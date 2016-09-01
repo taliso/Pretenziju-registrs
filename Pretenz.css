@@ -1,0 +1,27 @@
+body {
+    background-color: lightgrey;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}h2 {
+    color: black;
+    text-align: center;
+}
+ td.npk {
+	width: 3%; 
+    border: 1px solid black;
+    /*padding: 5px;*/
+ }
+td.teksts {
+	width: 47%; 
+    border: 1px solid black;
+     /*padding: 5px;*/
+ }
+td.ievade {
+	width: 50%; 
+    border: 1px solid black;
+     /*padding: 5px;*/
+	
+ }
