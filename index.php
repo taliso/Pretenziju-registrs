@@ -81,7 +81,9 @@ if (isset($_POST['form-submit']))
     <tr>  <!---7  --->
     <td class="npk">7.</td>
     <td class="teksts">Preces daudzums, par kuru iztekta pretenzija</td>
-    <td class="ievade"><input type="checkbox" name="vehicle1" value="Bike"> I have a bike</td>
+    <td class="ievade"><input type="checkbox" name="vehicle1" value="Bike"> Viss pasūtījums</br>
+                      <input type="checkbox" name="vehicle1" value="Bike"> piegādes partija(s) Nr.<input type="text" name="dokumenta_datums" value=""></br>
+                      <input type="checkbox" name="vehicle1" value="Bike"> Viss pasūtījums</br></td>
   </tr>
   <tr>  <!--- 8 --->
     <td class="npk">8.</td>
@@ -97,7 +99,9 @@ if (isset($_POST['form-submit']))
     <td class="npk">9.</td>
     <td class="teksts">Pretenzijas apraksts
 	pievienot pretenzijas aprakstu Pielikumā</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="checkbox" name="vehicle1" value="Bike"> Noformējis TENAPORS pārdevējs</br>
+                      <input type="checkbox" name="vehicle1" value="Bike"> Saņemta e-pasta vēstule no pretenzijas iesniedzēja</br>
+                      <input type="checkbox" name="vehicle1" value="Bike"> Saņemta oficiāla vēstule no pretenzijas iesniedzēja</br></td>
   </tr>
   <tr>  <!--- 10 --->
     <td class="npk">10.</td>
