@@ -46,12 +46,12 @@ if (isset($_POST['form-submit']))
     <td class="npk">1.</td>
     <td class="teksts">Šī dokumenta noformēšamas datums</td>
     <td class="ievade">                                
-	<input type="text" name="dokumenta_datums" value="00.00.2016"</td>
+	<input type="date" name="dokumenta_datums" value="00.00.2016"></td>
   </tr>
   <tr>  <!---2  --->
     <td class="npk">2.</td>
     <td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas pieņēma pretenziju</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="text" name="agents" value=""></td>
   </tr>
   </table>
   
@@ -60,59 +60,61 @@ if (isset($_POST['form-submit']))
     <td class="npk">3.</td>
     <td class="teksts">Pretenzijas iesniedzējs </br>
 	(Uzņēmuma/privātpersonas nosaukums)</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="text" name="iesniedzejs" value=""></td>
   </tr>
   <tr>  <!---4  --->
     <td class="npk">4.</td>
     <td class="teksts">Datums, kad pieņemta pretenzija</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="date" name="sanemsanas_datums" value=""></td>
   </tr>
   <tr>  <!--- 5 --->
     <td class="npk">5.</td>
     <td class="teksts">Produkta tips un biezums, par kuru iztekta pretenzija</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="text" name="produkcija" value=""></td>
   </tr>
   <tr>  <!--- 6 --->
     <td class="npk">6.</td>
     <td class="teksts">Pasūtījums numurs, uz kuru attiecas pretenzija
 	pievienot pasūtījuma kopiju Pielikumā</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"> <input type="text" name="pasutijuma_nr" value="">                               </td>
   </tr>
     <tr>  <!---7  --->
     <td class="npk">7.</td>
     <td class="teksts">Preces daudzums, par kuru iztekta pretenzija</td>
-    <td class="ievade"><input type="checkbox" name="vehicle1" value="Bike"> Viss pasūtījums</br>
-                      <input type="checkbox" name="vehicle1" value="Bike"> piegādes partija(s) Nr.<input type="text" name="dokumenta_datums" value=""></br>
-                      <input type="checkbox" name="vehicle1" value="Bike"> Viss pasūtījums</br></td>
+    <td class="ievade"><input type="checkbox" name="daudzums_viss" value=0> Viss pasūtījums</br>
+                      <input type="checkbox" name="daudzums_pieg_part" value=0> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value=""></br>
+                      <input type="checkbox" name="daudzums_atsev_paneli" value=0> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value=""> kv.m piegādes partijā(s) Nr.<input type="text" name="no_partijas" value=""></br></td>
   </tr>
   <tr>  <!--- 8 --->
     <td class="npk">8.</td>
     <td class="teksts">Pretenzijas objekts</td>
-    <td class="ievade"><input type="checkbox" name="par_laiks" value="Bike"> Piegādes laiks </br>
-						<input type="checkbox" name="par_izkr_trans" value="Bike"> Prece, kas ir izkrauta no transportlīdzekļa </br>
-						<input type="checkbox" name="par_izkr_iepak" value="Bike"> Izkrauta, neizpakota prece </br>
-						<input type="checkbox" name="par_izkr_izpak" value="Bike"> Izkrauta, izpakota prece </br>
-						<input type="checkbox" name="par_piemont_jaun" value="Bike"> Piemontēta prece jaunbūvē</br>
-						<input type="checkbox" name="par_piemont_ekspl" value="Bike"> Piemontēta prece ekspluatētā ēkā</td>
+    <td class="ievade"><input type="checkbox" name="par_laiks" value=0> Piegādes laiks </br>
+						<input type="checkbox" name="par_izkr_trans" value=0> Prece, kas ir izkrauta no transportlīdzekļa </br>
+						<input type="checkbox" name="par_izkr_iepak" value=0> Izkrauta, neizpakota prece </br>
+						<input type="checkbox" name="par_izkr_izpak" value=0> Izkrauta, izpakota prece </br>
+						<input type="checkbox" name="par_piemont_jaun" value=0> Piemontēta prece jaunbūvē</br>
+						<input type="checkbox" name="par_piemont_ekspl" value=0> Piemontēta prece ekspluatētā ēkā</td>
   </tr>
   <tr>  <!--- 9 --->
     <td class="npk">9.</td>
     <td class="teksts">Pretenzijas apraksts
 	pievienot pretenzijas aprakstu Pielikumā</td>
-    <td class="ievade"><input type="checkbox" name="vehicle1" value="Bike"> Noformējis TENAPORS pārdevējs</br>
-                      <input type="checkbox" name="vehicle1" value="Bike"> Saņemta e-pasta vēstule no pretenzijas iesniedzēja</br>
-                      <input type="checkbox" name="vehicle1" value="Bike"> Saņemta oficiāla vēstule no pretenzijas iesniedzēja</br></td>
+    <td class="ievade"><input type="checkbox" name="noform_pardev" value=0> Noformējis TENAPORS pārdevējs</br>
+                      <input type="checkbox" name="noform_e_pasts" value=0> Saņemta e-pasta vēstule no pretenzijas iesniedzēja</br>
+                      <input type="checkbox" name="noform_oficial" value=0> Saņemta oficiāla vēstule no pretenzijas iesniedzēja</br></td>
   </tr>
   <tr>  <!--- 10 --->
     <td class="npk">10.</td>
     <td class="teksts">Iesniegtās fotofiksācijas
 	pievienot Pielikumā</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="checkbox" name="iesniegts_nav" value=0> Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)</br>
+                      <input type="checkbox" name="iesniegts_panel_foto" value=0>Ir saņemta paneļa fotofuksācijas</br>
+                      <input type="checkbox" name="iesniegts_mark_foto" value=0>Ir saņemta marķējuma fotofiksācijas</td>
   </tr>
     <tr>  <!---11  --->
     <td class="npk">11.</td>
     <td class="teksts">Datums, kad pretenzijas iesniedzējs ir ievērojis problēmu</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="date" name="konstat_datums" value=""></td>
   </tr>
   </table>
   
@@ -120,12 +122,12 @@ if (isset($_POST['form-submit']))
   <tr>  <!--- 12 --->
     <td class="npk">12.</td>
     <td class="teksts">Pretenzijas reģistrācijas datums TENAPORS uzskaites sistēmā</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="date" name="registr_datums" value=""></td>
   </tr>
  <tr>  <!--- 13 --->
     <td class="npk">13.</td>
     <td class="teksts">Pretenzijas reģistrācijas numurs</td>
-    <td class="ievade">                                </td>
+    <td class="ievade"><input type="text" name="reg_nr" value=""></td>
   </tr>
  
  </table>
