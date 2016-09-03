@@ -24,20 +24,19 @@
 <?php
 if (isset($_POST['parbaude']))
 {
-
-  $noform_datums = $_POST['noform_diena']."-".$_POST['noform_menes']."-".$_POST['noform_gads'];
+//2016-09-01
+  $noform_datums =$_POST['noform_gads']."-".$_POST['noform_menes']."-".$_POST['noform_diena'];
   $agenta_id = $_POST['agenta_id'];
   $agents = $_POST['agents'];
   $iesniedzejs = $_POST['iesniedzejs'];
-  $sanemts_datums = $_POST['sanemts_diena']."-".$_POST['sanemts_menes']."-".$_POST['sanemts_gads'];
+  $sanemts_datums = $_POST['sanemts_gads']."-".$_POST['sanemts_menes']."-".$_POST['sanemts_diena'];
   $produkcija = $_POST['produkcija'];
   $pasutijuma_nr = $_POST['pasutijuma_nr'];
-
   $daudzums_viss = (!isset($_POST['daudzums_viss'])) ? "0" : $_POST['daudzums_viss'];
   $daudzums_pieg_part =  (!isset($_POST['daudzums_pieg_part'])) ? "0" : $_POST['daudzums_pieg_part'];
   $pieg_part_nr = $_POST['pieg_part_nr'];
   $daudzums_atsev_paneli =  (!isset($_POST['daudzums_atsev_paneli'])) ? "0" : $_POST['daudzums_atsev_paneli'];
-  $daudzums_kvmet = $_POST['daudzums_kvmet'];
+  $daudzums_kvmet = ($_POST['daudzums_kvmet']=="") ? "0" : $_POST['daudzums_kvmet'];
   $no_partijas = $_POST['no_partijas'];
   $par_laiks =  (!isset($_POST['par_laiks'])) ? "0" : $_POST['par_laiks'];
   $par_izkr_trans =  (!isset($_POST['par_izkr_trans'])) ? "0" : $_POST['par_izkr_trans'];
@@ -52,10 +51,10 @@ if (isset($_POST['parbaude']))
   $iesniegts_nav =  (!isset($_POST['iesniegts_nav'])) ? "0" : $_POST['iesniegts_nav'];
   $iesniegts_panel_foto =  (!isset($_POST['iesniegts_panel_foto'])) ? "0" : $_POST['iesniegts_panel_foto'];
   $iesniegts_mark_foto =  (!isset($_POST['iesniegts_mark_foto'])) ? "0" : $_POST['iesniegts_mark_foto'];
-  $konstatets_datums = $_POST['konstatets_diena']."-".$_POST['konstatets_menes']."-".$_POST['konstatets_gads'];
+  $konstatets_datums = $_POST['konstatets_gads']."-".$_POST['konstatets_menes']."-".$_POST['konstatets_diena'];
   $reg_nr = $_POST['reg_nr'];
 
-    $sql = "INSERT INTO data SET
+    $sql = "INSERT INTO pretenzijas SET
         dokumenta_datums=:noform_datums,
 	      agenta_id=:agenta_id,
    	    agents=:agents,
@@ -77,7 +76,7 @@ if (isset($_POST['parbaude']))
         par_piemont_ekspl=:par_piemont_ekspl,
         noform_pardev=:noform_pardev,
         noform_e_pasts=:noform_e_pasts,
-        noform_oficial,=:noform_oficial,
+        noform_oficial=:noform_oficial,
         apraksts=:apraksts,
         iesniegts_nav=:iesniegts_nav,
         iesniegts_panel_foto=:iesniegts_panel_foto,
@@ -125,7 +124,7 @@ if (isset($_POST['parbaude']))
   <pre><?php print_r($data); ?></pre>
 <form action="#" method="post">
 <table>
-  <tr>  <!--- 1 --->
+  <tr>  <!-- 1 -->
     <td class="npk">1.</td>
     <td class="teksts">Šī dokumenta noformēšamas datums</td>
     <td class="ievade">
@@ -141,7 +140,7 @@ if (isset($_POST['parbaude']))
       Izvēlaties noformēšanas datumu.
       </td>
   </tr>
-  <tr>  <!---2  --->
+  <tr>  <!--2  -->
     <td class="npk">2.</td>
     <td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas pieņēma pretenziju</td>
     <td class="ievade">
@@ -149,14 +148,14 @@ if (isset($_POST['parbaude']))
       <input type="text" name="agents" value="<?php if(isset($_POST['form-submit'])) { echo $_POST['agents']; } ?>" readonly size="60">
     </td>
   </tr>
-  <tr>  <!---3  --->
+  <tr>  <!--3  -->
     <td class="npk">3.</td>
     <td class="teksts">Pretenzijas iesniedzējs <br>
 	(Uzņēmuma/privātpersonas nosaukums)
     </td>
     <td class="ievade"><input type="text" name="iesniedzejs" value="" size="70"></td>
   </tr>
-  <tr>  <!---4  --->
+  <tr>  <!--4  -->
     <td class="npk">4.</td>
     <td class="teksts">Datums, kad pieņemta pretenzija</td>
     <td class="ievade">
@@ -172,18 +171,18 @@ if (isset($_POST['parbaude']))
       Izvēlaties pretenzijas pieņemšanas datumu
 </td>
   </tr>
-  <tr>  <!--- 5 --->
+  <tr>  <!-- 5 -->
     <td class="npk">5.</td>
     <td class="teksts">Produkta tips un biezums, par kuru iztekta pretenzija</td>
     <td class="ievade"><input type="text" name="produkcija" value="" size="100"></td>
   </tr>
-  <tr>  <!--- 6 --->
+  <tr>  <!-- 6 -->
     <td class="npk">6.</td>
     <td class="teksts">Pasūtījums numurs, uz kuru attiecas pretenzija
 	pievienot pasūtījuma kopiju Pielikumā</td>
     <td class="ievade"> <input type="text" name="pasutijuma_nr" value="">                               </td>
   </tr>
-    <tr>  <!---7  --->
+    <tr>  <!--7  -->
     <td class="npk">7.</td>
     <td class="teksts">Preces daudzums, par kuru iztekta pretenzija</td>
     <td class="ievade"><input type="checkbox" name="daudzums_viss" value="1"> Viss pasūtījums<br>
@@ -191,7 +190,7 @@ if (isset($_POST['parbaude']))
                       <input type="checkbox" name="daudzums_atsev_paneli" value="1"> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value=""> kv.m piegādes partijā(s) Nr.<input type="text" name="no_partijas" value=""><br>
   </td>
   </tr>
-  <tr>  <!--- 8 --->
+  <tr>  <!-- 8 -->
     <td class="npk">8.</td>
     <td class="teksts">Pretenzijas objekts</td>
     <td class="ievade"><input type="checkbox" name="par_laiks" value="1"> Piegādes laiks <br>
@@ -201,7 +200,7 @@ if (isset($_POST['parbaude']))
 						<input type="checkbox" name="par_piemont_jaun" value="1"> Piemontēta prece jaunbūvē<br>
 						<input type="checkbox" name="par_piemont_ekspl" value="1"> Piemontēta prece ekspluatētā ēkā</td>
   </tr>
-  <tr>  <!--- 9 --->
+  <tr>  <!-- 9 -->
     <td class="npk">9.</td>
     <td class="teksts">Pretenzijas apraksts
 	pievienot pretenzijas aprakstu Pielikumā</td>
@@ -212,7 +211,7 @@ if (isset($_POST['parbaude']))
       <input type="text" name="apraksts" value="" size="70">
     </td>
   </tr>
-  <tr>  <!--- 10 --->
+  <tr>  <!-- 10 -->
     <td class="npk">10.</td>
     <td class="teksts">Iesniegtās fotofiksācijas
 	pievienot Pielikumā</td>
@@ -220,7 +219,7 @@ if (isset($_POST['parbaude']))
                       <input type="checkbox" name="iesniegts_panel_foto" value="1">Ir saņemta paneļa fotofuksācijas<br>
                       <input type="checkbox" name="iesniegts_mark_foto" value="1">Ir saņemta marķējuma fotofiksācijas</td>
   </tr>
-    <tr>  <!---11  --->
+    <tr>  <!--11  -->
     <td class="npk">11.</td>
     <td class="teksts">Datums, kad pretenzijas iesniedzējs ir ievērojis problēmu</td>
     <td class="ievade">
@@ -236,12 +235,12 @@ if (isset($_POST['parbaude']))
       Izvēlaties datumu, kurā klients konstatējis problēmu.
 </td>
   </tr>
-  <tr>  <!--- 12 --->
+  <tr>  <!-- 12 -->
     <td class="npk">12.</td>
     <td class="teksts">Pretenzijas reģistrācijas datums TENAPORS uzskaites sistēmā</td>
     <td class="ievade">Reģistrācijas datums tiks fiksēts automātiski</td>
   </tr>
- <tr>  <!--- 13 --->
+ <tr>  <!-- 13 -->
     <td class="npk">13.</td>
     <td class="teksts">Pretenzijas reģistrācijas numurs</td>
     <td class="ievade"><input type="text" name="reg_nr" value=""></td>
