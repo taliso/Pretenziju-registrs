@@ -9,19 +9,28 @@ h1 {
     color: black;
     text-align: center;
 }
+#logo {
+  float: left;
+}
+#saturs
+{
+  width: 72%;
+  margin: 0 auto;
+}
  td.npk {
-	width: 3%; 
+	width: 3%;
     border: 1px solid black;
+    text-align: center;
     /*padding: 5px;*/
  }
 td.teksts {
-	width: 47%; 
+	width: 55%;
     border: 1px solid black;
      /*padding: 5px;*/
  }
 td.ievade {
-	width: 50%; 
+	width: 42%;
     border: 1px solid black;
      /*padding: 5px;*/
-	
+
  }
