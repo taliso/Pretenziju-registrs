@@ -5,6 +5,8 @@
 
   include "funkcijas.php";
   include "konekcija.php";
+
+  $datums=datums();
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +24,7 @@
 <h2>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h2>
 <h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1>
 <?php
+
 if (isset($_POST['parbaude']))
 {
 //2016-09-01
@@ -129,13 +132,25 @@ if (isset($_POST['parbaude']))
     <td class="teksts">Šī dokumenta noformēšamas datums</td>
     <td class="ievade">
        <select name="noform_diena">
-          <option value="01">01</option>
+          <?php
+            foreach($datums["diena"] as $diena){
+              echo "<option value='$diena'>$diena</option>";
+            } 
+          ?>
        </select>
       <select name="noform_menes">
-        <option value="09">09</option>
-      </select>
+          <?php
+            foreach($datums["menes"] as $menes){
+              echo "<option value='$menes'>$menes</option>";
+            } 
+          ?>
+       </select>
       <select name="noform_gads">
-        <option value="2016">2016</option>
+         <?php
+            foreach($datums["gads"] as $gads){
+              echo "<option value='$gads'>$gads</option>";
+            } 
+          ?>
       </select>
       Izvēlaties noformēšanas datumu.
       </td>
@@ -160,14 +175,26 @@ if (isset($_POST['parbaude']))
     <td class="teksts">Datums, kad pieņemta pretenzija</td>
     <td class="ievade">
       <select name="sanemts_diena">
-          <option value="01">01</option>
+        <?php
+            foreach($datums["diena"] as $diena){
+              echo "<option value='$diena'>$diena</option>";
+            } 
+          ?>
        </select>
       <select name="sanemts_menes">
-        <option value="09">09</option>
-      </select>
+          <?php
+            foreach($datums["menes"] as $menes){
+              echo "<option value='$menes'>$menes</option>";
+            } 
+          ?>
+     </select>
       <select name="sanemts_gads">
-        <option value="2016">2016</option>
-      </select>
+         <?php
+            foreach($datums["gads"] as $gads){
+              echo "<option value='$gads'>$gads</option>";
+            } 
+          ?>
+     </select>
       Izvēlaties pretenzijas pieņemšanas datumu
 </td>
   </tr>
@@ -224,13 +251,25 @@ if (isset($_POST['parbaude']))
     <td class="teksts">Datums, kad pretenzijas iesniedzējs ir ievērojis problēmu</td>
     <td class="ievade">
       <select name="konstatets_diena">
-          <option value="01">01</option>
+       <?php
+            foreach($datums["diena"] as $diena){
+              echo "<option value='$diena'>$diena</option>";
+            } 
+          ?>
        </select>
       <select name="konstatets_menes">
-        <option value="09">09</option>
+         <?php
+            foreach($datums["menes"] as $menes){
+              echo "<option value='$menes'>$menes</option>";
+            } 
+          ?>
       </select>
       <select name="konstatets_gads">
-        <option value="2016">2016</option>
+         <?php
+            foreach($datums["gads"] as $gads){
+              echo "<option value='$gads'>$gads</option>";
+            } 
+          ?>
       </select>
       Izvēlaties datumu, kurā klients konstatējis problēmu.
 </td>
