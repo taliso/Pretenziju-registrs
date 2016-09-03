@@ -19,11 +19,11 @@ define("DB", "tp_pretenzijas");
 define("PASS", "1labaparole");
 /* PIESLĒGŠANĀS BATUBĀZEI */
 //Definētās konstantes tiek izmantotas
-$db = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS,
-              array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+// $db = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS,
+//               array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 //Parametrs, kas nosaka, ka kļūdas tiks izvadītas uz ekrāna
 //Kamēr izstrādā programmu, ir ļoti noderīgs
-$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+// $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
 define(fdokumenta_datums, date);
 define("HOST", "10.0.4.7");
@@ -32,20 +32,20 @@ if (isset($_POST['form-submit']))
 {
     $atext = $_POST['atext'];
     $btext = $_POST['btext'];
-    
+
     $sql = "INSERT INTO data SET title=:atext, text=:btext";
-    $q = $db->prepare($sql);
-    $q->execute(array(':atext'=>$atext,':btext'=>$btext));
+//     $q = $db->prepare($sql);
+//     $q->execute(array(':atext'=>$atext,':btext'=>$btext));
 }
 ?>
 
 
 <table style="width:70%">
-  
+
   <tr>  <!--- 1 --->
     <td class="npk">1.</td>
     <td class="teksts">Šī dokumenta noformēšamas datums</td>
-    <td class="ievade">                                
+    <td class="ievade">
 	<input type="date" name="dokumenta_datums" value="00.00.2016"></td>
   </tr>
   <tr>  <!---2  --->
@@ -54,7 +54,7 @@ if (isset($_POST['form-submit']))
     <td class="ievade"><input type="text" name="agents" value=""></td>
   </tr>
   </table>
-  
+
   <table style="width:70%">
   <tr>  <!---3  --->
     <td class="npk">3.</td>
@@ -117,7 +117,7 @@ if (isset($_POST['form-submit']))
     <td class="ievade"><input type="date" name="konstat_datums" value=""></td>
   </tr>
   </table>
-  
+
  <table style="width:70%">
   <tr>  <!--- 12 --->
     <td class="npk">12.</td>
@@ -129,7 +129,7 @@ if (isset($_POST['form-submit']))
     <td class="teksts">Pretenzijas reģistrācijas numurs</td>
     <td class="ievade"><input type="text" name="reg_nr" value=""></td>
   </tr>
- 
+
  </table>
 
 
