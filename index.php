@@ -6,7 +6,10 @@
   include "funkcijas.php";
   include "konekcija.php";
 
-  $datums=datums();
+$datums=datums();
+define("MAX_FILE_SIZE",5000000);
+$target_dir = "uploads/";
+$regnr = "10001";
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +28,11 @@
 <h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1>
 <?php
 
-if (isset($_POST['parbaude']))
+if (isset($_POST['submit']))
 {
 //2016-09-01
+  file_upload($_FILES,$target_dir,$regnr);
+
   $noform_datums =$_POST['noform_gads']."-".$_POST['noform_menes']."-".$_POST['noform_diena'];
   $agenta_id = $_POST['agenta_id'];
   $agents = $_POST['agents'];
@@ -207,7 +212,9 @@ if (isset($_POST['parbaude']))
     <td class="npk">6.</td>
     <td class="teksts">Pasūtījums numurs, uz kuru attiecas pretenzija
 	pievienot pasūtījuma kopiju Pielikumā</td>
-    <td class="ievade"> <input type="text" name="pasutijuma_nr" value="">                               </td>
+    <td class="ievade"> <input type="text" name="pasutijuma_nr" value=""><br>
+              <input type="file" name="filePas" id="filePas">
+   </td>
   </tr>
     <tr>  <!--7  -->
     <td class="npk">7.</td>
@@ -230,21 +237,23 @@ if (isset($_POST['parbaude']))
   <tr>  <!-- 9 -->
     <td class="npk">9.</td>
     <td class="teksts">Pretenzijas apraksts
-	pievienot pretenzijas aprakstu Pielikumā</td>
+	  </td>
     <td class="ievade"><input type="checkbox" name="noform_pardev" value="1"> Noformējis TENAPORS pārdevējs<br>
                       <input type="checkbox" name="noform_e_pasts" value="1"> Saņemta e-pasta vēstule no pretenzijas iesniedzēja<br>
                       <input type="checkbox" name="noform_oficial" value="1"> Saņemta oficiāla vēstule no pretenzijas iesniedzēja<br>
-<!--       <textarea name="apraksts" value="" ></textarea>                 -->
-      <input type="text" name="apraksts" value="" size="70">
+                      <input type="text" name="apraksts" value="" size="70"><br>
+                      <input type="file" name="fileApr" id="fileApr">
     </td>
   </tr>
   <tr>  <!-- 10 -->
     <td class="npk">10.</td>
     <td class="teksts">Iesniegtās fotofiksācijas
-	pievienot Pielikumā</td>
+	  </td>
     <td class="ievade"><input type="checkbox" name="iesniegts_nav" value="1"> Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)<br>
                       <input type="checkbox" name="iesniegts_panel_foto" value="1">Ir saņemta paneļa fotofuksācijas<br>
-                      <input type="checkbox" name="iesniegts_mark_foto" value="1">Ir saņemta marķējuma fotofiksācijas</td>
+                      <input type="checkbox" name="iesniegts_mark_foto" value="1">Ir saņemta marķējuma fotofiksācijas<br>
+                      <input type="file" name="fileFoto" id="fileFoto">
+    </td>
   </tr>
     <tr>  <!--11  -->
     <td class="npk">11.</td>
@@ -286,7 +295,7 @@ if (isset($_POST['parbaude']))
   </tr>
 
  </table>
-<input type="submit" name="parbaude" value="Apstiprināt">
+  <input type="submit" name="submit" value="Apstiprināt">
   </form>
 
     </div>
