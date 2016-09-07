@@ -11,7 +11,6 @@ define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
 $regnr = "10001";
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,15 +20,24 @@ $regnr = "10001";
 </head>
 <body>
   <div id="saturs">
-<!-- <img id="logo" src="http://Pretenziju-registrs/TENAX_TENAPORS_logo.jpg"> -->
-<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:150px;height:80px;">
-<h2>Pretenziju noformēšanas veidlapa</h2>
-<h2>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h2>
-<h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1>
+	<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:150px;height:80px;">
+	<h2>Pretenziju noformēšanas veidlapa</h2>
+	<h2>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h2>
+	<h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1>
 <?php
 
 if (isset($_POST['submit']))
-{
+{ //Ģenerējam pretenzijas reģistrācijas numuru
+
+// Error
+    $sql = "SELECT ped_reg_nr FROM dati";
+    $result = $db->query($sql);
+    $row=mysqli_fetch_assoc($result);
+    echo $row["ped_reg_nr"];
+ //Error
+
+  // Formējam INSERT rindu
+////
 //2016-09-01
   file_upload($_FILES,$target_dir,$regnr);
 
@@ -93,7 +101,7 @@ if (isset($_POST['submit']))
         reg_nr=:reg_nr,
 	      registr_datums='00-00-0000';";
     $q = $db->prepare($sql);
-    $data = array(
+	$data = array(
           ':noform_datums'=>$noform_datums,
           ':agenta_id'=>$agenta_id,
           ':agents'=>$agents,
@@ -123,13 +131,14 @@ if (isset($_POST['submit']))
           ':konstatets_datums'=>$konstatets_datums,
           ':reg_nr'=>$reg_nr
       );
-
+	
     $q->execute($data);
 }
-// echo fons("OK");
+
+
+
   ?>
 
-  <pre><?php print_r($data); ?></pre>
 <form action="#" method="post">
 <table>
   <tr>  <!-- 1 -->
@@ -213,7 +222,7 @@ if (isset($_POST['submit']))
     <td class="teksts">Pasūtījums numurs, uz kuru attiecas pretenzija
 	pievienot pasūtījuma kopiju Pielikumā</td>
     <td class="ievade"> <input type="text" name="pasutijuma_nr" value=""><br>
-              <input type="file" name="filePas" id="filePas">
+              <input type="file" name="filePas" align="right" id="filePas">
    </td>
   </tr>
     <tr>  <!--7  -->
@@ -221,7 +230,12 @@ if (isset($_POST['submit']))
     <td class="teksts">Preces daudzums, par kuru iztekta pretenzija</td>
     <td class="ievade"><input type="checkbox" name="daudzums_viss" value="1"> Viss pasūtījums<br>
                       <input type="checkbox" name="daudzums_pieg_part" value="1"> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value=""><br>
-                      <input type="checkbox" name="daudzums_atsev_paneli" value="1"> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value=""> kv.m piegādes partijā(s) Nr.<input type="text" name="no_partijas" value=""><br>
+                      <input type="checkbox" name="daudzums_atsev_paneli" value="1"> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value="" size="7">
+                      <select name="mervieniba">
+                          <option value='kvm'>kv.m.</option>
+                          <option value='m'>m</option>
+                     </select>
+                        piegādes partijā(s) Nr.<input type="text" name="no_partijas" value="" size="16"><br>
   </td>
   </tr>
   <tr>  <!-- 8 -->
@@ -241,7 +255,7 @@ if (isset($_POST['submit']))
     <td class="ievade"><input type="checkbox" name="noform_pardev" value="1"> Noformējis TENAPORS pārdevējs<br>
                       <input type="checkbox" name="noform_e_pasts" value="1"> Saņemta e-pasta vēstule no pretenzijas iesniedzēja<br>
                       <input type="checkbox" name="noform_oficial" value="1"> Saņemta oficiāla vēstule no pretenzijas iesniedzēja<br>
-                      <input type="text" name="apraksts" value="" size="70"><br>
+                      Komentārs: <input type="text" name="apraksts" value="" size="70"><br>
                       <input type="file" name="fileApr" id="fileApr">
     </td>
   </tr>
@@ -295,7 +309,7 @@ if (isset($_POST['submit']))
   </tr>
 
  </table>
-  <input type="submit" name="submit" value="Apstiprināt">
+  <input type="submit" name="submit" value="Apstiprināt" align="right">
   </form>
 
     </div>
