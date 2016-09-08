@@ -9,7 +9,7 @@
 $datums=datums();
 define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
-$regnr = "10001";
+$reg_nr = "10003";
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,18 +28,10 @@ $regnr = "10001";
 
 if (isset($_POST['submit']))
 { //Ģenerējam pretenzijas reģistrācijas numuru
-
-// Error
-    $sql = "SELECT ped_reg_nr FROM dati";
-    $result = $db->query($sql);
-    $row=mysqli_fetch_assoc($result);
-    echo $row["ped_reg_nr"];
- //Error
-
   // Formējam INSERT rindu
 ////
 //2016-09-01
-  file_upload($_FILES,$target_dir,$regnr);
+  file_upload($_FILES,$target_dir,$reg_nr);
 
   $noform_datums =$_POST['noform_gads']."-".$_POST['noform_menes']."-".$_POST['noform_diena'];
   $agenta_id = $_POST['agenta_id'];
@@ -68,7 +60,8 @@ if (isset($_POST['submit']))
   $iesniegts_panel_foto =  (!isset($_POST['iesniegts_panel_foto'])) ? "0" : $_POST['iesniegts_panel_foto'];
   $iesniegts_mark_foto =  (!isset($_POST['iesniegts_mark_foto'])) ? "0" : $_POST['iesniegts_mark_foto'];
   $konstatets_datums = $_POST['konstatets_gads']."-".$_POST['konstatets_menes']."-".$_POST['konstatets_diena'];
-  $reg_nr = $_POST['reg_nr'];
+  // $reg_nr = $_POST['reg_nr']; 
+  
 
     $sql = "INSERT INTO pretenzijas SET
         dokumenta_datums=:noform_datums,
@@ -130,8 +123,9 @@ if (isset($_POST['submit']))
           ':iesniegts_mark_foto'=>$iesniegts_mark_foto,
           ':konstatets_datums'=>$konstatets_datums,
           ':reg_nr'=>$reg_nr
+
       );
-	
+	echo "Registracijas numurs $reg_nr IR";
     $q->execute($data);
 }
 
@@ -305,7 +299,8 @@ if (isset($_POST['submit']))
  <tr>  <!-- 13 -->
     <td class="npk">13.</td>
     <td class="teksts">Pretenzijas reģistrācijas numurs</td>
-    <td class="ievade"><input type="text" name="reg_nr" value=""></td>
+    <!-- /*<td class="ievade"><input type="text" name="reg_nr" value=""></td>*/ -->
+	
   </tr>
 
  </table>
