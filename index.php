@@ -10,7 +10,30 @@ $datums=datums();
 define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
 $reg_nr = "10003";
+
+
+// Izgūstam datus no kl_agenti
+$agent_list=array[];
+$sql = "SELECT agenta_id, agents FROM kl_agenti";
+$q = $conn->query($sql);
+//ielasa izgūtos datus asociatīvajā masīvā
+//masīva elementu atslēgas ir DB tabulas kolonnu nosaukumi
+//piem., $data['username']
+while($r = $q->fetch(PDO::FETCH_ASSOC)){
+    $agent_list[]=$r;
+}
+
+
+foreach ($agent_list as $r)
+{
+	// ????????????????????????????????????
+    echo $r['agenta_id']. " : ".$r['agents'];
+    echo "<br />";
+	// ????????????????????????????????????
+}
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -167,8 +190,22 @@ if (isset($_POST['submit']))
     <td class="npk">2.</td>
     <td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas pieņēma pretenziju</td>
     <td class="ievade">
-      <input type="text" name="agenta_id" value="" size="5">
-      <input type="text" name="agents" value="<?php if(isset($_POST['form-submit'])) { echo $_POST['agents']; } ?>" readonly size="60">
+<!-- 		// ???????????????????????????????????? -->
+
+	     <select name="agents">
+         <?php
+            foreach($agent_list as $row){
+              echo "<option value='$row['agents']'>$agents</option>";
+            } 
+          ?>
+      </select>
+
+	<!-- 		// ???????????????????????????????????? -->
+	
+<!--       <input type="text" name="agenta_id" value="" size="5"> -->
+
+<!--       <input type="text" name="agents" value="<?php if(isset($_POST['form-submit'])) { echo $_POST['agents']; } ?>" readonly size="60"> -->
+
     </td>
   </tr>
   <tr>  <!--3  -->
