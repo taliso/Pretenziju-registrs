@@ -13,23 +13,19 @@ $reg_nr = "10003";
 
 
 // Izgūstam datus no kl_agenti
-$agent_list=array[];
 $sql = "SELECT agenta_id, agents FROM kl_agenti";
-$q = $conn->query($sql);
+$q = $db->query($sql);
 //ielasa izgūtos datus asociatīvajā masīvā
 //masīva elementu atslēgas ir DB tabulas kolonnu nosaukumi
 //piem., $data['username']
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
     $agent_list[]=$r;
-}
-
+	}
 
 foreach ($agent_list as $r)
 {
-	// ????????????????????????????????????
-    echo $r['agenta_id']. " : ".$r['agents'];
+	echo $r['agenta_id']. " : ".$r['agents'];
     echo "<br />";
-	// ????????????????????????????????????
 }
 
 ?>
@@ -48,7 +44,7 @@ foreach ($agent_list as $r)
 	<h2>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h2>
 	<h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1>
 <?php
-
+echo $_SERVER['SCRIPT_FILENAME'];
 if (isset($_POST['submit']))
 { //Ģenerējam pretenzijas reģistrācijas numuru
   // Formējam INSERT rindu
@@ -190,22 +186,14 @@ if (isset($_POST['submit']))
     <td class="npk">2.</td>
     <td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas pieņēma pretenziju</td>
     <td class="ievade">
-<!-- 		// ???????????????????????????????????? -->
-
-	     <select name="agents">
-         <?php
-            foreach($agent_list as $row){
-              echo "<option value='$row['agents']'>$agents</option>";
+     <select name="agents">
+          <?php
+            foreach($agent_list['agents'] as $agents){
+              echo "<option value='$agents'>$agents</option>";
             } 
           ?>
-      </select>
-
-	<!-- 		// ???????????????????????????????????? -->
+       </select>
 	
-<!--       <input type="text" name="agenta_id" value="" size="5"> -->
-
-<!--       <input type="text" name="agents" value="<?php if(isset($_POST['form-submit'])) { echo $_POST['agents']; } ?>" readonly size="60"> -->
-
     </td>
   </tr>
   <tr>  <!--3  -->
