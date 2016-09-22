@@ -6,11 +6,38 @@
   include "funkcijas.php";
   include "konekcija.php";
 
-$datums=datums();
+$datums=datums(); //*****************
+
 define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
-$regnr = "10001";
+$reg_nr = "10003";
+
+
+// Izgūstam datus no kl_agenti
+$sql = "SELECT agenta_id, agents FROM kl_agenti";
+$q = $db->query($sql);
+//ielasa izgūtos datus asociatīvajā masīvā
+//masīva elementu atslēgas ir DB tabulas kolonnu nosaukumi
+//piem., $data['username']
+while($r = $q->fetch(PDO::FETCH_ASSOC)){
+    $agent_list[]=$r;
+	}
+$mdat=mktime(01, 01, 01, 8, 5, 2014);
+	$dat=date("d",$mdat);
+	$men=date("m",$mdat);
+	echo($dat.":".$men."<br>");
+$sdat=date("d.m.Y");
+echo($sdat);
+	
+foreach ($agent_list as $r)
+{
+	echo $r['agenta_id']. " : ".$r['agents'];
+	$s=strlen($r['agents']);
+    echo "$s"."<br />";
+}
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,21 +52,13 @@ $regnr = "10001";
 	<h2>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h2>
 	<h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1>
 <?php
-
+echo $_SERVER['SCRIPT_FILENAME'];
 if (isset($_POST['submit']))
 { //Ģenerējam pretenzijas reģistrācijas numuru
-
-// Error
-    $sql = "SELECT ped_reg_nr FROM dati";
-    $result = $db->query($sql);
-    $row=mysqli_fetch_assoc($result);
-    echo $row["ped_reg_nr"];
- //Error
-
   // Formējam INSERT rindu
 ////
 //2016-09-01
-  file_upload($_FILES,$target_dir,$regnr);
+  file_upload($_FILES,$target_dir,$reg_nr);
 
   $noform_datums =$_POST['noform_gads']."-".$_POST['noform_menes']."-".$_POST['noform_diena'];
   $agenta_id = $_POST['agenta_id'];
@@ -68,7 +87,8 @@ if (isset($_POST['submit']))
   $iesniegts_panel_foto =  (!isset($_POST['iesniegts_panel_foto'])) ? "0" : $_POST['iesniegts_panel_foto'];
   $iesniegts_mark_foto =  (!isset($_POST['iesniegts_mark_foto'])) ? "0" : $_POST['iesniegts_mark_foto'];
   $konstatets_datums = $_POST['konstatets_gads']."-".$_POST['konstatets_menes']."-".$_POST['konstatets_diena'];
-  $reg_nr = $_POST['reg_nr'];
+  // $reg_nr = $_POST['reg_nr']; 
+  
 
     $sql = "INSERT INTO pretenzijas SET
         dokumenta_datums=:noform_datums,
@@ -130,8 +150,9 @@ if (isset($_POST['submit']))
           ':iesniegts_mark_foto'=>$iesniegts_mark_foto,
           ':konstatets_datums'=>$konstatets_datums,
           ':reg_nr'=>$reg_nr
+
       );
-	
+	echo "Registracijas numurs $reg_nr IR";
     $q->execute($data);
 }
 
@@ -147,11 +168,20 @@ if (isset($_POST['submit']))
     <td class="ievade">
        <select name="noform_diena">
           <?php
-            foreach($datums["diena"] as $diena){
-              echo "<option value='$diena'>$diena</option>";
-            } 
+    	//==========================================
+		$dd=mktime(11, 14, 54, 8, 12, 2014);
+			$rd=diena_select($dd);
+			echo $rd;
+	    //=============================================
+       //     foreach($datums["diena"] as $diena){
+       //       echo "<option value='$diena'>$diena</option>";
+       //     } 
           ?>
        </select>
+	    <?php
+			
+		//	print($rd);
+		?>
       <select name="noform_menes">
           <?php
             foreach($datums["menes"] as $menes){
@@ -173,8 +203,15 @@ if (isset($_POST['submit']))
     <td class="npk">2.</td>
     <td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas pieņēma pretenziju</td>
     <td class="ievade">
-      <input type="text" name="agenta_id" value="" size="5">
-      <input type="text" name="agents" value="<?php if(isset($_POST['form-submit'])) { echo $_POST['agents']; } ?>" readonly size="60">
+     <select name="agents">
+          <?php
+            foreach($agent_list as $agents){
+				$magents=$agents["agenta_id"]." : ".$agents["agents"];
+				echo "<option value='$magents'>$magents</option>";
+            } 
+          ?>
+       </select>
+	
     </td>
   </tr>
   <tr>  <!--3  -->
@@ -305,7 +342,8 @@ if (isset($_POST['submit']))
  <tr>  <!-- 13 -->
     <td class="npk">13.</td>
     <td class="teksts">Pretenzijas reģistrācijas numurs</td>
-    <td class="ievade"><input type="text" name="reg_nr" value=""></td>
+    <!-- /*<td class="ievade"><input type="text" name="reg_nr" value=""></td>*/ -->
+	
   </tr>
 
  </table>

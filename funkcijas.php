@@ -6,9 +6,14 @@
 function datums()
 {
   $datums = array();
-
+	//$sd=string; Error ????
   for($d=1;$d<=31;$d++) {
-    $datums["diena"][] = $d;
+	$sd=(string)$d; //???
+	//$lensd=strlen($sd);
+	if (strlen($sd)<2){
+		$sd="0".$sd;
+	}
+    $datums["diena"][] = $sd;
   }
 
   for($m=1;$m<=12;$m++) {
@@ -27,8 +32,6 @@ return $datums;
 function faila_nos($regnr,$grupa,$faila_nos){
         return $regnr."_".$grupa."_".$faila_nos; 
  }
-
-
 
 function file_upload($fails,$target_dir,$regnr){
     echo "<pre>";
@@ -76,4 +79,27 @@ function file_upload($fails,$target_dir,$regnr){
 
         }
     }
+}
+
+function diena_select($fixdat)
+{
+	// Ja nav norādīts fixdat, pielīdzinam to šodienai
+	if (empty($fixdat)){$fixdat=date("d.m.Y");}
+	$fd=date("d",$fixdat);
+	$mselect_dienas="";
+	for($d=1;$d<=31;$d++){
+		$sd=(string)$d;
+		if (strlen($sd)==1){
+			$sd="0".$sd;
+		}
+		if ($fd=$sd) {
+			$mselect_dienas=$mselect_dienas."<option selected value='".$sd."'>".$sd."</option>"."<br>";
+		} else {
+			$mselect_dienas=$mselect_dienas."<option value='".$sd."'>".$sd."</option>"."<br>";
+		}
+		
+		
+	}
+	return $mselect_dienas;
+
 }
