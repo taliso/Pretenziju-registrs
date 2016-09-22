@@ -9,8 +9,13 @@ function datums()
 	//$sd=string; Error ????
   for($d=1;$d<=31;$d++) {
 	$sd=(string)$d; //???
+<<<<<<< HEAD
 	//$lensd=strlen($sd);
 	if (strlen($sd)<2){
+=======
+	$lensd=strlen($sd);
+	if ($lensd<2){
+>>>>>>> 1936e59dd5882c8a2fc6635695495a7195c86b07
 		$sd="0".$sd;
 	}
     $datums["diena"][] = $sd;
@@ -81,6 +86,7 @@ function file_upload($fails,$target_dir,$regnr){
     }
 }
 
+<<<<<<< HEAD
 function diena_select($fixdat)
 {
 	// Ja nav norādīts fixdat, pielīdzinam to šodienai
@@ -101,5 +107,19 @@ function diena_select($fixdat)
 		
 	}
 	return $mselect_dienas;
+=======
+
+function diena_select()
+{
+	for($d=1;$d<=31;$d++) {
+		$id=(string)$d;	
+//		if strlen($id)=1
+//		{
+		$id="0".$id;
+//		}
+	}
+    //$datums["diena"][] = $d;
+	//echo "$d";
+>>>>>>> 1936e59dd5882c8a2fc6635695495a7195c86b07
 
 }

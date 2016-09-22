@@ -22,6 +22,7 @@ $q = $db->query($sql);
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
     $agent_list[]=$r;
 	}
+<<<<<<< HEAD
 $mdat=mktime(01, 01, 01, 8, 5, 2014);
 	$dat=date("d",$mdat);
 	$men=date("m",$mdat);
@@ -29,6 +30,29 @@ $mdat=mktime(01, 01, 01, 8, 5, 2014);
 $sdat=date("d.m.Y");
 echo($sdat);
 	
+=======
+
+//$dat=date("m");
+//echo "<br>";
+//$la=strlen($dat);
+//$las=(string)$la;
+//$cdat=":".$las.":";
+//$sdat=trim($dat," ");
+//$lb=strlen($las);
+ //da = array();
+ for($d=1;$d<=31;$d++) {
+	$sd=(string)$d;
+	$l=strlen($sd);
+	echo ($l);
+	if (strlen($sd)<1);
+	{
+		$sd="0".$sd;
+	}
+    $da["diena"][] = $sd;
+  }
+
+
+>>>>>>> 1936e59dd5882c8a2fc6635695495a7195c86b07
 foreach ($agent_list as $r)
 {
 	echo $r['agenta_id']. " : ".$r['agents'];
