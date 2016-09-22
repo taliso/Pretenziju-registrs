@@ -22,10 +22,31 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
     $agent_list[]=$r;
 	}
 
+//$dat=date("m");
+//echo "<br>";
+//$la=strlen($dat);
+//$las=(string)$la;
+//$cdat=":".$las.":";
+//$sdat=trim($dat," ");
+//$lb=strlen($las);
+ //da = array();
+ for($d=1;$d<=31;$d++) {
+	$sd=(string)$d;
+	$l=strlen($sd);
+	echo ($l);
+	if (strlen($sd)<1);
+	{
+		$sd="0".$sd;
+	}
+    $da["diena"][] = $sd;
+  }
+
+
 foreach ($agent_list as $r)
 {
 	echo $r['agenta_id']. " : ".$r['agents'];
-    echo "<br />";
+	$s=strlen($r['agents']);
+    echo "$s"."<br />";
 }
 
 ?>
@@ -188,8 +209,9 @@ if (isset($_POST['submit']))
     <td class="ievade">
      <select name="agents">
           <?php
-            foreach($agent_list['agents'] as $agents){
-              echo "<option value='$agents'>$agents</option>";
+            foreach($agent_list as $agents){
+				$magents=$agents["agenta_id"]." : ".$agents["agents"];
+				echo "<option value='$magents'>$magents</option>";
             } 
           ?>
        </select>

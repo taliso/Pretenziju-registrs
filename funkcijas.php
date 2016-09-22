@@ -6,9 +6,14 @@
 function datums()
 {
   $datums = array();
-
+	//$sd=string; Error ????
   for($d=1;$d<=31;$d++) {
-    $datums["diena"][] = $d;
+	$sd=(string)$d; //???
+	$lensd=strlen($sd);
+	if ($lensd<2){
+		$sd="0".$sd;
+	}
+    $datums["diena"][] = $sd;
   }
 
   for($m=1;$m<=12;$m++) {
@@ -27,8 +32,6 @@ return $datums;
 function faila_nos($regnr,$grupa,$faila_nos){
         return $regnr."_".$grupa."_".$faila_nos; 
  }
-
-
 
 function file_upload($fails,$target_dir,$regnr){
     echo "<pre>";
@@ -76,4 +79,19 @@ function file_upload($fails,$target_dir,$regnr){
 
         }
     }
+}
+
+
+function diena_select()
+{
+	for($d=1;$d<=31;$d++) {
+		$id=(string)$d;	
+//		if strlen($id)=1
+//		{
+		$id="0".$id;
+//		}
+	}
+    //$datums["diena"][] = $d;
+	//echo "$d";
+
 }
