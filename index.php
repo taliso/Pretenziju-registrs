@@ -6,8 +6,7 @@
   include "funkcijas.php";
   include "konekcija.php";
 
-$datums=datums(); //*****************
-
+$datums=datums();
 define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
 $reg_nr = "10003";
@@ -22,15 +21,6 @@ $q = $db->query($sql);
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
     $agent_list[]=$r;
 	}
-<<<<<<< HEAD
-$mdat=mktime(01, 01, 01, 8, 5, 2014);
-	$dat=date("d",$mdat);
-	$men=date("m",$mdat);
-	echo($dat.":".$men."<br>");
-$sdat=date("d.m.Y");
-echo($sdat);
-	
-=======
 
 //$dat=date("m");
 //echo "<br>";
@@ -52,7 +42,6 @@ echo($sdat);
   }
 
 
->>>>>>> 1936e59dd5882c8a2fc6635695495a7195c86b07
 foreach ($agent_list as $r)
 {
 	echo $r['agenta_id']. " : ".$r['agents'];
@@ -190,23 +179,14 @@ if (isset($_POST['submit']))
     <td class="npk">1.</td>
     <td class="teksts">Šī dokumenta noformēšamas datums</td>
     <td class="ievade">
-       <select name="noform_diena">
+		<select name="noform_diena">
           <?php
-    	//==========================================
-		$dd=mktime(11, 14, 54, 8, 12, 2014);
-			$rd=diena_select($dd);
-			echo $rd;
-	    //=============================================
-       //     foreach($datums["diena"] as $diena){
-       //       echo "<option value='$diena'>$diena</option>";
-       //     } 
+			$fixdat=date("d.m.Y",time("tomorrow"));
+			$select_diena=diena_select("$fixdat");
+			echo $select_diena;
           ?>
-       </select>
-	    <?php
-			
-		//	print($rd);
-		?>
-      <select name="noform_menes">
+		</select>
+     <select name="noform_menes">
           <?php
             foreach($datums["menes"] as $menes){
               echo "<option value='$menes'>$menes</option>";
