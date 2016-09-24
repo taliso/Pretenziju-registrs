@@ -33,6 +33,13 @@ function faila_nos($regnr,$grupa,$faila_nos){
         return $regnr."_".$grupa."_".$faila_nos; 
  }
 
+/**
+ * Augšipielādē failu
+ * 
+ * @param $fails
+ * @param $target_dir
+ * @param $regnr
+ */
 function file_upload($fails,$target_dir,$regnr){
     echo "<pre>";
     var_dump($fails);
@@ -93,6 +100,7 @@ function diena_select($fixdat)
 		$mselect_dienas="";
 		for($d=1;$d<=31;$d++){
 			$sd=(string)$d;
+			msg($sd);
 			if (strlen($sd)==1){
 				$sd="0".$sd;
 			}
@@ -105,4 +113,13 @@ function diena_select($fixdat)
 		
 		}
 	return $mselect_dienas;
+	
+}
+
+function msg($mteksts){	
+	$log = fopen (LOGFILE,'a+');
+	fwrite($log,$mteksts."\n");
+	fwrite($log,
+	"===========================================================\n");
+	fclose($log);
 }
