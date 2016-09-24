@@ -30,24 +30,6 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 //$sdat=trim($dat," ");
 //$lb=strlen($las);
  //da = array();
- for($d=1;$d<=31;$d++) {
-	$sd=(string)$d;
-	$l=strlen($sd);
-	echo ($l);
-	if (strlen($sd)<1);
-	{
-		$sd="0".$sd;
-	}
-    $da["diena"][] = $sd;
-  }
-
-
-foreach ($agent_list as $r)
-{
-	echo $r['agenta_id']. " : ".$r['agents'];
-	$s=strlen($r['agents']);
-    echo "$s"."<br />";
-}
 
 ?>
 
@@ -65,7 +47,7 @@ foreach ($agent_list as $r)
 	<h2>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h2>
 	<h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1>
 <?php
-echo $_SERVER['SCRIPT_FILENAME'];
+//echo $_SERVER['SCRIPT_FILENAME'];
 if (isset($_POST['submit']))
 { //Ģenerējam pretenzijas reģistrācijas numuru
   // Formējam INSERT rindu
@@ -182,7 +164,7 @@ if (isset($_POST['submit']))
 		<select name="noform_diena">
           <?php
 			$fixdat=date("d.m.Y",time("tomorrow"));
-			$select_diena=diena_select("$fixdat");
+			$select_diena=diena_select($fixdat);
 			echo $select_diena;
           ?>
 		</select>
@@ -346,7 +328,7 @@ if (isset($_POST['submit']))
  <tr>  <!-- 13 -->
     <td class="npk">13.</td>
     <td class="teksts">Pretenzijas reģistrācijas numurs</td>
-    <!-- /*<td class="ievade"><input type="text" name="reg_nr" value=""></td>*/ -->
+    <td class="ievade">></td>
 	
   </tr>
 
