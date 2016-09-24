@@ -20,7 +20,17 @@ else
         <title>Formas</title>
     </head>
     <body>
-        
+ body>
+
+<h1>My First JavaScript</h1>
+
+<button type="button"
+onclick="document.getElementById('demo').innerHTML = Date()">
+Click me to display Date and Time.</button>
+
+<p id="demo"></p>
+
+<
         <h1>Forma</h1>
         <form action='index1.php' method="post">
             <input type='text' name='fname' placeholder="Vards"><br /><br />
