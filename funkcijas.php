@@ -92,15 +92,16 @@ function file_upload($fails,$target_dir,$regnr){
 function diena_select($fixdat)
 {
 	// Ja nav norādīts fixdat, pielīdzinam to šodienai
-	$fixdat="";
+//	$fixdat="";
 	$fd=0;
-	if (empty($fixdat)){$fixdat=time();} else {date_timestamp_get($fixdat);}
+	if (empty($fixdat)) {
+		$fixdat=time();
+	} 
 			
 		$fd=date("d",$fixdat);
 		$mselect_dienas="";
 		for($d=1;$d<=31;$d++){
 			$sd=(string)$d;
-			msg($sd);
 			if (strlen($sd)==1){
 				$sd="0".$sd;
 			}
@@ -109,11 +110,8 @@ function diena_select($fixdat)
 			} else {
 				$mselect_dienas=$mselect_dienas."<option value='".$sd."'>".$sd."</option>"."<br>";
 			}
-		
-		
 		}
 	return $mselect_dienas;
-	
 }
 
 function msg($mteksts){	

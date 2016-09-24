@@ -41,8 +41,8 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 	<h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1>
 <?php
 //echo $_SERVER['SCRIPT_FILENAME'];
-if (isset($_POST['submit']))
-{ //Ģenerējam pretenzijas reģistrācijas numuru
+if (isset($_POST['submit'])) {
+	//Ģenerējam pretenzijas reģistrācijas numuru
   // Formējam INSERT rindu
 ////
 //2016-09-01
@@ -156,7 +156,7 @@ if (isset($_POST['submit']))
     <td class="ievade">
 		<select name="noform_diena">
           <?php
-			$fixdat=date("d.m.Y",time("tomorrow"));
+			$fixdat = strtotime('tomorrow');
 			$select_diena=diena_select($fixdat);
 			echo $select_diena;
           ?>
