@@ -5,8 +5,13 @@ body {
 h1 {
     color: white;
     text-align: center;
-}h2 {
-    color: black;
+}
+h2 {
+    color: white;
+    text-align: center;
+}
+h3 {
+    color: white;
     text-align: center;
 }
 #logo {
@@ -17,6 +22,20 @@ h1 {
   width: 72%;
   margin: 0 auto;
 }
+#virsraksts-konteineris {
+	background-color:black;
+	color:white;
+	padding:1px;
+	height:60px;
+}
+	
+#galvenais-virsraksts {
+	float:left;
+}
+#sub-virsraksts {
+	float:left;
+}
+
  td.npk {
 	width: 3%;
     border: 1px solid black;
@@ -34,3 +53,17 @@ td.ievade {
      /*padding: 5px;*/
 
  }
+ul li {
+	display: inline;
+	border: 1px solid red;
+	padding: 5px;
+	background: orange;
+	border-radius: 5px;
+}
+
+a {			
+	text-decoration: none;
+	font-weight: bold;
+	color: yellow;
+}
+ 
