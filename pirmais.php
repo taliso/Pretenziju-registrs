@@ -25,14 +25,7 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
- <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
- <link rel="stylesheet" type="text/css" href="pretenz.css" />
-  <title>Pretenzijas</title>
-</head>
-<body>
+
   <div id="saturs">
 	<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:150px;height:80px;">
 	<h2>Pretenziju noformēšanas veidlapa</h2>
@@ -329,5 +322,3 @@ if (isset($_POST['submit']))
   </form>
 
     </div>
-  </body>
-</html>
