@@ -1,4 +1,5 @@
 <?php
+	session_start();
   ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
@@ -38,7 +39,11 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
  <div id="virsraksts-konteineris" style="background-color:black;color:white;padding:1px;">
 <!--  	 <img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:30px;height:20px;"> -->
 	 	<div id="galvenais-virsraksts"><h2>Pretenziju noformēšanas veidlapa</h2></div>
-		<div id="sub-virsraksts"><h3>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h3></div>
+		<div id="sub-virsraksts"><h3>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h3>
+		<?php if (isset($_SESSION['TEST'])) {
+			echo "SESIJA: " . $_SESSION['TEST'];
+		} else { echo "Nav lietotāja (sesija)";};?>
+		</div>
 
 	
  </div>
@@ -47,8 +52,8 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
  <!--  Meņjū -->
  <div style="background-color:#98a3d5;padding:1px;">
 	<ul>
-		<li><a href="?lapa=veidlapa">Pirmais</a></li>
-		<li><a href="?lapa=otrais">Otrais</a></li>
+		<li><a href="?lapa=veidlapa">Veidlapa</a></li>
+		<li><a href="?lapa=autorizacija">Autorizācija</a></li>
 	</ul>
  
 </div>
