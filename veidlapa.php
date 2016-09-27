@@ -202,7 +202,7 @@ if (isset($_POST['submit'])) {
   </tr>
     <tr>  <!--7  -->
     <td class="npk">7.</td>
-    <td class="teksts">Preces daudzums, par kuru iztekta pretenzija</td>
+    <td class="teksts">Preces daudzums, par kuru izteikta pretenzija</td>
     <td class="ievade"><input type="checkbox" name="daudzums_viss" value="1"> Viss pasūtījums<br>
                       <input type="checkbox" name="daudzums_pieg_part" value="1"> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value=""><br>
                       <input type="checkbox" name="daudzums_atsev_paneli" value="1"> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value="" size="7">

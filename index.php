@@ -36,10 +36,10 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 </head>
 <body>
 
- <div id="virsraksts-konteineris" style="background-color:black;color:white;padding:1px;">
+ <div id="virsraksts-konteineris" style="background-color:black;color:white;padding:3px;height: 75px">
 <!--  	 <img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:30px;height:20px;"> -->
-	 	<div id="galvenais-virsraksts"><h2>Pretenziju noformēšanas veidlapa</h2></div>
-		<div id="sub-virsraksts"><h3>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h3>
+	 	<div id="galvenais-virsraksts"><h3>PRETENZIJU REĢISTRS</h3><h3>Sendvičpaneļi, palīgdetaļas un montāžas materiāli</h3></div>
+		<div id="sub-virsraksts"><h3>Pretenzijas noformēšanas veidlapa</h3>
 		<?php if (isset($_SESSION['TEST'])) {
 			echo "SESIJA: " . $_SESSION['TEST'];
 		} else { echo "Nav lietotāja (sesija)";};?>

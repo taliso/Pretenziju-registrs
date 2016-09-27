@@ -5,14 +5,21 @@ body {
 h1 {
     color: white;
     text-align: center;
+    padding: 0px;
+    height: 10px;
 }
 h2 {
     color: white;
     text-align: center;
+    padding: 0px;
+    height: 10px;
 }
 h3 {
     color: white;
     text-align: center;
+    padding: 0px;
+    height: 10px;
+    
 }
 #logo {
   float: left;
@@ -31,9 +38,14 @@ h3 {
 	
 #galvenais-virsraksts {
 	float:left;
+	text-align: center;
+	background-color:#211ce0;
+	width: 50%;
 }
 #sub-virsraksts {
-	float:left;
+	float:right;
+	text-align: center;
+	width: 50%;
 }
 
  td.npk {

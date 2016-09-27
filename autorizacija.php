@@ -40,9 +40,8 @@ if (isset($_SESSION['TEST'])) {
 </form>
 <?php else: ?>
 <form action="#" method="post">
-	<h4>Lietotāja vārds:</h4><input type="text" name="user" value="" size="20"><br>
-	<br>
-	<h4>Parole:</h4><input type="password" name="psw" value="" size="20"><br>
+	Lietotāja vārds:<input type="text" name="user" value="" size="20"><br>
+	Parole:<input type="password" name="psw" value="" size="20"><br>
 	<input type="submit" name="submit" value="Ieiet">
 </form> 
 <?php endif; ?>
