@@ -1,33 +1,29 @@
 body {
-    background-color: lightgrey;
+    background-color: white;
 }
 
 h1 {
     color: white;
     text-align: center;
-    padding: 0px;
-    height: 10px;
+	padding: 2px;
 }
 h2 {
     color: white;
     text-align: center;
-    padding: 0px;
-    height: 10px;
 }
 h3 {
     color: white;
     text-align: center;
-    padding: 0px;
-    height: 10px;
-    
 }
 #logo {
   float: left;
+  padding:1px;
 }
 #saturs
 {
   width: 72%;
   margin: 0 auto;
+  padding: 10px;
 }
 #virsraksts-konteineris {
 	background-color:black;
@@ -38,16 +34,28 @@ h3 {
 	
 #galvenais-virsraksts {
 	float:left;
-	text-align: center;
-	background-color:#211ce0;
-	width: 50%;
 }
 #sub-virsraksts {
-	float:right;
-	text-align: center;
-	width: 50%;
+	float:left;
 }
-
+#divLogo{
+	background-color:black;
+	color:white;
+	padding:1px;
+	height:30px;
+}
+#divLogin{
+	background-color:blue;
+	float:right;
+	color:white;
+	width:100px;
+	height:20px;
+}
+#divMenju{
+	background-color:blue;
+	padding:8px;
+	height:44px;
+}
  td.npk {
 	width: 3%;
     border: 1px solid black;
@@ -55,12 +63,12 @@ h3 {
     /*padding: 5px;*/
  }
 td.teksts {
-	width: 55%;
+	width: 40%;
     border: 1px solid black;
      /*padding: 5px;*/
  }
 td.ievade {
-	width: 42%;
+	width: 57%;
     border: 1px solid black;
      /*padding: 5px;*/
 
@@ -68,14 +76,18 @@ td.ievade {
 ul li {
 	display: inline;
 	border: 1px solid red;
-	padding: 5px;
+	padding: 3px;
 	background: orange;
 	border-radius: 5px;
-}
+	float: left;
+	height: 25px;
+	width: 100px;
+	text-align: center;
+	}
 
 a {			
 	text-decoration: none;
 	font-weight: bold;
 	color: yellow;
-}
+	}
  
