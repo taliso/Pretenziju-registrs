@@ -28,7 +28,7 @@ if (isset($_SESSION['AGENTS'])) {
 
 <!-- <form action="#" method="post">
 	<input type="submit" name="logout" value="Ieiet">
-</form>
+</form> -->
 <?php else: ?>
 <form action="#" method="post">
  	<table>

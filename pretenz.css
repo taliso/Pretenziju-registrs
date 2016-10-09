@@ -74,20 +74,28 @@ td.ievade {
 
  }
 ul li {
-	display: inline;
-	border: 1px solid red;
-	padding: 3px;
-	background: orange;
-	border-radius: 5px;
-	float: left;
-	height: 25px;
-	width: 100px;
-	text-align: center;
+    display: inline;
+    border: 1px solid red;
+    padding: 3px;
+    background: orange;
+    border-radius: 5px;
+    float: left;
+    height: 25px;
+    width: 100px;
+    text-align: center;
+    margin-right: 8px;
 	}
-
+ul {
+    margin: 0px;
+    padding: 0px;
+    width: 50%;
+}
 a {			
-	text-decoration: none;
-	font-weight: bold;
-	color: yellow;
-	}
+    text-decoration: none;
+    font-weight: bold;
+    color: yellow;
+    height: 100%;
+    display: block;
+    padding: 5px;	
+    }
  

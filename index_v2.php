@@ -50,16 +50,9 @@ if ($agentsir==1) {
 	include "autorizacija_v2.php";
 // Pārlādējam lapu
 
-
+//aaa
 
 } ?>
-		
-		
-		
-
-
-
-
 
 
 
