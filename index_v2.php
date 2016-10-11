@@ -13,7 +13,7 @@ define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
 $reg_nr = "10003";
 $agentsir = 0;  // Vai ir bijusi autorizācija un aģents ir atpazīts
-
+$_SESSION['SODIEN'] = time();
 
 // Izgūstam datus no kl_agenti
 $sql = "SELECT agenta_id, agents FROM kl_agenti";

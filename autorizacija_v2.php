@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
 		echo "Nav lieotājs";
 	}
 //	var_dump($r);
-header( 'refresh: 1; url=http://10.0.4.7/tp_pretenz/index_v2.php' );
+header( 'refresh: 1; url=http://127.0.0.1/Pretenziju-registrs/index_v2.php');
 }
 
 if (isset($_SESSION['AGENTS'])) {

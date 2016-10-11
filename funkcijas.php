@@ -88,7 +88,7 @@ function file_upload($fails,$target_dir,$regnr){
     }
 }
 
-
+// ======================  DIENA_SELECT  ======================================================
 function diena_select($fixdat)
 {
 	// Ja nav norādīts fixdat, pielīdzinam to šodienai
@@ -112,6 +112,67 @@ function diena_select($fixdat)
 			}
 		}
 	return $mselect_dienas;
+}
+// ======================  MENES_SELECT  ======================================================
+function menes_select($fixdat)
+{
+	// Ja nav norādīts fixdat, pielīdzinam to šodienai
+	//	$fixdat="";
+	$fm=0;
+	if (empty($fixdat)) {
+		$fixdat=time();
+	}
+		
+	$fm=date("m",$fixdat);
+	$mmenes_select="";
+	for($m=1;$m<=12;$m++){
+		$sm=(string)$m;
+		if (strlen($sm)==1){
+			$sm="0".$sm;
+		}
+		if ($fm==$sm) {
+			$mmenes_select=$mmenes_select."<option value='".$sm."' selected>".$sm." </option>"."<br>";
+		} else {
+			$mmenes_select=$mmenes_select."<option value='".$sm."'>".$sm."</option>"."<br>";
+		}
+	}
+	return $mmenes_select;
+}
+
+// ======================  GADS_SELECT  ======================================================
+function gads_select($fixdat)
+{
+	// Ja nav norādīts fixdat, pielīdzinam to šodienai
+	//	$fixdat="";
+	$fy=0;
+	if (empty($fixdat)) {
+		$fixdat=time();
+	}
+
+	$fy=date("Y",$fixdat);
+	$mgads_select="";
+	for($y=$fy-1;$y<=$fy+1;$y++){
+		$sy=(string)$y;
+		if ($fy==$sy) {
+			$mgads_select=$mgads_select."<option value='".$sy."' selected>".$sy." </option>"."<br>";
+		} else {
+			$mgads_select=$mgads_select."<option value='".$sy."'>".$sy."</option>"."<br>";
+		}
+	}
+	return $mgads_select;
+}
+
+// ======================  DATUMS_SELECT  ======================================================
+function datums_select($fixdat,$lauka_prefiks){
+
+	if (empty($fixdat)) {
+		$fixdat=time();
+	}
+	$diena=diena_select($fixdat);
+	$menes=menes_select($fixdat);
+	$gads=gads_select($fixdat);
+	$mdatums_select= "<select name='".$lauka_prefiks."_diena'>".$diena."</select><select name='".$lauka_prefiks."_menes'>".$menes."</select><select name='".$lauka_prefiks."_gads'>".$gads."</select>";
+	return $mdatums_select;
 }
 
 function msg($mteksts){	

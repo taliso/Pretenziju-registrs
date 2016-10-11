@@ -12,7 +12,7 @@ if (isset($_POST['form-submit']))
   define("DB", "phpshack");
   define("PASS", "");
   
-  /* PIESLEGŠANAS BATUBAZEI */
+  /* PIESLEGï¿½ANAS BATUBAZEI */
   //Definetas konstantes tiek izmantotas
   $db = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS,
                 array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
@@ -23,7 +23,7 @@ if (isset($_POST['form-submit']))
   $fname = $_POST['fname'];
   $lname = $_POST['lname'];
   
-  // Šim piemeram tabulai data jaeksiste iekš "phpshack" datubazes
+  // ï¿½im piemeram tabulai data jaeksiste iekï¿½ "phpshack" datubazes
   // Tabulai jabut 2 obligatajiem (required) laukiem - fname un lname
   $sql = "INSERT INTO data SET fname=:fname, lname=:lname";
   $q = $db->prepare($sql);
@@ -49,7 +49,7 @@ else
             <input type='text' name='fname' placeholder="Vards"><br /><br />
             <input type='text' name='lname' placeholder="Uzvards"><br /><br />
             <input type='submit' name='form-submit' value='OK'><br />
-        <form>
+        </form>
         
     </body>
 </html>

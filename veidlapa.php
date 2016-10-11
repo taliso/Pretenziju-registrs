@@ -3,6 +3,17 @@
   <div id="saturs">
 <!-- 	<h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1> -->
 <?php
+
+$sql = "SELECT agenta_id, agents FROM kl_agenti";
+$q = $db->query($sql);
+//ielasa izgūtos datus asociatīvajā masīvā
+while($r = $q->fetch(PDO::FETCH_ASSOC)){
+	$agent_list[]=$r;
+}
+
+
+
+$fixdat = $_SESSION['SODIEN'];
 //echo $_SERVER['SCRIPT_FILENAME'];
 if (isset($_POST['submit'])) {
 	//Ģenerējam pretenzijas reģistrācijas numuru
@@ -115,25 +126,7 @@ if (isset($_POST['submit'])) {
     <td class="npk">1.</td>
     <td class="teksts">Šī dokumenta noformēšamas datums</td>
     <td class="ievade">
-		<select name="noform_diena">
-          <?php
-			echo diena_select($fixdat);
-          ?>
-		</select>
-     <select name="noform_menes">
-          <?php
-            foreach($datums["menes"] as $menes){
-              echo "<option value='$menes'>$menes</option>";
-            } 
-          ?>
-       </select>
-      <select name="noform_gads">
-         <?php
-            foreach($datums["gads"] as $gads){
-              echo "<option value='$gads'>$gads</option>";
-            } 
-          ?>
-      </select>
+		<?php echo datums_select("","noform") ?>
       Izvēlaties noformēšanas datumu.
       </td>
   </tr>
@@ -163,27 +156,7 @@ if (isset($_POST['submit'])) {
     <td class="npk">4.</td>
     <td class="teksts">Datums, kad pieņemta pretenzija</td>
     <td class="ievade">
-      <select name="sanemts_diena">
-        <?php
-            foreach($datums["diena"] as $diena){
-              echo "<option value='$diena'>$diena</option>";
-            } 
-          ?>
-       </select>
-      <select name="sanemts_menes">
-          <?php
-            foreach($datums["menes"] as $menes){
-              echo "<option value='$menes'>$menes</option>";
-            } 
-          ?>
-     </select>
-      <select name="sanemts_gads">
-         <?php
-            foreach($datums["gads"] as $gads){
-              echo "<option value='$gads'>$gads</option>";
-            } 
-          ?>
-     </select>
+    <?php echo datums_select("","sanemts") ?>
       Izvēlaties pretenzijas pieņemšanas datumu
 </td>
   </tr>
@@ -197,7 +170,7 @@ if (isset($_POST['submit'])) {
     <td class="teksts">Pasūtījums numurs, uz kuru attiecas pretenzija
 	pievienot pasūtījuma kopiju Pielikumā</td>
     <td class="ievade"> <input type="text" name="pasutijuma_nr" value=""><br>
-              <input type="file" name="filePas" align="right" id="filePas">
+              <input type="file" name="filePas" id="filePas">
    </td>
   </tr>
     <tr>  <!--7  -->
@@ -248,27 +221,7 @@ if (isset($_POST['submit'])) {
     <td class="npk">11.</td>
     <td class="teksts">Datums, kad pretenzijas iesniedzējs ir ievērojis problēmu</td>
     <td class="ievade">
-      <select name="konstatets_diena">
-       <?php
-            foreach($datums["diena"] as $diena){
-              echo "<option value='$diena'>$diena</option>";
-            } 
-          ?>
-       </select>
-      <select name="konstatets_menes">
-         <?php
-            foreach($datums["menes"] as $menes){
-              echo "<option value='$menes'>$menes</option>";
-            } 
-          ?>
-      </select>
-      <select name="konstatets_gads">
-         <?php
-            foreach($datums["gads"] as $gads){
-              echo "<option value='$gads'>$gads</option>";
-            } 
-          ?>
-      </select>
+    <?php echo datums_select("","konstatets") ?>
       Izvēlaties datumu, kurā klients konstatējis problēmu.
 </td>
   </tr>
@@ -285,7 +238,7 @@ if (isset($_POST['submit'])) {
   </tr>
 
  </table>
-  <input type="submit" name="submit" value="Apstiprināt" align="right">
+  <input type="submit" name="submit" value="Apstiprināt">
   </form>
 
     </div>
