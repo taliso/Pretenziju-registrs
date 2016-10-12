@@ -56,6 +56,11 @@ h3 {
 	padding:8px;
 	height:44px;
 }
+#divFormMenu{
+	background-color:blue;
+	height:44px;
+	
+}
  td.npk {
 	width: 3%;
     border: 1px solid black;
@@ -98,4 +103,5 @@ a {
     display: block;
     padding: 5px;	
     }
+    
  
