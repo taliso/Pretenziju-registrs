@@ -6,6 +6,7 @@
 		<li><a href="?lapa=autorizacija_v2">Autorizācija</a></li>
 	</ul>
 	<?php
+	msg("17. Informācija par loginu");
 	include "logininfo.php";?>
 </div>
 
@@ -19,6 +20,7 @@
 		if(isset($_GET['lapa'])){
 			include($_GET['lapa'].".php");
 		} else {
+			msg("18. Iedarbinam veidlapu");
 			include("veidlapa.php");
 		}
 	?>

@@ -35,14 +35,14 @@ $q = $db->query($sql);
 <div id="divLogo"><img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:50px;height:30px;">
 Pretenziju noformēšanas veidlapa</div>
  <!-- Pārbaudam, vai ir autorizacoja  $_SESSION['AGENTS']-->
-		<?php if (isset($_SESSION['AGENTS'])) {$agentsir = 1;} else {$agentsir = 0;}?>
+<?php if (isset($_SESSION['AGENTS'])) {$agentsir = 1;} else {$agentsir = 0;}?>
 <!-- Darbības pēc veiksmīgas autorizācijas -->
 <!-- ========================================================================================================= -->
 <?php
 //msg("Autorizacija ir notikusi");
 if ($agentsir==1) {
+	msg("15. Autorizacija ir notikusi");
 	include "Menju.php";
-	
 } else {	
 //msg("Sākam autorizāciju");
 // Nav veiksmīgas autorizācijas		 -->

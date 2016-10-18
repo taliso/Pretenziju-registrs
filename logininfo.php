@@ -1,14 +1,19 @@
 <div ID="divLogin">
-	<form>
+	<form method="post">
 		<?php 
 		if (isset($_POST['btniziet'])) {
-				unset($_SESSION['AGENTS']);	
-				echo $_SESSION['AGENTS'];
+			msg("19. Poga nospiesta");
+			unset($_SESSION['AGENTS']);	
+			//echo $_SESSION['AGENTS'];
 		}		
+		if (isset($_SESSION['AGENTS'])) {
 			$user = $_SESSION['AGENTS'];
-			echo ($user)."    ";
-			echo '<input type="submit" name="btniziet" value="Iziet">';
-		
+		} else {
+			$user = "";
+		}
+		echo ($user)."    ";
+		msg("20. Users ir ".$user);
+		echo '<input type="submit" name="btniziet" value="Iziet">';
 		?>
 	</form>
 </div>
