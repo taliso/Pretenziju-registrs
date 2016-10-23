@@ -11,9 +11,9 @@
 		} else {
 			$user = "";
 		}
-		echo ($user)."    ";
+		//echo ($user)."    ";
 		msg("20. Users ir ".$user);
-		echo '<input type="submit" name="btniziet" value="Iziet">';
+		echo $user.'   <input type="submit" name="btniziet" value="Iziet">';
 		?>
 	</form>
-</div>
+</div> 

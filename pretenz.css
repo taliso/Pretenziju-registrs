@@ -1,10 +1,11 @@
 body {
     background-color: white;
 }
-
 h1 {
     color: white;
     text-align: center;
+    font-family: verdana;
+    font-size: 24px;
 	padding: 2px;
 }
 h2 {
@@ -31,18 +32,11 @@ h3 {
 	padding:1px;
 	height:60px;
 }
-	
 #galvenais-virsraksts {
 	float:left;
 }
 #sub-virsraksts {
 	float:left;
-}
-#divLogo{
-	background-color:black;
-	color:white;
-	padding:1px;
-	height:30px;
 }
 #divLogin{
 	background-color:blue;
@@ -103,5 +97,116 @@ a {
     display: block;
     padding: 5px;	
     }
-    
- 
+#divMaster{
+	width:1800px;
+	height:1000px;
+}
+#divGalva{
+	background-color:white;
+	border-style: solid;
+	margin:auto;
+	height:84px;
+	width:100%;
+}   
+#divLogo{
+ 	background-color: #4a47bf;
+	float:left;
+	color:red;
+	width:10%;
+	height:84px;
+}
+#divTitle{
+	background-color: #4a47bf;
+	float:left;
+	color:red;
+	width:90%;
+	height:54px;
+}
+#divInfo{
+	background-color: #4a47bf;
+	float:left;
+	color:red;
+	width:90%;
+	height:30px;
+}
+#divLoginInfo{
+	
+}
+#divLUser{
+	
+}
+#divAgents{
+	
+}
+#divPswTxt{
+	
+}
+#divPswIev{
+	
+}
+#divIeIz{
+	
+}
+#divAdmin{
+	
+}
+#divPapildInfo{
+	
+}
+#divKomp{
+	
+}
+#divVersija{
+	
+}
+#divDialog{
+	border-style: solid;
+	height:3%;
+	width:82%;
+	margin:auto;
+}
+
+#divDialText{
+	
+}
+#divDialJa{
+	
+}
+divDialNe{
+	
+}
+#divBody{
+	border-style: solid;
+	margin: 0 auto;
+	width:82%;
+	height:80%;
+}	
+#divMenu{	
+	float:left;
+	border-style: solid;
+	width:15%;
+	height:100%;
+}
+#divMenuTitle{
+	
+}
+divMenuSar{
+	
+}
+#divDarba{
+	float:left;
+	border-style: solid;
+	width:84%;
+	height:100%;
+	
+}	
+}
+#divFormTitle{
+	
+}
+#divForma{
+	
+}
+#divFormNavig{
+	
+}

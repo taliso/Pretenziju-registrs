@@ -42,7 +42,7 @@ function faila_nos($regnr,$grupa,$faila_nos){
  */
 function file_upload($fails,$target_dir,$regnr){
     echo "<pre>";
-    var_dump($fails);
+//    var_dump($fails);
     echo "</pre>";
 
     $keys = array();
@@ -179,6 +179,6 @@ function msg($mteksts){
 	$log = fopen (LOGFILE,'a+');
 	fwrite($log,$mteksts."\n");
 	fwrite($log,
-	"====================================================".time()."=======\n");
+	"====================================================".date('d',time())."=.date('m',time()).======\n");
 	fclose($log);
 }

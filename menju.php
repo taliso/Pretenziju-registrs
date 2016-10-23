@@ -1,13 +1,10 @@
 
  <!--  Meņjū -->
  <div id="divMenju">
-	<ul>
-		<li><a href="?lapa=veidlapa">Sendvičpaneļi</a></li>
-		<li><a href="?lapa=autorizacija_v2">Autorizācija</a></li>
-	</ul>
-	<?php
-	msg("17. Informācija par loginu");
-	include "logininfo.php";?>
+ 
+ <?php include "logininfo.php";
+ 		include "autorizacija_v2.php";
+	 ?>
 </div>
 
 <!--  Kļūdu paziņojums -->
@@ -16,13 +13,21 @@
 </div>
 <div>
 
-	<?php	
-		if(isset($_GET['lapa'])){
-			include($_GET['lapa'].".php");
-		} else {
-			msg("18. Iedarbinam veidlapu");
-			include("veidlapa.php");
-		}
+	<?php
+	if ($agentsir == 1) {?>
+		
+		<ul>
+			<li><a href="?lapa=admin">Administrēšana</a></li>
+			<li><a href="?lapa=veidlapa">Pretenziju reģistrācija</a></li>
+		</ul>
+		
+	<?php	if(isset($_GET['lapa'])){
+				include($_GET['lapa'].".php");
+			} else {
+				msg("18. Iedarbinam veidlapu");
+				include("veidlapa.php");
+			}
+	}
 	?>
 	
 </div>
