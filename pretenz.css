@@ -129,35 +129,28 @@ a {
 	width:90%;
 	height:30px;
 }
-#divLoginInfo{
-	
-}
-#divLUser{
-	
-}
-#divAgents{
-	
-}
-#divPswTxt{
-	
-}
-#divPswIev{
-	
-}
-#divIeIz{
-	
-}
+
 #divAdmin{
+	float:left;
+	width:20%;
+	height:100%
 	
 }
 #divPapildInfo{
+	float:left;
+	width:20%;
+	height:100%
 	
 }
 #divKomp{
-	
+	float:left;
+	width:50%;
+	height:100%;
 }
 #divVersija{
-	
+	float:left;
+	width:50%;
+	height:100%;
 }
 #divDialog{
 	border-style: solid;
@@ -167,12 +160,24 @@ a {
 }
 
 #divDialText{
+	float:left;
+	width:80%;
+	height:100%;
+	border-style: solid;
 	
 }
 #divDialJa{
+	float:left;
+	width:9%;
+	height:100%;
+	border-style: solid;
 	
 }
-divDialNe{
+#divDialNe{
+	float:left;
+	width:9%;
+	height:100%;
+	border-style: solid;
 	
 }
 #divBody{
@@ -185,28 +190,79 @@ divDialNe{
 	float:left;
 	border-style: solid;
 	width:15%;
-	height:100%;
+	height:95%;
 }
 #divMenuTitle{
-	
+	width:100%;
+	height:5%;
+	border-style: solid;
 }
-divMenuSar{
-	
+#divMenuSar{
+	width:100%;
+	height:94%;
+	border-style: solid;
 }
 #divDarba{
 	float:left;
 	border-style: solid;
 	width:84%;
-	height:100%;
+	height:95%;
 	
 }	
-}
+
 #divFormTitle{
+	width:100%;
+	border-style: solid;
+	height:4%;
 	
 }
 #divForma{
+	width:100%;
+	border-style: solid;
+	height:90%;
+	
 	
 }
 #divFormNavig{
+	width:100%;
+	border-style: solid;
+	height:4%;
 	
+	
+}
+#divStatus{
+	height:5%;
+	border-style: solid;
+	float:left;
+	width:100%;
+}
+#divLoginInfo{
+	float:left;
+	width:60%;
+	height:100%;
+}
+#divLUser{
+	float:left;
+	width:20%;
+	height:100%;
+}
+#divAgents{
+	float:left;
+	width:20%;
+	height:100%;
+}
+#divPswTxt{
+	float:left;
+	width:20%;
+	height:100%;
+}
+#divPswIev{
+	float:left;
+	width:20%;
+	height:100%;
+}
+#divIeIz{
+	float:left;
+	width:20%;
+	height:100%;
 }

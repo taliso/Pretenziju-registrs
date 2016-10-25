@@ -28,14 +28,40 @@ include "konekcija.php";
 		<div id="divTitle">
 			<h1>Pretenziju reģistrācijas sistēma</h1>
 		</div>
-		<div id="divInfo"></div>
+		<div id="divInfo">
+			<div id="divLoginInfo">
+				<div id="divLUser"></div>
+				<div id="divAgents"></div>
+				<div id="divPswTxt"></div>
+				<div id="divPswIev"></div>
+				<div id="divIeIz"></div>
+			</div>
+			<div id="divAdmin">
+			</div>
+			<div id="divPapildInfo">
+				<div id="divKomp"></div>
+				<div id="divVersija"></div>
+			</div>
+		</div>
 	</div>
 <div id="divMaster">
-	<div id="divDialog"></div>
+	<div id="divDialog">
+		<div id="divDialText"></div>
+		<div id="divDialJa"></div>
+		<div id="divDialNe"></div>
+	</div>
 	<div id="divBody">
-		<div id="divMenu"></div>
-		<div id="divDarba"></div>
-	
+		<div id="divMenu">
+			<div id="divMenuTitle"></div>
+			<div id="divMenuSar"></div>
+		</div>
+		<div id="divDarba">
+			<div id="divFormTitle"></div>
+			<div id="divForma"></div>
+			<div id="divFormNavig"></div>
+		
+		</div>
+		<div id="divStatus"></div>
 	</div>
 </div>
 </body>
