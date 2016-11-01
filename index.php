@@ -46,8 +46,8 @@ $versija="";
 <body>
   	<?php $sql = "SELECT agenta_id,agents, username, pasword, tiesibas FROM kl_agenti";
   	$q = $db->query($sql);
-	$masAgents = $q->fetch();
-	
+//	$masAgents = $q->fetch();
+	$result = $q->setFetchMode(PDO::FETCH_ASSOC);
 	if (isset($_SESSION['AGENTS'])) {
 		$autor_ir = 1;
 		$agents=$_SESSION['AGENTS'];
