@@ -60,10 +60,10 @@ $versija="";
 
 		print_r("Kolonas:".$kols);
 		for ($row=0;$row<$rows;$row++){
-			print $row;
+			print "r=".$row."|";
 			for ($kol=0;$kol<$kols;$kol++){
-				print $kol;
-				print $agent_list[$row][$kol];
+				print "k=".$kol;
+				$a= $agent_list[$row][$kol];
 			}
 		}
 		
