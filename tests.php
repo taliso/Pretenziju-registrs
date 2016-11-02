@@ -52,21 +52,26 @@ $versija="";
 	  		$agent_list[]=$r;
 	  	}
 	  	
-		$rows=count($agent_list);
+// 		$rows=count($agent_list);
 		
-		print "Rindas: ".$rows;
+// 		print "Rindas: ".$rows;
 		
-		$kols=count($agent_list[0]);
+// 		$kols=count($agent_list[0]);
 
-		print_r("Kolonas:".$kols);
-		for ($row=0;$row<$rows;$row++){
-			print "r=".$row."|";
-			for ($kol=0;$kol<$kols;$kol++){
-				print "k=".$kol;
-				$a= $agent_list[$row][$kol];
-			}
-		}
-		
+// 		print_r("Kolonas:".$kols);
+// 		for ($row=0;$row<$rows;$row++){
+// 			print "r=".$row."|";
+// 			for ($kol=0;$kol<$kols;$kol++){
+// 				print "k=".$kol;
+// 				$a= $agent_list[$row][$kol];
+// 			}
+// 		}
+	  	foreach ($agent_list as $row)
+	  	{
+	  		echo $row['agenta_id'].":".$row['agents'];
+	  		echo "<br />";
+	  	}
+	  	
 	?>
 			
 </body>			

@@ -12,16 +12,18 @@ include "konekcija.php";
 // ***************************************************************************
 //*	Mainigie:
 //* 		$autor_ir - false/true - ir vai nav notikusi veiksmīga autorizācija
+$autor_ir = 0;
 //*			$agents - Aģents, kurš autorizējies
 //*			$tiesibas - aģenta tiesības
 //*			$user_ip
 //*			$versija
-//*
-$autor_ir="";
-$agents="";
-$tiesibas="";
-$user_ip="";
-$versija="";
+//*			$MainInfo - informācijas teksts
+$MainInfo="";
+// $autor_ir="";
+// $agents="";
+// $tiesibas="";
+// $user_ip="";
+// $versija="";
 //*
 //*	Ieraksti: $_SESION
 //*						AGENTS
@@ -46,48 +48,39 @@ $versija="";
 <body>
   	<?php $sql = "SELECT agenta_id,agents, username, pasword, tiesibas FROM kl_agenti";
   	$q = $db->query($sql);
-//	$masAgents = $q->fetch();
-	$result = $q->setFetchMode(PDO::FETCH_ASSOC);
-	if (isset($_SESSION['AGENTS'])) {
-		$autor_ir = 1;
-		$agents=$_SESSION['AGENTS'];
-		msg("Agents ir: ".$agents);
-	} else {
-		$autor_ir = 0;
-		$agents="";
-	}
-	
+  	while($r = $q->fetch(PDO::FETCH_ASSOC)){
+  		$agent_list[]=$r;
+  	}
+ 	
 	if (isset($_POST['btIeiet'])) {
-		$agents = $_POST['user'];
+
+		$user = $_POST['user'];
 		$psw = $_POST['psw'];
-		msg("Izpilda autorizāciju  |".$agents."|");
-		var_dump($masAgents);
-		for ($k = 1; $k = 10; $k++) {
-			msg($masAgents[AGENTS]);
-			msg("xxx".$magents);
-			if ($magents==user){
+		
+		foreach($agent_list as $row){
+			$lUsername=$row['username'];
+			$lPsw=$row['pasword'];
+			if($lUsername==$_POST['user']){
+				$autor_ir = 1;  					// Autorizācijas pirmais solis - username sakrita
+				if($lPsw==$_POST['psw']){
+					$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
+					$lAgenta_id=$row['agenta_id'];
+					$lAgents=$row['agents'];
+					$lTiesibas=$row['tiesibas'];
+
+					session_regenerate_id();
+					$_SESSION['AGENTS'] = $lAgents;
+					$_SESSION['USER'] = $lUsername;
+					$_SESSION['TIESIBAS'] = $lTiesibas;
+					$_SESSION['AGENTA_ID'] = $lAgenta_id;
+					session_write_close();
+					$MainInfo="Autorizācija ir veiksmīga";
+				}
 				
 			}
 		}
+	}	
 		
-		if ($r != false) {
-			msg("Lietotājs atrasts");
-		
-			session_regenerate_id();
-			$_SESSION['AGENTS'] = $user;
-			msg("AGENTS: " . $_SESSION['AGENTS']);
-			//		$_SESSION['TEST'] = $r['agents'];
-			session_write_close();
-		
-		} else {
-			echo "Nav lietotājs";
-			msg("Nav lietotājs");
-		}
-		
-		
-		
-		
-	}
 ?>
 <form action="#" method="post">
 	<div id="divGalva">
@@ -102,42 +95,44 @@ $versija="";
 		<div id="divInfo">
 			<div id="divLoginInfo">
 				<div id="divLUser">
-				<?php 	if ($autor_ir==0){?>
-							Lietotājs:
-				<?php 	;} else {
+				<?php 	if ($autor_ir==2){?>
 							
-						}?>
+				<?php 	;} else {?>
+							Lietotājs:
+					<?php	}?>
 				</div>
 				<div id="divAgents">
-					<?php 	if ($autor_ir==0){?>
-								<input type="text" name="user" value="" size="15">
-					<?php 	;} else {
-								echo( $agents);
-						}?>
+					<?php 	if ($autor_ir==2){
+								echo( $lAgents);
+						 	;} else {?>
+								
+								<input type="text" name="user" value="" size="10">
+					<?php	}?>
 					
 				</div>
 				<div id="divPswTxt">
-					<?php 	if ($autor_ir==0){?>
-						Parole:			
-					<?php 	;} else {
-								
-					}?>
+					<?php 	if ($autor_ir==2){?>
+								<input type="submit" name="btIziet" value="Iziet">
+					<?php 	;} else {?>
+								Parole:
+					<?php } ?>
 					
 				</div>
 				<div id="divPswIev">
-					<?php 	if ($autor_ir==0){?>
-						<input type="password" name="psw" value="" size="15">
-					<?php 	;} else {
-								
-					}?>
+					<?php 	if ($autor_ir==2){?>
+						
+					<?php 	;} else {?>
+						<input type="password" name="psw" value="" size="10">		
+					<?php }?>
 					
 				
 				</div>
 				<div id="divIeIz">
-					<?php 	if ($autor_ir==0){?>
-						<input type="submit" name="btIeiet" value="Ieiet">
+					<?php 	if ($autor_ir==2){?>
+								
 					<?php 	;} else { ?>
-						<input type="submit" name="btIziet" value="Iziet">
+								<input type="submit" name="btIeiet" value="Ieiet">
+						
 					<?php } ?>
 				</div>
 			</div>
@@ -151,7 +146,7 @@ $versija="";
 	</div>
 <div id="divMaster">
 	<div id="divDialog">
-		<div id="divDialText"></div>
+		<div id="divDialText"><?php echo $MainInfo ?></div>
 		<div id="divDialJa"></div>
 		<div id="divDialNe"></div>
 	</div>
@@ -164,7 +159,6 @@ $versija="";
 			<div id="divFormTitle"></div>
 			<div id="divForma"></div>
 			<div id="divFormNavig"></div>
-		
 		</div>
 		<div id="divStatus"></div>
 	</div>
