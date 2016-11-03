@@ -73,17 +73,21 @@ td.ievade {
 
  }
 ul li {
-    display: inline;
-    border: 1px solid red;
-    padding: 3px;
-    background: orange;
-    border-radius: 5px;
-    float: left;
-    height: 25px;
-    width: 100px;
-    text-align: center;
-    margin-right: 8px;
-	}
+	display: inline;
+	border: 2px solid red;
+	padding: 3px;
+	background: orange;
+	border-radius: 5px;
+	height: 29px;
+	width: 207px;
+	text-align: center;
+	margin-right: 8px;
+	float: left;
+	font-size: 14px;
+	font-family: verdana;
+	margin: 2px;
+}
+
 ul {
     margin: 0px;
     padding: 0px;
@@ -201,41 +205,42 @@ a {
 #divMenuTitle{
 	width:100%;
 	height:5%;
-	border-style: solid;
+	background:indigo;
+	color: ivory;
+	text-align: center;
+	font-family: verdana;
+	font-size: 20px;
 }
 #divMenuSar{
 	width:100%;
 	height:94%;
-	border-style: solid;
+	background:ivory;
 }
 #divDarba{
 	float:left;
 	border-style: solid;
 	width:84%;
 	height:95%;
-	
 }	
 
 #divFormTitle{
 	width:100%;
 	border-style: solid;
 	height:4%;
-	
 }
+
 #divForma{
 	width:100%;
 	border-style: solid;
 	height:90%;
-	
-	
 }
+
 #divFormNavig{
 	width:100%;
 	border-style: solid;
 	height:4%;
-	
-	
 }
+
 #divStatus{
 	height:5%;
 	border-style: solid;

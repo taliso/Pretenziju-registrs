@@ -46,12 +46,25 @@ $MainInfo="";
 </head>
  
 <body>
-  	<?php $sql = "SELECT agenta_id,agents, username, pasword, tiesibas FROM kl_agenti";
+	<?php 
+  	//*********  IELĀDĒJAM AĢENTU SARAKSTU MASĪVĀ $agent_list ******************************
+  	
+  	$sql = "SELECT * FROM kl_agenti";
   	$q = $db->query($sql);
   	while($r = $q->fetch(PDO::FETCH_ASSOC)){
   		$agent_list[]=$r;
   	}
  	
+  	//*********  IELĀDĒJAM AĢENTU SARAKSTU MASĪVĀ $menju_list ******************************
+  	
+  	$sql = "SELECT * FROM menju";
+  	$q = $db->query($sql);
+  	while($r = $q->fetch(PDO::FETCH_ASSOC)){
+  		$menju_list[]=$r;
+  	}
+  	
+  	
+  	
 	if (isset($_POST['btIeiet'])) {
 
 		$user = $_POST['user'];
@@ -152,12 +165,30 @@ $MainInfo="";
 	</div>
 	<div id="divBody">
 		<div id="divMenu">
-			<div id="divMenuTitle"></div>
-			<div id="divMenuSar"></div>
+			<div id="divMenuTitle">Formas</div>
+			<div id="divMenuSar">
+			
+				<ul>
+					<?php foreach($menju_list as $menju){
+							echo '<li><a href="?lapa='.$menju['forma'].'">'.$menju['teksts'].'</a></li>';
+					}?>
+				</ul>
+<!-- 			if(isset($_GET['lapa'])){ -->
+<!-- 				include($_GET['lapa'].".php"); -->
+<!-- 			} else { -->
+<!-- 				msg("18. Iedarbinam veidlapu"); -->
+<!-- 				include("veidlapa.php"); -->
+<!-- 			} -->
+			
+			
+			
+			</div>
 		</div>
 		<div id="divDarba">
 			<div id="divFormTitle"></div>
-			<div id="divForma"></div>
+			<div id="divForma">
+				
+			</div>
 			<div id="divFormNavig"></div>
 		</div>
 		<div id="divStatus"></div>
