@@ -63,38 +63,65 @@ $MainInfo="";
   		$menju_list[]=$r;
   	}
   	
-  	
-  	
-	if (isset($_POST['btIeiet'])) {
+if (isset($_POST['btIeiet'])) {
 
-		$user = $_POST['user'];
-		$psw = $_POST['psw'];
-		
-		foreach($agent_list as $row){
-			$lUsername=$row['username'];
-			$lPsw=$row['pasword'];
-			if($lUsername==$_POST['user']){
-				$autor_ir = 1;  					// Autorizācijas pirmais solis - username sakrita
-				if($lPsw==$_POST['psw']){
-					$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
-					$lAgenta_id=$row['agenta_id'];
-					$lAgents=$row['agents'];
-					$lTiesibas=$row['tiesibas'];
-
-					session_regenerate_id();
-					$_SESSION['AGENTS'] = $lAgents;
-					$_SESSION['USER'] = $lUsername;
-					$_SESSION['TIESIBAS'] = $lTiesibas;
-					$_SESSION['AGENTA_ID'] = $lAgenta_id;
-					session_write_close();
-					$MainInfo="Autorizācija ir veiksmīga";
-				}
-				
+	$user = $_POST['user'];
+	$psw = $_POST['psw'];
+	
+			foreach($agent_list as $row){
+				$lUsername=$row['username'];
+				$lPsw=$row['pasword'];
+						if($lUsername==$_POST['user']){
+										$autor_ir = 1;  					// Autorizācijas pirmais solis - username sakrita
+										if($lPsw==$_POST['psw']){
+											
+											$lAgenta_id=$row['agenta_id'];
+											$lAgents=$row['agents'];
+											$lTiesibas=$row['tiesibas'];
+						
+											session_regenerate_id();
+											$_SESSION['AGENTS'] = $lAgents;
+											$_SESSION['USER'] = $lUsername;
+											$_SESSION['TIESIBAS'] = $lTiesibas;
+											$_SESSION['AGENTA_ID'] = $lAgenta_id;
+											$_SESSION['FORMA'] = -1;
+											$_SESSION['FORM_TITLE'] = -1;
+											$_SESSION['NAVIG'] = -1;
+											session_write_close();
+											$MainInfo="Autorizācija ir veiksmīga";
+										}
+							
+						}
 			}
-		}
-	}	
-		
+	
+}	
+if (isset($_POST['btIziet'])) {
+	unset($_SESSION['AGENTS']);
+}
+
+
+					if(isset($_GET['menu'])){
+						$arKey=$_GET['menu'];
+						$_SESSION['FORMA']=$menju_list[$arKey]['forma'];
+						$_SESSION['FORM_TITLE']=$menju_list[$arKey]['title'];
+					}
+					if(isset($_GET['navig'])){
+						$_SESSION['NAVIG']=$_GET['navig'];
+					}
+					
+					if(isset($_SESSION['AGENTS'])){
+						
+						$lAgents=$_SESSION['AGENTS'];
+						$lUsername=$_SESSION['USER'];
+						$lTiesibas=$_SESSION['TIESIBAS'];
+						$lAgenta_id=$_SESSION['AGENTA_ID'];
+						$form=$_SESSION['FORMA'];
+						$title=$_SESSION['FORM_TITLE'];
+						$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
+					}
+					
 ?>
+
 <form action="#" method="post">
 	<div id="divGalva">
 		<div id="divLogo">
@@ -151,49 +178,64 @@ $MainInfo="";
 			</div>
 			<div id="divAdmin">
 			</div>
-			<div id="divPapildInfo">
-				<div id="divKomp"></div>
-				<div id="divVersija">Ver.2.0.1</div>
-			</div>
-		</div>
-	</div>
-<div id="divMaster">
-	<div id="divDialog">
-		<div id="divDialText"><?php echo $MainInfo ?></div>
-		<div id="divDialJa"></div>
-		<div id="divDialNe"></div>
-	</div>
-	<div id="divBody">
-		<div id="divMenu">
-			<div id="divMenuTitle">Formas</div>
-			<div id="divMenuSar">
-			
-				<ul>
-					<?php foreach($menju_list as $menju){
-							echo '<li><a href="?lapa='.$menju['forma'].'">'.$menju['teksts'].'</a></li>';
-					}?>
-				</ul>
-<!-- 			if(isset($_GET['lapa'])){ -->
-<!-- 				include($_GET['lapa'].".php"); -->
-<!-- 			} else { -->
-<!-- 				msg("18. Iedarbinam veidlapu"); -->
-<!-- 				include("veidlapa.php"); -->
-<!-- 			} -->
-			
-			
-			
-			</div>
-		</div>
-		<div id="divDarba">
-			<div id="divFormTitle"></div>
-			<div id="divForma">
-				
-			</div>
-			<div id="divFormNavig"></div>
-		</div>
-		<div id="divStatus"></div>
-	</div>
-</div>
+										
+<?php if ($autor_ir==2){ ?>
+										<div id="divPapildInfo">
+											<div id="divKomp"></div>
+											<div id="divVersija">Ver.2.0.1</div>
+										</div>
+									</div>
+								</div>
+							<div id="divMaster">
+								<div id="divDialog">
+									<div id="divDialText"><?php echo $MainInfo ?></div>
+									<div id="divDialJa"></div>
+									<div id="divDialNe"></div>
+								</div>
+								<div id="divBody">
+									<div id="divMenu">
+										<div id="divMenuTitle">Formas</div>
+										<div id="divMenuSar">
+										
+											<ul>
+												<?php foreach($menju_list as $key=>$menju){
+														echo '<li><a href="?menu='.$key.'">'.$menju['teksts'].'</a></li>';
+												}?>
+											</ul>
+										</div>
+									</div>
+									<div id="divDarba">
+							<?php 
+							//Msg("190: ".$title);
+									if (isset($title)){
+							//			Msg("192: ".$title);
+										echo "<div id='divFormTitle'>".$title."</div>";
+									}
+									else{
+										echo "<div id='divFormTitle'></div>";
+									}	
+							  ?>
+									
+									
+										<div id="divForma">
+											<?php 
+												if(isset($form) && $form != -1){
+													include $form;
+												}
+											?>
+										</div>
+										<div id="divFormNavig">
+										<ul>
+											<li id='mnNavig'><a id='mnaNavig' href="?navig=mnSave">Saglabāt</a></li>
+											<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
+											<li id='mnNavig'><a id='mnaNavig' href="?navig=mnList">Saraksts</a></li>
+										</ul>	
+										</div>
+									</div>
+									<div id="divStatus"></div>
+								</div>
+							</div>
+<?php } ?>							
 </form>
 </body>
 </html>

@@ -13,7 +13,7 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 
 
 
-$fixdat = $_SESSION['SODIEN'];
+//$fixdat = $_SESSION['SODIEN'];
 //echo $_SERVER['SCRIPT_FILENAME'];
 if (isset($_POST['submit'])) {
 	//Ģenerējam pretenzijas reģistrācijas numuru
@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
   ?>
 
 <form action="#" method="post">
-<div id="divFormMenu">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+<!-- <div id="divFormMenu">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div> -->
 <table>
   <tr>  <!-- 1 -->
     <td class="npk">1.</td>
@@ -148,8 +148,7 @@ if (isset($_POST['submit'])) {
   </tr>
   <tr>  <!--3  -->
     <td class="npk">3.</td>
-    <td class="teksts">Pretenzijas iesniedzējs <br>
-	(Uzņēmuma/privātpersonas nosaukums)
+    <td class="teksts">Pretenzijas iesniedzējs (Uzņēmuma/privātpersonas nosaukums)
     </td>
     <td class="ievade"><input type="text" name="iesniedzejs" value="" size="70"></td>
   </tr>
@@ -232,11 +231,11 @@ if (isset($_POST['submit'])) {
     <td class="ievade">Reģistrācijas datums tiks fiksēts automātiski</td>
   </tr>
  <tr>  <!-- 13 -->
-    <td class="npk">13.</td>
-    <td class="teksts">Pretenzijas reģistrācijas numurs</td>
-    <td class="ievade">></td>
+<!--     <td class="npk">13.</td> -->
+<!--     <td class="teksts">Pretenzijas reģistrācijas numurs</td> -->
+<!--     <td class="ievade">></td> -->
 	
-  </tr>
+<!--   </tr> -->
 
  </table>
   <input type="submit" name="submit" value="Apstiprināt">

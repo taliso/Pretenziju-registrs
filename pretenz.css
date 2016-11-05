@@ -22,9 +22,9 @@ h3 {
 }
 #saturs
 {
-  width: 72%;
+  width: 99%;
   margin: 0 auto;
-  padding: 10px;
+  padding: 0px;
 }
 #virsraksts-konteineris {
 	background-color:black;
@@ -91,7 +91,7 @@ ul li {
 ul {
     margin: 0px;
     padding: 0px;
-    width: 50%;
+    width: 100%;
 }
 a {			
     text-decoration: none;
@@ -101,13 +101,37 @@ a {
     display: block;
     padding: 5px;	
     }
+#mnNavig{
+	display: inline;
+    border: 3px solid indigo;
+	padding: 2px;
+    background: lightcyan;
+	border-radius: 5px;
+	height: 16px;
+	width: 200px;
+	text-align: center;
+	margin-right: 8px;
+	float: left;
+	font-size: 14px;
+	font-family: verdana;
+	margin: 2px;
+}
+#mnaNavig{
+    text-decoration: none;
+    font-weight: bold;
+    color: indigo;
+    height: 100%;
+    display: block;
+    padding: 0px;	
+}
+
 #divMaster{
 	width:1800px;
 	height:1000px;
 }
 #divGalva{
 	background-color:white;
-	border-style: solid;
+	/* border-style: solid; */
 	margin:auto;
 	height:76px;
 	width:100%;
@@ -124,7 +148,7 @@ a {
 	float:left;
 	color:red;
 	width:90%;
-	height:54px;
+	height:50px;
 	border-bottom: 1px solid;
 	border-bottom-color: #1992d4;
 }
@@ -133,7 +157,7 @@ a {
 	float:left;
 	color:red;
 	width:90%;
-	height:22px;
+	height:25px;
 }
 
 #divAdmin{
@@ -163,7 +187,7 @@ a {
 	
 }
 #divDialog{
-	border-style: solid;
+	/*border-style: solid;*/
 	height:3%;
 	width:82%;
 	margin:auto;
@@ -173,32 +197,33 @@ a {
 	float:left;
 	width:80%;
 	height:100%;
-	border-style: solid;
+	/*border-style: solid;*/
+
 	
 }
 #divDialJa{
 	float:left;
 	width:9%;
 	height:100%;
-	border-style: solid;
+	/*border-style: solid;*/
 	
 }
 #divDialNe{
 	float:left;
 	width:9%;
 	height:100%;
-	border-style: solid;
+	/*border-style: solid;*/
 	
 }
 #divBody{
-	border-style: solid;
+	/*border-style: solid;*/
 	margin: 0 auto;
 	width:82%;
 	height:80%;
 }	
 #divMenu{	
 	float:left;
-	border-style: solid;
+	/*border-style: solid;*/
 	width:15%;
 	height:95%;
 }
@@ -225,8 +250,12 @@ a {
 
 #divFormTitle{
 	width:100%;
-	border-style: solid;
 	height:4%;
+	background: indigo;
+    color: ivory;
+    text-align: center;
+    font-family: verdana;
+    font-size: 20px;
 }
 
 #divForma{
@@ -250,7 +279,7 @@ a {
 #divLoginInfo{
 	float:left;
 	width:30%;
-	height:100%;
+	height:93%;
 }
 #divLUser{
 	float:left;
@@ -317,4 +346,10 @@ a {
 	font-family: verdana;
 	font-size: 12px;
 
+}
+#tukss{
+	width:100%;
+	height:100%;
+	background:ivory;
+	
 }
