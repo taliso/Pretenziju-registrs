@@ -72,7 +72,7 @@ $MainInfo="";
   	$q = $db->query($sql);
   	$r = $q->fetch(PDO::FETCH_ASSOC);
   	//var_dump($r);
-   	 $reg_nr=$r['ped_reg_nr']+1;
+   //	 $reg_nr=$r['ped_reg_nr']+1;
    	 $versija=$r['versija'];
   	
   	
@@ -102,7 +102,8 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['NAVIG'] = -1;
 				$_SESSION['PRET_ID'] = "";
 				$_SESSION['VERSIJA'] = $versija;
-				$_SESSION['REG_NR'] = $reg_nr;
+				$_SESSION['REG_NR'] = "";
+				$_SESSION['PREFIKS'] = "";
 				
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
@@ -118,6 +119,17 @@ if(isset($_GET['menu'])){
 	$arKey=$_GET['menu'];
 	$_SESSION['FORMA']=$menju_list[$arKey]['forma'];
 	$_SESSION['FORM_TITLE']=$menju_list[$arKey]['title'];
+	$npk = $menju_list[$arKey]['npk'];
+	
+	$sql = "SELECT * FROM menju where npk=$npk";
+	$q = $db->query($sql);
+	$r = $q->fetch(PDO::FETCH_ASSOC);
+	$reg_nr = $r['reg_nr'];
+	$pref = $r['prefiks'];
+	$_SESSION['REG_NR'] = $reg_nr;
+	$_SESSION['PREFIKS'] = $pref;
+	
+	
 }
 if(isset($_GET['navig'])){
 	$_SESSION['NAVIG']=$_GET['navig'];
@@ -221,7 +233,7 @@ if(isset($_SESSION['AGENTS'])){
 				<div id="divDarba">
 		<?php 
 				if (isset($title)){
-					echo "<div id='divFormTitle'>".$title."Nr. ".$reg_nr."</div>";
+					echo "<div id='divFormTitle'>".$title."  -  Nr. ".$pref." - ".$reg_nr."</div>";
 				}
 				else{
 					echo "<div id='divFormTitle'></div>";

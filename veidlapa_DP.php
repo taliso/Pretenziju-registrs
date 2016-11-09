@@ -1,127 +1,106 @@
 
  
   <div id="saturs">
-<!-- 	<h1>1. VISPĀRĪGĀ INFORMĀCIJA PAR PRETENZIJU</h1> -->
 <?php
-
-$sql = "SELECT agenta_id, agents FROM kl_agenti";
-$q = $db->query($sql);
-//ielasa izgūtos datus asociatīvajā masīvā
-while($r = $q->fetch(PDO::FETCH_ASSOC)){
-	$agent_list[]=$r;
-}
-
-
-
-//$fixdat = $_SESSION['SODIEN'];
-//echo $_SERVER['SCRIPT_FILENAME'];
 if (isset($_POST['submit'])) {
-	//Ģenerējam pretenzijas reģistrācijas numuru
-  // Formējam INSERT rindu
-////
-//2016-09-01
-  file_upload($_FILES,$target_dir,$reg_nr);
-
-  $noform_datums =$_POST['noform_gads']."-".$_POST['noform_menes']."-".$_POST['noform_diena'];
-  $agenta_id = $_POST['agenta_id'];
-  $agents = $_POST['agents'];
-  $iesniedzejs = $_POST['iesniedzejs'];
-  $sanemts_datums = $_POST['sanemts_gads']."-".$_POST['sanemts_menes']."-".$_POST['sanemts_diena'];
-  $produkcija = $_POST['produkcija'];
-  $pasutijuma_nr = $_POST['pasutijuma_nr'];
-  $daudzums_viss = (!isset($_POST['daudzums_viss'])) ? "0" : $_POST['daudzums_viss'];
-  $daudzums_pieg_part =  (!isset($_POST['daudzums_pieg_part'])) ? "0" : $_POST['daudzums_pieg_part'];
-  $pieg_part_nr = $_POST['pieg_part_nr'];
-  $daudzums_atsev_paneli =  (!isset($_POST['daudzums_atsev_paneli'])) ? "0" : $_POST['daudzums_atsev_paneli'];
-  $daudzums_kvmet = ($_POST['daudzums_kvmet']=="") ? "0" : $_POST['daudzums_kvmet'];
-  $no_partijas = $_POST['no_partijas'];
-  $par_laiks =  (!isset($_POST['par_laiks'])) ? "0" : $_POST['par_laiks'];
-  $par_izkr_trans =  (!isset($_POST['par_izkr_trans'])) ? "0" : $_POST['par_izkr_trans'];
-  $par_izkr_iepak =  (!isset($_POST['par_izkr_iepak'])) ? "0" : $_POST['par_izkr_iepak'];
-  $par_izkr_izpak =  (!isset($_POST['par_izkr_izpak'])) ? "0" : $_POST['par_izkr_izpak'];
-  $par_piemont_jaun =  (!isset($_POST['par_piemont_jaun'])) ? "0" : $_POST['par_piemont_jaun'];
-  $par_piemont_ekspl =  (!isset($_POST['par_piemont_ekspl'])) ? "0" : $_POST['par_piemont_ekspl'];
-  $noform_pardev =  (!isset($_POST['noform_pardev'])) ? "0" : $_POST['noform_pardev'];
-  $noform_e_pasts =  (!isset($_POST['noform_e_pasts'])) ? "0" : $_POST['noform_e_pasts'];
-  $noform_oficial =  (!isset($_POST['noform_oficial'])) ? "0" : $_POST['noform_oficial'];
-  $apraksts = $_POST['apraksts'];
-  $iesniegts_nav =  (!isset($_POST['iesniegts_nav'])) ? "0" : $_POST['iesniegts_nav'];
-  $iesniegts_panel_foto =  (!isset($_POST['iesniegts_panel_foto'])) ? "0" : $_POST['iesniegts_panel_foto'];
-  $iesniegts_mark_foto =  (!isset($_POST['iesniegts_mark_foto'])) ? "0" : $_POST['iesniegts_mark_foto'];
-  $konstatets_datums = $_POST['konstatets_gads']."-".$_POST['konstatets_menes']."-".$_POST['konstatets_diena'];
-  // $reg_nr = $_POST['reg_nr']; 
-  
-
-    $sql = "INSERT INTO pretenzijas SET
-        dokumenta_datums=:noform_datums,
-	      agenta_id=:agenta_id,
-   	    agents=:agents,
-   	    iesniedzejs=:iesniedzejs,
-        sanemsanas_datums=:sanemts_datums,
-        produkcija=:produkcija,
-        pasutijuma_nr=:pasutijuma_nr,
-        daudzums_viss=:daudzums_viss,
-        daudzums_pieg_part=:daudzums_pieg_part,
-        pieg_part_nr=:pieg_part_nr,
-        daudzums_atsev_paneli=:daudzums_atsev_paneli,
-        daudzums_kvmet=:daudzums_kvmet,
-        no_partijas=:no_partijas,
-        par_laiks=:par_laiks,
-        par_izkr_trans=:par_izkr_trans,
-        par_izkr_iepak=:par_izkr_iepak,
-        par_izkr_izpak=:par_izkr_izpak,
-        par_piemont_jaun=:par_piemont_jaun,
-        par_piemont_ekspl=:par_piemont_ekspl,
-        noform_pardev=:noform_pardev,
-        noform_e_pasts=:noform_e_pasts,
-        noform_oficial=:noform_oficial,
-        apraksts=:apraksts,
-        iesniegts_nav=:iesniegts_nav,
-        iesniegts_panel_foto=:iesniegts_panel_foto,
-        iesniegts_mark_foto=:iesniegts_mark_foto,
-        konstat_datums=:konstatets_datums,
-        reg_nr=:reg_nr,
-	      registr_datums='00-00-0000';";
-    $q = $db->prepare($sql);
+	
+	file_upload($_FILES,$target_dir,$reg_nr);
+	
+	$noform_datums =$_POST['noform_gads']."-".$_POST['noform_menes']."-".$_POST['noform_diena'];
+	$agents = $_POST['agents'];
+	$iesniedzejs = $_POST['iesniedzejs'];
+	$sanemts_datums = $_POST['sanemts_gads']."-".$_POST['sanemts_menes']."-".$_POST['sanemts_diena'];
+	$produkcija = $_POST['produkcija'];
+	$pasutijuma_nr = $_POST['pasutijuma_nr'];
+	$daudzums_viss = (!isset($_POST['daudzums_viss'])) ? "0" : $_POST['daudzums_viss'];
+	$daudzums_pieg_part =  (!isset($_POST['daudzums_pieg_part'])) ? "0" : $_POST['daudzums_pieg_part'];
+	$pieg_part_nr = $_POST['pieg_part_nr'];
+	$daudzums_atsev_paneli =  (!isset($_POST['daudzums_atsev_paneli'])) ? "0" : $_POST['daudzums_atsev_paneli'];
+	$daudzums_kvmet = ($_POST['daudzums_kvmet']=="") ? "0" : $_POST['daudzums_kvmet'];
+	$no_partijas = $_POST['no_partijas'];
+	$par_laiks =  (!isset($_POST['par_laiks'])) ? "0" : $_POST['par_laiks'];
+	$par_izkr_trans =  (!isset($_POST['par_izkr_trans'])) ? "0" : $_POST['par_izkr_trans'];
+	$par_izkr_iepak =  (!isset($_POST['par_izkr_iepak'])) ? "0" : $_POST['par_izkr_iepak'];
+	$par_izkr_izpak =  (!isset($_POST['par_izkr_izpak'])) ? "0" : $_POST['par_izkr_izpak'];
+	$par_piemont_jaun =  (!isset($_POST['par_piemont_jaun'])) ? "0" : $_POST['par_piemont_jaun'];
+	$par_piemont_ekspl =  (!isset($_POST['par_piemont_ekspl'])) ? "0" : $_POST['par_piemont_ekspl'];
+	$noform_pardev =  (!isset($_POST['noform_pardev'])) ? "0" : $_POST['noform_pardev'];
+	$noform_e_pasts =  (!isset($_POST['noform_e_pasts'])) ? "0" : $_POST['noform_e_pasts'];
+	$noform_oficial =  (!isset($_POST['noform_oficial'])) ? "0" : $_POST['noform_oficial'];
+	$apraksts = $_POST['apraksts'];
+	$iesniegts_nav =  (!isset($_POST['iesniegts_nav'])) ? "0" : $_POST['iesniegts_nav'];
+	$iesniegts_panel_foto =  (!isset($_POST['iesniegts_panel_foto'])) ? "0" : $_POST['iesniegts_panel_foto'];
+	$iesniegts_mark_foto =  (!isset($_POST['iesniegts_mark_foto'])) ? "0" : $_POST['iesniegts_mark_foto'];
+	$konstatets_datums = $_POST['konstatets_gads']."-".$_POST['konstatets_menes']."-".$_POST['konstatets_diena'];
+	
+	$sql = "INSERT INTO pretenzijas SET
+	dokumenta_datums=:noform_datums,
+	agents=:agents,
+	iesniedzejs=:iesniedzejs,
+	sanemsanas_datums=:sanemts_datums,
+	produkcija=:produkcija,
+	pasutijuma_nr=:pasutijuma_nr,
+	daudzums_viss=:daudzums_viss,
+	daudzums_pieg_part=:daudzums_pieg_part,
+	pieg_part_nr=:pieg_part_nr,
+	daudzums_atsev_paneli=:daudzums_atsev_paneli,
+	daudzums_kvmet=:daudzums_kvmet,
+	no_partijas=:no_partijas,
+	par_laiks=:par_laiks,
+	par_izkr_trans=:par_izkr_trans,
+	par_izkr_iepak=:par_izkr_iepak,
+	par_izkr_izpak=:par_izkr_izpak,
+	par_piemont_jaun=:par_piemont_jaun,
+	par_piemont_ekspl=:par_piemont_ekspl,
+	noform_pardev=:noform_pardev,
+	noform_e_pasts=:noform_e_pasts,
+	noform_oficial=:noform_oficial,
+	apraksts=:apraksts,
+	iesniegts_nav=:iesniegts_nav,
+	iesniegts_panel_foto=:iesniegts_panel_foto,
+	iesniegts_mark_foto=:iesniegts_mark_foto,
+	konstat_datums=:konstatets_datums,
+	reg_nr=:reg_nr";
+	
+	$q = $db->prepare($sql);
+	
 	$data = array(
-          ':noform_datums'=>$noform_datums,
-          ':agenta_id'=>$agenta_id,
-          ':agents'=>$agents,
-          ':iesniedzejs'=>$iesniedzejs,
-          ':sanemts_datums'=>$sanemts_datums,
-          ':produkcija'=>$produkcija,
-          ':pasutijuma_nr'=>$pasutijuma_nr,
-          ':daudzums_viss'=>$daudzums_viss,
-          ':daudzums_pieg_part'=>$daudzums_pieg_part,
-          ':pieg_part_nr'=>$pieg_part_nr,
-          ':daudzums_atsev_paneli'=>$daudzums_atsev_paneli,
-          ':daudzums_kvmet'=>$daudzums_kvmet,
-          ':no_partijas'=>$no_partijas,
-          ':par_laiks'=>$par_laiks,
-          ':par_izkr_trans'=>$par_izkr_trans,
-          ':par_izkr_iepak'=>$par_izkr_iepak,
-          ':par_izkr_izpak'=>$par_izkr_izpak,
-          ':par_piemont_jaun'=>$par_piemont_jaun,
-          ':par_piemont_ekspl'=>$par_piemont_ekspl,
-          ':noform_pardev'=>$noform_pardev,
-          ':noform_e_pasts'=>$noform_e_pasts,
-          ':noform_oficial'=>$noform_oficial,
-          ':apraksts'=>$apraksts,
-          ':iesniegts_nav'=>$iesniegts_nav,
-          ':iesniegts_panel_foto'=>$iesniegts_panel_foto,
-          ':iesniegts_mark_foto'=>$iesniegts_mark_foto,
-          ':konstatets_datums'=>$konstatets_datums,
-          ':reg_nr'=>$reg_nr
-
-      );
-	echo "Registracijas numurs $reg_nr IR";
-    $q->execute($data);
+			':noform_datums'=>$noform_datums,
+			':agents'=>$agents,
+			':iesniedzejs'=>$iesniedzejs,
+			':sanemts_datums'=>$sanemts_datums,
+			':produkcija'=>$produkcija,
+			':pasutijuma_nr'=>$pasutijuma_nr,
+			':daudzums_viss'=>$daudzums_viss,
+			':daudzums_pieg_part'=>$daudzums_pieg_part,
+			':pieg_part_nr'=>$pieg_part_nr,
+			':daudzums_atsev_paneli'=>$daudzums_atsev_paneli,
+			':daudzums_kvmet'=>$daudzums_kvmet,
+			':no_partijas'=>$no_partijas,
+			':par_laiks'=>$par_laiks,
+			':par_izkr_trans'=>$par_izkr_trans,
+			':par_izkr_iepak'=>$par_izkr_iepak,
+			':par_izkr_izpak'=>$par_izkr_izpak,
+			':par_piemont_jaun'=>$par_piemont_jaun,
+			':par_piemont_ekspl'=>$par_piemont_ekspl,
+			':noform_pardev'=>$noform_pardev,
+			':noform_e_pasts'=>$noform_e_pasts,
+			':noform_oficial'=>$noform_oficial,
+			':apraksts'=>$apraksts,
+			':iesniegts_nav'=>$iesniegts_nav,
+			':iesniegts_panel_foto'=>$iesniegts_panel_foto,
+			':iesniegts_mark_foto'=>$iesniegts_mark_foto,
+			':konstatets_datums'=>$konstatets_datums,
+			':reg_nr'=>$reg_nr
+	);
+	
+	$q->execute($data);
+	
 }
 
-  ?>
+?>
 
 <form action="#" method="post">
-<!-- <div id="divFormMenu">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div> -->
 <table>
   <tr>  <!-- 1 -->
     <td class="npk">1.</td>
@@ -233,7 +212,7 @@ if (isset($_POST['submit'])) {
  <tr>  <!-- 13 -->
 <!--     <td class="npk">13.</td> -->
 <!--     <td class="teksts">Pretenzijas reģistrācijas numurs</td> -->
-<!--     <td class="ievade">></td> -->
+<!--     <td class="ievade"><?php echo $reg_nr ?></td> -->
 	
 <!--   </tr> -->
 
