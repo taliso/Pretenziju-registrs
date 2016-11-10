@@ -60,7 +60,8 @@ if (isset($_POST['submit'])) {
 	iesniegts_panel_foto=:iesniegts_panel_foto,
 	iesniegts_mark_foto=:iesniegts_mark_foto,
 	konstat_datums=:konstatets_datums,
-	reg_nr=:reg_nr";
+	reg_nr=:reg_nr,
+	veids=:veids";
 	
 	$q = $db->prepare($sql);
 	
@@ -91,11 +92,15 @@ if (isset($_POST['submit'])) {
 			':iesniegts_panel_foto'=>$iesniegts_panel_foto,
 			':iesniegts_mark_foto'=>$iesniegts_mark_foto,
 			':konstatets_datums'=>$konstatets_datums,
-			':reg_nr'=>$reg_nr
+			':reg_nr'=>$reg_nr,
+			':veids'=>$_SESSION['PREFIKS']
 	);
 	
 	$q->execute($data);
-	
+	$MainInfo="Pretenzija ar numuru ".$_SESSION['PREFIKS']."-".$_SESSION['REG_NR']." ir veismīgi saglabāts.";
+	$_SESSION['INFO']=$MainInfo;
+	$sql = "update menju set reg_nr=reg_nr+1 where prefiks='SP'";
+	$q = $db->query($sql);
 }
 
 ?>

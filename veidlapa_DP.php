@@ -60,7 +60,8 @@ if (isset($_POST['submit'])) {
 	iesniegts_panel_foto=:iesniegts_panel_foto,
 	iesniegts_mark_foto=:iesniegts_mark_foto,
 	konstat_datums=:konstatets_datums,
-	reg_nr=:reg_nr";
+	reg_nr=:reg_nr,
+	veids=:veids";
 	
 	$q = $db->prepare($sql);
 	
@@ -91,8 +92,9 @@ if (isset($_POST['submit'])) {
 			':iesniegts_panel_foto'=>$iesniegts_panel_foto,
 			':iesniegts_mark_foto'=>$iesniegts_mark_foto,
 			':konstatets_datums'=>$konstatets_datums,
-			':reg_nr'=>$reg_nr
-	);
+			':reg_nr'=>$reg_nr,
+			':veids'=>$_SESSION['PREFIKS']
+			);
 	
 	$q->execute($data);
 	
