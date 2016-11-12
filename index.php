@@ -22,9 +22,7 @@ $autor_ir = 0;
 //*			$user_ip
 //*			$versija
 //*			$MainInfo - informācijas teksts
-$MainInfo=$_SESSION['INFO'];
-$pref="";
-$reg_nr="";
+$MainInfo="";
 // $autor_ir="";
 // $agents="";
 // $tiesibas="";
@@ -106,7 +104,7 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['VERSIJA'] = $versija;
 				$_SESSION['REG_NR'] = "";
 				$_SESSION['PREFIKS'] = "";
-				$_SESSION['INFO']="";
+				
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
 			}
@@ -147,6 +145,7 @@ if(isset($_SESSION['AGENTS'])){
 	$title=$_SESSION['FORM_TITLE'];
 	$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
 }
+					
 ?>
 
 <form action="#" method="post">
@@ -191,6 +190,7 @@ if(isset($_SESSION['AGENTS'])){
 					<?php 	;} else {?>
 						<input type="password" name="psw" value="" size="10">		
 					<?php }?>
+					
 				
 				</div>
 				<div id="divIeIz">
@@ -198,6 +198,7 @@ if(isset($_SESSION['AGENTS'])){
 								
 					<?php 	;} else { ?>
 								<input type="submit" name="btIeiet" value="Ieiet">
+						
 					<?php } ?>
 				</div>
 			</div>
@@ -214,7 +215,6 @@ if(isset($_SESSION['AGENTS'])){
 		<div id="divMaster">
 			<div id="divDialog">
 				<div id="divDialText"><?php echo $MainInfo ?></div>
-				<?php $_SESSION['INFO']=""; ?>
 				<div id="divDialJa"></div>
 				<div id="divDialNe"></div>
 			</div>
@@ -241,6 +241,7 @@ if(isset($_SESSION['AGENTS'])){
 		  ?>
 		  		<div id="divFormNavig">
 					<ul>
+						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnSave">Saglabāt</a></li>
 						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
 						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnList">Saraksts</a></li>
