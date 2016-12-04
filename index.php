@@ -22,6 +22,11 @@ $autor_ir = 0;
 //*			$user_ip
 //*			$versija
 //*			$MainInfo - informācijas teksts
+if (isset($_SESSION['INFO'])){
+	$MainInfo=$_SESSION['INFO'];
+}
+$pref="";
+$reg_nr="";
 $MainInfo="";
 // $autor_ir="";
 // $agents="";
@@ -204,7 +209,7 @@ if(isset($_SESSION['AGENTS'])){
 			</div>
 			<div id="divAdmin">
 			</div>
-										
+</form>										
 <?php if ($autor_ir==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
 					<div id="divPapildInfo">
 						<div id="divKomp"></div>
@@ -260,6 +265,6 @@ if(isset($_SESSION['AGENTS'])){
 			</div>
 		</div>
 <?php } ?>							
-</form>
+
 </body>
 </html>

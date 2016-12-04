@@ -182,3 +182,59 @@ function msg($mteksts){
 	"====================================================".date('d',time())."=.date('m',time()).======\n");
 	fclose($log);
 }
+function list_row($col_count, $var_array){
+	//$row_array- Masīva struktūra: 1-mainīgais,2-nosaukums, 3-klase,
+	//$var_array- parādāmo vērtību masīva, kolonnu skaitam jāsakrīt,
+	
+	$tab_row="";
+	$tab_row= '<tr>';
+	$k=0;
+	for($k=0;$k<=$col_count;$k++){
+//	foreach($row_array as $kompl){
+		$tab_row=$tab_row.'<td class="tcol'.$k.'"><input type="text" name="kolonna'.$k.'" value="'.$var_array[$k].'"></td>';
+		msg($tab_row);
+	}
+	$tab_row=$tab_row.'</tr>';
+// 	var_dump($tab_row);
+	return $tab_row;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
