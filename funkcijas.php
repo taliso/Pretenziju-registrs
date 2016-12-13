@@ -191,7 +191,9 @@ function list_row($col_count, $var_array){
 	$k=0;
 	for($k=0;$k<=$col_count;$k++){
 //	foreach($row_array as $kompl){
-		$tab_row=$tab_row.'<td class="tcol'.$k.'"><input type="text" name="kolonna'.$k.'" value="'.$var_array[$k].'"></td>';
+// 		$tab_row=$tab_row.'<td class="tcol'.$k.'"><input type="text" name="kolonna'.$k.'" value="'.$var_array[$k].'"></td>';
+
+		$tab_row=$tab_row.'<td class="tcol'.$k.'">'.$var_array[$k].'</td>';
 		msg($tab_row);
 	}
 	$tab_row=$tab_row.'</tr>';

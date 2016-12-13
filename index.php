@@ -71,12 +71,10 @@ $MainInfo="";
   	while($r = $q->fetch(PDO::FETCH_ASSOC)){
   		$menju_list[]=$r;
   	}
-  	
   	//*********  IELĀDĒJAM SISTĒMAS DATUS ***************************************************
   	$sql = "SELECT * FROM dati";
   	$q = $db->query($sql);
   	$r = $q->fetch(PDO::FETCH_ASSOC);
-  	//var_dump($r);
    //	 $reg_nr=$r['ped_reg_nr']+1;
    	 $versija=$r['versija'];
   	
@@ -138,6 +136,13 @@ if(isset($_GET['menu'])){
 }
 if(isset($_GET['navig'])){
 	$_SESSION['NAVIG']=$_GET['navig'];
+	$navig=$_GET['navig'];
+	msg($navig);
+	if($navig='mnList'){
+		msg('Iekšā:'.$navig);
+		$_SESSION['FORMA'] = "pret_list.php";
+	}
+	
 }
 
 if(isset($_SESSION['AGENTS'])){
@@ -230,6 +235,7 @@ if(isset($_SESSION['AGENTS'])){
 					
 						<ul>
 							<?php foreach($menju_list as $key=>$menju){
+									//VERTIKĀLAIS menju
 									echo '<li><a href="?menu='.$key.'">'.$menju['teksts'].'</a></li>';
 							}?>
 						</ul>
@@ -246,6 +252,7 @@ if(isset($_SESSION['AGENTS'])){
 		  ?>
 		  		<div id="divFormNavig">
 					<ul>
+						<?php // HORIZONTĀLAIS menju ?>
 						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnSave">Saglabāt</a></li>
 						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
@@ -256,6 +263,7 @@ if(isset($_SESSION['AGENTS'])){
 					<div id="divForma">
 						<?php 
 							if(isset($form) && $form != -1){
+								// Pretenzijas forma
 								include $form;
 							}
 						?>

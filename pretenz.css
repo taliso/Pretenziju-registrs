@@ -72,7 +72,43 @@ td.ievade {
      /*padding: 5px;*/
 
  }
-ul li {
+ 
+ 
+td.tcol0 {
+		width:5%;
+		text-align: center;
+ }
+ 
+ td.tcol1 {
+ 	width:5%;
+ 	text-align: center;
+ }
+ 
+ td.tcol2 {
+  	width:5%;
+ 	text-align: center;
+ 
+ }
+ 
+ td.tcol3 {
+   	width:30%;
+ 
+ }
+ 
+ td.tcol4 {
+ 	width:30%;
+ 	
+ }
+ 
+ td.tcol5 {
+    	width:24%;
+ 
+ }
+ 
+ td.tcol6 {
+ }
+ 
+ ul li {
     display: inline;
     border: 2px solid aqua;
     padding: 3px;
