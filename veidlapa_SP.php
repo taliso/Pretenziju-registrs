@@ -98,6 +98,11 @@ if (isset($_POST['submit'])) {
 	
 }
 
+if (isset($_GET['akt_id'])){
+	msg('Get strādā');
+	rrr;
+}
+
 ?>
 
 <form action="#" method="post">

@@ -182,6 +182,7 @@ function msg($mteksts){
 	"====================================================".date('d',time())."=.date('m',time()).======\n");
 	fclose($log);
 }
+// ======================  LIST_ROW  ======================================================
 function list_row($col_count, $var_array){
 	//$row_array- Masīva struktūra: 1-mainīgais,2-nosaukums, 3-klase,
 	//$var_array- parādāmo vērtību masīva, kolonnu skaitam jāsakrīt,
@@ -192,14 +193,17 @@ function list_row($col_count, $var_array){
 	for($k=0;$k<=$col_count;$k++){
 //	foreach($row_array as $kompl){
 // 		$tab_row=$tab_row.'<td class="tcol'.$k.'"><input type="text" name="kolonna'.$k.'" value="'.$var_array[$k].'"></td>';
+		if ($k==0){
+			$tab_row=$tab_row.'<td class="tcol0"><a href="?p=veidlapa_SP.php&akt_id='.$var_array[0].'">'.$var_array[$k].'</td>';
+			msg($tab_row);
+		} else {
+			$tab_row=$tab_row.'<td class="tcol'.$k.'">'.$var_array[$k].'</td>';
 
-		$tab_row=$tab_row.'<td class="tcol'.$k.'">'.$var_array[$k].'</td>';
-		msg($tab_row);
+		}
 	}
 	$tab_row=$tab_row.'</tr>';
 // 	var_dump($tab_row);
 	return $tab_row;
-	
 }
 
 
