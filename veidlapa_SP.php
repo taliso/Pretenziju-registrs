@@ -32,6 +32,8 @@ if (isset($_POST['submit'])) {
 	$iesniegts_panel_foto =  (!isset($_POST['iesniegts_panel_foto'])) ? "0" : $_POST['iesniegts_panel_foto'];
 	$iesniegts_mark_foto =  (!isset($_POST['iesniegts_mark_foto'])) ? "0" : $_POST['iesniegts_mark_foto'];
 	$konstatets_datums = $_POST['konstatets_gads']."-".$_POST['konstatets_menes']."-".$_POST['konstatets_diena'];
+	$veids=$_SESSION['PREFIKS'];
+	$pret_id=$_SESSION['PREFIKS']."-".$_SESSION['REG_NR'];
 	
 	$sql = "INSERT INTO pretenzijas SET
 	dokumenta_datums=:noform_datums,
@@ -60,7 +62,9 @@ if (isset($_POST['submit'])) {
 	iesniegts_panel_foto=:iesniegts_panel_foto,
 	iesniegts_mark_foto=:iesniegts_mark_foto,
 	konstat_datums=:konstatets_datums,
-	reg_nr=:reg_nr";
+	reg_nr=:reg_nr,
+	veids=:veids,
+	pret_id=:pret_id";
 	
 	$q = $db->prepare($sql);
 	
@@ -91,17 +95,53 @@ if (isset($_POST['submit'])) {
 			':iesniegts_panel_foto'=>$iesniegts_panel_foto,
 			':iesniegts_mark_foto'=>$iesniegts_mark_foto,
 			':konstatets_datums'=>$konstatets_datums,
-			':reg_nr'=>$reg_nr
-	);
+			':reg_nr'=>$reg_nr,
+			':veids'=>$veids,
+			':pret_id'=>$pret_id);
 	
 	$q->execute($data);
 	
 }
-
-if (isset($_GET['akt_id'])){
-	msg('Get strādā');
-	rrr;
+$pret_id= $_SESSION['PRET_ID'];
+// var_dump ($akt_id);
+if (strlen($pret_id)>0){
+	var_dump ('Ieksa'.$pret_id);
+	$sql ="SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='.$pret_id.'";
+	$q = $db->query($sql);
+	while($r = $q->fetch(PDO::FETCH_ASSOC)){
+		$agent_list[]=$r;
+		var_dump($r);
+	}
+	
+	$noform_datums;
+	$agents;
+	$iesniedzejs;
+	$sanemts_datums;
+	$produkcija;
+	$pasutijuma_nr;
+	$daudzums_viss;
+	$daudzums_pieg_part;
+	$pieg_part_nr;
+	$daudzums_atsev_paneli;
+	$daudzums_kvmet;
+	$no_partijas;
+	$par_laiks;
+	$par_izkr_trans;
+	$par_izkr_iepak;
+	$par_izkr_izpak;
+	$par_piemont_jaun;
+	$par_piemont_ekspl;
+	$noform_pardev;
+	$noform_e_pasts;
+	$noform_oficial;
+	$apraksts;
+	$iesniegts_nav;
+	$iesniegts_panel_foto;
+	$iesniegts_mark_foto;
+	$konstatets_datums;
+	
 }
+
 
 ?>
 

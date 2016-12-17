@@ -77,7 +77,14 @@ $MainInfo="";
   	$r = $q->fetch(PDO::FETCH_ASSOC);
    //	 $reg_nr=$r['ped_reg_nr']+1;
    	 $versija=$r['versija'];
-  	
+   	 if (isset($_GET['pret_id'])){
+   	 	$pret_id=$_GET['pret_id'];
+   	 	msg('Get strada='.$pret_id);
+   	 	//rrr;
+   	 } else {
+   	 	$pret_id="";
+   	 }
+   	  
   	
 if (isset($_POST['btIeiet'])) {
 
@@ -103,7 +110,7 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['FORMA'] = -1;
 				$_SESSION['FORM_TITLE'] = -1;
 				$_SESSION['NAVIG'] = -1;
-				$_SESSION['PRET_ID'] = "";
+				$_SESSION['PRET_ID'] = $pret_id;
 				$_SESSION['VERSIJA'] = $versija;
 				$_SESSION['REG_NR'] = "";
 				$_SESSION['PREFIKS'] = "";
@@ -134,12 +141,13 @@ if(isset($_GET['menu'])){
 	
 	
 }
+
+
+
 if(isset($_GET['navig'])){
 	$_SESSION['NAVIG']=$_GET['navig'];
 	$navig=$_GET['navig'];
-	msg($navig);
 	if($navig='mnList'){
-		msg('Iekšā:'.$navig);
 		$_SESSION['FORMA'] = "pret_list.php";
 	}
 	
@@ -213,7 +221,7 @@ if(isset($_SESSION['AGENTS'])){
 				</div>
 			</div>
 			<div id="divAdmin">
-			</div>
+	</div>
 </form>										
 <?php if ($autor_ir==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
 					<div id="divPapildInfo">
