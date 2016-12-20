@@ -77,8 +77,11 @@ $MainInfo="";
   	$r = $q->fetch(PDO::FETCH_ASSOC);
    //	 $reg_nr=$r['ped_reg_nr']+1;
    	 $versija=$r['versija'];
+   	 
    	 if (isset($_GET['pret_id'])){
    	 	$pret_id=$_GET['pret_id'];
+   	 	$_SESSION['PRET_ID']=$pret_id;
+   	 	$_SESSION['STATUS']="VIEW";
    	 	msg('Get strada='.$pret_id);
    	 	//rrr;
    	 } else {
@@ -110,10 +113,12 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['FORMA'] = -1;
 				$_SESSION['FORM_TITLE'] = -1;
 				$_SESSION['NAVIG'] = -1;
-				$_SESSION['PRET_ID'] = $pret_id;
+				$_SESSION['PRET_ID'] = "";
 				$_SESSION['VERSIJA'] = $versija;
 				$_SESSION['REG_NR'] = "";
 				$_SESSION['PREFIKS'] = "";
+				$_SESSION['STATUS'] = "NEW"; // 'NEW', 'VIEW','EDIT','LIST'
+				
 				
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
@@ -147,8 +152,18 @@ if(isset($_GET['menu'])){
 if(isset($_GET['navig'])){
 	$_SESSION['NAVIG']=$_GET['navig'];
 	$navig=$_GET['navig'];
-	if($navig='mnList'){
-		$_SESSION['FORMA'] = "pret_list.php";
+	
+	if($navig='mnEdit'){
+		
+	}
+	if($navig='mnNew'){
+		
+	}
+	if($navig='mnDelete'){
+		
+	}
+	if($navig='mnEvent'){
+		
 	}
 	
 }
@@ -261,10 +276,10 @@ if(isset($_SESSION['AGENTS'])){
 		  		<div id="divFormNavig">
 					<ul>
 						<?php // HORIZONTĀLAIS menju ?>
-						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnSave">Saglabāt</a></li>
+						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEdit">Labot</a></li>
 						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
-						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnList">Saraksts</a></li>
+						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi</a></li>
 					</ul>	
 				</div>
 		  

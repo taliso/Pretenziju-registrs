@@ -194,7 +194,7 @@ function list_row($col_count, $var_array){
 //	foreach($row_array as $kompl){
 // 		$tab_row=$tab_row.'<td class="tcol'.$k.'"><input type="text" name="kolonna'.$k.'" value="'.$var_array[$k].'"></td>';
 		if ($k==0){
-			$tab_row=$tab_row.'<td class="tcol0"><a href="?akt_id='.$var_array[$k].'">'.$var_array[$k].'</td>';
+			$tab_row=$tab_row.'<td class="tcol0"><a href="?pret_id='.$var_array[$k].'">'.$var_array[$k].'</td>';
 			//msg($tab_row);
 		} else {
 			$tab_row=$tab_row.'<td class="tcol'.$k.'">'.$var_array[$k].'</td>';
@@ -205,13 +205,6 @@ function list_row($col_count, $var_array){
 // 	var_dump($tab_row);
 	return $tab_row;
 }
-
-function p()
-{
-	msg('Function p');
-	echo 'Funkcija';
-}
-
 
 
 

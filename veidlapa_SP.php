@@ -2,6 +2,7 @@
  
   <div id="saturs">
 <?php
+$status=$_SESSION['STATUS'];
 if (isset($_POST['submit'])) {
 	
 	file_upload($_FILES,$target_dir,$reg_nr);
@@ -103,17 +104,20 @@ if (isset($_POST['submit'])) {
 	
 }
 $pret_id= $_SESSION['PRET_ID'];
-// var_dump ($akt_id);
+//var_dump ($pret_id);
 if (strlen($pret_id)>0){
-	var_dump ('Ieksa'.$pret_id);
-	$sql ="SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='.$pret_id.'";
+//	var_dump ('Ieksa'.$pret_id);
+	$sql ="SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
+	msg("SQl:".$sql);
 	$q = $db->query($sql);
 	while($r = $q->fetch(PDO::FETCH_ASSOC)){
-		$agent_list[]=$r;
+		$pret[]=$r;
 		var_dump($r);
 	}
-	
-	$noform_datums;
+	var_dump($pret);
+	msg('Izvilktais ier.:'.$pret['dokumenta_datums']);
+	$noform_datums=$pret['dokumenta_datums'];
+	echo $noform_datums;
 	$agents;
 	$iesniedzejs;
 	$sanemts_datums;
@@ -151,7 +155,21 @@ if (strlen($pret_id)>0){
     <td class="npk">1.</td>
     <td class="teksts">Šī dokumenta noformēšamas datums</td>
     <td class="ievade">
-		<?php echo datums_select("","noform") ?>
+    
+		<?php 
+		if($status=='NEW'){
+		echo datums_select("","noform");
+		}
+		
+		if($status=='VIEW'){
+			echo $noform_datums;
+		}
+		
+		if($status=='EDIT'){
+			echo datums_select($noform_datums,"noform");
+		}
+		
+		?>
       Izvēlaties noformēšanas datumu.
       </td>
   </tr>
