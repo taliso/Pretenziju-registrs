@@ -28,6 +28,7 @@ if (isset($_SESSION['INFO'])){
 $pref="";
 $reg_nr="";
 $MainInfo="";
+$form="";
 // $autor_ir="";
 // $agents="";
 // $tiesibas="";
@@ -75,15 +76,22 @@ $MainInfo="";
   	$sql = "SELECT * FROM dati";
   	$q = $db->query($sql);
   	$r = $q->fetch(PDO::FETCH_ASSOC);
-   //	 $reg_nr=$r['ped_reg_nr']+1;
    	 $versija=$r['versija'];
    	 
+//***   IZVELE NO SARAKSTA  ********************************************************************   	 
    	 if (isset($_GET['pret_id'])){
    	 	$pret_id=$_GET['pret_id'];
    	 	$_SESSION['PRET_ID']=$pret_id;
    	 	$_SESSION['STATUS']="VIEW";
    	 	msg('Get strada='.$pret_id);
-   	 	//rrr;
+   	 	$sql = 'SELECT * FROM pretenzijas where pret_id="'.$pret_id.'"';
+   	 	$q = $db->query($sql);
+   	 	$r = $q->fetch(PDO::FETCH_ASSOC);
+   	 	$_SESSION['REG_NR'] = $r['reg_nr'];
+   	 	$_SESSION['PREFIKS'] = $r['veids'];
+   	 	$_SESSION['FORMA']="veidlapa_SP.php";
+   	 	$form=$_SESSION['FORMA'];
+   	 	msg('L:93 Forma='.$form);
    	 } else {
    	 	$pret_id="";
    	 }
@@ -113,12 +121,11 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['FORMA'] = -1;
 				$_SESSION['FORM_TITLE'] = -1;
 				$_SESSION['NAVIG'] = -1;
-				$_SESSION['PRET_ID'] = "";
 				$_SESSION['VERSIJA'] = $versija;
+				$_SESSION['PRET_ID'] = "";
 				$_SESSION['REG_NR'] = "";
 				$_SESSION['PREFIKS'] = "";
 				$_SESSION['STATUS'] = "LIST"; // 'NEW', 'VIEW','EDIT','LIST'
-				
 				
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
@@ -129,7 +136,10 @@ if (isset($_POST['btIeiet'])) {
 if (isset($_POST['btIziet'])) {
 	unset($_SESSION['AGENTS']);
 }
-
+if ($_SESSION['FORMA']==-1) {
+	$_SESSION['FORMA']='pret_list.php';
+	$form=$_SESSION['FORMA'];
+}
 if(isset($_GET['menu'])){
 	$arKey=$_GET['menu'];
 	$_SESSION['FORMA']=$menju_list[$arKey]['forma'];
@@ -188,15 +198,15 @@ if(isset($_SESSION['AGENTS'])){
 	$lUsername=$_SESSION['USER'];
 	$lTiesibas=$_SESSION['TIESIBAS'];
 	$lAgenta_id=$_SESSION['AGENTA_ID'];
-	if ($_SESSION['STATUS']='LIST'){
-		$form='pret_list.php';
-		msg("R:193 STATUS".$_SESSION['STATUS']);
-	} 
-	else 
-	{
-		$form=$_SESSION['FORMA'];
-		msg("R:198 STATUS".$_SESSION['STATUS']);
-	}
+// 	if ($_SESSION['STATUS']='LIST'){
+// 		$form='pret_list.php';
+// 		msg("R:193 STATUS".$_SESSION['STATUS']);
+// 	} 
+// 	else 
+// 	{
+// 		$form=$_SESSION['FORMA'];
+// 		msg("R:198 STATUS".$_SESSION['STATUS']);
+// 	}
 	msg('Izveleta forma:'.$form);
 	$title=$_SESSION['FORM_TITLE'];
 	$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
@@ -290,7 +300,7 @@ if(isset($_SESSION['AGENTS'])){
 				<div id="divDarba">
 		<?php 
 				if (isset($title)){
-					echo "<div id='divFormTitle'>".$title."  -  Nr. ".$pref." - ".$reg_nr."</div>";
+					echo "<div id='divFormTitle'>".$title."  -  Nr. ".$_SESSION['PREFIKS']." - ".$_SESSION['REG_NR']."</div>";
 				}
 				else{
 					echo "<div id='divFormTitle'></div>";
