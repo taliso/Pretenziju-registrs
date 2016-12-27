@@ -117,7 +117,7 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['VERSIJA'] = $versija;
 				$_SESSION['REG_NR'] = "";
 				$_SESSION['PREFIKS'] = "";
-				$_SESSION['STATUS'] = "NEW"; // 'NEW', 'VIEW','EDIT','LIST'
+				$_SESSION['STATUS'] = "LIST"; // 'NEW', 'VIEW','EDIT','LIST'
 				
 				
 				session_write_close();
@@ -158,6 +158,20 @@ if(isset($_GET['navig'])){
 	}
 	if($navig='mnNew'){
 		
+		$_SESSION['STATUS'] = "NEW";
+		//********************************************************************************************************
+		// Registracijas numura apdeitosana +1
+		$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
+		$q = $db->query($sql);
+		$r = $q->fetch(PDO::FETCH_ASSOC);
+		$reg_nr=$r['reg_nr'];
+		$reg_nr=$reg_nr+1;
+		$_SESSION['REG_NR']=$reg_nr;
+		// Registracijas numura apdeitosana +1
+		//*********************************************************************************************************
+		//$_SESSION['FORMA'];
+		
+		msg('R:174 STATUS:'.$_SESSION['STATUS'].' Forma: '.$_SESSION['FORMA'] );
 	}
 	if($navig='mnDelete'){
 		
@@ -174,7 +188,16 @@ if(isset($_SESSION['AGENTS'])){
 	$lUsername=$_SESSION['USER'];
 	$lTiesibas=$_SESSION['TIESIBAS'];
 	$lAgenta_id=$_SESSION['AGENTA_ID'];
-	$form=$_SESSION['FORMA'];
+	if ($_SESSION['STATUS']='LIST'){
+		$form='pret_list.php';
+		msg("R:193 STATUS".$_SESSION['STATUS']);
+	} 
+	else 
+	{
+		$form=$_SESSION['FORMA'];
+		msg("R:198 STATUS".$_SESSION['STATUS']);
+	}
+	msg('Izveleta forma:'.$form);
 	$title=$_SESSION['FORM_TITLE'];
 	$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
 }

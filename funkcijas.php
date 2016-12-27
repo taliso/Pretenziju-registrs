@@ -207,7 +207,20 @@ function list_row($col_count, $var_array){
 }
 
 
-
+function NextID($mveids){
+	
+	
+	$sql = "SELECT * FROM menju where prefiks=".$mveids;
+	$q = $db->query($sql);
+	$r = $q->fetch(PDO::FETCH_ASSOC);
+	
+	$reg_nr=$r['reg_nr'];
+	$reg_nr=$reg_nr++;
+	
+	$sql ="UPDATE tp_pretenzijas.menju SET reg_nr=".$reg_nr." WHERE prefiks=".$mveids;
+	return $reg_nr;
+	
+}
 
 
 

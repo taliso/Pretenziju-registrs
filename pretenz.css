@@ -77,35 +77,46 @@ td.ievade {
 td.tcol0 {
 		width:5%;
 		text-align: center;
+		background-color: cornflowerblue;
  }
  
  td.tcol1 {
  	width:5%;
  	text-align: center;
+ 	border: 1px solid black;
  }
  
  td.tcol2 {
   	width:5%;
  	text-align: center;
+ 	border: 1px solid black;
  
  }
  
  td.tcol3 {
    	width:30%;
+   	border: 1px solid black;
  
  }
  
  td.tcol4 {
  	width:30%;
+ 	border: 1px solid black;
  	
  }
  
  td.tcol5 {
     	width:24%;
+    	border: 1px solid black;
  
  }
  
  td.tcol6 {
+ 		border: 1px solid black;
+ }
+ 
+ tr0 {
+ 
  }
  
  ul li {

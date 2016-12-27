@@ -7,6 +7,10 @@ if (isset($_POST['submit'])) {
 	
 	file_upload($_FILES,$target_dir,$reg_nr);
 	
+	$sql ="UPDATE tp_pretenzijas.menju SET reg_nr=".$_SESSION['REG_NR']." where prefiks='".$_SESSION['PREFIKS']."'";
+	$q = $db->query($sql);
+	
+	
 	$noform_datums =$_POST['noform_gads']."-".$_POST['noform_menes']."-".$_POST['noform_diena'];
 	$agents = $_POST['agents'];
 	$iesniedzejs = $_POST['iesniedzejs'];
@@ -158,6 +162,8 @@ if (strlen($pret_id)>0){
     
 		<?php 
 		if($status=='NEW'){
+			
+			
 		echo datums_select("","noform");
 		}
 		
