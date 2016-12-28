@@ -42,7 +42,7 @@ CREATE TABLE `menju` (
 
 LOCK TABLES `menju` WRITE;
 /*!40000 ALTER TABLE `menju` DISABLE KEYS */;
-INSERT INTO `menju` VALUES (1,'Aģentu saraksts','pret_list.php','','Aģentu reģistrs',0,''),(2,'SP pretenzijas','veidlapa_SP.php','','Sendvičpaneļu pretenziju reģistrs',12,'SP'),(6,'Dekoru pretenzijas','veidlapa_DE.php','','Dekoru pretenziju reģistrs',3,'DE'),(3,'EPS pretenzijas','veidlapa_EP.php','','EPS pretenziju reģistrs',0,'EP'),(7,'DP pretenzija','veidlapa_DP.php','','Dobeles Paneļa pretenzija',0,'DP'),(8,'PU pretenzija','veidlapa_PU.php','','PU paneļu pretenzija',0,'PU'),(9,'PIR pretenzijas','veidlapa_PI.php',' ','PIR paneļu pretenzijas',0,'PI');
+INSERT INTO `menju` VALUES (1,'Aģentu saraksts','pret_list.php','','Aģentu reģistrs',0,''),(2,'SP pretenzijas','pret_list.php','','Sendvičpaneļu pretenziju reģistrs',12,'SP'),(6,'Dekoru pretenzijas','pret_list.php','','Dekoru pretenziju reģistrs',3,'DE'),(3,'EPS pretenzijas','pret_list.php','','EPS pretenziju reģistrs',0,'EP'),(7,'DP pretenzija','pret_list.php','','Dobeles Paneļa pretenzija',0,'DP'),(8,'PU pretenzija','pret_list.php','','PU paneļu pretenzija',0,'PU'),(9,'PIR pretenzijas','pret_list.php',' ','PIR paneļu pretenzijas',0,'PI');
 /*!40000 ALTER TABLE `menju` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -85,13 +85,17 @@ $form="";
    	 	$_SESSION['STATUS']="VIEW";
    	 	msg('Get strada='.$pret_id);
    	 	$sql = 'SELECT * FROM pretenzijas where pret_id="'.$pret_id.'"';
+   	 	msg('SQl='.$sql);
    	 	$q = $db->query($sql);
    	 	$r = $q->fetch(PDO::FETCH_ASSOC);
+   	 	var_dump($r);
    	 	$_SESSION['REG_NR'] = $r['reg_nr'];
    	 	$_SESSION['PREFIKS'] = $r['veids'];
+   	 	msg('L:92 '.$_SESSION['FORMA']);
    	 	$_SESSION['FORMA']="veidlapa_SP.php";
+   	 	msg('L:94 '.$_SESSION['FORMA']);
    	 	$form=$_SESSION['FORMA'];
-   	 	msg('L:93 Forma='.$form);
+   	 	//msg('L:93 Forma='.$form);
    	 } else {
    	 	$pret_id="";
    	 }
@@ -118,7 +122,8 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['USER'] = $lUsername;
 				$_SESSION['TIESIBAS'] = $lTiesibas;
 				$_SESSION['AGENTA_ID'] = $lAgenta_id;
-				$_SESSION['FORMA'] = -1;
+				$_SESSION['FORMA'] = 'pret_list.php';
+				msg('L:125 '.$_SESSION['FORMA']);
 				$_SESSION['FORM_TITLE'] = -1;
 				$_SESSION['NAVIG'] = -1;
 				$_SESSION['VERSIJA'] = $versija;
@@ -136,13 +141,11 @@ if (isset($_POST['btIeiet'])) {
 if (isset($_POST['btIziet'])) {
 	unset($_SESSION['AGENTS']);
 }
-if ($_SESSION['FORMA']==-1) {
-	$_SESSION['FORMA']='pret_list.php';
-	$form=$_SESSION['FORMA'];
-}
 if(isset($_GET['menu'])){
 	$arKey=$_GET['menu'];
+	msg('L:145 '.$_SESSION['FORMA']);
 	$_SESSION['FORMA']=$menju_list[$arKey]['forma'];
+	msg('L:147 '.$_SESSION['FORMA']);
 	$_SESSION['FORM_TITLE']=$menju_list[$arKey]['title'];
 	$npk = $menju_list[$arKey]['npk'];
 	
@@ -153,6 +156,7 @@ if(isset($_GET['menu'])){
 	$pref = $r['prefiks'];
 	$_SESSION['REG_NR'] = $reg_nr;
 	$_SESSION['PREFIKS'] = $pref;
+	msg($_SESSION['PREFIKS']);
 	
 	
 }
@@ -181,7 +185,7 @@ if(isset($_GET['navig'])){
 		//*********************************************************************************************************
 		//$_SESSION['FORMA'];
 		
-		msg('R:174 STATUS:'.$_SESSION['STATUS'].' Forma: '.$_SESSION['FORMA'] );
+		//msg('R:174 STATUS:'.$_SESSION['STATUS'].' Forma: '.$_SESSION['FORMA'] );
 	}
 	if($navig='mnDelete'){
 		
@@ -318,9 +322,10 @@ if(isset($_SESSION['AGENTS'])){
 		  
 					<div id="divForma">
 						<?php 
-							if(isset($form) && $form != -1){
+							if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
 								// Pretenzijas forma
-								include $form;
+								msg('L:325 '.$_SESSION['FORMA']);
+								include $_SESSION['FORMA'];
 							}
 						?>
 					</div>

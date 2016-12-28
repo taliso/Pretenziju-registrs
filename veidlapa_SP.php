@@ -112,14 +112,11 @@ $pret_id= $_SESSION['PRET_ID'];
 if (strlen($pret_id)>0){
 //	var_dump ('Ieksa'.$pret_id);
 	$sql ="SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
-	msg("SQl:".$sql);
 	$q = $db->query($sql);
 	while($r = $q->fetch(PDO::FETCH_ASSOC)){
 		$pret[]=$r;
-		var_dump($r);
 	}
-	var_dump($pret);
-	msg('Izvilktais ier.:'.$pret['dokumenta_datums']);
+	var_dump ($pret);
 	$noform_datums=$pret['dokumenta_datums'];
 	echo $noform_datums;
 	$agents;
