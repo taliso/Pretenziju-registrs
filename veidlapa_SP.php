@@ -211,18 +211,18 @@ if (strlen($pret_id)>0){
     </td>
 	<td>
 		<?php 
-		if($status=='NEW'){
-			echo '<input type="text" name="iesniedzejs" value="" size="70">';
-		}
+// 		if($status=='NEW'){
+// 			echo '<input type="text" name="iesniedzejs" value="" size="70">';
+// 		}
 		
-		if($status=='VIEW'){
-			echo $iesniedzejs;
-		}
+// 		if($status=='VIEW'){
+// 			echo $iesniedzejs;
+// 		}
 		
-		if($status=='EDIT'){
-			echo '<input type="text" name="iesniedzejs" value="'.$iesniedzejs.'" size="70">';
-		}
-		
+// 		if($status=='EDIT'){
+// 			echo '<input type="text" name="iesniedzejs" value="'.$iesniedzejs.'" size="70">';
+// 		}
+		StatText($status,"iesniedzejs",$iesniedzejs,70);
 		?>
 	</td>
 

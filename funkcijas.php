@@ -223,7 +223,6 @@ function NextID($mveids){
 	
 }
 
-
 function check($mvert){
 	$vert="";
 	if ($mvert ==1){
@@ -231,3 +230,64 @@ function check($mvert){
 	}
 	return $vert;
 }
+
+function StatText($mstatus,$mname,$mvalue,$msize){
+
+	$mteksts="";
+	if ($mstatus=='NEW'){
+		$mteksts='<input type="text" name="'.$mname.'" value="" size="'.$msize.'">;';
+	}
+	if ($mstatus=='VIEW'){
+		$mteksts=$mvalue;
+	}
+	if ($mstatus=='EDIT'){
+		$mteksts='<input type="text" name="'.$mname.'" value=".$mvalue." size="'.$msize.'">;';
+	}
+	msg($mteksts);
+	echo $mteksts;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
