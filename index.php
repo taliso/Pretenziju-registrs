@@ -88,7 +88,7 @@ $form="";
    	 	msg('SQl='.$sql);
    	 	$q = $db->query($sql);
    	 	$r = $q->fetch(PDO::FETCH_ASSOC);
-   	 	var_dump($r);
+  // 	 	var_dump($r);
    	 	$_SESSION['REG_NR'] = $r['reg_nr'];
    	 	$_SESSION['PREFIKS'] = $r['veids'];
    	 	msg('L:92 '.$_SESSION['FORMA']);
@@ -242,7 +242,7 @@ if(isset($_SESSION['AGENTS'])){
 								echo( $lAgents);
 						 	;} else {?>
 								
-								<input type="text" name="user" value="" size="10">
+								<input type="text" name="user" value="" size="8">
 					<?php	}?>
 					
 				</div>
@@ -258,7 +258,7 @@ if(isset($_SESSION['AGENTS'])){
 					<?php 	if ($autor_ir==2){?>
 						
 					<?php 	;} else {?>
-						<input type="password" name="psw" value="" size="10">		
+						<input type="password" name="psw" value="" size="8">		
 					<?php }?>
 					
 				
@@ -304,7 +304,7 @@ if(isset($_SESSION['AGENTS'])){
 				<div id="divDarba">
 		<?php 
 				if (isset($title)){
-					echo "<div id='divFormTitle'>".$title."  -  Nr. ".$_SESSION['PREFIKS']." - ".$_SESSION['REG_NR']."</div>";
+					echo "<div id='divFormTitle'>".$title."  -  Nr. ".$_SESSION['PREFIKS']." - ".$_SESSION['REG_NR']."  [ ".$_SESSION['STATUS']." ] </div>";
 				}
 				else{
 					echo "<div id='divFormTitle'></div>";

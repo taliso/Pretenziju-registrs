@@ -90,7 +90,7 @@ function file_upload($fails,$target_dir,$regnr){
 
 // ======================  DIENA_SELECT  ======================================================
 function diena_select($fixdat)
-{
+{	msg('F: diena_select R:93 '. $fixdat);
 	// Ja nav norādīts fixdat, pielīdzinam to šodienai
 //	$fixdat="";
 	$fd=0;
@@ -99,6 +99,7 @@ function diena_select($fixdat)
 	} 
 			
 		$fd=date("d",$fixdat);
+		msg('F: diena_select R:102 '. $fd);
 		$mselect_dienas="";
 		for($d=1;$d<=31;$d++){
 			$sd=(string)$d;
@@ -223,34 +224,10 @@ function NextID($mveids){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function check($mvert){
+	$vert="";
+	if ($mvert ==1){
+		$vert="checked ";
+	}
+	return $vert;
+}
