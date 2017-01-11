@@ -97,8 +97,8 @@ function diena_select($fixdat)
 	if (empty($fixdat)) {
 		$fixdat=time();
 	} 
-			
-		$fd=date("d",$fixdat);
+	msg('XXXXX F: diena_select R:100 '. $fixdat);
+		$fd=date_timestamp_get($fixdat);
 		msg('F: diena_select R:102 '. $fd);
 		$mselect_dienas="";
 		for($d=1;$d<=31;$d++){
@@ -231,28 +231,43 @@ function check($mvert){
 	return $vert;
 }
 
-function StatText($mstatus,$mname,$mvalue,$msize){
+function StatText($mname,$mvalue,$msize){
 
 	$mteksts="";
-	if ($mstatus=='NEW'){
+	if ($_SESSION['STATUS']=='NEW'){
 		$mteksts='<input type="text" name="'.$mname.'" value="" size="'.$msize.'">;';
 	}
-	if ($mstatus=='VIEW'){
+	if ($_SESSION['STATUS']=='VIEW'){
 		$mteksts=$mvalue;
 	}
-	if ($mstatus=='EDIT'){
+	if ($_SESSION['STATUS']=='EDIT'){
 		$mteksts='<input type="text" name="'.$mname.'" value=".$mvalue." size="'.$msize.'">;';
 	}
 	msg($mteksts);
 	echo $mteksts;
 }
 
+function StatCheckBox($mname,$mvariable,$koments,$nobeig){
 
-
-
-
-
-
+	if ($mvariable==1){
+		$mcheckstat=" checked";
+	}
+	else{
+		$mcheckstat="";
+	}
+	$mteksts="";
+	if ($_SESSION['STATUS']=='NEW'){
+		$mteksts='<input type="checkbox" name="'.$mname.'" value="1"> '.$koments.$nobeig;
+	}
+	if ($_SESSION['STATUS']=='VIEW'){
+		$mteksts='<input type="checkbox" name="'.$mname.'"'.$mcheckstat.' disabled> '.$koments.$nobeig;
+	}
+	if ($_SESSION['STATUS']=='EDIT'){
+		$mteksts='<input type="checkbox" name="'.$mname.'"'.$mcheckstat.'> '.$koments.$nobeig;
+	}
+	msg($mteksts);
+	echo $mteksts;
+}
 
 
 

@@ -157,22 +157,20 @@ if(isset($_GET['menu'])){
 	$_SESSION['REG_NR'] = $reg_nr;
 	$_SESSION['PREFIKS'] = $pref;
 	msg($_SESSION['PREFIKS']);
-	
-	
 }
-
-
 
 if(isset($_GET['navig'])){
 	$_SESSION['NAVIG']=$_GET['navig'];
 	$navig=$_GET['navig'];
 	
-	if($navig='mnEdit'){
-		
+	if($navig=='mnEdit'){
+		$_SESSION['STATUS'] = "EDIT";
+		msg("INDEX L: 172  Status EDIT");
 	}
-	if($navig='mnNew'){
+	if($navig=='mnNew'){
 		
 		$_SESSION['STATUS'] = "NEW";
+		msg("INDEX L: 177  Status NEW");
 		//********************************************************************************************************
 		// Registracijas numura apdeitosana +1
 		$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
@@ -183,14 +181,12 @@ if(isset($_GET['navig'])){
 		$_SESSION['REG_NR']=$reg_nr;
 		// Registracijas numura apdeitosana +1
 		//*********************************************************************************************************
-		//$_SESSION['FORMA'];
-		
-		//msg('R:174 STATUS:'.$_SESSION['STATUS'].' Forma: '.$_SESSION['FORMA'] );
+
 	}
-	if($navig='mnDelete'){
+	if($navig=='mnDelete'){
 		
 	}
-	if($navig='mnEvent'){
+	if($navig=='mnEvent'){
 		
 	}
 	

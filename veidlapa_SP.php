@@ -222,7 +222,7 @@ if (strlen($pret_id)>0){
 // 		if($status=='EDIT'){
 // 			echo '<input type="text" name="iesniedzejs" value="'.$iesniedzejs.'" size="70">';
 // 		}
-		StatText($status,"iesniedzejs",$iesniedzejs,70);
+		StatText("iesniedzejs",$iesniedzejs,70);
 		?>
 	</td>
 
@@ -253,18 +253,18 @@ if (strlen($pret_id)>0){
     
       	<td>
 	    	<?php 
-			if($status=='NEW'){
-				echo '<input type="text" name="produkcija" value="" size="70">';
-			}
+// 			if($status=='NEW'){
+// 				echo '<input type="text" name="produkcija" value="" size="70">';
+// 			}
 			
-			if($status=='VIEW'){
-				echo $produkcija;
-			}
+// 			if($status=='VIEW'){
+// 				echo $produkcija;
+// 			}
 			
-			if($status=='EDIT'){
-				echo '<input type="text" name="produkcija" value="'.$produkcija.'" size="70">';
-			}
-			
+// 			if($status=='EDIT'){
+// 				echo '<input type="text" name="produkcija" value="'.$produkcija.'" size="70">';
+// 			}
+	    	StatText("produkcija",$produkcija,70);
 			?>
     	</td>
    </tr>
@@ -275,18 +275,18 @@ if (strlen($pret_id)>0){
 	
 	    <td>
 	    	<?php 
-			if($status=='NEW'){
-				echo '<input type="text" name="pasutijuma_nr" value="" size="70">';
-			}
+// 			if($status=='NEW'){
+// 				echo '<input type="text" name="pasutijuma_nr" value="" size="70">';
+// 			}
 			
-			if($status=='VIEW'){
-				echo $pasutijuma_nr;
-			}
+// 			if($status=='VIEW'){
+// 				echo $pasutijuma_nr;
+// 			}
 			
-			if($status=='EDIT'){
-				echo '<input type="text" name="pasutijuma_nr" value="'.$pasutijuma_nr.'" size="70">';
-			}
-			
+// 			if($status=='EDIT'){
+// 				echo '<input type="text" name="pasutijuma_nr" value="'.$pasutijuma_nr.'" size="70">';
+// 			}
+			StatText("pasutijuma_nr",$pasutijuma_nr,70);
 			?>
     	</td>
 	
@@ -339,36 +339,14 @@ if (strlen($pret_id)>0){
     <td class="npk">8.</td>
     <td class="teksts">Pretenzijas objekts</td>
     <td class="ievade">
-    	
-	    <?php	if($status=='NEW'){ ?>
-	    
-			    <input type="checkbox" name="par_laiks" value="1"> Piegādes laiks <br>
-				<input type="checkbox" name="par_izkr_trans" value="1"> Prece, kas ir izkrauta no transportlīdzekļa <br>
-				<input type="checkbox" name="par_izkr_iepak" value="1"> Izkrauta, neizpakota prece <br>
-				<input type="checkbox" name="par_izkr_izpak" value="1"> Izkrauta, izpakota prece <br>
-				<input type="checkbox" name="par_piemont_jaun" value="1"> Piemontēta prece jaunbūvē<br>
-				<input type="checkbox" name="par_piemont_ekspl" value="1"> Piemontēta prece ekspluatētā ēkā
-		<?php } ?>
-		
-	   	<?php	if($status=='VIEW'){ ?>
-	    
-			    <input type="checkbox" name="par_laiks" <?php echo check($par_laiks ) ?> disabled> Piegādes laiks <br>
-				<input type="checkbox" name="par_izkr_trans" <?php echo check($par_izkr_trans ) ?> disabled> Prece, kas ir izkrauta no transportlīdzekļa <br>
-				<input type="checkbox" name="par_izkr_iepak" <?php echo check($par_izkr_iepak ) ?> disabled> Izkrauta, neizpakota prece <br>
-				<input type="checkbox" name="par_izkr_izpak" <?php echo check($par_izkr_izpak ) ?> disabled> Izkrauta, izpakota prece <br>
-				<input type="checkbox" name="par_piemont_jaun" <?php echo check($par_piemont_jaun ) ?> disabled> Piemontēta prece jaunbūvē<br>
-				<input type="checkbox" name="par_piemont_ekspl" <?php echo check($par_piemont_ekspl ) ?> disabled> Piemontēta prece ekspluatētā ēkā
-		<?php } ?>
-		
-	   	<?php	if($status=='EDIT'){ ?>
-	    
-			    <input type="checkbox" name="par_laiks" <?php echo check($par_laiks ) ?>> Piegādes laiks <br>
-				<input type="checkbox" name="par_izkr_trans" <?php echo check($par_izkr_trans ) ?>> Prece, kas ir izkrauta no transportlīdzekļa <br>
-				<input type="checkbox" name="par_izkr_iepak" <?php echo check($par_izkr_iepak ) ?>> Izkrauta, neizpakota prece <br>
-				<input type="checkbox" name="par_izkr_izpak" <?php echo check($par_izkr_izpak ) ?>> Izkrauta, izpakota prece <br>
-				<input type="checkbox" name="par_piemont_jaun" <?php echo check($par_piemont_jaun ) ?>> Piemontēta prece jaunbūvē<br>
-				<input type="checkbox" name="par_piemont_ekspl" <?php echo check($par_piemont_ekspl ) ?>> Piemontēta prece ekspluatētā ēkā
-		<?php } ?>
+  <?php 
+  		StatCheckBox("par_laiks",$par_laiks,"Piegādes laiks","<br>" );
+    	StatCheckBox("par_izkr_trans" ,$par_izkr_trans,"Prece, kas ir izkrauta no transportlīdzekļa","<br>");
+    	StatCheckBox("par_izkr_iepak",$par_izkr_iepak,"Izkrauta, neizpakota prece","<br>");
+    	StatCheckBox("par_izkr_izpak",$par_izkr_izpak,"Izkrauta, izpakota prece","<br>" );
+    	StatCheckBox("par_piemont_jaun",$par_piemont_jaun, "Piemontēta prece jaunbūvē","<br>");
+    	StatCheckBox("par_piemont_ekspl",$par_piemont_ekspl,"Piemontēta prece ekspluatētā ēkā","");
+    	?>
 	</td>
   </tr>
   <tr>  <!-- 9 -->
