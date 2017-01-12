@@ -155,7 +155,10 @@ if (strlen($pret_id)>0){
     <td class="ievade">
     
 		<?php 
+		msg("TABLE <1> STATUS=".$_SESSION['STATUS']);
+//################# <1> ########################################################################
 		if($status=='NEW'){
+			
 			echo datums_select("","noform").'      Izvēlaties noformēšanas datumu.';
 		}
 		
@@ -175,10 +178,12 @@ if (strlen($pret_id)>0){
     <td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas pieņēma pretenziju</td>
     <td class="ievade">
    
-     <?php     if($status=='NEW'){  ?>
+     <?php
+     msg("TABLE <2> STATUS=".$_SESSION['STATUS']);
+//################# <2> ########################################################################
+     if($status=='NEW'){  ?>
          <select name="agents">
           <?php
-        
             	foreach($agent_list as $agents){
             		$magents=$agents["agenta_id"]." : ".$agents["agents"];
             		echo "<option value='$magents'>$magents</option>";
@@ -211,17 +216,8 @@ if (strlen($pret_id)>0){
     </td>
 	<td>
 		<?php 
-// 		if($status=='NEW'){
-// 			echo '<input type="text" name="iesniedzejs" value="" size="70">';
-// 		}
-		
-// 		if($status=='VIEW'){
-// 			echo $iesniedzejs;
-// 		}
-		
-// 		if($status=='EDIT'){
-// 			echo '<input type="text" name="iesniedzejs" value="'.$iesniedzejs.'" size="70">';
-// 		}
+		msg("TABLE <3> STATUS=".$_SESSION['STATUS']);
+//################# <3> ########################################################################
 		StatText("iesniedzejs",$iesniedzejs,70);
 		?>
 	</td>
@@ -233,6 +229,8 @@ if (strlen($pret_id)>0){
     <td class="ievade">
     
     	<?php 
+    	msg("TABLE <4> STATUS=".$_SESSION['STATUS']);
+//################# <4> ########################################################################
 		if($status=='NEW'){
 			echo datums_select("","sanemts").'      Izvēlaties pretenzijas pieņemšanas datumu.';
 		}
@@ -253,17 +251,8 @@ if (strlen($pret_id)>0){
     
       	<td>
 	    	<?php 
-// 			if($status=='NEW'){
-// 				echo '<input type="text" name="produkcija" value="" size="70">';
-// 			}
-			
-// 			if($status=='VIEW'){
-// 				echo $produkcija;
-// 			}
-			
-// 			if($status=='EDIT'){
-// 				echo '<input type="text" name="produkcija" value="'.$produkcija.'" size="70">';
-// 			}
+	    	msg("TABLE <5> STATUS=".$_SESSION['STATUS']);
+//################# <5> ########################################################################
 	    	StatText("produkcija",$produkcija,70);
 			?>
     	</td>
@@ -275,17 +264,9 @@ if (strlen($pret_id)>0){
 	
 	    <td>
 	    	<?php 
-// 			if($status=='NEW'){
-// 				echo '<input type="text" name="pasutijuma_nr" value="" size="70">';
-// 			}
-			
-// 			if($status=='VIEW'){
-// 				echo $pasutijuma_nr;
-// 			}
-			
-// 			if($status=='EDIT'){
-// 				echo '<input type="text" name="pasutijuma_nr" value="'.$pasutijuma_nr.'" size="70">';
-// 			}
+	    	msg("TABLE <6> STATUS=".$_SESSION['STATUS']);
+//################# <6> ########################################################################
+	    	
 			StatText("pasutijuma_nr",$pasutijuma_nr,70);
 			?>
     	</td>
@@ -296,7 +277,11 @@ if (strlen($pret_id)>0){
     <td class="teksts">Preces daudzums, par kuru izteikta pretenzija</td>
     <td class="ievade">
     
- <?php	if($status=='NEW'){ ?>
+ <?php
+ msg("TABLE <7> STATUS=".$_SESSION['STATUS']);
+ //################# <7> ########################################################################
+ 
+ if($status=='NEW'){ ?>
 	        
 	    <input type="checkbox" name="daudzums_viss" value="1"> Viss pasūtījums<br>
 	    <input type="checkbox" name="daudzums_pieg_part" value="1"> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value=""><br>
@@ -308,7 +293,7 @@ if (strlen($pret_id)>0){
 	    piegādes partijā(s) Nr.<input type="text" name="no_partijas" value="" size="16"><br>
 <?php } ?>
     
-<?php	if($status=='VIEW'){msg("Veidlapa_SP L:311 daudzums_viss=".$daudzums_viss); ?>
+<?php	if($status=='VIEW'){ ?>
 		
 		<input type="checkbox" name="daudzums_viss" <?php echo check($daudzums_viss) ?> disabled> Viss pasūtījums<br>
 	    <input type="checkbox" name="daudzums_pieg_part" <?php echo check($daudzums_pieg_part) ?> disabled> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value="<?php echo $pieg_part_nr ?>" disabled><br>
@@ -321,7 +306,7 @@ if (strlen($pret_id)>0){
 		
 <?php } ?>   
     
-<?php	if($status=='EDIT'){ msg("Veidlapa_SP L:324 daudzums_viss=".$daudzums_viss);?>
+<?php	if($status=='EDIT'){;?>
   	    <input type="checkbox" name="daudzums_viss" <?php echo check($daudzums_viss) ?>> Viss pasūtījums<br>
 	    <input type="checkbox" name="daudzums_pieg_part" <?php echo check($daudzums_pieg_part) ?>> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value="<?php echo $pieg_part_nr ?>"><br>
 	    <input type="checkbox" name="daudzums_atsev_paneli" <?php echo check($daudzums_atsev_paneli) ?>> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value="<?php echo $daudzums_atsev_paneli ?>" size="7">
@@ -340,6 +325,8 @@ if (strlen($pret_id)>0){
     <td class="teksts">Pretenzijas objekts</td>
     <td class="ievade">
   <?php 
+  msg("TABLE <8> STATUS=".$_SESSION['STATUS']);
+  //################# <8> ########################################################################
   		StatCheckBox("par_laiks",$par_laiks,"Piegādes laiks","<br>" );
     	StatCheckBox("par_izkr_trans" ,$par_izkr_trans,"Prece, kas ir izkrauta no transportlīdzekļa","<br>");
     	StatCheckBox("par_izkr_iepak",$par_izkr_iepak,"Izkrauta, neizpakota prece","<br>");
@@ -355,32 +342,21 @@ if (strlen($pret_id)>0){
 	  </td>
     <td class="ievade">
     
-    	<?php	if($status=='NEW'){ ?>
-	    
-		    <input type="checkbox" name="noform_pardev" value="1"> Noformējis TENAPORS pārdevējs<br>
-		    <input type="checkbox" name="noform_e_pasts" value="1"> Saņemta e-pasta vēstule no pretenzijas iesniedzēja<br>
-		    <input type="checkbox" name="noform_oficial" value="1"> Saņemta oficiāla vēstule no pretenzijas iesniedzēja<br>
+    	<?php	
+    	msg("TABLE <9> STATUS=".$_SESSION['STATUS']);
+//################# <9> ########################################################################
+    	StatCheckBox("noform_pardev",$noform_pardev,"Noformējis TENAPORS pārdevējs","<br>" );
+    	StatCheckBox("noform_e_pasts",$noform_e_pasts,"Saņemta e-pasta vēstule no pretenzijas iesniedzēja","<br>" );
+    	StatCheckBox("noform_oficial",$noform_oficial,"Saņemta oficiāla vēstule no pretenzijas iesniedzēja","<br>" );
+
+    	if($status=='NEW'){ ?>
 		    Komentārs: <input type="text" name="apraksts" value="" size="70"><br>
 		    <input type="file" name="fileApr" id="fileApr">
-
-		<?php } ?>
-		
-	   	<?php	if($status=='VIEW'){ ?>
-	    
-			    <input type="checkbox" name="noform_pardev" <?php echo check($noform_pardev ) ?> disabled> Noformējis TENAPORS pārdevējs<br>
-				<input type="checkbox" name="noform_e_pasts" <?php echo check($noform_e_pasts ) ?> disabled> Saņemta e-pasta vēstule no pretenzijas iesniedzēja<br>
-				 <input type="checkbox" name="noform_oficial" <?php echo check($noform_oficial ) ?> disabled> Saņemta oficiāla vēstule no pretenzijas iesniedzēja<br>
-
 		<?php } ?>
 		
 	   	<?php	if($status=='EDIT'){ ?>
-	    
-		    <input type="checkbox" name="noform_pardev" <?php echo check($noform_pardev ) ?>> Noformējis TENAPORS pārdevējs<br>
-		    <input type="checkbox" name="noform_e_pasts" <?php echo check($noform_e_pasts ) ?>> Saņemta e-pasta vēstule no pretenzijas iesniedzēja<br>
-		    <input type="checkbox" name="noform_oficial" <?php echo check($noform_oficial ) ?>> Saņemta oficiāla vēstule no pretenzijas iesniedzēja<br>
 		    Komentārs: <input type="text" name="apraksts" value="" size="70"><br>
 		    <input type="file" name="fileApr" id="fileApr">
-
 		<?php } ?>
                        
     </td>
@@ -391,30 +367,20 @@ if (strlen($pret_id)>0){
 	  </td>
 	<td class="ievade">  
      	
-     	<?php	if($status=='NEW'){ ?>
-	    
-		    <input type="checkbox" name="iesniegts_nav" value="1"> Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)<br>
-		    <input type="checkbox" name="iesniegts_panel_foto" value="1"> Ir saņemta paneļa fotofiksācijas<br>
-		    <input type="checkbox" name="iesniegts_mark_foto" value="1"> Ir saņemta marķējuma fotofiksācijas<br>
+     	<?php	
+     	msg("TABLE <10> STATUS=".$_SESSION['STATUS']);
+//################# <10> ########################################################################
+     	StatCheckBox("iesniegts_nav",$iesniegts_nav,"Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)","<br>" );
+     	StatCheckBox("iesniegts_panel_foto",$iesniegts_panel_foto,"Ir saņemta paneļa fotofiksācijas","<br>" );
+     	StatCheckBox("iesniegts_mark_foto",$iesniegts_mark_foto,"Ir saņemta marķējuma fotofiksācijas","<br>" );
+     	
+     	
+     	if($status=='NEW'){ ?>
 		    <input type="file" name="fileFoto" id="fileFoto">
-
-		<?php } ?>
-		
-	   	<?php	if($status=='VIEW'){ ?>
-	    
-			    <input type="checkbox" name="iesniegts_nav" <?php echo check($iesniegts_nav ) ?> disabled> Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)<br>
-				<input type="checkbox" name="iesniegts_panel_foto" <?php echo check($iesniegts_panel_foto ) ?> disabled> Ir saņemta paneļa fotofiksācijas<br>
-				 <input type="checkbox" name="iesniegts_mark_foto" <?php echo check($iesniegts_mark_foto ) ?> disabled> Ir saņemta marķējuma fotofiksācijas<br>
-
 		<?php } ?>
 		
 	   	<?php	if($status=='EDIT'){ ?>
-	    
-		    <input type="checkbox" name="iesniegts_nav" <?php echo check($iesniegts_nav ) ?>> Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)<br>
-		    <input type="checkbox" name="iesniegts_panel_foto" <?php echo check($iesniegts_panel_foto ) ?>> Ir saņemta paneļa fotofiksācijas<br>
-		    <input type="checkbox" name="iesniegts_mark_foto" <?php echo check($iesniegts_mark_foto ) ?>> Ir saņemta marķējuma fotofiksācijas<br>
 		    <input type="file" name="fileFoto" id="fileFoto">
-
 		<?php } ?>
 		
   </td>
@@ -425,6 +391,8 @@ if (strlen($pret_id)>0){
     <td class="ievade">
  
      	<?php 
+     	msg("TABLE <11> STATUS=".$_SESSION['STATUS']);
+//################# <11> ########################################################################
 		if($status=='NEW'){
 			echo datums_select("","konstatets").'      Izvēlaties datumu, kurā klients konstatējis problēmu.';
 		}

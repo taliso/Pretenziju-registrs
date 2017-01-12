@@ -3,6 +3,7 @@
   {
     return $status;
   }
+  
 function datums()
 {
   $datums = array();
@@ -28,6 +29,8 @@ function datums()
 return $datums;
 
 }
+
+
 
 function faila_nos($regnr,$grupa,$faila_nos){
         return $regnr."_".$grupa."_".$faila_nos; 
@@ -90,15 +93,11 @@ function file_upload($fails,$target_dir,$regnr){
 
 // ======================  DIENA_SELECT  ======================================================
 function diena_select($fixdat)
-{	msg('F: diena_select R:93 '. $fixdat);
-	// Ja nav norādīts fixdat, pielīdzinam to šodienai
-//	$fixdat="";
-	$fd=0;
-	if (empty($fixdat)) {
-		$fixdat=time();
-	} 
-	msg('XXXXX F: diena_select R:100 '. $fixdat);
-		$fd=date_timestamp_get($fixdat);
+{	
+// Ja nav norādīts fixdat, pielīdzinam to šodienai
+$fd=0;
+		
+		$fd=date("d",$fixdat);
 		msg('F: diena_select R:102 '. $fd);
 		$mselect_dienas="";
 		for($d=1;$d<=31;$d++){
@@ -120,10 +119,6 @@ function menes_select($fixdat)
 	// Ja nav norādīts fixdat, pielīdzinam to šodienai
 	//	$fixdat="";
 	$fm=0;
-	if (empty($fixdat)) {
-		$fixdat=time();
-	}
-		
 	$fm=date("m",$fixdat);
 	$mmenes_select="";
 	for($m=1;$m<=12;$m++){
@@ -146,10 +141,6 @@ function gads_select($fixdat)
 	// Ja nav norādīts fixdat, pielīdzinam to šodienai
 	//	$fixdat="";
 	$fy=0;
-	if (empty($fixdat)) {
-		$fixdat=time();
-	}
-
 	$fy=date("Y",$fixdat);
 	$mgads_select="";
 	for($y=$fy-1;$y<=$fy+1;$y++){
@@ -165,22 +156,28 @@ function gads_select($fixdat)
 
 // ======================  DATUMS_SELECT  ======================================================
 function datums_select($fixdat,$lauka_prefiks){
-
+	
+	msg("datums selsct=".$fixdat."-".$lauka_prefiks);
 	if (empty($fixdat)) {
 		$fixdat=time();
 	}
+	else {
+		$fixdat=date_create($fixdat);
+		$fixdat=date_timestamp_get($fixdat);
+	}
+	
 	$diena=diena_select($fixdat);
 	$menes=menes_select($fixdat);
 	$gads=gads_select($fixdat);
 	$mdatums_select= "<select name='".$lauka_prefiks."_diena'>".$diena."</select><select name='".$lauka_prefiks."_menes'>".$menes."</select><select name='".$lauka_prefiks."_gads'>".$gads."</select>";
 	return $mdatums_select;
 }
-
+//===============================================================================================
 function msg($mteksts){	
 	$log = fopen (LOGFILE,'a+');
 	fwrite($log,$mteksts."\n");
 	fwrite($log,
-	"====================================================".date('d',time())."=.date('m',time()).======\n");
+	"====================================================".date('d',time())."=".date('m',time())."======\n");
 	fclose($log);
 }
 // ======================  LIST_ROW  ======================================================
@@ -192,18 +189,14 @@ function list_row($col_count, $var_array){
 	$tab_row= '<tr>';
 	$k=0;
 	for($k=0;$k<=$col_count;$k++){
-//	foreach($row_array as $kompl){
-// 		$tab_row=$tab_row.'<td class="tcol'.$k.'"><input type="text" name="kolonna'.$k.'" value="'.$var_array[$k].'"></td>';
 		if ($k==0){
 			$tab_row=$tab_row.'<td class="tcol0"><a href="?pret_id='.$var_array[$k].'">'.$var_array[$k].'</td>';
-			//msg($tab_row);
 		} else {
 			$tab_row=$tab_row.'<td class="tcol'.$k.'">'.$var_array[$k].'</td>';
 
 		}
 	}
 	$tab_row=$tab_row.'</tr>';
-// 	var_dump($tab_row);
 	return $tab_row;
 }
 
@@ -235,15 +228,14 @@ function StatText($mname,$mvalue,$msize){
 
 	$mteksts="";
 	if ($_SESSION['STATUS']=='NEW'){
-		$mteksts='<input type="text" name="'.$mname.'" value="" size="'.$msize.'">;';
+		$mteksts='<input type="text" name="'.$mname.'" value="" size="'.$msize.'">';
 	}
 	if ($_SESSION['STATUS']=='VIEW'){
 		$mteksts=$mvalue;
 	}
 	if ($_SESSION['STATUS']=='EDIT'){
-		$mteksts='<input type="text" name="'.$mname.'" value=".$mvalue." size="'.$msize.'">;';
+		$mteksts='<input type="text" name="'.$mname.'" value="'.$mvalue.'" size="'.$msize.'">';
 	}
-	msg($mteksts);
 	echo $mteksts;
 }
 
@@ -265,7 +257,6 @@ function StatCheckBox($mname,$mvariable,$koments,$nobeig){
 	if ($_SESSION['STATUS']=='EDIT'){
 		$mteksts='<input type="checkbox" name="'.$mname.'"'.$mcheckstat.'> '.$koments.$nobeig;
 	}
-	msg($mteksts);
 	echo $mteksts;
 }
 

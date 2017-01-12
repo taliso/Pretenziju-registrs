@@ -3,8 +3,6 @@
 $pref=$_SESSION['PREFIKS'];
 $sql = 'SELECT * FROM pretenzijas where veids="'.$pref.'"';
 
-msg('pret_list L:7   '.$sql);
-
 $q = $db->query($sql);
 
 $col_name=array('Reģ.Nr.','Datums','Pasūt.Nr','Sūdzmanis','Produkcija','Aģents');

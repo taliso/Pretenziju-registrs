@@ -143,9 +143,7 @@ if (isset($_POST['btIziet'])) {
 }
 if(isset($_GET['menu'])){
 	$arKey=$_GET['menu'];
-	msg('L:145 '.$_SESSION['FORMA']);
 	$_SESSION['FORMA']=$menju_list[$arKey]['forma'];
-	msg('L:147 '.$_SESSION['FORMA']);
 	$_SESSION['FORM_TITLE']=$menju_list[$arKey]['title'];
 	$npk = $menju_list[$arKey]['npk'];
 	
@@ -156,7 +154,6 @@ if(isset($_GET['menu'])){
 	$pref = $r['prefiks'];
 	$_SESSION['REG_NR'] = $reg_nr;
 	$_SESSION['PREFIKS'] = $pref;
-	msg($_SESSION['PREFIKS']);
 }
 
 if(isset($_GET['navig'])){
@@ -165,12 +162,10 @@ if(isset($_GET['navig'])){
 	
 	if($navig=='mnEdit'){
 		$_SESSION['STATUS'] = "EDIT";
-		msg("INDEX L: 172  Status EDIT");
 	}
 	if($navig=='mnNew'){
 		
 		$_SESSION['STATUS'] = "NEW";
-		msg("INDEX L: 177  Status NEW");
 		//********************************************************************************************************
 		// Registracijas numura apdeitosana +1
 		$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
@@ -198,16 +193,6 @@ if(isset($_SESSION['AGENTS'])){
 	$lUsername=$_SESSION['USER'];
 	$lTiesibas=$_SESSION['TIESIBAS'];
 	$lAgenta_id=$_SESSION['AGENTA_ID'];
-// 	if ($_SESSION['STATUS']='LIST'){
-// 		$form='pret_list.php';
-// 		msg("R:193 STATUS".$_SESSION['STATUS']);
-// 	} 
-// 	else 
-// 	{
-// 		$form=$_SESSION['FORMA'];
-// 		msg("R:198 STATUS".$_SESSION['STATUS']);
-// 	}
-	msg('Izveleta forma:'.$form);
 	$title=$_SESSION['FORM_TITLE'];
 	$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
 }
@@ -320,7 +305,6 @@ if(isset($_SESSION['AGENTS'])){
 						<?php 
 							if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
 								// Pretenzijas forma
-								msg('L:325 '.$_SESSION['FORMA']);
 								include $_SESSION['FORMA'];
 							}
 						?>
