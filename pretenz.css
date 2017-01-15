@@ -117,6 +117,14 @@ td.tcol0 {
  td.tcol6 {
  		border: 1px solid black;
  }
+td.htcol0 {
+ 	width:2%;
+ 	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 14px;
+ 	background-color:cornflowerblue;
+ }
 
 td.htcol1 {
  	width:2%;
@@ -212,6 +220,22 @@ a {
     display: block;
     padding: 5px;	
     }
+#mnTools {
+	display: inline;
+    border: 3px solid indigo;
+	padding: 2px;
+    background: lightcyan;
+	border-radius: 5px;
+	height: 16px;
+	width: 40%;
+	text-align: center;
+	margin-right: 8px;
+	float: left;
+	font-size: 14px;
+	font-family: verdana;
+	margin: 2px;
+	
+}
 #mnNavig{
 	display: inline;
     border: 3px solid indigo;
@@ -377,6 +401,7 @@ text-align: center;
 	width:20%;
 	border: 1px solid black;
 	float:left;
+	text-align: left;
 }
 #divView{
 	width:78%;

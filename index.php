@@ -288,6 +288,13 @@ if(isset($_SESSION['AGENTS'])){
 		</div><!--divFormNavig    -->
 		<div id="divForma"><!--divForma    -->
 			<div id="divTools">
+				Pretenzijas veids:<br>
+				<ul>
+					<?php // Tools menju ?>
+					<li id='mnTools'><a id='mnaTools' href="?mTools=mnEPS">EPS</a></li>
+					<li id='mnTools'><a id='mnaTools' href="?mTools=mnSP">SP</a></li>
+				</ul>	
+				
 			</div><!--divTools    -->
 			<div id="divView">
 				<?php 
