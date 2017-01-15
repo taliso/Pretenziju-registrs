@@ -78,6 +78,9 @@ td.tcol0 {
 		width:5%;
 		text-align: center;
 		background-color: cornflowerblue;
+		font-family: verdana;
+	    font-size: 14px;
+		
  }
  
  td.tcol1 {
@@ -114,11 +117,72 @@ td.tcol0 {
  td.tcol6 {
  		border: 1px solid black;
  }
+
+td.htcol1 {
+ 	width:3%;
+ 	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 14px;
+ 	background-color:cornflowerblue;
+ }
+   
+td.htcol1 {
+ 	width:6%;
+ 	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 14px;
+ 	background-color:cornflowerblue;
+ }
  
- tr0 {
+ td.htcol2 {
+  	width:7%;
+ 	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 14px;
+ 	background-color:cornflowerblue;
  
  }
  
+ td.htcol3 {
+   	width:30%;
+ 	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 14px;
+ 	background-color:cornflowerblue;
+ 
+ }
+ 
+ td.htcol4 {
+ 	width:30%;
+  	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 14px;
+ 	background-color:cornflowerblue;
+	
+ }
+ 
+ td.htcol5 {
+ 	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 14px;
+ 	background-color:cornflowerblue;
+
+ }
+ 
+ td.htcol6 {
+  	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 14px;
+ 	background-color:cornflowerblue;
+  }
+  
  ul li {
     display: inline;
     border: 2px solid aqua;
@@ -209,6 +273,7 @@ a {
 
 #divAdmin{
 	float:left;
+	border: 1px solid black;
 	width:20%;
 	height:100%
 	
@@ -353,7 +418,7 @@ a {
 	border-left:1px solid;
 	border-left-color: darkcyan;
 	color: #38d4d4;
-	width:19%;
+	width:30%;
 	height:100%;
 	text-align: right;
 	margin-right: 5px;
@@ -366,7 +431,7 @@ a {
 	border-left:1px solid;
 	border-left-color: darkcyan;
 	color: #38d4d4;
-	width:19%;
+	width:20%;
 	height:100%;
 	text-align: right;
 	margin-right: 5px;

@@ -200,120 +200,92 @@ if(isset($_SESSION['AGENTS'])){
 ?>
 
 <form action="#" method="post">
-	<div id="divGalva">
-		<div id="divLogo">
-			<div id="divLogo">
-				<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:101px;height:56px;margin:10px">
-			</div>
-		</div>
-		<div id="divTitle">
-			<h1>Pretenziju reģistrācijas sistēma</h1>
-		</div>
-		<div id="divInfo">
-			<div id="divLoginInfo">
-				<div id="divLUser">
+<div id="divGalva"><!--divGalva    -->
+	<div id="divLogo"><!--divLogo    -->
+		<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:101px;height:56px;margin:10px">
+	</div>	<!--divLogo    -->
+	<div id="divTitle"><!--divTitle    -->
+		<h1>Pretenziju reģistrācijas sistēma</h1>
+	</div><!--divTitle    -->
+	<div id="divInfo"><!--divInfo    -->
+		<div id="divLoginInfo"><!--divLoginInfo    -->
+			<div id="divLUser"><!--divLUser    -->
+				<?php 	if ($autor_ir==2){?>
+				<?php 	;} else {?>
+					Lietotājs:
+				<?php	}?>
+			</div><!--divLUser    -->
+			<div id="divAgents"><!--divAgents    -->
+				<?php 	if ($autor_ir==2){
+					echo( $lAgents);
+				} 
+				else {?>
+					<input type="text" name="user" value="" size="8">
+				<?php	}?>
+			</div><!--divAgents    -->
+			<div id="divPswTxt"><!--divPswTxt    -->
+				<?php 	if ($autor_ir==2){?>
+					<input type="submit" name="btIziet" value="Iziet">
+				<?php 	;} else {?>
+					Parole:
+				<?php } ?>
+			</div><!--divPswTxt    -->
+			<div id="divPswIev"><!--divPswIev    -->
+				<?php 	if ($autor_ir==2){?>
+					
+				<?php 	;} else {?>
+					<input type="password" name="psw" value="" size="8">		
+				<?php }?>
+			</div><!--divPswIev    -->
+			<div id="divIeIz"><!--divIeIz    -->
 				<?php 	if ($autor_ir==2){?>
 							
-				<?php 	;} else {?>
-							Lietotājs:
-					<?php	}?>
-				</div>
-				<div id="divAgents">
-					<?php 	if ($autor_ir==2){
-								echo( $lAgents);
-						 	;} else {?>
-								
-								<input type="text" name="user" value="" size="8">
-					<?php	}?>
-					
-				</div>
-				<div id="divPswTxt">
-					<?php 	if ($autor_ir==2){?>
-								<input type="submit" name="btIziet" value="Iziet">
-					<?php 	;} else {?>
-								Parole:
-					<?php } ?>
-					
-				</div>
-				<div id="divPswIev">
-					<?php 	if ($autor_ir==2){?>
-						
-					<?php 	;} else {?>
-						<input type="password" name="psw" value="" size="8">		
-					<?php }?>
-					
-				
-				</div>
-				<div id="divIeIz">
-					<?php 	if ($autor_ir==2){?>
-								
-					<?php 	;} else { ?>
-								<input type="submit" name="btIeiet" value="Ieiet">
-						
-					<?php } ?>
-				</div>
-			</div>
-			<div id="divAdmin">
-	</div>
-</form>										
-<?php if ($autor_ir==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
-					<div id="divPapildInfo">
-						<div id="divKomp"></div>
-						<div id="divVersija"><?php echo $versija ?></div>
-					</div>
-				</div>
-			</div>
-		<div id="divMaster">
-			<div id="divDialog">
-				<div id="divDialText"><?php echo $MainInfo ?></div>
-				<div id="divDialJa"></div>
-				<div id="divDialNe"></div>
-			</div>
-			<div id="divBody">
-				<div id="divMenu">
-					<div id="divMenuTitle">Formas</div>
-					<div id="divMenuSar">
-					
-						<ul>
-							<?php foreach($menju_list as $key=>$menju){
-									//VERTIKĀLAIS menju
-									echo '<li><a href="?menu='.$key.'">'.$menju['teksts'].'</a></li>';
-							}?>
-						</ul>
-					</div>
-				</div>
-				<div id="divDarba">
-		<?php 
-				if (isset($title)){
-					echo "<div id='divFormTitle'>".$title."  -  Nr. ".$_SESSION['PREFIKS']." - ".$_SESSION['REG_NR']."  [ ".$_SESSION['STATUS']." ] </div>";
-				}
-				else{
-					echo "<div id='divFormTitle'></div>";
-				}	
-		  ?>
-		  		<div id="divFormNavig">
-					<ul>
-						<?php // HORIZONTĀLAIS menju ?>
-						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEdit">Labot</a></li>
-						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
-						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
-						<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi</a></li>
-					</ul>	
-				</div>
-		  
-					<div id="divForma">
-						<?php 
-							if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
-								// Pretenzijas forma
-								include $_SESSION['FORMA'];
-							}
-						?>
-					</div>
-				</div>
-<!-- 				<div id="divStatus"></div> -->
-			</div>
+				<?php 	} else { ?>
+							<input type="submit" name="btIeiet" value="Ieiet">
+				<?php } ?>
+			</div><!--divIeIz    -->
+		</div><!--divLoginInfo    -->
+		<div id="divAdmin">
 		</div>
-<?php } ?>							
+		<div id="divPapildInfo">
+			<div id="divKomp">
+			</div><!--divKomp    -->
+			<div id="divVersija">
+			</div><!--divVersija    -->
+		</div><!--divPapildInfo    -->
+	</div><!--divInfo    -->
+</div><!--divGalva    -->	
 
+									
+<?php if ($autor_ir==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
+<div id="divDarba"><!--divDarba    -->
+	<?php 
+			if (isset($title)){
+				echo "<div id='divFormTitle'>".$title."  -  Nr. ".$_SESSION['PREFIKS']." - ".$_SESSION['REG_NR']."  [ ".$_SESSION['STATUS']." ] </div>";
+			}
+			else{
+				echo "<div id='divFormTitle'></div>";
+			}	
+	  ?>
+	<div id="divFormNavig"><!--divFormNavig    -->
+		<ul>
+			<?php // HORIZONTĀLAIS menju ?>
+			<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEdit">Labot</a></li>
+			<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
+			<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
+			<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi</a></li>
+		</ul>	
+	</div><!--divFormNavig    -->
+	<div id="divForma"><!--divForma    -->
+		<?php 
+			if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
+				// Pretenzijas forma
+				include $_SESSION['FORMA'];
+			}
+		?>
+	</div><!--divForma    -->
+</div><!--divDarba    -->
+<?php } ?>							
+</form>	
 </body>
 </html>

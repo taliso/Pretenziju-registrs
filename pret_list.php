@@ -10,7 +10,7 @@ echo '<table>';
 $col_count=5;
 $rin="";
 for($kk=0;$kk<=$col_count;$kk++){
-  	$rin=$rin.'<td class="tcol'.$kk.'">'.$col_name[$kk].'</td>';
+  	$rin=$rin.'<td class="htcol'.$kk.'">'.$col_name[$kk].'</td>';
   }
 echo $rin;
 

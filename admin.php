@@ -37,8 +37,25 @@ if (isset($_POST['bt_add'])) {
 ?>
 <div>
 <form action="#" method="post">
-<div id="divAdmin">Administrēšana</div>
+<div id="divAdmin">
+	<ul>
+		<?php // administratora menju ?>
+		<li id='mnAdmin'><a id='mnAdmin' href="?mnadmin=mnAList">Aģentu saraksts</a></li>
+		<li id='mnAdmin'><a id='mnAdmin' href="?mnadmin=mnAAdd">Pievienot aģentu</a></li>
+		<li id='mnAdmin'><a id='mnAdmin' href="?mnadmin=mnAPolis">Mainīt tiesības</a></li>
+		<li id='mnAdmin'><a id='mnAdmin' href="?mnadmin=mnVersija">Izmaiņas versijā</a></li>
+	</ul>	
+
+</div>
 <table>
+ <tr>
+    <td id="t_npk">Nr.p.k.</td>
+    <td id="t_kods">Kods</td>
+    <td id="t_agents">Aģents</td>
+    <td id="t_pasword">Parole</td>
+    <td id="t_tiesibas">Tiesības</td>
+  </tr>
+
   <tr>
     <td id="t_npk">Nr.p.k.</td>
     <td id="t_kods">Kods</td>
