@@ -247,6 +247,15 @@ if(isset($_SESSION['AGENTS'])){
 				</div><!--divIeIz    -->
 			</div><!--divLoginInfo    -->
 			<div id="divAdmin">
+				<?php 	if ($autor_ir==2){
+					$IrTies=stripos($_SESSION['TIESIBAS'],"S",0);
+					msg("L:252  Tiesības :".$_SESSION['TIESIBAS']);
+					msg("L:253  Vērtība :".$IrTies);
+					if ($IrTies>0){
+						echo '<input type="submit" name="btAdministret" value="Administrēšana">';
+					}
+				}?>
+			
 			</div>
 			<div id="divPapildInfo">
 				<div id="divKomp">
@@ -271,19 +280,23 @@ if(isset($_SESSION['AGENTS'])){
 		<div id="divFormNavig"><!--divFormNavig    -->
 			<ul>
 				<?php // HORIZONTĀLAIS menju ?>
-				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEdit">Labot</a></li>
+				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnLists">Saraksts</a></li>
 				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
 				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi</a></li>
 			</ul>	
 		</div><!--divFormNavig    -->
 		<div id="divForma"><!--divForma    -->
-			<?php 
-				if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
-					// Pretenzijas forma
-					include $_SESSION['FORMA'];
-				}
-			?>
+			<div id="divTools">
+			</div><!--divTools    -->
+			<div id="divView">
+				<?php 
+					if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
+						// Pretenzijas forma
+						include $_SESSION['FORMA'];
+					}
+				?>
+			</div><!--divView    -->	
 		</div><!--divForma    -->
 	</div><!--divDarba    -->
 	<?php } ?>				
