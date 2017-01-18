@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 	$produkcija = $_POST['produkcija'];
 	$pasutijuma_nr = $_POST['pasutijuma_nr'];
 	$daudzums_viss = (!isset($_POST['daudzums_viss'])) ? "0" : $_POST['daudzums_viss'];
-	$daudzums_pieg_part =  (!isset($_POST['daudzums_pieg_part'])) ? "0" : $_POST['daudzums_pieg_part'];
+	$daudzums_pieg_part =  /*(!isset($_POST['daudzums_pieg_part'])) ? "0" :*/ $_POST['daudzums_pieg_part'];
 	$pieg_part_nr = $_POST['pieg_part_nr'];
 	$daudzums_atsev_paneli =  (!isset($_POST['daudzums_atsev_paneli'])) ? "0" : $_POST['daudzums_atsev_paneli'];
 	$daudzums_kvmet = ($_POST['daudzums_kvmet']=="") ? "0" : $_POST['daudzums_kvmet'];
@@ -40,8 +40,13 @@ if (isset($_POST['submit'])) {
 	$veids=$_SESSION['PREFIKS'];
 	$pret_id=$_SESSION['PREFIKS']."-".$_SESSION['REG_NR'];
 	
-	$sql = "INSERT INTO pretenzijas SET
-	dokumenta_datums=:noform_datums,
+	msg();
+if ($_SESSION['STATUS']="NEW") {	
+		$sql = "INSERT INTO pretenzijas SET ";
+	} else {		
+		$sql = "UPDATE pretenzijas SET ";
+	}		
+	$sql=$sql."dokumenta_datums=:noform_datums,
 	agents=:agents,
 	iesniedzejs=:iesniedzejs,
 	sanemsanas_datums=:sanemts_datums,
@@ -70,9 +75,13 @@ if (isset($_POST['submit'])) {
 	reg_nr=:reg_nr,
 	veids=:veids,
 	pret_id=:pret_id";
-	
+	if ($_SESSION['STATUS']=="EDIT") {
+		$sql = $sql.' WHERE pret_id="'.$_SESSION['PRET_ID'].'"';
+	}
+	$_SESSION['STATUS'] = "VIEW";
 	$q = $db->prepare($sql);
-	
+ 	msg("daudzums_viss=".$daudzums_viss);
+	msg("daudzums_pieg_part=".$daudzums_pieg_part);
 	$data = array(
 			':noform_datums'=>$noform_datums,
 			':agents'=>$agents,

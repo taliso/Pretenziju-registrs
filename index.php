@@ -17,11 +17,7 @@ $target_dir = "uploads/";
 //*	Mainigie:
 //* 		$autor_ir - false/true - ir vai nav notikusi veiksmīga autorizācija
 $autor_ir = 0;
-//*			$agents - Aģents, kurš autorizējies
-//*			$tiesibas - aģenta tiesības
-//*			$user_ip
-//*			$versija
-//*			$MainInfo - informācijas teksts
+
 if (isset($_SESSION['INFO'])){
 	$MainInfo=$_SESSION['INFO'];
 }
@@ -29,20 +25,6 @@ $pref="";
 $reg_nr="";
 $MainInfo="";
 $form="";
-// $autor_ir="";
-// $agents="";
-// $tiesibas="";
-// $user_ip="";
-// $versija="";
-//*
-//*	Ieraksti: $_SESION
-//*						AGENTS
-//*						TIESIBAS
-//*						USER_IP
-//*						VERSIJA
-//*						$
-//*						$
-//*						$
 
 ?>
 
@@ -83,19 +65,13 @@ $form="";
    	 	$pret_id=$_GET['pret_id'];
    	 	$_SESSION['PRET_ID']=$pret_id;
    	 	$_SESSION['STATUS']="VIEW";
-   	 	msg('Get strada='.$pret_id);
    	 	$sql = 'SELECT * FROM pretenzijas where pret_id="'.$pret_id.'"';
-   	 	msg('SQl='.$sql);
    	 	$q = $db->query($sql);
    	 	$r = $q->fetch(PDO::FETCH_ASSOC);
-  // 	 	var_dump($r);
    	 	$_SESSION['REG_NR'] = $r['reg_nr'];
    	 	$_SESSION['PREFIKS'] = $r['veids'];
-   	 	msg('L:92 '.$_SESSION['FORMA']);
    	 	$_SESSION['FORMA']="veidlapa_SP.php";
-   	 	msg('L:94 '.$_SESSION['FORMA']);
    	 	$form=$_SESSION['FORMA'];
-   	 	//msg('L:93 Forma='.$form);
    	 } else {
    	 	$pret_id="";
    	 }
@@ -123,13 +99,12 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['TIESIBAS'] = $lTiesibas;
 				$_SESSION['AGENTA_ID'] = $lAgenta_id;
 				$_SESSION['FORMA'] = 'pret_list.php';
-				msg('L:125 '.$_SESSION['FORMA']);
 				$_SESSION['FORM_TITLE'] = -1;
 				$_SESSION['NAVIG'] = -1;
 				$_SESSION['VERSIJA'] = $versija;
 				$_SESSION['PRET_ID'] = "";
 				$_SESSION['REG_NR'] = "";
-				$_SESSION['PREFIKS'] = "";
+				$_SESSION['PREFIKS'] = "SP";
 				$_SESSION['STATUS'] = "LIST"; // 'NEW', 'VIEW','EDIT','LIST'
 				
 				session_write_close();
@@ -138,28 +113,38 @@ if (isset($_POST['btIeiet'])) {
 		}
 	}
 }	
+
+
 if (isset($_POST['btIziet'])) {
 	unset($_SESSION['AGENTS']);
 }
-if(isset($_GET['menu'])){
-	$arKey=$_GET['menu'];
-	$_SESSION['FORMA']=$menju_list[$arKey]['forma'];
-	$_SESSION['FORM_TITLE']=$menju_list[$arKey]['title'];
-	$npk = $menju_list[$arKey]['npk'];
-	
-	$sql = "SELECT * FROM menju where npk=$npk";
-	$q = $db->query($sql);
-	$r = $q->fetch(PDO::FETCH_ASSOC);
-	$reg_nr = $r['reg_nr'];
-	$pref = $r['prefiks'];
-	$_SESSION['REG_NR'] = $reg_nr;
-	$_SESSION['PREFIKS'] = $pref;
+
+if (isset($_POST['addNewEvent'])) {
+	$_SESSION['STATUS']="NEWEVENT";
+}
+
+
+if(isset($_GET['mTools'])){
+	$arKey=$_GET['mTools'];
+	if ($arKey=="mnEPS"){
+		$_SESSION['FORMA'] = 'pret_list.php';
+		$_SESSION['PREFIKS'] ="EP";
+		$_SESSION['STATUS'] = "LIST";
+	}
+	if ($arKey=="mnSP"){
+		$_SESSION['FORMA'] = 'pret_list.php';
+		$_SESSION['PREFIKS'] ="SP";
+		$_SESSION['STATUS'] = "LIST";
+	}
 }
 
 if(isset($_GET['navig'])){
 	$_SESSION['NAVIG']=$_GET['navig'];
 	$navig=$_GET['navig'];
-	
+	if($navig=='mnLists'){
+		$_SESSION['STATUS'] = "LIST";
+		$_SESSION['FORMA'] = 'pret_list.php';
+	}
 	if($navig=='mnEdit'){
 		$_SESSION['STATUS'] = "EDIT";
 	}
@@ -176,13 +161,19 @@ if(isset($_GET['navig'])){
 		$_SESSION['REG_NR']=$reg_nr;
 		// Registracijas numura apdeitosana +1
 		//*********************************************************************************************************
-
+		if ($_SESSION['PREFIKS'] =="EP"){
+			$_SESSION['FORMA']="veidlapa_EPS.php";
+		}
+		if ($_SESSION['PREFIKS'] =="SP"){
+			$_SESSION['FORMA']="veidlapa_SP.php";
+		}
+		
 	}
 	if($navig=='mnDelete'){
 		
 	}
 	if($navig=='mnEvent'){
-		
+		$_SESSION['FORMA'] = 'notikumi.php';
 	}
 	
 }
@@ -221,7 +212,7 @@ if(isset($_SESSION['AGENTS'])){
 						echo( $lAgents);
 					} 
 					else {?>
-						<input type="text" name="user" value="" size="8">
+						<input type="text" name="user" value="" size="20">
 					<?php	}?>
 				</div><!--divAgents    -->
 				<div id="divPswTxt"><!--divPswTxt    -->
@@ -249,8 +240,6 @@ if(isset($_SESSION['AGENTS'])){
 			<div id="divAdmin">
 				<?php 	if ($autor_ir==2){
 					$IrTies=stripos($_SESSION['TIESIBAS'],"S",0);
-					msg("L:252  Tiesības :".$_SESSION['TIESIBAS']);
-					msg("L:253  Vērtība :".$IrTies);
 					if ($IrTies>0){
 						echo '<input type="submit" name="btAdministret" value="Administrēšana">';
 					}
@@ -281,25 +270,39 @@ if(isset($_SESSION['AGENTS'])){
 			<ul>
 				<?php // HORIZONTĀLAIS menju ?>
 				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnLists">Saraksts</a></li>
-				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
-				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
-				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi</a></li>
+				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEdit">Labot</a></li>
+				<?php } ?>
+				<?php if ($_SESSION['STATUS'] != "NEW") { ?>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
+				<?php } ?>
+				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
+				<?php } ?>
+				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi</a></li>
+				<?php } ?>
+					
 			</ul>	
 		</div><!--divFormNavig    -->
 		<div id="divForma"><!--divForma    -->
 			<div id="divTools">
-				Pretenzijas veids:<br>
+				<span style="color:blue;font-weight:bold">Pretenzijas veids:</span><br>
 				<ul>
 					<?php // Tools menju ?>
-					<li id='mnTools'><a id='mnaTools' href="?mTools=mnEPS">EPS</a></li>
 					<li id='mnTools'><a id='mnaTools' href="?mTools=mnSP">SP</a></li>
-				</ul>	
-				
+					<li id='mnTools'><a id='mnaTools' href="?mTools=mnEPS">EPS</a></li>
+				</ul>	<br>
+				<span style="color:blue;font-weight:bold">Sakārtot pēc:</span><br>
+				<br>
+				<span style="color:blue;font-weight:bold">Filtrs:</span><br>
+				<br>
 			</div><!--divTools    -->
 			<div id="divView">
 				<?php 
 					if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
 						// Pretenzijas forma
+						msg($_SESSION['REG_NR']);
 						include $_SESSION['FORMA'];
 					}
 				?>
