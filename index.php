@@ -75,8 +75,7 @@ $form="";
    	 } else {
    	 	$pret_id="";
    	 }
-   	  
-  	
+    	
 if (isset($_POST['btIeiet'])) {
 
 	$user = $_POST['user'];
@@ -151,6 +150,7 @@ if(isset($_GET['navig'])){
 	if($navig=='mnNew'){
 		
 		$_SESSION['STATUS'] = "NEW";
+		$_SESSION['PRET_ID'] = "";
 		//********************************************************************************************************
 		// Registracijas numura apdeitosana +1
 		$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";

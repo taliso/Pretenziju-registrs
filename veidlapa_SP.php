@@ -2,9 +2,32 @@
  
   <div id="saturs">
 <?php
-$status=$_SESSION['STATUS'];
+$agents=$_SESSION['AGENTS'];
+$iesniedzejs="";
+$produkcija="";
+$pasutijuma_nr="";
+$pieg_part_nr="";
+$daudzums_kvmet="";
+$no_partijas="";
+$apraksts="";
+$veids="";
+$pret_id="";
+$par_laiks="";
+$par_izkr_trans="";
+$par_izkr_iepak="";
+$par_izkr_izpak="";
+$par_piemont_jaun="";
+$par_piemont_ekspl="";
+$noform_pardev="";
+$noform_e_pasts="";
+$noform_oficial="";
+$iesniegts_nav="";
+$iesniegts_panel_foto="";
+$iesniegts_mark_foto="";
+
+
+//$status=$_SESSION['STATUS'];
 if (isset($_POST['submit'])) {
-	
 	file_upload($_FILES,$target_dir,$reg_nr);
 	
 	$sql ="UPDATE tp_pretenzijas.menju SET reg_nr=".$_SESSION['REG_NR']." where prefiks='".$_SESSION['PREFIKS']."'";
@@ -17,31 +40,30 @@ if (isset($_POST['submit'])) {
 	$sanemts_datums = $_POST['sanemts_gads']."-".$_POST['sanemts_menes']."-".$_POST['sanemts_diena'];
 	$produkcija = $_POST['produkcija'];
 	$pasutijuma_nr = $_POST['pasutijuma_nr'];
-	$daudzums_viss = (!isset($_POST['daudzums_viss'])) ? "0" : $_POST['daudzums_viss'];
-	$daudzums_pieg_part =  /*(!isset($_POST['daudzums_pieg_part'])) ? "0" :*/ $_POST['daudzums_pieg_part'];
+	$daudzums_viss = (!isset($_POST['daudzums_viss'])) ? "0" : "1"/* $_POST['daudzums_viss']*/;
+	$daudzums_pieg_part =  (!isset($_POST['daudzums_pieg_part'])) ? "0" : "1";
 	$pieg_part_nr = $_POST['pieg_part_nr'];
-	$daudzums_atsev_paneli =  (!isset($_POST['daudzums_atsev_paneli'])) ? "0" : $_POST['daudzums_atsev_paneli'];
+	$daudzums_atsev_paneli =  (!isset($_POST['daudzums_atsev_paneli'])) ? "0" : "1";
 	$daudzums_kvmet = ($_POST['daudzums_kvmet']=="") ? "0" : $_POST['daudzums_kvmet'];
 	$no_partijas = $_POST['no_partijas'];
 	$par_laiks =  (!isset($_POST['par_laiks'])) ? "0" : $_POST['par_laiks'];
-	$par_izkr_trans =  (!isset($_POST['par_izkr_trans'])) ? "0" : $_POST['par_izkr_trans'];
-	$par_izkr_iepak =  (!isset($_POST['par_izkr_iepak'])) ? "0" : $_POST['par_izkr_iepak'];
-	$par_izkr_izpak =  (!isset($_POST['par_izkr_izpak'])) ? "0" : $_POST['par_izkr_izpak'];
-	$par_piemont_jaun =  (!isset($_POST['par_piemont_jaun'])) ? "0" : $_POST['par_piemont_jaun'];
-	$par_piemont_ekspl =  (!isset($_POST['par_piemont_ekspl'])) ? "0" : $_POST['par_piemont_ekspl'];
-	$noform_pardev =  (!isset($_POST['noform_pardev'])) ? "0" : $_POST['noform_pardev'];
-	$noform_e_pasts =  (!isset($_POST['noform_e_pasts'])) ? "0" : $_POST['noform_e_pasts'];
-	$noform_oficial =  (!isset($_POST['noform_oficial'])) ? "0" : $_POST['noform_oficial'];
+	$par_izkr_trans =  (!isset($_POST['par_izkr_trans'])) ? "0" : "1";
+	$par_izkr_iepak =  (!isset($_POST['par_izkr_iepak'])) ? "0" : "1";
+	$par_izkr_izpak =  (!isset($_POST['par_izkr_izpak'])) ? "0" : "1";
+	$par_piemont_jaun =  (!isset($_POST['par_piemont_jaun'])) ? "0" : "1";
+	$par_piemont_ekspl =  (!isset($_POST['par_piemont_ekspl'])) ? "0" : "1";
+	$noform_pardev =  (!isset($_POST['noform_pardev'])) ? "0" : "1";
+	$noform_e_pasts =  (!isset($_POST['noform_e_pasts'])) ? "0" : "1";
+	$noform_oficial =  (!isset($_POST['noform_oficial'])) ? "0" : "1";
 	$apraksts = $_POST['apraksts'];
-	$iesniegts_nav =  (!isset($_POST['iesniegts_nav'])) ? "0" : $_POST['iesniegts_nav'];
-	$iesniegts_panel_foto =  (!isset($_POST['iesniegts_panel_foto'])) ? "0" : $_POST['iesniegts_panel_foto'];
-	$iesniegts_mark_foto =  (!isset($_POST['iesniegts_mark_foto'])) ? "0" : $_POST['iesniegts_mark_foto'];
+	$iesniegts_nav =  (!isset($_POST['iesniegts_nav'])) ? "0" : "1";
+	$iesniegts_panel_foto =  (!isset($_POST['iesniegts_panel_foto'])) ? "0" : "1";
+	$iesniegts_mark_foto =  (!isset($_POST['iesniegts_mark_foto'])) ? "0" : "1";
 	$konstatets_datums = $_POST['konstatets_gads']."-".$_POST['konstatets_menes']."-".$_POST['konstatets_diena'];
 	$veids=$_SESSION['PREFIKS'];
 	$pret_id=$_SESSION['PREFIKS']."-".$_SESSION['REG_NR'];
 	
-	msg();
-if ($_SESSION['STATUS']="NEW") {	
+if ($_SESSION['STATUS']=="NEW") {	
 		$sql = "INSERT INTO pretenzijas SET ";
 	} else {		
 		$sql = "UPDATE pretenzijas SET ";
@@ -78,7 +100,7 @@ if ($_SESSION['STATUS']="NEW") {
 	if ($_SESSION['STATUS']=="EDIT") {
 		$sql = $sql.' WHERE pret_id="'.$_SESSION['PRET_ID'].'"';
 	}
-	$_SESSION['STATUS'] = "VIEW";
+	
 	$q = $db->prepare($sql);
  	msg("daudzums_viss=".$daudzums_viss);
 	msg("daudzums_pieg_part=".$daudzums_pieg_part);
@@ -114,12 +136,16 @@ if ($_SESSION['STATUS']="NEW") {
 			':pret_id'=>$pret_id);
 	
 	$q->execute($data);
+	$_SESSION['STATUS'] = "LIST";
+	$_SESSION['FORMA'] = 'pret_list.php';
 	
 }
 $pret_id= $_SESSION['PRET_ID'];
+msg("pret_id=".$_SESSION['PRET_ID']);
 if (strlen($pret_id)>0){
 	$sql ="SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
 	$q = $db->query($sql);
+	$pret="";
 	while($r = $q->fetch(PDO::FETCH_ASSOC)){
 		$pret=$r;
 	}
@@ -166,16 +192,16 @@ if (strlen($pret_id)>0){
 		<?php 
 		msg("TABLE <1> STATUS=".$_SESSION['STATUS']);
 //################# <1> ########################################################################
-		if($status=='NEW'){
+		if($_SESSION['STATUS']=='NEW'){
 			
 			echo datums_select("","noform").'      Izvēlaties noformēšanas datumu.';
 		}
 		
-		if($status=='VIEW'){
+		if($_SESSION['STATUS']=='VIEW'){
 			echo $noform_datums;
 		}
 		
-		if($status=='EDIT'){
+		if($_SESSION['STATUS']=='EDIT'){
 			echo datums_select($noform_datums,"noform").'      Izvēlaties noformēšanas datumu.';
 		}
 		
@@ -190,7 +216,7 @@ if (strlen($pret_id)>0){
      <?php
      msg("TABLE <2> STATUS=".$_SESSION['STATUS']);
 //################# <2> ########################################################################
-     if($status=='NEW'){  ?>
+     if($_SESSION['STATUS']=='NEW'){  ?>
          <select name="agents">
           <?php
             	foreach($agent_list as $agents){
@@ -201,10 +227,10 @@ if (strlen($pret_id)>0){
          </select>
 		<?php }?>       
            
-       <?php     if($status=='VIEW'){  
+       <?php     if($_SESSION['STATUS']=='VIEW'){  
              echo $agents;
          }   ?>
-       <?php     if($status=='EDIT'){   ?>
+       <?php     if($_SESSION['STATUS']=='EDIT'){   ?>
          <select name="agents">
           <?php
         
@@ -240,15 +266,15 @@ if (strlen($pret_id)>0){
     	<?php 
     	msg("TABLE <4> STATUS=".$_SESSION['STATUS']);
 //################# <4> ########################################################################
-		if($status=='NEW'){
+		if($_SESSION['STATUS']=='NEW'){
 			echo datums_select("","sanemts").'      Izvēlaties pretenzijas pieņemšanas datumu.';
 		}
 		
-		if($status=='VIEW'){
+		if($_SESSION['STATUS']=='VIEW'){
 			echo $sanemts_datums;
 		}
 		
-		if($status=='EDIT'){
+		if($_SESSION['STATUS']=='EDIT'){
 			echo datums_select($sanemts_datums,"sanemts").'      Izvēlaties pretenzijas pieņemšanas datumu.';
 		}	?>
     
@@ -290,7 +316,7 @@ if (strlen($pret_id)>0){
  msg("TABLE <7> STATUS=".$_SESSION['STATUS']);
  //################# <7> ########################################################################
  
- if($status=='NEW'){ ?>
+ if($_SESSION['STATUS']=='NEW'){ ?>
 	        
 	    <input type="checkbox" name="daudzums_viss" value="1"> Viss pasūtījums<br>
 	    <input type="checkbox" name="daudzums_pieg_part" value="1"> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value=""><br>
@@ -302,7 +328,7 @@ if (strlen($pret_id)>0){
 	    piegādes partijā(s) Nr.<input type="text" name="no_partijas" value="" size="16"><br>
 <?php } ?>
     
-<?php	if($status=='VIEW'){ ?>
+<?php	if($_SESSION['STATUS']=='VIEW'){ ?>
 		
 		<input type="checkbox" name="daudzums_viss" <?php echo check($daudzums_viss) ?> disabled> Viss pasūtījums<br>
 	    <input type="checkbox" name="daudzums_pieg_part" <?php echo check($daudzums_pieg_part) ?> disabled> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value="<?php echo $pieg_part_nr ?>" disabled><br>
@@ -315,7 +341,7 @@ if (strlen($pret_id)>0){
 		
 <?php } ?>   
     
-<?php	if($status=='EDIT'){;?>
+<?php	if($_SESSION['STATUS']=='EDIT'){;?>
   	    <input type="checkbox" name="daudzums_viss" <?php echo check($daudzums_viss) ?>> Viss pasūtījums<br>
 	    <input type="checkbox" name="daudzums_pieg_part" <?php echo check($daudzums_pieg_part) ?>> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value="<?php echo $pieg_part_nr ?>"><br>
 	    <input type="checkbox" name="daudzums_atsev_paneli" <?php echo check($daudzums_atsev_paneli) ?>> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value="<?php echo $daudzums_atsev_paneli ?>" size="7">
@@ -358,12 +384,12 @@ if (strlen($pret_id)>0){
     	StatCheckBox("noform_e_pasts",$noform_e_pasts,"Saņemta e-pasta vēstule no pretenzijas iesniedzēja","<br>" );
     	StatCheckBox("noform_oficial",$noform_oficial,"Saņemta oficiāla vēstule no pretenzijas iesniedzēja","<br>" );
 
-    	if($status=='NEW'){ ?>
+    	if($_SESSION['STATUS']=='NEW'){ ?>
 		    Komentārs: <input type="text" name="apraksts" value="" size="70"><br>
 		    <input type="file" name="fileApr" id="fileApr">
 		<?php } ?>
 		
-	   	<?php	if($status=='EDIT'){ ?>
+	   	<?php	if($_SESSION['STATUS']=='EDIT'){ ?>
 		    Komentārs: <input type="text" name="apraksts" value="" size="70"><br>
 		    <input type="file" name="fileApr" id="fileApr">
 		<?php } ?>
@@ -384,11 +410,11 @@ if (strlen($pret_id)>0){
      	StatCheckBox("iesniegts_mark_foto",$iesniegts_mark_foto,"Ir saņemta marķējuma fotofiksācijas","<br>" );
      	
      	
-     	if($status=='NEW'){ ?>
+     	if($_SESSION['STATUS']=='NEW'){ ?>
 		    <input type="file" name="fileFoto" id="fileFoto">
 		<?php } ?>
 		
-	   	<?php	if($status=='EDIT'){ ?>
+	   	<?php	if($_SESSION['STATUS']=='EDIT'){ ?>
 		    <input type="file" name="fileFoto" id="fileFoto">
 		<?php } ?>
 		
@@ -402,15 +428,15 @@ if (strlen($pret_id)>0){
      	<?php 
      	msg("TABLE <11> STATUS=".$_SESSION['STATUS']);
 //################# <11> ########################################################################
-		if($status=='NEW'){
+		if($_SESSION['STATUS']=='NEW'){
 			echo datums_select("","konstatets").'      Izvēlaties datumu, kurā klients konstatējis problēmu.';
 		}
 		
-		if($status=='VIEW'){
+		if($_SESSION['STATUS']=='VIEW'){
 			echo $konstatets_datums;
 		}
 		
-		if($status=='EDIT'){
+		if($_SESSION['STATUS']=='EDIT'){
 			echo datums_select($konstatets_datums,"konstatets").'      Izvēlaties datumu, kurā klients konstatējis problēmu.';
 		}	?>
  

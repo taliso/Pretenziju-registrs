@@ -1,21 +1,30 @@
 
+<?php $sql = 'SELECT * FROM pretenzijas where pret_id="'.$_SESSION['PRET_ID'].'"';
+   	 $q = $db->query($sql);
+   	 $r = $q->fetch(PDO::FETCH_ASSOC);
+   	 
+   	 
+   	 ?>
+
 <div id='divEventForm'>
 <table>
 	<tr> 
 	    <td class="hapraksts1"><span id="fspan1">No:</span></td>
-	    <td class="hinfo1"><span id="fspan2"> <?php echo $_SESSION['PRET_ID'] ?> </span></td>
+	    <td class="hinfo1"><span id="fspan2"> <?php echo $r['pret_id']  ?> </span></td>
 	    <td class="hapraksts2">Reģ.dat.:</td>
-	    <td class="hinfo2">xxxxxxxx</td>
+	    <td class="hinfo2"><?php echo $r['registr_datums'] ?></td>
+<?php msg("Reg.dat.=".$r['registr_datums']); ?>	    
+	    
 	</tr> 
 	<tr> 
 	    <td class="hapraksts1">Pasūt.Nr:</td>
-	    <td class="hinfo1">xxxxxx</td>
+	    <td class="hinfo1"><?php echo $r['pasutijuma_nr'] ?></td>
 	    <td class="hapraksts2">Aģents:</td>
-	    <td class="hinfo2">wwwwwwwwwwwwww</td>
+	    <td class="hinfo2"><?php echo $_SESSION['AGENTS'] ?></td>
 	</tr> 
 	<tr> 
 	    <td class="hapraksts1">Atbildīgais:</td>
-	    <td class="hinfo1">wwwwwwwwwwwwww</td>
+	    <td class="hinfo1"><?php echo $r['atbildigais'] ?></td>
 	    <td class="hapraksts2">Not.sk.:</td>
 	    <td class="hinfo2">xx</td>
 	</tr> 
