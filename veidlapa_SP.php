@@ -7,7 +7,7 @@ $iesniedzejs="";
 $produkcija="";
 $pasutijuma_nr="";
 $pieg_part_nr="";
-$daudzums_kvmet="";
+$daudzums_kvmet=0;
 $no_partijas="";
 $apraksts="";
 $veids="";
@@ -24,6 +24,12 @@ $noform_oficial="";
 $iesniegts_nav="";
 $iesniegts_panel_foto="";
 $iesniegts_mark_foto="";
+$notikumu_sk=0;
+$atbildigais="";
+$beigu_dat="";
+$budzets=0;
+$grupa="";
+
 
 
 //$status=$_SESSION['STATUS'];
@@ -33,7 +39,7 @@ if (isset($_POST['submit'])) {
 	$sql ="UPDATE tp_pretenzijas.menju SET reg_nr=".$_SESSION['REG_NR']." where prefiks='".$_SESSION['PREFIKS']."'";
 	$q = $db->query($sql);
 	
-	
+		
 	$noform_datums =$_POST['noform_gads']."-".$_POST['noform_menes']."-".$_POST['noform_diena'];
 	$agents = $_POST['agents'];
 	$iesniedzejs = $_POST['iesniedzejs'];
@@ -44,8 +50,10 @@ if (isset($_POST['submit'])) {
 	$daudzums_pieg_part =  (!isset($_POST['daudzums_pieg_part'])) ? "0" : "1";
 	$pieg_part_nr = $_POST['pieg_part_nr'];
 	$daudzums_atsev_paneli =  (!isset($_POST['daudzums_atsev_paneli'])) ? "0" : "1";
-	$daudzums_kvmet = ($_POST['daudzums_kvmet']=="") ? "0" : $_POST['daudzums_kvmet'];
-	$no_partijas = $_POST['no_partijas'];
+	//$daudzums_kvmet = (!isset($_POST['daudzums_kvmet'])) ? "0" : $_POST['daudzums_kvmet'];
+	$daudzums_kvmet = (empty($_POST['daudzums_kvmet'])) ? "0" : $_POST['daudzums_kvmet'];
+	
+	$no_partijas = (!isset($_POST['no_partijas'])) ? "0" : $_POST['no_partijas'];
 	$par_laiks =  (!isset($_POST['par_laiks'])) ? "0" : $_POST['par_laiks'];
 	$par_izkr_trans =  (!isset($_POST['par_izkr_trans'])) ? "0" : "1";
 	$par_izkr_iepak =  (!isset($_POST['par_izkr_iepak'])) ? "0" : "1";
@@ -97,13 +105,13 @@ if ($_SESSION['STATUS']=="NEW") {
 	reg_nr=:reg_nr,
 	veids=:veids,
 	pret_id=:pret_id";
+	
 	if ($_SESSION['STATUS']=="EDIT") {
 		$sql = $sql.' WHERE pret_id="'.$_SESSION['PRET_ID'].'"';
 	}
 	
 	$q = $db->prepare($sql);
- 	msg("daudzums_viss=".$daudzums_viss);
-	msg("daudzums_pieg_part=".$daudzums_pieg_part);
+	msg('L:111  $daudzums_kvmet=='.$daudzums_kvmet);
 	$data = array(
 			':noform_datums'=>$noform_datums,
 			':agents'=>$agents,
@@ -134,9 +142,9 @@ if ($_SESSION['STATUS']=="NEW") {
 			':reg_nr'=>$reg_nr,
 			':veids'=>$veids,
 			':pret_id'=>$pret_id);
-	
+	msg('L:143  $daudzums_kvmet=='.$daudzums_kvmet);
 	$q->execute($data);
-	$_SESSION['STATUS'] = "LIST";
+	$_SESSION['STATUS'] = "VIEW";
 	$_SESSION['FORMA'] = 'pret_list.php';
 	
 }
@@ -179,10 +187,19 @@ if (strlen($pret_id)>0){
 	
 }
 
-
 ?>
 
 <form action="#" method="post">
+<?php
+if($_SESSION['STATUS']=="NEW"){
+	$pret_id=$_SESSION['PREFIKS']." - ".($_SESSION['REG_NR']+1);
+} else {
+	$pret_id=$_SESSION['PREFIKS']." - ".$_SESSION['REG_NR'];
+}
+
+
+echo "<div id='divFormTitle'>Pretenzija Nr. ".$pret_id."  [ ".$_SESSION['STATUS']." ] </div>";
+?>
 <table>
   <tr>  <!-- 1 -->
     <td class="npk">1.</td>
@@ -220,7 +237,7 @@ if (strlen($pret_id)>0){
          <select name="agents">
           <?php
             	foreach($agent_list as $agents){
-            		$magents=$agents["agenta_id"]." : ".$agents["agents"];
+            		$magents=$agents["agents"];
             		echo "<option value='$magents'>$magents</option>";
             	}
             	?>
@@ -332,7 +349,7 @@ if (strlen($pret_id)>0){
 		
 		<input type="checkbox" name="daudzums_viss" <?php echo check($daudzums_viss) ?> disabled> Viss pasūtījums<br>
 	    <input type="checkbox" name="daudzums_pieg_part" <?php echo check($daudzums_pieg_part) ?> disabled> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value="<?php echo $pieg_part_nr ?>" disabled><br>
-	    <input type="checkbox" name="daudzums_atsev_paneli" <?php echo check($daudzums_atsev_paneli) ?> disabled> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value="<?php echo $daudzums_atsev_paneli ?>"  disabled>
+	    <input type="checkbox" name="daudzums_atsev_paneli" <?php echo check($daudzums_atsev_paneli) ?> disabled> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value="<?php echo $daudzums_kvmet ?>" size="7" disabled>
 	         <select name="mervieniba">
 	           	<option value='kvm'>kv.m.</option>
 	           	<option value='m'>m</option>
@@ -344,7 +361,7 @@ if (strlen($pret_id)>0){
 <?php	if($_SESSION['STATUS']=='EDIT'){;?>
   	    <input type="checkbox" name="daudzums_viss" <?php echo check($daudzums_viss) ?>> Viss pasūtījums<br>
 	    <input type="checkbox" name="daudzums_pieg_part" <?php echo check($daudzums_pieg_part) ?>> Piegādes partija(s) Nr.<input type="text" name="pieg_part_nr" value="<?php echo $pieg_part_nr ?>"><br>
-	    <input type="checkbox" name="daudzums_atsev_paneli" <?php echo check($daudzums_atsev_paneli) ?>> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value="<?php echo $daudzums_atsev_paneli ?>" size="7">
+	    <input type="checkbox" name="daudzums_atsev_paneli" <?php echo check($daudzums_atsev_paneli) ?>> Atsevišķi paneļi <input type="text" name="daudzums_kvmet" value="<?php echo $daudzums_kvmet ?>" size="7">
 	         <select name="mervieniba">
 	           	<option value='kvm'>kv.m.</option>
 	           	<option value='m'>m</option>

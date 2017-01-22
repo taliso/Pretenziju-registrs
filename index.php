@@ -189,7 +189,6 @@ if(isset($_SESSION['AGENTS'])){
 }
 					
 ?>
-
 <form action="#" method="post">
 <div id="divMaster"><!--divMaster    -->
 	<div id="divGalva"><!--divGalva    -->
@@ -258,15 +257,19 @@ if(isset($_SESSION['AGENTS'])){
 	<!-- ##################################################################################################################   -->
 	<?php if ($autor_ir==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
 	<div id="divDarba"><!--divDarba    -->
-		<?php 
-				if (isset($title)){
-					echo "<div id='divFormTitle'>".$title."  -  Nr. ".$_SESSION['PREFIKS']." - ".$_SESSION['REG_NR']."  [ ".$_SESSION['STATUS']." ] </div>";
-				}
-				else{
-					echo "<div id='divFormTitle'></div>";
-				}	
-		  ?>
 		<div id="divFormNavig"><!--divFormNavig    -->
+			<span id="fspan2">Pretenzijas veids:</span>
+			<div id="divTools">
+				<ul>
+					<?php // Tools menju ?>
+					<li id='mnTools'><a id='<?php if ($_SESSION['PREFIKS']=="SP"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' href="?mTools=mnSP">SP</a></li>
+					<li id='mnTools'><a id='<?php if ($_SESSION['PREFIKS']=="EP"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' href="?mTools=mnEPS">EPS</a></li>
+<!-- 					<li id='mnTools'><a id='mnaTools' href="?mTools=mnSP">SP</a></li> -->
+<!-- 					<li id='mnTools'><a id='mnaTools' href="?mTools=mnEPS">EPS</a></li> -->
+
+				</ul>	<br>
+			</div><!--divTools    -->
+		
 			<ul>
 				<?php // HORIZONTĀLAIS menju ?>
 				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnLists">Saraksts</a></li>
@@ -286,19 +289,7 @@ if(isset($_SESSION['AGENTS'])){
 			</ul>	
 		</div><!--divFormNavig    -->
 		<div id="divForma"><!--divForma    -->
-			<div id="divTools">
-				<span style="color:blue;font-weight:bold">Pretenzijas veids:</span><br>
-				<ul>
-					<?php // Tools menju ?>
-					<li id='mnTools'><a id='mnaTools' href="?mTools=mnSP">SP</a></li>
-					<li id='mnTools'><a id='mnaTools' href="?mTools=mnEPS">EPS</a></li>
-				</ul>	<br>
-				<span style="color:blue;font-weight:bold">Sakārtot pēc:</span><br>
-				<br>
-				<span style="color:blue;font-weight:bold">Filtrs:</span><br>
-				<br>
-			</div><!--divTools    -->
-			<div id="divView">
+				<div id="divView">
 				<?php 
 					if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
 						// Pretenzijas forma

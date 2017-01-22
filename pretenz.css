@@ -75,119 +75,164 @@ td.ievade {
  
  
 td.tcol0 {
-		width:5%;
+		width:3%;
 		text-align: center;
 		background-color: cornflowerblue;
 		font-family: verdana;
-	    font-size: 14px;
-		
+	    font-size: 12px;
  }
  
  td.tcol1 {
- 	width:5%;
+ 	width:8%;
  	text-align: center;
  	border: 1px solid black;
+ 	font-size: 12px;
+	font-family: verdana; 	
  }
  
  td.tcol2 {
-  	width:5%;
+  	width:8%;
  	text-align: center;
  	border: 1px solid black;
- 
+ 	font-size: 12px;
+ 	font-family: verdana;
  }
  
  td.tcol3 {
-   	width:30%;
+   	width:20%;
    	border: 1px solid black;
- 
+	font-size: 12px;
+	font-family: verdana; 
  }
  
  td.tcol4 {
- 	width:30%;
+ 	width:20%;
  	border: 1px solid black;
- 	
+ 	font-size: 12px;
+ 	font-family: verdana;
  }
  
  td.tcol5 {
-    	width:24%;
-    	border: 1px solid black;
- 
+   	width:10%;
+   	border: 1px solid black;
+ 	font-size: 12px;
+ 	font-family: verdana;
  }
  
  td.tcol6 {
- 		border: 1px solid black;
+ 	width: 10%;
+	border: 1px solid black;
+	font-size: 12px;
+ 	font-family: verdana;
  }
+ td.tcol7 {
+	border: 1px solid black;
+	font-size: 12px;
+ 	font-family: verdana;
+ 	width:	5%;
+ }
+ td.tcol8 {
+	border: 1px solid black;
+	font-size: 12px;
+ 	font-family: verdana;
+ 	width: 4%;
+ }
+ td.tcol9 {
+	border: 1px solid black;
+	font-size: 12px;
+ 	font-family: verdana;
+ 	width: 4%;
+ }
+ 
 td.htcol0 {
- 	width:2%;
+ 	width:3%;
  	text-align: center;
  	border: 1px solid black;
  	font-family: verdana;
-	font-size: 14px;
+	font-size: 12px;
  	background-color:cornflowerblue;
  }
 
-td.htcol1 {
- 	width:2%;
- 	text-align: center;
- 	border: 1px solid black;
- 	font-family: verdana;
-	font-size: 14px;
- 	background-color:cornflowerblue;
- }
-   
 td.htcol1 {
  	width:8%;
  	text-align: center;
  	border: 1px solid black;
  	font-family: verdana;
-	font-size: 14px;
+	font-size: 12px;
  	background-color:cornflowerblue;
  }
- 
- td.htcol2 {
-  	width:10%;
+   
+td.htcol2 {
+ 	width:8%;
  	text-align: center;
  	border: 1px solid black;
  	font-family: verdana;
-	font-size: 14px;
+	font-size: 12px;
  	background-color:cornflowerblue;
- 
  }
  
  td.htcol3 {
-   	width:30%;
+  	width:20%;
  	text-align: center;
  	border: 1px solid black;
  	font-family: verdana;
-	font-size: 14px;
+	font-size: 12px;
  	background-color:cornflowerblue;
  
  }
  
  td.htcol4 {
- 	width:30%;
+   	width:20%;
+ 	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 12px;
+ 	background-color:cornflowerblue;
+ 
+ }
+ 
+ td.htcol5 {
+ 	width:10%;
   	text-align: center;
  	border: 1px solid black;
  	font-family: verdana;
-	font-size: 14px;
+	font-size: 12px;
  	background-color:cornflowerblue;
 	
  }
  
- td.htcol5 {
+ td.htcol6 {
  	text-align: center;
  	border: 1px solid black;
  	font-family: verdana;
-	font-size: 14px;
+	font-size: 12px;
  	background-color:cornflowerblue;
-
+	width:10%;
  }
  
- td.htcol6 {
+ td.htcol7 {
+ 	width:5%;
   	text-align: center;
  	border: 1px solid black;
  	font-family: verdana;
-	font-size: 14px;
+	font-size: 12px;
+ 	background-color:cornflowerblue;
+  }
+
+td.htcol8 {
+ 	width:5%;
+  	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 12px;
+ 	background-color:cornflowerblue;
+  }
+
+td.htcol9 {
+  	text-align: center;
+ 	border: 1px solid black;
+ 	font-family: verdana;
+	font-size: 12px;
  	background-color:cornflowerblue;
   }
   
@@ -221,6 +266,10 @@ a {
     padding: 5px;	
     }
     
+a:hover {
+	
+}
+
 #divTools{
 	width:20%;
 	border: 1px solid black;
@@ -230,18 +279,17 @@ a {
 
 #mnTools {
 	display: inline;
-    border: 3px solid indigo;
-	padding: 2px;
+    border: 2px solid indigo;
+	padding: 1px;
     background: lightcyan;
-	border-radius: 5px;
-	height: 16px;
+	height: 14px;
 	width: 40%;
 	text-align: center;
-	margin-right: 8px;
+	margin-right: 6px;
 	float: left;
-	font-size: 14px;
+	font-size: 12px;
 	font-family: verdana;
-	margin: 2px;
+	margin: 1px;
 	
 }
 #mnaTools{
@@ -252,6 +300,16 @@ a {
     display: block;
     padding: 0px;	
 }
+#mnaToolsSel{
+    text-decoration: none;
+    font-weight: bold;
+    color: #ff0000;
+    background: #804040;
+    height: 100%;
+    display: block;
+    padding: 0px;	
+}
+
 #mnNavig{
 	display: inline;
     border: 3px solid indigo;
@@ -259,10 +317,10 @@ a {
     background: lightcyan;
 	border-radius: 5px;
 	height: 16px;
-	width: 15%;
+	width: 10%;
 	text-align: center;
 	margin-right: 8px;
-	float: left;
+	float: right;
 	font-size: 14px;
 	font-family: verdana;
 	margin: 2px;
@@ -411,7 +469,7 @@ a {
 	
 }
 #divView{
-	width:78%;
+	width:98%;
 	border: 1px solid black;
 	float:left;
 }
@@ -514,6 +572,7 @@ td.hapraksts1{
 	font-size: 14px;
 	width: 20%;
 	border: 1px solid black;
+	border-collapse: collapse;
 	text-align: right;
 	color: gray;
 }
@@ -543,15 +602,89 @@ td.hinfo2{
 	text-align: center;
 	color: blueviolet;
 }
+
 #fspan1{
-	font-size: 20px;
-	
+	font-size: 16px;
+	/*float: left;*/
+	color: indigo;
+	font-family: verdana;
 }
 
 #fspan2{
-	font-size: 20px;
+	font-size: 16px;
+	float: left;
+	color: blueviolet;
+	font-family: verdana;
+}
+
+#fspan3{
+	font-size: 16px;
+	float: left;
+	font-family: verdana;
+}
+
+#divEventHead{
+	display:block;
+	background: blueviolet;
+	color: #ffff00;
+	width: 100%;
+	border: 1px solid black;
+	height: 23px;
+}
+
+#divEventTitle{
+	display:block;
+	background: blueviolet;
+	color: indigo;
+	width: 100%;
+	border: 1px solid black;
+	height: 23px;
+}
+
+#divEvent{
+	width:100%;
 	
 }
+
+#divEventGalva{
+	width:100%;
+}
+
+#divEventUzdevums{
+	width:100%;
+}
+
+#divEventLemums{
+	width:100%;
+}
+
+#divEventIzpilde{
+	width:100%;
+}
+
+#evspan1{
+	background: blueviolet;
+	font-size: 16px;
+	float: left;
+	font-family: verdana;
+	color: #ffff00 ;
+}
+#evspan2{
+	font-size: 16px;
+	float: left;
+	font-family: verdana;
+}
+#evspan3{
+	font-size: 16px;
+	float: left;
+	font-family: verdana;
+}
+
+
+
+
+
+
 
 
 
