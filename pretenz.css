@@ -570,7 +570,7 @@ a:hover {
 td.hapraksts1{
 	font-family: verdana;
 	font-size: 14px;
-	width: 20%;
+	width: 15%;
 	border: 1px solid black;
 	border-collapse: collapse;
 	text-align: right;
@@ -581,14 +581,14 @@ td.hinfo1{
 	font-family: verdana;
 	font-size: 14px;
 	border: 1px solid black;
-	width: 25%;
+	width: 15%;
 	text-align: center;
 	color: blueviolet;
 }
 td.hapraksts2{
 	font-family: verdana;
 	font-size: 14px;
-	width: 30%;
+	width: 15%;
 	border: 1px solid black;
 	text-align: right;
 	color: gray;
@@ -605,7 +605,7 @@ td.hinfo2{
 
 #fspan1{
 	font-size: 16px;
-	/*float: left;*/
+	/* float: left; */
 	color: indigo;
 	font-family: verdana;
 }
@@ -633,7 +633,7 @@ td.hinfo2{
 }
 
 #divEventTitle{
-	display:block;
+	display:bqslock;
 	background: blueviolet;
 	color: indigo;
 	width: 100%;
@@ -680,12 +680,42 @@ td.hinfo2{
 	font-family: verdana;
 }
 
+#selekts{
+	font-family: verdana;
+	font-size: 12px;
+}
 
+td.apraksts1{
+	width:15%;
+	text-align: right;
+	border: 1px solid gray;
+	font-family: verdana;
+	font-size: 14px;
+	
+}
+td.apraksts2{
+	width:40%;
+	border: 1px solid gray;
+	font-family: verdana;
+	font-size: 14px;
+	text-align: right;
 
+}
+td.info1{
+	width:15%;
+	text-align: left;
+	border: 1px solid gray;
+	font-family: verdana;
+	font-size: 14px;
 
-
-
-
+}
+td.info2{
+	width:40%;
+	border: 1px solid gray;
+	font-family: verdana;
+	font-size: 14px;
+	text-align: left;
+}
 
 
 

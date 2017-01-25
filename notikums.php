@@ -2,7 +2,7 @@
 	<div id="divEventGalva">
 		<span id="evspan1">Nr: 0</span>
 		<div style="width:40%">
-			
+			<?php echo "Ag.ID".$lAgenta_id; ?>
 		</div>
 		<span id="evspan2">Reģ.datums:</span>
 		<input type="text" name="reg_time" value=""><br>

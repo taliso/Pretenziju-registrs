@@ -44,10 +44,15 @@ $form="";
   	$sql = "SELECT * FROM kl_agenti";
   	$q = $db->query($sql);
   	while($r = $q->fetch(PDO::FETCH_ASSOC)){
-  		$agent_list[]=$r;
-  	}
- 	
-  	//*********  IELĀDĒJAM MENJU SARAKSTU MASĪVĀ $menju_list ******************************
+  		if ($r['loma']=='A') {
+  			$agent_list[]=$r;
+  		}	
+  		if ($r['loma']=='T') {
+  			$teh_list[]=$r;
+  		}
+  		$liet_list[]=$r;
+   	}
+   	//*********  IELĀDĒJAM MENJU SARAKSTU MASĪVĀ $menju_list ******************************
   	
   	$sql = "SELECT * FROM menju";
   	$q = $db->query($sql);
@@ -71,6 +76,9 @@ $form="";
    	 	$_SESSION['REG_NR'] = $r['reg_nr'];
    	 	$_SESSION['PREFIKS'] = $r['veids'];
    	 	$_SESSION['FORMA']="veidlapa_SP.php";
+   	 	$_SESSION['PASUT_NR'] = $r['pasutijuma_nr'];
+   	 	$_SESSION['KLIENTS'] = $r['iesniedzejs'];
+   	 	
    	 	$form=$_SESSION['FORMA'];
    	 } else {
    	 	$pret_id="";
@@ -81,7 +89,7 @@ if (isset($_POST['btIeiet'])) {
 	$user = $_POST['user'];
 	$psw = $_POST['psw'];
 	
-	foreach($agent_list as $row){
+	foreach($liet_list as $row){
 		$lUsername=$row['username'];
 		$lPsw=$row['pasword'];
 		if($lUsername==$_POST['user']){
@@ -91,7 +99,8 @@ if (isset($_POST['btIeiet'])) {
 				$lAgenta_id=$row['agenta_id'];
 				$lAgents=$row['agents'];
 				$lTiesibas=$row['tiesibas'];
-
+				$lLoma=$row['loma'];
+				
 				session_regenerate_id();
 				$_SESSION['AGENTS'] = $lAgents;
 				$_SESSION['USER'] = $lUsername;
@@ -104,6 +113,8 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['PRET_ID'] = "";
 				$_SESSION['REG_NR'] = "";
 				$_SESSION['PREFIKS'] = "SP";
+				$_SESSION['PASUT_NR'] = "";
+				$_SESSION['KLIENTS'] = "";
 				$_SESSION['STATUS'] = "LIST"; // 'NEW', 'VIEW','EDIT','LIST'
 				
 				session_write_close();
