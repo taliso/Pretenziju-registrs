@@ -20,9 +20,6 @@
 <!--  	$grupa -->
 <?php 
 
-//var_dump($teh_list);
-
-
 ?>
 
 <div id='divEventForm'>
@@ -32,11 +29,11 @@
 </div>
 	<table style="width: 100%;">
 		<tr> 
-		    <td class="hapraksts1"><span id="fspan1">No:</span></td>
+		    <td class="hapraksts1"><span id="fspan1">Pretenzija No:</span></td>
 		    <td class="hinfo1"><span id="fspan2"> <?php echo $r['pret_id']  ?> </span></td>
 		    <td class="hapraksts1"><span id="fspan1">Pasūtījuma Nr: </span></td>
 		    <td class="hapraksts1"><span id="fspan2"><?php echo $_SESSION['PASUT_NR']; ?></span></td>
-		    <td class="hapraksts2">Reģ.dat.:</td>
+		    <td class="hapraksts1">Reģ.dat.:</td>
 		    <td class="hinfo1"><?php echo $r['registr_datums'] ?></td>
 		    
 		</tr> 
@@ -73,8 +70,11 @@
 		    <?php if ($_SESSION['STATUS']=="NEW") { ?>
 			    <td class="info2"><input type="submit" name="submitEvents" value="Saglabāt"></td>
 			<?php } else { ?>
-		    	<td class="info2"><input type="submit" name="addNewEvent" value="Pievienot notikumu"></td>
+		    	<td class="info2"><input type="submit" name="addNewEvent" value="Pievienot notikumu">
+		    						<input type="submit" name="allEvent" value="Visi notikumi">
+		    	</td>
 		    <?php } ?>
+		    
 		</tr> 
 	
 	</table>
@@ -82,9 +82,6 @@
 
 if($_SESSION['STATUS'] == "NEWEVENT"){?>
 
-		<div id='divEventTitle'> <span id="fspan2">
-		    Janus notikums </span>
-		</div><br>
 		
 <!-- 		<table> -->
 <!-- 			<tr>  -->
@@ -105,5 +102,18 @@ if($_SESSION['STATUS'] == "NEWEVENT"){?>
 	<?php include "notikums.php";		
 
 	 } ?>
+	 
+	 
 </div>
- 
+<?php if($_SESSION['STATUS'] == "EVENT"){?>
+	<div id="divEvents">
+		<div id="divEvent"></div>
+	</div>	
+	<div id="divEvents">
+		<div id="divEvent"></div>
+	</div>	
+	<div id="divEvents">
+		<div id="divEvent"></div>
+	</div>	
+	
+	<?php } ?>

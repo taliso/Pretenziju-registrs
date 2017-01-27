@@ -132,6 +132,9 @@ if (isset($_POST['btIziet'])) {
 if (isset($_POST['addNewEvent'])) {
 	$_SESSION['STATUS']="NEWEVENT";
 }
+if (isset($_POST['addEvent'])) {
+	$_SESSION['STATUS']="EVENT";
+}
 
 
 if(isset($_GET['mTools'])){
