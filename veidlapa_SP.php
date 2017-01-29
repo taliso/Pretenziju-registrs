@@ -146,7 +146,6 @@ if ($_SESSION['STATUS']=="NEW") {
 	$q->execute($data);
 	$_SESSION['STATUS'] = "VIEW";
 	$_SESSION['FORMA'] = 'pret_list.php';
-	
 }
 $pret_id= $_SESSION['PRET_ID'];
 msg("pret_id=".$_SESSION['PRET_ID']);
@@ -157,6 +156,7 @@ if (strlen($pret_id)>0){
 	while($r = $q->fetch(PDO::FETCH_ASSOC)){
 		$pret=$r;
 	}
+	$_SESSION['ID_PRET']=$pret['ID'];
 	$noform_datums=$pret['dokumenta_datums'];
 	$agents=$pret['agents'];
 	$iesniedzejs=$pret['iesniedzejs'];

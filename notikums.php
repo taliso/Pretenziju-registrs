@@ -1,47 +1,38 @@
 <?php
 
 
-if($_SESSION['STATUS'] == "NEWEVENT"){
-	$notik_list['event_npk']="0";
-}?>
 
 
+?>
 
-<div id="divEvent">
+<div id="divNewEvent">
 		<div id='divEventTitle'> <span id="fspan2">
-		    Jauns notikums </span>
-		</div><br>
+		     Notikums Nr:<?php echo $event_npk ?></span>
+		</div>
 		<div id="divEventUzdevums">
+			<span id="evspan1">Uzdevums:</span><input type="text" name="uzdevums" value="" size="240">
 			<table>
 				<tr>
-					<td><?php echo $notik_list['event_npk'] ?></td>
-					<td><span id="evspan1">Uzdevums:</span><input type="text" name="uzdevums" value="" size="200"></td>
-					
+					<td class="info2"><span id="evspan2">Sākts:</span><input type="text" name="reg_time" value="<?php echo date("Y-m-d"); ?>" size="50" disabled></td>
+					<td class="info2"><span id="evspan2">Termiņš:</span><input type="text" name="termins" value="" size="50"></td>
+					<td class="info2"><span id="evspan2">Izpildīts:</span><input type="text" name="izpildes_dat" value="" size="50"></td>
 				</tr>
 				<tr>
-					<td></td>
-					<td> <input type="submit" name="addEvent" value="Saglabāt"></td>
+					<td class="info2"><span id="evspan2">Izpildītājs:</span>
+						<select id="selekts" name="persona">
+				    			<?php	foreach($teh_list as $teh){
+				    			$itd=$teh['agents'];
+		    					 echo "<option value='$itd'>$itd</option>"; 
+				    		}   ?>
+			    		</select>					 
+						
+					
+					</td>
+					<td class="info2"></td>
+					<td class="info2"><input type="checkbox" name="pedejais" value="1"> Šis ir pēdējais notikums</td>
 				</tr>
+				
 			</table>
 		</div>
-
-
-
-
-<!-- 	<div id="divEventGalva"> -->
-<!-- 		<span id="evspan1">Nr: 0</span> -->
-<!--		<div style="width:40%"> -->
-			
-<!-- 		</div> -->
-<!-- 		<span id="evspan2">Reģ.datums:</span> -->
-<!-- 		<input type="text" name="reg_time" value=""><br> -->
-<!-- 		<div id="divEventUzdevums"> -->
-<!-- 			<span id="evspan1">Uzdevums:</span><br> -->
-<!-- 			<input type="text" name="reg_time" value="" size="200"> -->
-<!-- 		</div> -->
-<!-- 		<div id="divEventLemums">  -->
-<!-- 		</div>  -->
-<!-- 		<div id="divEventIzpilde">  -->
-<!-- 		</div> -->
-<!-- 	</div>  -->
+		<input type="submit" name="addEvent" value="Saglabāt">
 </div>

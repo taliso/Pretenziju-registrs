@@ -29,3 +29,9 @@ $iesniegts_mark_foto
 <?php } ?>
 
 <span onclick="alert('<?php echo "adssadsad"; ?>')">Info</span>
+
+
+
+foreach($samplearr as $key => $item){
+  print "<tr><td>" . $key . "</td><td>" . $item['value1'] . "</td><td>" . $item['value2'] . "</td></tr>";
+}

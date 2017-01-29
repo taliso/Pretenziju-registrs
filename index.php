@@ -116,7 +116,7 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['PASUT_NR'] = "";
 				$_SESSION['KLIENTS'] = "";
 				$_SESSION['STATUS'] = "LIST"; // 'NEW', 'VIEW','EDIT','LIST'
-				
+				$_SESSION['ID_PRET']="";
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
 			}

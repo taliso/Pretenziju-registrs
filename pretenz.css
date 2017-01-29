@@ -571,21 +571,20 @@ td.hapraksts1{
 	font-family: verdana;
 	font-size: 14px;
 	width: 15%;
-	/* border: 1px solid black; */
 	border-collapse: collapse;
 	text-align: right;
 	color: gray;
-	background:#ff8000;
+	
 }
 
 td.hinfo1{
 	font-family: verdana;
 	font-size: 14px;
-	/* border: 1px solid black; */
+	
 	width: 15%;
 	text-align: center;
 	color: blueviolet;
-	background:#ff8000;
+	
 }
 td.hapraksts2{
 	font-family: verdana;
@@ -608,14 +607,14 @@ td.hinfo2{
 #fspan1{
 	font-size: 16px;
 	/* float: left; */
-	color: indigo;
+	color: #ff8000;
 	font-family: verdana;
 }
 
 #fspan2{
 	font-size: 16px;
 	float: left;
-	color: #ffff00;
+	color: #ffffff;
 	font-family: verdana;
 }
 
@@ -631,7 +630,7 @@ td.hinfo2{
 	color: #ffff00;
 	width: 100%;
 	border: 1px solid black;
-	height: 23px;
+	height: 45px;
 }
 
 #divEventTitle{
@@ -644,11 +643,27 @@ td.hinfo2{
 }
 
 #divEvent{
-	width:800px;
-	height:40px;
-	border:1px solid black;
+	width: 98%;
+    height: 40px;
+    border: 1px solid blue;
+    margin: 10px;
+    background: aliceblue;
 	
 }
+divNewEvent{
+	width: 98%;
+    height: 40px;
+    border: 1px solid blue;
+    margin: 10px;
+    background: aliceblue;
+	
+}
+
+#divEvents{
+	width:100%;
+	border:1px solid blue;
+	
+}	
 
 #divEventGalva{
 	width:100%;
@@ -714,11 +729,12 @@ td.info1{
 
 }
 td.info2{
-	width:40%;
-	border: 1px solid gray;
+	width:30%;
+	/* border: 1px solid gray; */
 	font-family: verdana;
 	font-size: 14px;
 	text-align: left;
+	padding-left: 11px;
 }
 
 

@@ -1,43 +1,84 @@
 
-<?php $sql = 'SELECT * FROM pretenzijas where pret_id="'.$_SESSION['PRET_ID'].'"';
-   	 $q = $db->query($sql);
-   	 $r = $q->fetch(PDO::FETCH_ASSOC);
-   	 
-	$sql ="SELECT * from tp_pretenzijas.notikumi where id_pret='".$_SESSION['PRET_ID']."'";
-	$q = $db->query($sql);
+<?php 
+$event_npk=0;
+// #########   DATI PAR KONKRETO PRETENZIJU  ##############################################
+ $sql = 'SELECT * FROM pretenzijas where pret_id="'.$_SESSION['PRET_ID'].'"';
+    	 $q = $db->query($sql);
+    	 $r = $q->fetch(PDO::FETCH_ASSOC);
+
+// #########   VEIDOJAM NOTIKUMU SARAKSTU  ############################################## 
+	$sql ="SELECT * from tp_pretenzijas.notikumi where id_pret='".$_SESSION['ID_PRET']."'";
+	$q  = $db->query($sql);
 	$n_sk=0;
 	while($n = $q->fetch(PDO::FETCH_ASSOC)){
 		$notik_list[]=$n;
 		$n_sk=$n_sk+1;
 	}
-	
-   	 ?>
+	$event_npk=$n_sk;
+	//var_dump($notik_list);
+// #########   POGA - PIEVIENOT NOTIKUMU -atveram jauna notikuma logu  ########################################
+if (isset($_POST['addNewEvent'])) {
+	if (isset($notik_list)){
+		$event_npk=$notik_list[$n_sk-1]['event_npk']+1;
+	} else {
+		$event_npk=1;
+	}
+}// addNewEvent
 
-<!--  	$notikumu_sk -->
-<!--  	$atbildigais -->
-<!--  	$beigu_dat -->
-<!--  	$budzets -->
-<!--  	$grupa -->
-<?php 
+// #########   POGA - SAGLABAT - saglabajam jauno notikumu  #############################
+if (isset($_POST['addEvent'])) {
+	$lauki_notikumi = array(
+			'id_pret' =>$_SESSION['ID_PRET'],
+			'pret_id'=>$_SESSION['PRET_ID'],
+			'pasut_nr'=>$_SESSION['PASUT_NR'],
+			'event_id'=>$_SESSION['PRET_ID']."-".$event_npk,
+			'event_npk'=>$event_npk,
+			'persona'=>$_POST['persona'],
+			'uzdevums'=>$_POST['uzdevums'],
+			'reg_time'=>date("Y-m-d"),
+			'termins'=>$_POST['termins'],
+			'lemums'=>"",
+			'izdevumi'=>0,
+			'pedejais'=>0,
+			'izpildes_dat'=>$_POST['izpildes_dat'],
+			'apraksts'=>""
+			
+			
+			);
+	$notik_list['event_npk']=$event_npk;
+	
+// #########       IEVIETOJAM JAUNU NOTIKUMU     #############################
+	$sql="INSERT INTO notikumi SET ";
+	foreach($lauki_notikumi as $key => $item){
+		$sql=$sql.$key."='".$item."',";
+	}
+	$sql=substr($sql,0,strlen($sql)-1);
+	echo $sql;
+	$q = $db->query($sql);
+
+	
+	
+	
+}// addEvent-  
+
 
 ?>
 
-<div id='divEventForm'>
-<div id='divEventHead'> 
-	<span id="fspan3">   Notikumi pēc pretenzijas reģistrācijas </span>
-
-</div>
-	<table style="width: 100%;">
+<div id='divEventForm'><!--divEventForm    -->
+	<div id='divEventHead'><!--divEventHead    --> 
+		<span id="fspan3">   Notikumi pēc pretenzijas reģistrācijas </span>
+		<table style="width: 100%;">
 		<tr> 
 		    <td class="hapraksts1"><span id="fspan1">Pretenzija No:</span></td>
 		    <td class="hinfo1"><span id="fspan2"> <?php echo $r['pret_id']  ?> </span></td>
 		    <td class="hapraksts1"><span id="fspan1">Pasūtījuma Nr: </span></td>
 		    <td class="hapraksts1"><span id="fspan2"><?php echo $_SESSION['PASUT_NR']; ?></span></td>
-		    <td class="hapraksts1">Reģ.dat.:</td>
-		    <td class="hinfo1"><?php echo $r['registr_datums'] ?></td>
-		    
+		    <td class="hapraksts1"><span id="fspan1">Reģ.dat.:</span></td>
+		    <td class="hinfo1"><span id="fspan2"><?php echo $r['registr_datums'] ?></span></td>
 		</tr> 
 	</table>
+	
+	</div><!--divEventHead    -->
 	
 	<table>
 		<tr> 
@@ -80,40 +121,7 @@
 	</table>
 <?php
 
-if($_SESSION['STATUS'] == "NEWEVENT"){?>
 
-		
-<!-- 		<table> -->
-<!-- 			<tr>  -->
-<!-- 			    <td class="evapraksts">Persona</td> -->
-<!-- 			    <td class="evapraksts">Uzdevums</td> -->
-<!-- 			    <td class="evapraksts">Reģ.dat.:</td> -->
-<!-- 			    <td class="evapraksts">Izdevumi</td> -->
-<!-- 			    <td class="evapraksts"></td> -->
-<!-- 			</tr>  -->
-<!-- 			<tr>  -->
-<!-- 			    <td class="apraksts"><input type="text" name="evPersona" value="" size="7"></td> -->
-<!-- 			    <td class="apraksts"><input type="text" name="evUzdevums" value="" size="7"></td> -->
-<!-- 			    <td class="apraksts"><input type="text" name="evRegDat" value="" size="7"></td> -->
-<!-- 			    <td class="apraksts"><input type="text" name="evIzdevumi" value="" size="7"></td> -->
-<!-- 			    <td class="apraksts"><input type="submit" name="addEvent" value="Pievienot"></td> -->
-<!-- 			</tr>  -->
-<!-- 		</table> -->
-	<?php include "notikums.php";		
 
-	 } ?>
 	 
-	 
-</div>
-<?php if($_SESSION['STATUS'] == "EVENT"){?>
-	<div id="divEvents">
-		<div id="divEvent"></div>
-	</div>	
-	<div id="divEvents">
-		<div id="divEvent"></div>
-	</div>	
-	<div id="divEvents">
-		<div id="divEvent"></div>
-	</div>	
-	
-	<?php } ?>
+</div><!--divEventForm    -->
