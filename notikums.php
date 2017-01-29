@@ -10,7 +10,7 @@
 		     Notikums Nr:<?php echo $event_npk ?></span>
 		</div>
 		<div id="divEventUzdevums">
-			<span id="evspan1">Uzdevums:</span><input type="text" name="uzdevums" value="" size="240">
+			<span id="evspan1">Uzdevums:</span><input type="text" name="uzdevums" value="" size="200">
 			<table>
 				<tr>
 					<td class="info2"><span id="evspan2">Sākts:</span><input type="text" name="reg_time" value="<?php echo date("Y-m-d"); ?>" size="50" disabled></td>

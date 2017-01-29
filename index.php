@@ -129,12 +129,12 @@ if (isset($_POST['btIziet'])) {
 	unset($_SESSION['AGENTS']);
 }
 
-if (isset($_POST['addNewEvent'])) {
-	$_SESSION['STATUS']="NEWEVENT";
-}
-if (isset($_POST['addEvent'])) {
-	$_SESSION['STATUS']="EVENT";
-}
+// if (isset($_POST['addNewEvent'])) {
+// 	$_SESSION['STATUS']="NEWEVENT";
+// }
+// if (isset($_POST['addEvent'])) {
+// 	$_SESSION['STATUS']="EVENT";
+// }
 
 
 if(isset($_GET['mTools'])){
@@ -188,6 +188,7 @@ if(isset($_GET['navig'])){
 	}
 	if($navig=='mnEvent'){
 		$_SESSION['FORMA'] = 'notikumi.php';
+		$_SESSION['STATUS'] = "EVENTS";
 	}
 	
 }
