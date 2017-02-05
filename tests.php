@@ -35,3 +35,74 @@ $iesniegts_mark_foto
 foreach($samplearr as $key => $item){
   print "<tr><td>" . $key . "</td><td>" . $item['value1'] . "</td><td>" . $item['value2'] . "</td></tr>";
 }
+
+
+
+
+//Iezīmēt tikai apakšējos borderus
+tr td {
+    border-bottom: 1px solid silver;
+}
+
+//Iezīmēt pāra kolonnu
+tr:nth-child(even) {background: #CCC}
+//Iezīmēt nepāra kolonnas
+tr:nth-child(odd) {background: #FFF}
+
+
+//Iekrāsot rindu zem kursora
+tr:hover { background-color: green; }
+
+
+
+function sutit_epastu_adresatam ($adresats, $virsraksts, $zinojums)
+{
+    //debug:
+    $adresats_ists = $adresats;
+    $adresats = 'martins@tenax.lv';
+    
+    $to = $adresats;
+    
+    $headers = 'MIME-Version: 1.0' . "\r\n" . 'Content-type: text/plain; charset=UTF-8' . "\r\n";
+    
+    if(mail($to,'=?UTF-8?B?'.base64_encode($virsraksts).'?=',$zinojums." Kam:".$adresats_ists,$headers))
+    {
+        //echo('Ziņojums nosūtīts');
+        aktivitate ("2", "Atgādinājums - rezervācija - ražošana", "Atgādinājums nosūtīts uz: ".str_replace("[ at ]", "@", $adresats));
+    }
+    else 
+    { 
+        echo('Ziņojums netika nosūtīts');
+    }
+}
+
+
+
+
+// Datuma izvēle / kalendārs
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Datepicker - Default functionality</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/hemes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function()
+            $( "#datepicker1" ).datepicker();
+            $( "#datepicker2" ).datepicker();
+            $( "#datepicker3" ).datepicker({dateFormat: 'mm-dd-yy'});
+        } );
+    </script>
+</head>
+<body>
+
+<p>Date: <input type="text" id="datepicker1"></p>
+<p>Date: <input type="text" id="datepicker2"></p>
+<p>Date: <input type="text" id="datepicker3"></p>
+
+
+</body>

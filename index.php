@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 include "config.php";
 include "funkcijas.php";
 include "konekcija.php";
-
+include "\phpmailer\mailset.php";
 $datums=datums();
 define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
@@ -64,7 +64,11 @@ $form="";
   	$q = $db->query($sql);
   	$r = $q->fetch(PDO::FETCH_ASSOC);
    	 $versija=$r['versija'];
-   	 
+   	 if (isset($_POST['submitCancel'])) {   // Atcelt formas saglabāšanu
+   	 	$_SESSION['FORMA'] = 'pret_list.php';
+   	 	$_SESSION['STATUS'] = "LIST";
+   	 }
+   	  
 //***   IZVELE NO SARAKSTA  ********************************************************************   	 
    	 if (isset($_GET['pret_id'])){
    	 	$pret_id=$_GET['pret_id'];
@@ -75,7 +79,7 @@ $form="";
    	 	$r = $q->fetch(PDO::FETCH_ASSOC);
    	 	$_SESSION['REG_NR'] = $r['reg_nr'];
    	 	$_SESSION['PREFIKS'] = $r['veids'];
-   	 	$_SESSION['FORMA']="veidlapa_SP.php";
+   	 	$_SESSION['FORMA']="veidlapa_KM_view.php";
    	 	$_SESSION['PASUT_NR'] = $r['pasutijuma_nr'];
    	 	$_SESSION['KLIENTS'] = $r['iesniedzejs'];
    	 	
@@ -88,7 +92,6 @@ if (isset($_POST['btIeiet'])) {
 
 	$user = $_POST['user'];
 	$psw = $_POST['psw'];
-	
 	foreach($liet_list as $row){
 		$lUsername=$row['username'];
 		$lPsw=$row['pasword'];
@@ -112,7 +115,7 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['VERSIJA'] = $versija;
 				$_SESSION['PRET_ID'] = "";
 				$_SESSION['REG_NR'] = "";
-				$_SESSION['PREFIKS'] = "SP";
+				$_SESSION['PREFIKS'] = "KM";
 				$_SESSION['PASUT_NR'] = "";
 				$_SESSION['KLIENTS'] = "";
 				$_SESSION['STATUS'] = "LIST"; // 'NEW', 'VIEW','EDIT','LIST'
@@ -129,24 +132,16 @@ if (isset($_POST['btIziet'])) {
 	unset($_SESSION['AGENTS']);
 }
 
-// if (isset($_POST['addNewEvent'])) {
-// 	$_SESSION['STATUS']="NEWEVENT";
-// }
-// if (isset($_POST['addEvent'])) {
-// 	$_SESSION['STATUS']="EVENT";
-// }
-
-
 if(isset($_GET['mTools'])){
 	$arKey=$_GET['mTools'];
 	if ($arKey=="mnEPS"){
 		$_SESSION['FORMA'] = 'pret_list.php';
-		$_SESSION['PREFIKS'] ="EP";
+		$_SESSION['PREFIKS'] ="EPS";
 		$_SESSION['STATUS'] = "LIST";
 	}
-	if ($arKey=="mnSP"){
+	if ($arKey=="mnKM"){
 		$_SESSION['FORMA'] = 'pret_list.php';
-		$_SESSION['PREFIKS'] ="SP";
+		$_SESSION['PREFIKS'] ="KM";
 		$_SESSION['STATUS'] = "LIST";
 	}
 }
@@ -175,11 +170,11 @@ if(isset($_GET['navig'])){
 		$_SESSION['REG_NR']=$reg_nr;
 		// Registracijas numura apdeitosana +1
 		//*********************************************************************************************************
-		if ($_SESSION['PREFIKS'] =="EP"){
-			$_SESSION['FORMA']="veidlapa_EPS.php";
+		if ($_SESSION['PREFIKS'] =="EPS"){
+			$_SESSION['FORMA']="veidlapa_EPS_edit.php";
 		}
-		if ($_SESSION['PREFIKS'] =="SP"){
-			$_SESSION['FORMA']="veidlapa_SP.php";
+		if ($_SESSION['PREFIKS'] =="KM"){
+			$_SESSION['FORMA']="veidlapa_KM_edit.php";
 		}
 		
 	}
@@ -277,9 +272,9 @@ if(isset($_SESSION['AGENTS'])){
 			<div id="divTools">
 				<ul>
 					<?php // Tools menju ?>
-					<li id='mnTools'><a id='<?php if ($_SESSION['PREFIKS']=="SP"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' href="?mTools=mnSP">SP</a></li>
-					<li id='mnTools'><a id='<?php if ($_SESSION['PREFIKS']=="EP"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' href="?mTools=mnEPS">EPS</a></li>
-<!-- 					<li id='mnTools'><a id='mnaTools' href="?mTools=mnSP">SP</a></li> -->
+					<li id='mnTools'><a id='<?php if ($_SESSION['PREFIKS']=="KM"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' href="?mTools=mnKM">KM</a></li>
+					<li id='mnTools'><a id='<?php if ($_SESSION['PREFIKS']=="EPS"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' href="?mTools=mnEPS">EPS</a></li>
+<!-- 					<li id='mnTools'><a id='mnaTools' href="?mTools=mnKM">KM</a></li> -->
 <!-- 					<li id='mnTools'><a id='mnaTools' href="?mTools=mnEPS">EPS</a></li> -->
 
 				</ul>	<br>
@@ -306,9 +301,9 @@ if(isset($_SESSION['AGENTS'])){
 		<div id="divForma"><!--divForma    -->
 				<div id="divView">
 				<?php 
-					if(isset($_SESSION['FORMA']) && $_SESSION['FORMA'] != -1){
+					if(isset($_SESSION['FORMA'])) {
 						// Pretenzijas forma
-						msg($_SESSION['REG_NR']);
+						msg("L:303=".$_SESSION['FORMA']);
 						include $_SESSION['FORMA'];
 					}
 				?>

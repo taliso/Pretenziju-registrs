@@ -85,7 +85,7 @@ td.tcol0 {
  td.tcol1 {
  	width:8%;
  	text-align: center;
- 	border: 1px solid black;
+ 	
  	font-size: 12px;
 	font-family: verdana; 	
  }
@@ -93,52 +93,52 @@ td.tcol0 {
  td.tcol2 {
   	width:8%;
  	text-align: center;
- 	border: 1px solid black;
+ 	
  	font-size: 12px;
  	font-family: verdana;
  }
  
  td.tcol3 {
    	width:20%;
-   	border: 1px solid black;
+   	
 	font-size: 12px;
 	font-family: verdana; 
  }
  
  td.tcol4 {
  	width:20%;
- 	border: 1px solid black;
+ 	
  	font-size: 12px;
  	font-family: verdana;
  }
  
  td.tcol5 {
    	width:10%;
-   	border: 1px solid black;
+   	
  	font-size: 12px;
  	font-family: verdana;
  }
  
  td.tcol6 {
  	width: 10%;
-	border: 1px solid black;
+	
 	font-size: 12px;
  	font-family: verdana;
  }
  td.tcol7 {
-	border: 1px solid black;
+	
 	font-size: 12px;
  	font-family: verdana;
  	width:	5%;
  }
  td.tcol8 {
-	border: 1px solid black;
+	
 	font-size: 12px;
  	font-family: verdana;
  	width: 4%;
  }
  td.tcol9 {
-	border: 1px solid black;
+	
 	font-size: 12px;
  	font-family: verdana;
  	width: 4%;
@@ -738,7 +738,12 @@ td.info2{
 }
 
 
-
+#list_span{
+	color:#000080;
+}
+tr td {
+    border-bottom: 1px solid silver;
+}
 
 
 
