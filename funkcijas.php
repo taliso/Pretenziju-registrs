@@ -260,9 +260,18 @@ function StatCheckBox($mname,$mvariable,$koments,$nobeig){
 	echo $mteksts;
 }
 
-
-
-
+function MailTo($to,$sub,$body){
+	$mail->addAddress($to);               // Name is optional
+	$mail->Subject = $sub;
+	$mail->Body    = $body;
+	
+	if(!$mail->send()) {
+		echo 'Message could not be sent.';
+		echo 'Mailer Error: ' . $mail->ErrorInfo;
+	} else {
+		echo 'E-pasts ir nosūtīts otru reizi';
+	}
+}
 
 
 

@@ -89,77 +89,130 @@ if (strlen($pret_id)>0){
 	
 	echo "<div id='divFormTitle'>Pretenzija Nr. ".$pret_id."  </div>";
 	?>
+<!-- ###################   TABULA            ################################################# -->	
 	<table>
+
+
 	  <tr>  <!-- 1 -->
 	    <td class="npk">1.</td>
-	    <td class="teksts">Pretenzijas reģistrēšana datums</td>
+	    <td class="teksts">Šī dokumenta noformēšanas datums</td>
+	    <td class="atstarpe"></td>
 	    <td class="ievade">
 	    	<?php echo "<span id='list_span'>".$noform_datums."</span>" ; ?>
 	    </td>
 	  </tr>
+
+
 	  <tr>  <!--2  -->
 	    <td class="npk">2.</td>
-	    <td class="teksts">Pretenzijas iesniedzējs:</td>
+	    <td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas ir pieņēmis pretenziju</td>
+		<td class="atstarpe"></td>
 	    <td class="ievade">
 			<?php echo "<span id='list_span >".$agents."</span>";  ?>
 	    </td>
 	  </tr>
+	  
+	  
 	  <tr>  <!--3  -->
-	
 	    <td class="npk">3.</td>
-	    <td class="teksts">Klienta nosaukums:
-	    </td>
+	    <td class="teksts">Pretenzijas iesniedzējs (Uzņēmuma/privātpersonas nosaukums)  </td>
+		<td class="atstarpe"></td>
 		<td>
-			<?php 
-				echo "<span id='list_span'>".$iesniedzejs."</span>" ; 
-			?>
+			<?php echo "<span id='list_span'>".$iesniedzejs."</span>" ;	?>
 		</td>
 	  </tr>
+
+
 	  <tr>  <!--4  -->
 	    <td class="npk">4.</td>
-	    <td class="teksts">Datums, kad pieņemta pretenzija</td>
+	    <td class="teksts">Datums, kad saņemta pretenzija</td>
+		<td class="atstarpe"></td>
 	    <td class="ievade">
-	    	<?php 
-	    		echo "<span id='list_span'>".$sanemts_datums."</span>";
-			?>
-	</td>
+	    	<?php echo "<span id='list_span'>".$sanemts_datums."</span>"; ?>
+		</td>
 	  </tr>
+
+
 	  <tr>  <!-- 5 -->
 	    <td class="npk">5.</td>
-	    <td class="teksts">Produkta apraksts:</td>
-	    
-	      	<td class="ievade">
-		    	<?php 
-		    		echo "<span id='list_span'>".$produkcija."</span>";
-				?>
-	    	</td>
+	    <td class="teksts">Produkta tips un biezums u.c. informācija, par kuru izteikta pretenzija</td>
+   		<td class="atstarpe"></td>
+      	<td class="ievade">
+		    	<?php echo "<span id='list_span'>".$produkcija."</span>"; ?>
+    	</td>
 	   </tr>
+
+
 	  <tr>  <!-- 6 -->
 	    <td class="npk">6.</td>
-	    <td class="teksts">Pasūtījums numurs:</td>
+	    <td class="teksts">Pasūtījuma numurs, uz kuru attiecas pretenzija <br> (pievienot pasūtījuma kopiju pielikumā)</td>
+		<td class="atstarpe"></td>
 	    <td class="ievade">
-		    	<?php 
-		    	  	echo "<span id='list_span'>".$pasutijuma_nr."</span>";
-				?>
+		    	<?php echo "<span id='list_span'>".$pasutijuma_nr."</span>"; ?>
     	</td>
 	  </tr>
-	    <tr>  <!--7  -->
+	  
+
+	  <tr>  <!-- 7 -->
 	    <td class="npk">7.</td>
-	    <td class="teksts" style="width: 23%;">Preces daudzums, par kuru izteikta pretenzija</td>
-	    <td class="ievade1" style="width: 23%;">
-			<?php  
-				echo "<span id='list_span'>".$daudzums_kvmet." kv.m.</span>";
-			?>    
+	    <td class="teksts">Preces daudzums, par kuru izteikta pretenzija</td>
+		<td class="atstarpe"></td>
+	    <td class="ievade">
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Viss pasūtījums<br>
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Piegādes partija (s) Nr.<input type="text" name="pieg_part_nr" value=""><br>
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Atsevišķi paneļi, veidņi <input type="text" name="pieg_part_nr" value="">kv.m. piegādes partijā (s) Nr.<input type="text" name="pieg_part_nr" value="">
+    	</td>
+	  </tr>
+
+	  
+	  <tr>  <!--8  -->
+	    <td class="npk">8.</td>
+   	    <td class="teksts">Pretenzijas apraksts<br> (var pievienot pretenzijas aprakstu pielikumā)</td>
+		<td class="atstarpe"></td>
+	    <td class="ievade">
+		    <textarea rows="4" cols="120">At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+			</textarea>
+	    
 	  	</td>
-	    <td class="ievade1" style="width: 23%;">
-			<?php  
-				echo "<span id='ist_span'> ".$daudzums_kubmet." kub.m.</span>";
-			?>    
+	  </tr>
+	
+	
+	  <tr>  <!-- 9  -->
+	    <td class="npk">9.</td>
+   	    <td class="teksts">Pretenzijas iemesls</td>
+		<td class="atstarpe"></td>
+	    <td class="ievade">
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Piegādes laiks<br>
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Daudzuma neatbilstība<br>
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Piegādāta bojāta prece<br>
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Neatbilstoša preces kvalitāte
 	  	</td>
-	  	
-	</tr>
+	  </tr>
+
+		
+	  <tr>  <!-- 10  -->
+	    <td class="npk">10.</td>
+   	    <td class="teksts">Iesniegtās fotofiksācijas <br> (pievienot pielikumā)</td>
+		<td class="atstarpe"></td>
+	    <td class="ievade">
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)<br>
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Ir saņemtas preces fotofiksācija<br>
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Ir saņemtas marķējuma fotofiksācijas
+	  	</td>
+	  </tr>
+
+
+	  <tr>  <!-- 11  -->
+	    <td class="npk">11.</td>
+   	    <td class="teksts">Obligāti iesniedzami dokumenti (ja ir piegādāta <br> bojāta prece vai konstatēta daudzuma neatbilstība</td>
+		<td class="atstarpe"></td>
+	    <td class="ievade">
+	    	<input type="checkbox" name="daudzums_viss" value="1"> CMR<br>
+	    	<input type="checkbox" name="daudzums_viss" value="1"> Pieņemšanas nodošanas akts<br>
+	  	</td>
+	  </tr>
+	
 	</table>
-	  <input type="submit" name="submitSave" value="Saglabāt"><input type="submit" name="submitCancel" value="Atcelt">
   </form>
 
 </div>
