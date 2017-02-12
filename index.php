@@ -9,6 +9,7 @@ include "config.php";
 include "funkcijas.php";
 include "konekcija.php";
 include "\phpmailer\mailset.php";
+
 $datums=datums();
 define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
@@ -32,12 +33,21 @@ $form="";
 <!DOCTYPE html>
 <html>
 <head>
- <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
- <link rel="stylesheet" type="text/css" href="pretenz.css" />
+	 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	 <link rel="stylesheet" type="text/css" href="pretenz.css" />
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="jquery/jquery-ui.theme.min.css">
+	 <link rel="stylesheet" href="jquery/jquery-ui.structure.min.css">
+	 <link rel="stylesheet" href="jquery/jquery-ui.theme.min.css">
+	 <script src="jquery/jquery-3.1.1.min.js"></script>
+	 <script src="jquery/jquery-1.12.4.js"></script>
+	 <script src="jquery/jquery-ui.min.js"></script>
+ 
   <title>Pretenzijas</title>
 </head>
  
 <body>
+ 
 	<?php 
   	//*********  IELĀDĒJAM AĢENTU SARAKSTU MASĪVĀ $agent_list ******************************
   	
@@ -82,7 +92,7 @@ $form="";
    	 	$_SESSION['FORMA']="veidlapa_KM_view.php";
    	 	$_SESSION['PASUT_NR'] = $r['pasutijuma_nr'];
    	 	$_SESSION['KLIENTS'] = $r['iesniedzejs'];
-   	 	
+   	 	$_SESSION['PRET_STATUS']='REGISTER';
    	 	$form=$_SESSION['FORMA'];
    	 } else {
    	 	$pret_id="";
@@ -109,6 +119,7 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['USER'] = $lUsername;
 				$_SESSION['TIESIBAS'] = $lTiesibas;
 				$_SESSION['AGENTA_ID'] = $lAgenta_id;
+				$_SESSION['LOMA'] = $lLoma;
 				$_SESSION['FORMA'] = 'pret_list.php';
 				$_SESSION['FORM_TITLE'] = -1;
 				$_SESSION['NAVIG'] = -1;
@@ -118,8 +129,9 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['PREFIKS'] = "KM";
 				$_SESSION['PASUT_NR'] = "";
 				$_SESSION['KLIENTS'] = "";
-				$_SESSION['STATUS'] = "LIST"; // 'NEW', 'VIEW','EDIT','LIST'
+				$_SESSION['STATUS'] = "LIST"; // 'VIEW','EDIT',"VIEW_EVENT","EDIT_EVENT",'LIST'
 				$_SESSION['ID_PRET']="";
+				$_SESSION['PRET_STATUS']=""; // "NEW","REGISTER","DELETE","ARCHIVE"
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
 			}
@@ -155,10 +167,12 @@ if(isset($_GET['navig'])){
 	}
 	if($navig=='mnEdit'){
 		$_SESSION['STATUS'] = "EDIT";
+		$_SESSION['FORMA'] = 'veidlapa_KM_edit.php';
 	}
 	if($navig=='mnNew'){
 		
-		$_SESSION['STATUS'] = "NEW";
+		$_SESSION['STATUS'] = "EDIT";
+		$_SESSION['PRET_STATUS']="NEW";
 		$_SESSION['PRET_ID'] = "";
 		//********************************************************************************************************
 		// Registracijas numura apdeitosana +1

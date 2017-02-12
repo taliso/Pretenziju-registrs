@@ -1,20 +1,13 @@
 
  
  
+
+
 <?php
 
 $agents=$_SESSION['AGENTS'];
-if (isset($_POST['pret_risinajums'])) {
-	$sakuma_datums = date("Y-m-d");
-	
-	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
-	$sql ="UPDATE pretenzijas SET sakuma_datums='".$sakuma_datums."', status='REGISTER' WHERE pret_id='".$_SESSION['PRET_ID']."'";
-	$q = $dbf->query($sql);
-	
-}
 
 if ($_SESSION['PRET_STATUS']=="NEW") {
-	$ID="";
 	$reg_nr="";
 	$veids="";
 	$dokumenta_datums="";
@@ -71,20 +64,17 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	$saskanots_ar_klientu="";
 	$vienosanas="";
 	$beigu_dat="";
+	
 } else {
-
-
-	$_SESSION['STATUS'] = "VIEW";
-	//$pret_id= $_SESSION['PRET_ID'];
-	if (strlen($pret_id)>0){
-		
+	if (strlen($_SESSION['PRET_ID'])>0){
+		$pret_id=$_SESSION['PRET_ID'];
 		$sql ="SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
 		$q = $db->query($sql);
 		$pret="";
 		while($r = $q->fetch(PDO::FETCH_ASSOC)){
 			$pret=$r;
 		}
-		
+
 		$reg_nr=$pret['reg_nr'];
 		$veids=$pret['veids'];
 		$dokumenta_datums=$pret['dokumenta_datums'];
@@ -141,17 +131,56 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 		$saskanots_ar_klientu=$pret['saskanots_ar_klientu'];
 		$vienosanas=$pret['vienosanas'];
 		$beigu_dat=$pret['beigu_dat'];
-		
-		
-		
 	}
-}	
+	
+	
+}
+if (isset($_POST['pret_save'])) {
+	include 'veidlapa_KM_save.php';
+	$_SESSION['STATUS'] = "LIST";
+	$_SESSION['FORMA'] = 'pret_list.php';
+	if ($_SESSION['PRET_STATUS']=='NEW') {
+		$to='talis@tenax.lv';
+		$sub='Ir registreta jauna pretenzija Nr. '.$_SESSION['PRET_ID'];
+		$body='Ir registreta jauna pretenzija Nr. '.$_SESSION['PRET_ID'].'. Ludzu nozimet atbildigos.';
+			
+		$mail->addAddress($to);               // Name is optional
+		$mail->Subject = $sub;
+		$mail->Body    = $body;
+			
+		if(!$mail->send()) {
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'E-pasts ir nosūtīts. Par jaunu pretenziju.';
+		}
+		
+	} else {
+	
+			$to='talis@tenax.lv';
+			$sub='Pretenzija Nr. '.$_SESSION['PRET_ID'].' ir labota.';
+			$body='Pretenzija Nr. '.$_SESSION['PRET_ID'].' ir labota.';
+			
+			$mail->addAddress($to);               // Name is optional
+			$mail->Subject = $sub;
+			$mail->Body    = $body;
+			
+			if(!$mail->send()) {
+				echo 'Message could not be sent.';
+				echo 'Mailer Error: ' . $mail->ErrorInfo;
+			} else {
+				echo 'E-pasts ir nosūtīts. Par labošanu.';
+			}
+	}
+	}
+if (isset($_POST['pret_cancel'])) {
+	
+}
 
 ?>
+ 
  <div id="saturs">
 <form action="#" method="post">
-
-
 	<?php
 	if($_SESSION['STATUS']=="NEW"){
 		$pret_id=$_SESSION['PREFIKS']." - ".($_SESSION['REG_NR']+1);
@@ -171,7 +200,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="teksts">Šī dokumenta noformēšanas datums</td>
 	    <td class="atstarpe"></td>
 	    <td class="ievade">
-	    	<?php echo "<span id='list_span'>".$dokumenta_datums."</span>" ; ?>
+	    	<input ID="dokumenta_datums" type="text" name="dokumenta_datums" value="<?php echo $dokumenta_datums ; ?>">
 	    </td>
 	  </tr>
 
@@ -181,7 +210,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas ir pieņēmis pretenziju</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-			<?php echo "<span id='list_span' >".$agents."</span>";  ?>
+			<input ID="text_pret" type="text" name="agents" value="<?php echo $agents;  ?>">
 	    </td>
 	  </tr>
 	  
@@ -191,7 +220,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="teksts">Pretenzijas iesniedzējs (Uzņēmuma/privātpersonas nosaukums)  </td>
 		<td class="atstarpe"></td>
 		<td>
-			<?php echo "<span id='list_span'>".$iesniedzejs."</span>" ;	?>
+			<input ID="text_pret" type="text" name="iesniedzejs" value="<?php echo $iesniedzejs ;	?>">
 		</td>
 	  </tr>
 
@@ -201,7 +230,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="teksts">Datums, kad saņemta pretenzija</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-	    	<?php echo "<span id='list_span'>".$sanemsanas_datums."</span>"; ?>
+	    	<input ID="sanemsanas_datums" type="text" name="sanemsanas_datums" value="<?php echo $sanemsanas_datums; ?>">
 		</td>
 	  </tr>
 
@@ -211,7 +240,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="teksts">Produkta tips un biezums u.c. informācija, par kuru izteikta pretenzija</td>
    		<td class="atstarpe"></td>
       	<td class="ievade">
-		    	<?php echo "<span id='list_span'>".$produkcija."</span>"; ?>
+		    	<input ID="text_pret" type="text" name="produkcija" value="<?php echo $produkcija; ?>" size="100">
     	</td>
 	   </tr>
 
@@ -221,7 +250,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="teksts">Pasūtījuma numurs, uz kuru attiecas pretenzija <br> (pievienot pasūtījuma kopiju pielikumā)</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-		    	<?php echo "<span id='list_span'>".$pasutijuma_nr."</span>"; ?>
+		    	<input ID="text_pret" type="text" name="pasutijuma_nr" value="<?php echo $pasutijuma_nr; ?>">
     	</td>
 	  </tr>
 	  
@@ -231,14 +260,16 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="teksts">Preces daudzums, par kuru izteikta pretenzija</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-				<?php
-					StatCheckBox('daudzums_viss',$daudzums_viss,'Viss pasūtījums','<br>',' disabled') ;
-					StatCheckBox('daudzums_pieg_part',$daudzums_pieg_part,'Piegādes partija (s) Nr.','',' disabled'); 
-					echo $pieg_part_nr."<br>";
-					StatCheckBox('daudzums_atsev_paneli',$daudzums_atsev_paneli,'Atsevišķi paneļi, veidņi  ','',' disabled'); 
-					echo $daudzums_kvmet." kv.m. piegādes partijā (s) Nr.".$no_partijas;
-				
-				?>
+	    	<?php
+				StatCheckBox('daudzums_viss',$daudzums_viss,'Viss pasūtījums','<br>','') ;
+				StatCheckBox('daudzums_pieg_part',$daudzums_pieg_part,'Piegādes partija (s) Nr.','',''); 
+				echo "<input ID='text_pret' type='text' name='pieg_part_nr' value='".$pieg_part_nr."'><br>";
+				StatCheckBox('daudzums_atsev_paneli',$daudzums_atsev_paneli,'Atsevišķi paneļi, veidņi  ','',''); 
+				echo  "<input ID='text_pret' type='text' name='daudzums_kvmet' value='".$daudzums_kvmet."'>  kv.m. piegādes partijā (s) Nr.  <input ID='text_pret' type='text' name='no_partijas' value='".$no_partijas."'>";
+			?>
+	    	
+	    	
+	    	 
     	</td>
 	  </tr>
 
@@ -248,7 +279,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
    	    <td class="teksts">Pretenzijas apraksts<br> (var pievienot pretenzijas aprakstu pielikumā)</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-		    <textarea disabled rows="4" cols="120">
+		    <textarea rows="4" cols="120" name = "apraksts">
 		    	<?php echo $apraksts; ?>
 			</textarea>
 	  	</td>
@@ -260,13 +291,13 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
    	    <td class="teksts">Pretenzijas iemesls</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-	    	    <?php
-	    		StatCheckBox('par_laiks',$par_laiks,' Piegādes laiks','<br>',' disabled') ;
-				StatCheckBox('par_daudzumu',$par_daudzumu,'Daudzuma neatbilstība','<br>',' disabled'); 
-				StatCheckBox('par_bojats',$par_bojats,'Piegādāta bojāta prece','<br>',' disabled') ;
-				StatCheckBox('par_kvalitati',$par_kvalitati,'Neatbilstoša preces kvalitāte','',' disabled'); 
+	    <?php
+	    		StatCheckBox('par_laiks',$par_laiks,' Piegādes laiks','<br>','') ;
+				StatCheckBox('par_daudzumu',$par_daudzumu,'Daudzuma neatbilstība','<br>',''); 
+				StatCheckBox('par_bojats',$par_bojats,'Piegādāta bojāta prece','<br>','') ;
+				StatCheckBox('par_kvalitati',$par_kvalitati,'Neatbilstoša preces kvalitāte','',''); 
 				?>
-		    	
+	    	
 	  	</td>
 	  </tr>
 
@@ -276,13 +307,11 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
    	    <td class="teksts">Iesniegtās fotofiksācijas <br> (pievienot pielikumā)</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-	    	 <?php
-				StatCheckBox('iesniegts_nav',$iesniegts_nav,'Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)','<br>',' disabled'); 
-				StatCheckBox('iesniegts_panel_foto',$iesniegts_panel_foto,'Ir saņemtas preces fotofiksācija','<br>',' disabled') ;
-				StatCheckBox('iesniegts_mark_foto',$iesniegts_mark_foto,' Ir saņemtas marķējuma fotofiksācijas','',' disabled'); 
-			?>
-	    	
-	    	
+		 <?php
+				StatCheckBox('iesniegts_nav',$iesniegts_nav,'Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)','<br>',''); 
+				StatCheckBox('iesniegts_panel_foto',$iesniegts_panel_foto,'Ir saņemtas preces fotofiksācija','<br>','') ;
+				StatCheckBox('iesniegts_mark_foto',$iesniegts_mark_foto,' Ir saņemtas marķējuma fotofiksācijas','',''); 
+				?>
 	  	</td>
 	  </tr>
 
@@ -292,17 +321,25 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
    	    <td class="teksts">Obligāti iesniedzami dokumenti (ja ir piegādāta <br> bojāta prece vai konstatēta daudzuma neatbilstība</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-	    	<?php
-				StatCheckBox('obl_dok_crm',$obl_dok_crm,'CMR','<br>',' disabled') ;
-				StatCheckBox('obl_dok_akts',$obl_dok_akts,' Pieņemšanas - nodošanas akts','',' disabled'); 
-			?>
+			<?php
+				StatCheckBox('obl_dok_crm',$obl_dok_crm,'CMR','<br>','') ;
+				StatCheckBox('obl_dok_akts',$obl_dok_akts,' Pieņemšanas - nodošanas akts','',''); 
+				?>
+	    	
+	    	
 	  	</td>
 	  </tr>
 	
 	</table>
-	<?php if ($_SESSION['LOMA']=="Q" && $sakuma_datums=='0000-00-00') { ?>
-		<input type="submit" name="pret_risinajums" value="Risinājums">
-	<?php }	 ?>
+	<input type="submit" name="pret_save" value="Saglabāt">
+	<input type="submit" name="pret_cancel" value="Atcelt">
   </form>
+<script>
+    $( function() {
+    	$( "#dokumenta_datums" ).datepicker({dateFormat: 'yy-mm-dd'});
+        $( "#sanemsanas_datums" ).datepicker({dateFormat: 'yy-mm-dd'});
+    } );
+    
+</script>
 
 </div>

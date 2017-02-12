@@ -203,15 +203,17 @@ function list_row($col_count, $var_array){
 
 function NextID($mveids){
 	
-	
-	$sql = "SELECT * FROM menju where prefiks=".$mveids;
-	$q = $db->query($sql);
+	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+	$sql = "SELECT * FROM menju where prefiks='".$mveids."'";
+	$q = $dbf->query($sql);
 	$r = $q->fetch(PDO::FETCH_ASSOC);
 	
 	$reg_nr=$r['reg_nr'];
 	$reg_nr=$reg_nr++;
 	
 	$sql ="UPDATE tp_pretenzijas.menju SET reg_nr=".$reg_nr." WHERE prefiks=".$mveids;
+	$q = $dbf->query($sql);
+	
 	return $reg_nr;
 	
 }
@@ -239,8 +241,9 @@ function StatText($mname,$mvalue,$msize){
 	echo $mteksts;
 }
 
-function StatCheckBox($mname,$mvariable,$koments,$nobeig){
+function StatCheckBox($mname,$mvariable,$koments,$nobeig,$status){
 
+	
 	if ($mvariable==1){
 		$mcheckstat=" checked";
 	}
@@ -248,15 +251,7 @@ function StatCheckBox($mname,$mvariable,$koments,$nobeig){
 		$mcheckstat="";
 	}
 	$mteksts="";
-	if ($_SESSION['STATUS']=='NEW'){
-		$mteksts='<input type="checkbox" name="'.$mname.'" value="1"> '.$koments.$nobeig;
-	}
-	if ($_SESSION['STATUS']=='VIEW'){
-		$mteksts='<input type="checkbox" name="'.$mname.'"'.$mcheckstat.' disabled> '.$koments.$nobeig;
-	}
-	if ($_SESSION['STATUS']=='EDIT'){
-		$mteksts='<input type="checkbox" name="'.$mname.'"'.$mcheckstat.'> '.$koments.$nobeig;
-	}
+	$mteksts='<input type="checkbox" name="'.$mname.'"'.$mcheckstat.$status.'> '.$koments.$nobeig;
 	echo $mteksts;
 }
 
@@ -269,7 +264,7 @@ function MailTo($to,$sub,$body){
 		echo 'Message could not be sent.';
 		echo 'Mailer Error: ' . $mail->ErrorInfo;
 	} else {
-		echo 'E-pasts ir nosūtīts otru reizi';
+		echo 'E-pasts ir nosūtīts ';
 	}
 }
 
