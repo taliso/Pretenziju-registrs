@@ -199,7 +199,6 @@ if(isset($_GET['navig'])){
 		$_SESSION['FORMA'] = 'notikumi.php';
 		$_SESSION['STATUS'] = "EVENTS";
 	}
-	
 }
 
 if(isset($_SESSION['AGENTS'])){

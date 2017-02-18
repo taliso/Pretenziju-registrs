@@ -157,7 +157,7 @@ if (isset($_POST['pret_save'])) {
 		
 	} else {
 	
-			$to='talis@tenax.lv';
+			$to='service@tenax.lv';
 			$sub='Pretenzija Nr. '.$_SESSION['PRET_ID'].' ir labota.';
 			$body='Pretenzija Nr. '.$_SESSION['PRET_ID'].' ir labota.';
 			
@@ -176,7 +176,6 @@ if (isset($_POST['pret_save'])) {
 if (isset($_POST['pret_cancel'])) {
 	
 }
-
 ?>
  
  <div id="saturs">
