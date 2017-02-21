@@ -1,9 +1,5 @@
 <?php
-  function fons($status)
-  {
-    return $status;
-  }
-  
+ 
 function datums()
 {
   $datums = array();
@@ -30,19 +26,6 @@ return $datums;
 
 }
 
-
-
-function faila_nos($regnr,$grupa,$faila_nos){
-        return $regnr."_".$grupa."_".$faila_nos; 
- }
-
-/**
- * Augšipielādē failu
- * 
- * @param $fails
- * @param $target_dir
- * @param $regnr
- */
 function file_upload($fails,$target_dir,$regnr){
     echo "<pre>";
 //    var_dump($fails);
@@ -268,12 +251,43 @@ function MailTo($to,$sub,$body){
 	}
 }
 
+// ========================  SQL pieprasījums uz masīvu ========================================
+function sqltoarray($fields,$ftabula,$fwhere,$db) {
+	$sql ="SELECT ".$fields." FROM ".$ftabula;
+	if (strlen($fwhere)>0){
+		$sql=$sql." where ".$fwhere ;
+	}
+	
+	$q = $db->query($sql);
+	
+	while($r = $q->fetch(PDO::FETCH_ASSOC)){
+		$myarray[]=$r;
+	}
+	
+	var_dump($myarray);
+	
+	return $myarray;
+
+}
+
+function sqlupdate($field,$variable,$ftabula,$fwhere,$db) {
+	$sql ="UPDATE ".$ftabula." SET ".$field."='".$variable."' WHERE ".$fwhere ;
+	echo $sql;
+	$q = $db->query($sql);
+	
+	return 'true';
+
+}
 
 
+function sqlinsert($ftabula,$db) {
+	$sql ="UPDATE ".$ftabula." SET ".$field."='".$variable."' WHERE ".$fwhere ;
+	echo $sql;
+	$q = $db->query($sql);
 
+	return 'true';
 
-
-
+}
 
 
 

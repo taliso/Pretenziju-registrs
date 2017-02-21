@@ -51,12 +51,12 @@ $atbildes_datums = "0000-00-00";
 $saskanots_ar_klientu = "0000-00-00";
 $vienosanas = "";
 $beigu_dat = "0000-00-00";
-$registr_datums = "0000-00-00";
+$registr_datums = date("Y-m-d");
 $sakuma_datums= "0000-00-00";
 
 if ($_SESSION['PRET_STATUS']=="NEW") {
 	$sql = "INSERT INTO pretenzijas SET ";
-	//ECHO "2_SESSION['PRET_STATUS']=".$_SESSION['PRET_STATUS'];
+
 } else {
 	$sql = "UPDATE pretenzijas SET ";
 }

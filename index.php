@@ -87,11 +87,14 @@ $form="";
    	 	$sql = 'SELECT * FROM pretenzijas where pret_id="'.$pret_id.'"';
    	 	$q = $db->query($sql);
    	 	$r = $q->fetch(PDO::FETCH_ASSOC);
+   	 	$_SESSION['ID_PRET']=$r['ID'];
    	 	$_SESSION['REG_NR'] = $r['reg_nr'];
    	 	$_SESSION['PREFIKS'] = $r['veids'];
    	 	$_SESSION['FORMA']="veidlapa_KM_view.php";
    	 	$_SESSION['PASUT_NR'] = $r['pasutijuma_nr'];
    	 	$_SESSION['KLIENTS'] = $r['iesniedzejs'];
+		$_SESSION['SAKUMA_DATUMS']=$r['sakuma_datums'];
+		$_SESSION['NOTIKUMU_SK']=$r['notikumu_sk'];
    	 	$_SESSION['PRET_STATUS']='REGISTER';
    	 	$form=$_SESSION['FORMA'];
    	 } else {
@@ -132,6 +135,8 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['STATUS'] = "LIST"; // 'VIEW','EDIT',"VIEW_EVENT","EDIT_EVENT",'LIST'
 				$_SESSION['ID_PRET']="";
 				$_SESSION['PRET_STATUS']=""; // "NEW","REGISTER","DELETE","ARCHIVE"
+				$_SESSION['SAKUMA_DATUMS']="";
+				$_SESSION['NOTIKUMU_SK']="";
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
 			}
@@ -196,7 +201,8 @@ if(isset($_GET['navig'])){
 		
 	}
 	if($navig=='mnEvent'){
-		$_SESSION['FORMA'] = 'notikumi.php';
+		//$_SESSION['FORMA'] = 'notikumi.php';
+		$_SESSION['FORMA'] = 'eventi.php';
 		$_SESSION['STATUS'] = "EVENTS";
 	}
 }

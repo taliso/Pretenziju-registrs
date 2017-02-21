@@ -5,6 +5,7 @@
 
 $agents=$_SESSION['AGENTS'];
 if (isset($_POST['pret_risinajums'])) {
+	
 	$sakuma_datums = date("Y-m-d");
 	
 	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));

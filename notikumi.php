@@ -154,7 +154,7 @@ if (strlen($r['atbildigais'])==0){
 	</table>
 <?php	
 if ($_SESSION['STATUS'] == "ADDEVENTS"){
-	include "notikums.php";
+	include "newevent.php";
 }
 	?> 
 </div><!--divEventForm    -->

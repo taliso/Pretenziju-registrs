@@ -106,3 +106,59 @@ function sutit_epastu_adresatam ($adresats, $virsraksts, $zinojums)
 
 
 </body>
+
+
+
+// ========================  SQL pieprasījums uz masīvu ========================================
+function sqltoarray($fields,$ftabula,$fwhere) {
+	$sql ="SELECT ".$fields." FROM ".$ftabula;
+	if (strlen($fwhere)>0){
+		$sql=$sql." where ".$fwhere ;
+	}
+	$q = $db->query($sql);
+	$myarray="";
+	while($rrow = $q->fetch(PDO::FETCH_ASSOC)){
+		$myarray[]=$rrow;
+	}
+	
+	return $myarray
+
+}
+
+
+<option value=' <?php $pers ?>' ><?php $pers ?></option>
+
+teh_dala
+laboratorija
+logistika
+teh_cilv
+lab_cilv
+log_cilv
+uzd_teh
+uzd_lab
+uzd_log
+event_date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

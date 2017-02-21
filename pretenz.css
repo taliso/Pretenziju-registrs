@@ -693,6 +693,7 @@ divNewEvent{
 	float: left;
 	font-family: verdana;
 }
+
 #evspan3{
 	font-size: 16px;
 	float: left;
@@ -707,46 +708,47 @@ divNewEvent{
 td.apraksts1{
 	width:15%;
 	text-align: right;
-	/* border: 1px solid gray; */
 	font-family: verdana;
 	font-size: 14px;
-	
 }
+
 td.apraksts2{
 	width:20%;
-	/* border: 1px solid gray; */
 	font-family: verdana;
 	font-size: 14px;
 	text-align: right;
-
 }
+
 td.info1{
 	width:15%;
-	text-align: left;q
+	text-align: left;
 	border: 1px solid gray;
 	font-family: verdana;
 	font-size: 14px;
-
 }
+
 td.info2{
 	width:30%;
-	/* border: 1px solid gray; */
 	font-family: verdana;
 	font-size: 14px;
 	text-align: left;
 	padding-left: 11px;
 }
 
-
 #list_span{
 	color:#000080;
 }
+
+#dvtitle {
+	background: brown;
+	text-align: center;
+}
+
+#spantitle {
+	color: aliceblue;
+}
+
 tr td {
     border-bottom: 1px solid silver;
 }
-
-
-
-
-
 
