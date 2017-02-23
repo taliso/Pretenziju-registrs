@@ -100,7 +100,66 @@ $form="";
    	 } else {
    	 	$pret_id="";
    	 }
-    	
+   	 //###################  APSTIPRINU  NEWEVENT  ################################################date("Y-m-d")
+   	 if (isset($_POST['NewEventSave'])){
+   	 	//die("nostrādāja");
+   	 	$_SESSION['STATUS']="EVENTS";
+   	 	echo "Nospiestse";
+   	 	msg('NewEventSave');
+   	 	$id_pret=$_SESSION['ID_PRET'];
+   	 	$pret_id=$_SESSION['PRET_ID'];
+   	 	$pasut_nr=$_SESSION['PASUT_NR'];
+   	 	$event_id=$_SESSION['NOTIKUMU_SK']+1;
+   	 	$teh_cilv=$_POST['teh_cilv'];
+   	 	$lab_cilv=$_POST['lab_cilv'];
+   	 	$log_cilv=$_POST['log_cilv'];
+   	 	$uzd_teh=$_POST['uzd_teh'];
+   	 	$uzd_lab=$_POST['uzd_lab'];
+   	 	$uzd_log=$_POST['uzd_log'];
+   	 	$event_date=$_POST['event_date'];
+   	 	$kods=$pret_id."-".$event_id;
+   	 	 
+   	 	$sql = "INSERT INTO notikumi SET ";
+   	 	$sql=$sql."
+ 	  	id_pret=:id_pret ,
+ 	  	pret_id=:pret_id ,
+ 	  	pasut_nr=:pasut_nr ,
+ 	  	event_id=:event_id ,
+   		teh_cilv=:teh_cilv ,
+ 		lab_cilv=:lab_cilv ,
+   		log_cilv=:log_cilv ,
+ 		uzd_teh=:uzd_teh ,
+ 		uzd_lab=:uzd_lab ,
+ 		uzd_log=:uzd_log ,
+   	 	kods=:kods ,		
+ 		event_date=:event_date";
+
+   	 	$q = $db->prepare($sql);
+   	 
+   	 	$data = array(
+   	 			':id_pret'=>$id_pret,
+   	 			':pret_id'=>$pret_id,
+   	 			':pasut_nr'=>$pasut_nr,
+   	 			':event_id'=>$event_id,
+   	 			':teh_cilv'=>$teh_cilv,
+   	 			':lab_cilv'=>$lab_cilv,
+   	 			':log_cilv'=>$log_cilv,
+   	 			':uzd_teh'=>$uzd_teh,
+   	 			':uzd_lab'=>$uzd_lab,
+   	 			':uzd_log'=>$uzd_log,
+   	 			':kods'=>$kods,
+   	 			':event_date'=>$event_date);
+   	 	 
+   	 	$q->execute($data);
+   	 	sqlupdate('notikumu_sk',$event_id,'pretenzijas','pret_id="'.$pret_id.'"',$db);
+   	 }
+   	 
+   	 //###################    ATCELT   NEWEVENT  ####################################################
+   	 if (isset($_POST['NewEventCancel'])) {
+   	 	echo "NewEventCancel1";
+   	 	$_SESSION['STATUS']="EVENTS";
+   	 }
+   	  
 if (isset($_POST['btIeiet'])) {
 
 	$user = $_POST['user'];
@@ -195,7 +254,7 @@ if(isset($_GET['navig'])){
 		if ($_SESSION['PREFIKS'] =="KM"){
 			$_SESSION['FORMA']="veidlapa_KM_edit.php";
 		}
-		
+	
 	}
 	if($navig=='mnDelete'){
 		
