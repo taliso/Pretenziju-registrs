@@ -249,7 +249,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
    	    <td class="teksts">Pretenzijas apraksts<br> (var pievienot pretenzijas aprakstu pielikumā)</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-		    <textarea disabled rows="4" cols="120">
+		    <textarea disabled rows="4" cols="80">
 		    	<?php echo $apraksts; ?>
 			</textarea>
 	  	</td>

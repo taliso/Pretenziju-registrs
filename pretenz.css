@@ -606,16 +606,16 @@ td.hinfo2{
 
 #fspan1{
 	font-size: 16px;
-	/* float: left; */
 	color: #ff8000;
 	font-family: verdana;
 }
 
 #fspan2{
 	font-size: 16px;
+	color: #800000;
 	float: left;
-	color: #ffffff;
 	font-family: verdana;
+	text-align: left;
 }
 
 #fspan3{
@@ -682,16 +682,16 @@ divNewEvent{
 }
 
 #evspan1{
-	background: blueviolet;
-	font-size: 16px;
+	font-size: 14px;
 	float: left;
 	font-family: verdana;
-	color: #ffff00 ;
+	color: #804040 ;
 }
 #evspan2{
-	font-size: 16px;
-	float: left;
+	font-size: 14px;
 	font-family: verdana;
+	color: #0000a0 ;
+	margin: 10px;
 }
 
 #evspan3{
@@ -752,3 +752,9 @@ tr td {
     border-bottom: 1px solid silver;
 }
 
+#divEventFormTitle {
+	background: brown;
+	text-align: center;
+	
+	
+}

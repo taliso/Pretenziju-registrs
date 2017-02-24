@@ -95,6 +95,8 @@ $form="";
    	 	$_SESSION['KLIENTS'] = $r['iesniedzejs'];
 		$_SESSION['SAKUMA_DATUMS']=$r['sakuma_datums'];
 		$_SESSION['NOTIKUMU_SK']=$r['notikumu_sk'];
+		$_SESSION['BEIGU_DAT']=$r['beigu_dat'];
+		$_SESSION['IZDEVUMI']=$r['izdevumi'];
    	 	$_SESSION['PRET_STATUS']='REGISTER';
    	 	$form=$_SESSION['FORMA'];
    	 } else {

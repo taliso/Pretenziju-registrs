@@ -278,7 +278,7 @@ if (isset($_POST['pret_cancel'])) {
    	    <td class="teksts">Pretenzijas apraksts<br> (var pievienot pretenzijas aprakstu pielikumā)</td>
 		<td class="atstarpe"></td>
 	    <td class="ievade">
-		    <textarea rows="4" cols="120" name = "apraksts">
+		    <textarea rows="4" cols="80" name = "apraksts">
 		    	<?php echo $apraksts; ?>
 			</textarea>
 	  	</td>
