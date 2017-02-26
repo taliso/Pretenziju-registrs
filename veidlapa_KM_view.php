@@ -10,6 +10,7 @@ if (isset($_POST['pret_risinajums'])) {
 	
 	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 	$sql ="UPDATE pretenzijas SET sakuma_datums='".$sakuma_datums."', status='REGISTER' WHERE pret_id='".$_SESSION['PRET_ID']."'";
+	
 	$q = $dbf->query($sql);
 	
 }

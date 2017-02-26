@@ -44,6 +44,9 @@
   	}
   
   }
+  
+  
+  
 
   ?>
  <div>
@@ -55,12 +58,13 @@
  				<td style="width:10%;">Datums:<input type="text" name="event_date" value="<?php echo date("Y-m-d"); ?>" style="width: 60%;">
  				</td>
  				<td style="width:12%;"><span>Izpildītāji</span></td>
- 				<td style="width:20%;"><span>Uzdevums</span></td>
+ 				<td style="width:25%;"><span>Uzdevums</span></td>
  				<td style="width:10%;"><span>Atbild.dat.</span></td>
  				<td style="width:25%;"><span>Atbilde</span></td>
+ 				<td style="width:20%;"><span>Izdevumi</span></td>
  			</tr>
  		
- 			<tr>  <!-- R # 2. -->
+ 			<tr>  <!-- R # 2. TEH -->
  				<td><input type="checkbox" name="teh_dala" value="1"> Tehniskā daļa</td>
  				<td>
  					<select name="teh_cilv" style="width: 80%;">
@@ -70,11 +74,12 @@
  					</select>
  				</td>
  				<td><input type="text" name="uzd_teh" value="" style="width: 80%;"></td>
- 				<td>Atbildes datums</td>
- 				<td>Atbilde</td>
+ 				<td><input type="text" name="dat_teh" value="" style="width: 80%;" disabled></td>
+ 				<td><input type="text" name="teh_atbild" value="" style="width: 80%;" disabled></td>
+ 				<td><input type="text" name="teh_izdev" value="" style="width: 80%;" disabled></td>
  			</tr>
 
- 			<tr>  <!-- R # 3. -->
+ 			<tr>  <!-- R # 3. LAB -->
  				<td><input type="checkbox" name="laboratorija" value="1"> Laboratorija</td>
  				<td>
  					<select name="lab_cilv" style="width: 80%;">
@@ -83,13 +88,13 @@
 			            	} ?>
  					</select>
  				</td>
- 				<td><input type="text" name="uzd_lab" value="" style="width: 80%;"></td>
-
- 				<td>Atbildes datums</td>
- 				<td>Atbilde</td>
+ 				<td><input type="text" name="uzd_lab" value="" style="width: 90%;"></td>
+				<td><input type="text" name="dat_lab" value="" style="width: 90%;" disabled></td>
+ 				<td><input type="text" name="lab_atbild" value="" style="width: 90%;" disabled></td>
+ 				<td><input type="text" name="lab_izdev" value="" style="width: 90%;" disabled></td>
  				
  			</tr>
- 			<tr>  <!-- R # 4. -->
+ 			<tr>  <!-- R # 4. LOG -->
  				<td><input type="checkbox" name="logistika" value="1"> Loģistika</td>
  				<td>
  					<select name="log_cilv" style="width: 80%;">
@@ -99,14 +104,17 @@
  					</select>
  				</td>
  				<td><input type="text" name="uzd_log" value="" style="width: 80%;"></td>
- 				<td>Atbildes datums</td>
- 				<td>Atbilde</td>
+ 				<td><input type="text" name="dat_log" value="" style="width: 80%;" disabled></td>
+ 				<td><input type="text" name="log_atbild" value="" style="width: 80%;" disabled></td>
+ 				<td><input type="text" name="log_izdev" value="" style="width: 80%;" disabled></td>
  			</tr>
 			<tr>   <!-- R # 5. -->
  				<td></td>
  				<td></td>
- 				<td></td>
- 				<td><input type="submit" name="NewEventSave" value="Apstiprināt"><input type="submit" name="NewEventCancel" value="Atcelt"></td>
+				<td></td> 				
+				<td></td>
+				<td></td>
+ 				<td><input type="submit" name="event_save" value="Saglabāt"><input type="submit" name="event_cancel" value="Atcelt"></td>
  			</tr>
  		</table> 
  

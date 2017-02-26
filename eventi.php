@@ -1,11 +1,24 @@
-
- 
- 
 <?php
-if (isset($_POST['addNewEvent'])) {
-	$_SESSION['STATUS']="NEWEVENT";
+$event_sk=0;
+$pret_events=array();
+$izd_sum=0;
+$sql = "SELECT * FROM notikumi where pret_id='".$_SESSION['PRET_ID']."'";
+$q = $db->query($sql);
+while($r = $q->fetch(PDO::FETCH_ASSOC)){
+	$pret_events[]=$r;
 }
- ?>
+$event_sk=count($pret_events);
+$izd_sum=0;
+foreach ($pret_events as $one_event){
+	$izd_sum=$izd_sum + $one_event['izdevumi'];
+}
+$_SESSION['NOTIKUMU_SK']=$event_sk;
+$_SESSION['IZDEVUMI']=$izd_sum;
+
+//var_dump($pret_events);
+
+?>
+ 
 
  <div id="divEventForm">
 	<div id="divEventFormTitle">
@@ -41,29 +54,41 @@ if (isset($_POST['addNewEvent'])) {
 			</td>
 			<td>
 			</td>
-			<td>
-			</td>
-			
-			<td>
-				<?php if ($_SESSION['LOMA']=="Q") {	?>
-<!-- 					<input type="submit" name="addNewEvent" value="Jauns notikums"> -->
-					<?php 
-				}
-						?>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-				
-
 		</tr>			
 	</table>	
 
-	<?php if ($_SESSION['STATUS']=='NEWEVENT') {
+	<?php 
+	if ($_SESSION['STATUS']=='NEWEVENT') {
 		include 'newevent.php';
 	}?>
+	
+	
+	
+	
 </div>   <!-- <divEventForm>  -->
+<?php
+foreach ($pret_events as $one_event){?>
+	<div id="divEventForm"> 
+		<div id="divEventFormTitle">
+			<span id= "spantitle">Notikums Nr.<?php echo $one_event['event_id'] ?></span>
+		</div>   <!-- <divEventFormTitle>  -->
+		<?php 
+			$cilv='';
+			if (strlen($one_event['teh_cilv'])>1) {
+				$cilv=$cilv.$one_event['teh_cilv']." ," ;
+			}	
+			
+			if (strlen($one_event['lab_cilv'])>1) {
+				$cilv=$cilv.$one_event['lab_cilv']." ," ;
+			}
+				
+			if (strlen($one_event['log_cilv'])>1) {
+				$cilv=$cilv.$one_event['log_cilv']." ," ;
+			}
+				
+			
+			$ev_dat=	$one_event['event_date'] ;
+		include 'event_view.php'; ?>
+	</div>
+<?php } ?>
 

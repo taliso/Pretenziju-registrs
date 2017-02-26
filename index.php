@@ -14,7 +14,7 @@ $datums=datums();
 define("MAX_FILE_SIZE",5000000);
 $target_dir = "uploads/";
 
-// ***************************************************************************
+// ******************************************W*********************************
 //*	Mainigie:
 //* 		$autor_ir - false/true - ir vai nav notikusi veiksmīga autorizācija
 $autor_ir = 0;
@@ -40,7 +40,6 @@ $form="";
 	 <link rel="stylesheet" href="jquery/jquery-ui.structure.min.css">
 	 <link rel="stylesheet" href="jquery/jquery-ui.theme.min.css">
 	 <script src="jquery/jquery-3.1.1.min.js"></script>
-	 <script src="jquery/jquery-1.12.4.js"></script>
 	 <script src="jquery/jquery-ui.min.js"></script>
  
   <title>Pretenzijas</title>
@@ -99,70 +98,11 @@ $form="";
 		$_SESSION['IZDEVUMI']=$r['izdevumi'];
    	 	$_SESSION['PRET_STATUS']='REGISTER';
    	 	$form=$_SESSION['FORMA'];
-   	 } else {
+    	 } else {
    	 	$pret_id="";
    	 }
-   	 //###################  APSTIPRINU  NEWEVENT  ################################################date("Y-m-d")
-   	 if (isset($_POST['NewEventSave'])){
-   	 	//die("nostrādāja");
-   	 	$_SESSION['STATUS']="EVENTS";
-   	 	echo "Nospiestse";
-   	 	msg('NewEventSave');
-   	 	$id_pret=$_SESSION['ID_PRET'];
-   	 	$pret_id=$_SESSION['PRET_ID'];
-   	 	$pasut_nr=$_SESSION['PASUT_NR'];
-   	 	$event_id=$_SESSION['NOTIKUMU_SK']+1;
-   	 	$teh_cilv=$_POST['teh_cilv'];
-   	 	$lab_cilv=$_POST['lab_cilv'];
-   	 	$log_cilv=$_POST['log_cilv'];
-   	 	$uzd_teh=$_POST['uzd_teh'];
-   	 	$uzd_lab=$_POST['uzd_lab'];
-   	 	$uzd_log=$_POST['uzd_log'];
-   	 	$event_date=$_POST['event_date'];
-   	 	$kods=$pret_id."-".$event_id;
-   	 	 
-   	 	$sql = "INSERT INTO notikumi SET ";
-   	 	$sql=$sql."
- 	  	id_pret=:id_pret ,
- 	  	pret_id=:pret_id ,
- 	  	pasut_nr=:pasut_nr ,
- 	  	event_id=:event_id ,
-   		teh_cilv=:teh_cilv ,
- 		lab_cilv=:lab_cilv ,
-   		log_cilv=:log_cilv ,
- 		uzd_teh=:uzd_teh ,
- 		uzd_lab=:uzd_lab ,
- 		uzd_log=:uzd_log ,
-   	 	kods=:kods ,		
- 		event_date=:event_date";
 
-   	 	$q = $db->prepare($sql);
-   	 
-   	 	$data = array(
-   	 			':id_pret'=>$id_pret,
-   	 			':pret_id'=>$pret_id,
-   	 			':pasut_nr'=>$pasut_nr,
-   	 			':event_id'=>$event_id,
-   	 			':teh_cilv'=>$teh_cilv,
-   	 			':lab_cilv'=>$lab_cilv,
-   	 			':log_cilv'=>$log_cilv,
-   	 			':uzd_teh'=>$uzd_teh,
-   	 			':uzd_lab'=>$uzd_lab,
-   	 			':uzd_log'=>$uzd_log,
-   	 			':kods'=>$kods,
-   	 			':event_date'=>$event_date);
-   	 	 
-   	 	$q->execute($data);
-   	 	sqlupdate('notikumu_sk',$event_id,'pretenzijas','pret_id="'.$pret_id.'"',$db);
-   	 }
-   	 
-   	 //###################    ATCELT   NEWEVENT  ####################################################
-   	 if (isset($_POST['NewEventCancel'])) {
-   	 	echo "NewEventCancel1";
-   	 	$_SESSION['STATUS']="EVENTS";
-   	 }
-   	  
-if (isset($_POST['btIeiet'])) {
+ if (isset($_POST['btIeiet'])) {
 
 	$user = $_POST['user'];
 	$psw = $_POST['psw'];
@@ -198,6 +138,7 @@ if (isset($_POST['btIeiet'])) {
 				$_SESSION['PRET_STATUS']=""; // "NEW","REGISTER","DELETE","ARCHIVE"
 				$_SESSION['SAKUMA_DATUMS']="";
 				$_SESSION['NOTIKUMU_SK']="";
+				$_SESSION['IZDEVUMI']="";
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
 			}
@@ -223,6 +164,137 @@ if(isset($_GET['mTools'])){
 		$_SESSION['STATUS'] = "LIST";
 	}
 }
+//###################  APSTIPRINU  NEWEVENT  ################################################date("Y-m-d")
+if (isset($_POST['event_save'])) {
+		//die("nostrādāja");
+		$_SESSION['STATUS']="EVENTS";
+		msg('NewEventSave');
+		$id_pret=$_SESSION['ID_PRET'];
+		$pret_id=$_SESSION['PRET_ID'];
+		$pasut_nr=$_SESSION['PASUT_NR'];
+		$npk=$_SESSION['NOTIKUMU_SK']+1;
+		$chkTeh=(isset($_POST['teh_dala'])) ? $_POST['teh_dala'] : 0 ;
+		$chkLab=(isset($_POST['laboratorija'])) ? $_POST['laboratorija'] : 0 ;
+		$chkLog=(isset($_POST['logistika'])) ? $_POST['logistika'] : 0 ;
+		$teh_cilv=($chkTeh==1) ? $_POST['teh_cilv'] : "" ;
+		$lab_cilv=($chkLab==1) ? $_POST['lab_cilv'] : "" ;
+		$log_cilv=($chkLog==1) ? $_POST['log_cilv'] : "" ;
+		$uzd_teh=$_POST['uzd_teh'];
+		$uzd_lab=$_POST['uzd_lab'];
+		$uzd_log=$_POST['uzd_log'];
+		$event_date=$_POST['event_date'];
+		$event_id=$pret_id."-".$npk;
+			
+		$sql = "INSERT INTO notikumi SET ";
+		$sql=$sql."
+ 	  	id_pret=:id_pret ,
+ 	  	pret_id=:pret_id ,
+ 	  	pasut_nr=:pasut_nr ,
+		npk=:npk ,				
+ 	  	event_id=:event_id ,
+   		teh_cilv=:teh_cilv ,
+ 		lab_cilv=:lab_cilv ,
+   		log_cilv=:log_cilv ,
+ 		uzd_teh=:uzd_teh ,
+ 		uzd_lab=:uzd_lab ,
+ 		uzd_log=:uzd_log ,
+  		event_date=:event_date";
+
+		$q = $db->prepare($sql);
+			
+		$data = array(
+				':id_pret'=>$id_pret,
+				':pret_id'=>$pret_id,
+				':pasut_nr'=>$pasut_nr,
+				':npk'=>$npk,
+				':event_id'=>$event_id,
+				':teh_cilv'=>$teh_cilv,
+				':lab_cilv'=>$lab_cilv,
+				':log_cilv'=>$log_cilv,
+				':uzd_teh'=>$uzd_teh,
+				':uzd_lab'=>$uzd_lab,
+				':uzd_log'=>$uzd_log,
+				':event_date'=>$event_date);
+			
+		$q->execute($data);
+		sqlupdate('notikumu_sk',$npk,'pretenzijas','pret_id="'.$pret_id.'"',$db);
+		
+	if ($chkTeh==1) {	
+		$sql = "INSERT INTO uzdevumi SET ";
+		$sql=$sql."
+ 	  	avots=:avots ,
+ 	  	identifikators=:identifikators ,
+ 	  	persona=:persona ,
+		datums=:datums ,
+ 	  	uzdevums=:uzdevums ,
+  		status=:status";
+		
+		$q = $db->prepare($sql);
+		
+		$data = array(
+				':avots'=>"PRETENZIJA",
+				':identifikators'=>$event_id,
+				':persona'=>$teh_cilv,
+				':datums'=> $event_date,
+				':uzdevums'=>$uzd_teh ,
+				':status'=>"0");
+		
+		$q->execute($data);
+		
+	}	
+	if ($chkLab==1) {
+		$sql = "INSERT INTO uzdevumi SET ";
+		$sql=$sql."
+ 	  	avots=:avots ,
+ 	  	identifikators=:identifikators ,
+ 	  	persona=:persona ,
+		datums=:datums ,
+ 	  	uzdevums=:uzdevums ,
+  		status=:status";
+	
+		$q = $db->prepare($sql);
+		
+
+		$data = array(
+				':avots'=>"PRETENZIJA",
+				':identifikators'=>$event_id,
+				':persona'=>$lab_cilv,
+				':datums'=> $event_date,
+				':uzdevums'=>$uzd_lab ,
+				':status'=>"0");
+		
+		$q->execute($data);
+		
+		
+	}
+	if ($chkLog==1) {
+		$sql = "INSERT INTO uzdevumi SET ";
+		$sql=$sql."
+ 	  	avots=:avots ,
+ 	  	identifikators=:identifikators ,
+ 	  	persona=:persona ,
+		datums=:datums ,
+ 	  	uzdevums=:uzdevums ,
+  		status=:status";
+		
+		$q = $db->prepare($sql);
+	
+
+		$data = array(
+				':avots'=>"PRETENZIJA",
+				':identifikators'=>$event_id,
+				':persona'=>$log_cilv,
+				':datums'=> $event_date,
+				':uzdevums'=>$uzd_log ,
+				':status'=>"0");
+		
+		$q->execute($data);
+		
+		
+	}
+}
+
+
 
 if(isset($_GET['navig'])){
 	$_SESSION['NAVIG']=$_GET['navig'];
@@ -236,31 +308,44 @@ if(isset($_GET['navig'])){
 		$_SESSION['FORMA'] = 'veidlapa_KM_edit.php';
 	}
 	if($navig=='mnNew'){
+		if ($_SESSION['STATUS'] == "VIEW"){
+				$_SESSION['STATUS'] = "EDIT";
+				$_SESSION['PRET_STATUS']="NEW";
+				$_SESSION['PRET_ID'] = "";
+				//********************************************************************************************************
+				// Registracijas numura apdeitosana +1
+				$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
+				$q = $db->query($sql);
+				$r = $q->fetch(PDO::FETCH_ASSOC);
+				$reg_nr=$r['reg_nr'];
+				$reg_nr=$reg_nr+1;
+				$_SESSION['REG_NR']=$reg_nr;
+				// Registracijas numura apdeitosana +1
+				//*********************************************************************************************************
+				if ($_SESSION['PREFIKS'] =="EPS"){
+					$_SESSION['FORMA']="veidlapa_EPS_edit.php";
+				} //$_SESSION['PREFIKS'] =="EPS"
+				if ($_SESSION['PREFIKS'] =="KM"){
+					$_SESSION['FORMA']="veidlapa_KM_edit.php";
+				} //$_SESSION['PREFIKS'] =="KM"
+		}	//$_SESSION['STATUS'] == "VIEW"
+		if ($_SESSION['STATUS'] == "EVENTS"){
+			if ($_SESSION['LOMA']=="Q") {
+				$_SESSION['STATUS']="NEWEVENT";
+			} // $_SESSION['LOMA']=="Q"  
+		else {
+			//alert('Jums nav nepieciešamo tiesību');
+		}
+		} //$_SESSION['STATUS'] == "EVENTS"
 		
-		$_SESSION['STATUS'] = "EDIT";
-		$_SESSION['PRET_STATUS']="NEW";
-		$_SESSION['PRET_ID'] = "";
-		//********************************************************************************************************
-		// Registracijas numura apdeitosana +1
-		$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
-		$q = $db->query($sql);
-		$r = $q->fetch(PDO::FETCH_ASSOC);
-		$reg_nr=$r['reg_nr'];
-		$reg_nr=$reg_nr+1;
-		$_SESSION['REG_NR']=$reg_nr;
-		// Registracijas numura apdeitosana +1
-		//*********************************************************************************************************
-		if ($_SESSION['PREFIKS'] =="EPS"){
-			$_SESSION['FORMA']="veidlapa_EPS_edit.php";
-		}
-		if ($_SESSION['PREFIKS'] =="KM"){
-			$_SESSION['FORMA']="veidlapa_KM_edit.php";
-		}
+		
+		
+	}  //$navig=='mnNew'
 	
-	}
-	if($navig=='mnDelete'){
-		
-	}
+	if($navig=='mnTasks'){
+		$_SESSION['FORMA'] = 'tasks.php';
+		$_SESSION['STATUS'] = "TASKS";
+		}
 	if($navig=='mnEvent'){
 		//$_SESSION['FORMA'] = 'notikumi.php';
 		$_SESSION['FORMA'] = 'eventi.php';
@@ -361,19 +446,21 @@ if(isset($_SESSION['AGENTS'])){
 			</div><!--divTools    -->
 		
 			<ul>
-				<?php // HORIZONTĀLAIS menju ?>
-				<li id='mnNavig'><a id='mnaNavig' href="?navig=mnLists">Saraksts</a></li>
-				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
+				<?php // HORIZONTĀLAIS menju
+				if ($_SESSION['STATUS'] != "EVENT" && $_SESSION['STATUS'] != "NEWEVENT") { ?>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnLists">Saraksts</a></li>
+				<?php }
+				if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEdit">Labot</a></li>
 				<?php } ?>
 				<?php if ($_SESSION['STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 				<?php } ?>
 				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
-					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnDelete">Dzēst</a></li>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnTasks">Uzdevumi</a></li>
 				<?php } ?>
 				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
-					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi</a></li>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi <?php echo $_SESSION['NOTIKUMU_SK'] ?></a></li>
 				<?php } ?>
 					
 			</ul>	

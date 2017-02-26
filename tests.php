@@ -139,7 +139,58 @@ uzd_lab
 uzd_log
 event_date
 
+//#############  Parādīt / paslēpt @################################ 
+ 
+<html>
+<head>
+ 
+</head>
+ 
+<body>
+ 
+<style>
+ 
+.item {
+border: 1px solid red;
+padding: 5px;
+border-radius: 10px;
+width: 50%;
+}
+.invisible {
+display: none;
+}
 
+
+h1, p, div, span {
+asd
+}
+</style>
+ 
+<?php for($i=0;$i<20;$i++): ?>
+ 
+<div class="item">
+        <a onclick="$('#container-<?php echo $i ?>-invisible').toggle()">click</a>
+        <div class="visible">visible</div>
+        <div class="invisible" id="container-<?php echo $i ?>-invisible">invisible</div>
+</div>
+ 
+ 
+<?php endfor ?>
+ 
+ 
+?>
+   
+ 
+ 
+ 
+<script
+              src="https://code.jquery.com/jquery-3.1.1.min.js"
+              integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+              crossorigin="anonymous"></script>
+ 
+</body>
+
+    </html>
 
 
 

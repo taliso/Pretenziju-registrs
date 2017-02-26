@@ -1,3 +1,4 @@
+
 body {
     background-color: white;
 }
@@ -650,14 +651,7 @@ td.hinfo2{
     background: aliceblue;
 	
 }
-divNewEvent{
-	width: 98%;
-    height: 40px;
-    border: 1px solid blue;
-    margin: 10px;
-    background: aliceblue;
-	
-}
+
 
 #divEvents{
 	width:100%;
@@ -711,7 +705,6 @@ td.apraksts1{
 	font-family: verdana;
 	font-size: 14px;
 }
-
 td.apraksts2{
 	width:20%;
 	font-family: verdana;
@@ -746,6 +739,8 @@ td.info2{
 
 #spantitle {
 	color: aliceblue;
+	font-family: verdana;
+	font-size: 14px;
 }
 
 tr td {
@@ -756,5 +751,26 @@ tr td {
 	background: brown;
 	text-align: center;
 	
+}
+
+.ievade textarea {
+width: 100%;
+}
+
+#mnEvNavig {
+	color: brown;
+	display: inline;
+    border: 3px solid brown;
+	padding: 2px;
+    background: #fbe7bf;
+	border-radius: 5px;
+	height: 16px;
+	width: 10%;
+	text-align: center;
+	margin-right: 8px;
+	font-size: 14px;
+	font-family: verdana;
+	margin: 2px;
+	width:60px;
 	
 }

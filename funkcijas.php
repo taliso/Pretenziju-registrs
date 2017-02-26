@@ -272,7 +272,6 @@ function sqltoarray($fields,$ftabula,$fwhere,$db) {
 
 function sqlupdate($field,$variable,$ftabula,$fwhere,$db) {
 	$sql ="UPDATE ".$ftabula." SET ".$field."='".$variable."' WHERE ".$fwhere ;
-	echo $sql;
 	$q = $db->query($sql);
 	
 	return 'true';
