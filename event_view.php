@@ -2,7 +2,7 @@
 	
 ?>
 <div class="item">
-        <a style="color:aliceblue;background:brown;width:50px;" onclick="$('#container-<?php echo $one_event['event_id'] ?>-invisible').toggle()">Skats</a>
+        <a style="font-family: verdana;color:aliceblue;width:50px;" onclick="$('#container-<?php echo $one_event['event_id'] ?>-invisible').toggle()"><span id="evspan2">Skats</span></a>
         <div class="visible"> 						<!--  visible -->
           	<table>
           		<tr> 
@@ -26,7 +26,7 @@
           		</tr> 
           	</table>
         </div>	<!--  class="visible" --> 
-        <div class="invisible" id="container-<?php echo $one_event['event_id'] ?>-invisible"> <!--  invisible -->
+        <div class="invisible" id="container-<?php echo $one_event['event_id'] ?>-invisible" style="display:none;"> <!--  invisible -->
 	        
 	        <table>
 	           	<tr> <!-- R # 1. -->
