@@ -61,16 +61,27 @@ h3 {
     /* border: 1px solid black;*/
     text-align: center;
     /*padding: 5px;*/
+    font-size: 12px;
+ 	font-family: verdana;
+ 	color:#808080;
+    
  }
 td.teksts {
 	width: 40%;
     /* border: 1px solid black;*/
      /*padding: 5px;*/
+    font-size: 12px;
+ 	font-family: verdana;
+ 	color:#808080;
+     
  }
 td.ievade {
 	width: 57%;
    /* border: 1px solid black;*/
      /*padding: 5px;*/
+    font-size: 12px;
+ 	font-family: verdana;
+ 	color:#000080;
 
  }
  
@@ -462,7 +473,7 @@ a:hover {
     color: ivory;
     text-align: center;
     font-family: verdana;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #divForma{
@@ -471,7 +482,7 @@ a:hover {
 }
 #divView{
 	width:98%;
-	border: 1px solid black;
+	 /* border: 1px solid black; */
 	float:left;
 }
 #divFormNavig{
@@ -730,6 +741,9 @@ td.info2{
 
 #list_span{
 	color:#000080;
+	font-family: verdana;
+	font-size: 12px;
+	
 }
 
 #dvtitle {

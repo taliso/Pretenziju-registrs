@@ -139,6 +139,7 @@ $form="";
 				$_SESSION['SAKUMA_DATUMS']="";
 				$_SESSION['NOTIKUMU_SK']="";
 				$_SESSION['IZDEVUMI']="";
+				$_SESSION['TASK_NR']=0;
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
 			}
@@ -265,7 +266,6 @@ if (isset($_POST['event_save'])) {
 		
 		$q->execute($data);
 		
-		
 	}
 	if ($chkLog==1) {
 		$sql = "INSERT INTO uzdevumi SET ";
@@ -278,7 +278,6 @@ if (isset($_POST['event_save'])) {
   		status=:status";
 		
 		$q = $db->prepare($sql);
-	
 
 		$data = array(
 				':avots'=>"PRETENZIJA",
@@ -290,23 +289,23 @@ if (isset($_POST['event_save'])) {
 		
 		$q->execute($data);
 		
-		
 	}
 }
-
-
 
 if(isset($_GET['navig'])){
 	$_SESSION['NAVIG']=$_GET['navig'];
 	$navig=$_GET['navig'];
+	
 	if($navig=='mnLists'){
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['FORMA'] = 'pret_list.php';
 	}
+	
 	if($navig=='mnEdit'){
 		$_SESSION['STATUS'] = "EDIT";
 		$_SESSION['FORMA'] = 'veidlapa_KM_edit.php';
 	}
+	
 	if($navig=='mnNew'){
 		if ($_SESSION['STATUS'] == "VIEW"){
 				$_SESSION['STATUS'] = "EDIT";
@@ -329,16 +328,16 @@ if(isset($_GET['navig'])){
 					$_SESSION['FORMA']="veidlapa_KM_edit.php";
 				} //$_SESSION['PREFIKS'] =="KM"
 		}	//$_SESSION['STATUS'] == "VIEW"
+		
 		if ($_SESSION['STATUS'] == "EVENTS"){
 			if ($_SESSION['LOMA']=="Q") {
 				$_SESSION['STATUS']="NEWEVENT";
 			} // $_SESSION['LOMA']=="Q"  
-		else {
+			else {
 			//alert('Jums nav nepieciešamo tiesību');
-		}
+			}
+		
 		} //$_SESSION['STATUS'] == "EVENTS"
-		
-		
 		
 	}  //$navig=='mnNew'
 	
@@ -346,15 +345,16 @@ if(isset($_GET['navig'])){
 		$_SESSION['FORMA'] = 'tasks.php';
 		$_SESSION['STATUS'] = "TASKS";
 		}
+		
 	if($navig=='mnEvent'){
 		//$_SESSION['FORMA'] = 'notikumi.php';
 		$_SESSION['FORMA'] = 'eventi.php';
 		$_SESSION['STATUS'] = "EVENTS";
 	}
+	
 }
 
 if(isset($_SESSION['AGENTS'])){
-	
 	$lAgents=$_SESSION['AGENTS'];
 	$lUsername=$_SESSION['USER'];
 	$lTiesibas=$_SESSION['TIESIBAS'];
