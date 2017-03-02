@@ -182,7 +182,7 @@ if ($_SESSION['PRET_STATUS']=="REGISTER") {
 			':beigu_dat'=>$beigu_dat );
 					
 		$q->execute($data);
-		$_SESSION['STATUS'] = "VIEW";
+
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['FORMA'] = 'pret_list.php';
 		

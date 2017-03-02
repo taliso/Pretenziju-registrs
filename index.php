@@ -146,12 +146,17 @@ $form="";
 		}
 	}
 }	
+if (isset($_POST['task_save'])) {
+	
+	$atbilde=$_POST['atbilde'];
+	echo 'Atbilde='.$atbilde;
+	sqlupdate("atbilde",$atbilde,"uzdevumi"," identifikators ='".$_SESSION['TASK_NR']."'",$db);
+}
 
 
 if (isset($_POST['btIziet'])) {
 	unset($_SESSION['AGENTS']);
 }
-
 if(isset($_GET['mTools'])){
 	$arKey=$_GET['mTools'];
 	if ($arKey=="mnEPS"){

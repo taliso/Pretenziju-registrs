@@ -18,6 +18,7 @@ $tasks_count= count($tasks_list);
 	<div id="divTaskForms">
 		<table style="width:100%;">
 	 		 	<tr> <!-- R # 1. -->
+	 		 		<td style="width:3%;"><span id="evspan1" style="width:100%;text-align:center;">N.p.k.</span></td>
 	 				<td style="width:7%;"><span id="evspan1" style="width:100%;text-align:center;">Avots</span></td>
 	 				<td style="width:7%;"><span id="evspan1" style="width:100%;text-align:center;">Ident.</span></td>
 	 				<td style="width:8%;"><span id="evspan1" style="width:100%;text-align:center;">Datums</span></td>
@@ -33,46 +34,43 @@ if ($tasks_count>0) {
 	if(isset($_GET['tasknr'])){
 		$thisTask=$_GET['tasknr'];
 		
-		echo '$thisTask(0)='.$thisTask.'-----TASK_NR(0)='.$_SESSION['TASK_NR'];
-		
 		if ($thisTask==$_SESSION['TASK_NR']) {
 			$_SESSION['TASK_NR']= 0; 
-			echo '$thisTask='.$thisTask; 
+			
 		} else {
 			$_SESSION['TASK_NR']=$thisTask; 
-			echo '$thisTask(t)='.$thisTask;
+			
 		}
 		
 	}
 	
 	foreach ($tasks_list as $OneTask) {	?>
 		
-		<div id="divEventFormTitle">
-			<span id= "spantitle">Uzdevums</span><a id='mnaTasks' href="?tasknr=<?php echo $task_nr; ?>"> Nr.<?php echo $task_nr; ?></a>
-		</div>   <!-- <divEventFormTitle>  -->
-	
-		<div class="item">
-			<div class="visible"> 
+		<div id="divTask">
 					<table style="width:100%;">
 						<tr> 
+							<td style="width:3%; color:blue;"><a id='mnaTasks' href="?tasknr=<?php echo $task_nr; ?>"> Nr.<?php echo $task_nr; ?></a></td>
 							<td style="width:7%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['avots'] ?></span></td>
 							<td style="width:7%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['identifikators'] ?></span></td>
 							<td style="width:8%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['datums'] ?></span></td>
-							<td style="width:35%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['uzdevums'] ?></span></td>
+							<td style="width:35%;"><span id="evspan1" style="width:100%;text-align:left;"><?php echo $OneTask['uzdevums'] ?></span></td>
 							<td style="width:8%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['termins'] ?></span></td>
 							<td style="width:1%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['status'] ?></span></td>
 						</tr>
 					</table>
-			</div>	<!--  class="visible" --> 
 			<?php 
-			echo 'TASK_NR='.$_SESSION['TASK_NR'].'$task_nr='.$task_nr;
 			if ($_SESSION['TASK_NR']==$task_nr) {
 				$disp=''; } else {  $disp='none'; 
 					}
 					?>
 			<div class="invisible" style="display:<?php echo $disp ; ?>;"> <!--  invisible -->
-				<span id="evspan1"> Atbilde: </span><input type="text" name="atbilde" value="" style="width: 80%;"><input type="submit" name="task_send" value="Nosūtīt">
-			
+				<table>
+					<tr>
+						<td style="width:3%;"><span id="evspan1"> Atbilde:</span></td>
+						<td style="width:94%;"><textarea name="atbile" style="width:99%;font-family: verdana;font-size: 9px;"><?php echo $OneTask['atbilde']; ?></textarea></td>
+						<td style="width:2%;"><input type="submit" name="task_save" value="Nosūtīt"></td>
+					</tr>
+				</table>
 			</div> <!--  class="invisible" -->
 		</div>
 <?php

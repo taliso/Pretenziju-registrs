@@ -785,6 +785,20 @@ width: 100%;
 	font-size: 14px;
 	font-family: verdana;
 	margin: 2px;
-	width:60px;
+	width: 60px;
 	
+}
+#mnaTasks {
+	font-size: 12px;
+	font-family: verdana;
+	text-align: left;
+	color:blue;
+}
+
+
+#divTask {
+	border: 1px solid brown;
+	width: 100%;
+	background: #fffbdc;
+	margin: 2px;
 }
