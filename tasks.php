@@ -60,16 +60,23 @@ if ($tasks_count>0) {
 					</table>
 			<?php 
 			if ($_SESSION['TASK_NR']==$task_nr) {
-				$disp=''; } else {  $disp='none'; 
+				$disp=''; 
+				$_SESSION['TASK_ID']=$OneTask['identifikators']; } else {  $disp='none'; 
 					}
 					?>
 			<div class="invisible" style="display:<?php echo $disp ; ?>;"> <!--  invisible -->
 				<table>
 					<tr>
 						<td style="width:3%;"><span id="evspan1"> Atbilde:</span></td>
-						<td style="width:94%;"><textarea name="atbile" style="width:99%;font-family: verdana;font-size: 9px;"><?php echo $OneTask['atbilde']; ?></textarea></td>
+						<td style="width:94%;"><textarea name="atbilde" style="width:99%;font-family: verdana;font-size: 9px;"><?php echo $OneTask['atbilde']; ?></textarea></td>
 						<td style="width:2%;"><input type="submit" name="task_save" value="Nosūtīt"></td>
 					</tr>
+					<tr>
+						<td style="width:3%;"></td>
+						<td style="width:94%;"><input type="file" name="fileAtbilde" id="fileDoc"></td>
+						<td style="width:2%;"></td>
+					</tr>
+					
 				</table>
 			</div> <!--  class="invisible" -->
 		</div>

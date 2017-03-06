@@ -117,6 +117,7 @@ $form="";
 				$lAgents=$row['agents'];
 				$lTiesibas=$row['tiesibas'];
 				$lLoma=$row['loma'];
+				$lStrukt=$row['struktura_kods'];
 				
 				session_regenerate_id();
 				$_SESSION['AGENTS'] = $lAgents;
@@ -124,6 +125,7 @@ $form="";
 				$_SESSION['TIESIBAS'] = $lTiesibas;
 				$_SESSION['AGENTA_ID'] = $lAgenta_id;
 				$_SESSION['LOMA'] = $lLoma;
+				$_SESSION['STRUKTURA'] = $lStrukt;
 				$_SESSION['FORMA'] = 'pret_list.php';
 				$_SESSION['FORM_TITLE'] = -1;
 				$_SESSION['NAVIG'] = -1;
@@ -140,6 +142,7 @@ $form="";
 				$_SESSION['NOTIKUMU_SK']="";
 				$_SESSION['IZDEVUMI']="";
 				$_SESSION['TASK_NR']=0;
+				$_SESSION['TASK_ID']="";
 				session_write_close();
 				$MainInfo="Autorizācija ir veiksmīga";
 			}
@@ -147,12 +150,25 @@ $form="";
 	}
 }	
 if (isset($_POST['task_save'])) {
-	
 	$atbilde=$_POST['atbilde'];
-	echo 'Atbilde='.$atbilde;
-	sqlupdate("atbilde",$atbilde,"uzdevumi"," identifikators ='".$_SESSION['TASK_NR']."'",$db);
+	$fileAtbilde=$_POST['fileAtbilde'];
+	msg('File='.$fileAtbilde);
+	sqlupdate("atbilde",$atbilde,"uzdevumi"," identifikators ='".$_SESSION['TASK_ID']."'",$db);
+	sqlupdate("izpild_dat",date("Y-m-d"),"uzdevumi"," identifikators ='".$_SESSION['TASK_ID']."'",$db);
+	sqlupdate("fileAtbilde",$fileAtbilde,"uzdevumi"," identifikators ='".$_SESSION['TASK_ID']."'",$db);
+	
+	if ($_SESSION['STRUKTURA']=='TEH') {
+		$sql ="UPDATE notikumi SET dat_teh='".date("Y-m-d")."', teh_atbild='".$atbilde."'  WHERE event_id='".$_SESSION['TASK_ID']."' AND teh_cilv='".$_SESSION['AGENTS']."'" ;
+		msg("$sql=".$sql);
+		$q = $db->query($sql);
+			}
+	if ($_SESSION['STRUKTURA']=='LAB') {
+	
+	}
+	if ($_SESSION['STRUKTURA']=='LOG') {
+	
+	}
 }
-
 
 if (isset($_POST['btIziet'])) {
 	unset($_SESSION['AGENTS']);
@@ -167,6 +183,11 @@ if(isset($_GET['mTools'])){
 	if ($arKey=="mnKM"){
 		$_SESSION['FORMA'] = 'pret_list.php';
 		$_SESSION['PREFIKS'] ="KM";
+		$_SESSION['STATUS'] = "LIST";
+	}
+	if ($arKey=="mnIEK"){
+		$_SESSION['FORMA'] = 'pret_list.php';
+		$_SESSION['PREFIKS'] ="IEK";
 		$_SESSION['STATUS'] = "LIST";
 	}
 }
@@ -438,32 +459,27 @@ if(isset($_SESSION['AGENTS'])){
 	<?php if ($autor_ir==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
 	<div id="divDarba"><!--divDarba    -->
 		<div id="divFormNavig"><!--divFormNavig    -->
-			<span id="fspan2">Pretenzijas veids:</span>
 			<div id="divTools">
-				<ul>
+<!-- 	<ul> -->			
 					<?php // Tools menju ?>
-					<li id='mnTools'><a id='<?php if ($_SESSION['PREFIKS']=="KM"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' href="?mTools=mnKM">KM</a></li>
-					<li id='mnTools'><a id='<?php if ($_SESSION['PREFIKS']=="EPS"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' href="?mTools=mnEPS">EPS</a></li>
-<!-- 					<li id='mnTools'><a id='mnaTools' href="?mTools=mnKM">KM</a></li> -->
-<!-- 					<li id='mnTools'><a id='mnaTools' href="?mTools=mnEPS">EPS</a></li> -->
+					<a id='<?php if ($_SESSION['PREFIKS']=="KM"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' title='Kostruktīvo materiālu pretenzijas' href="?mTools=mnKM">KM</a>
+					<a id='<?php if ($_SESSION['PREFIKS']=="EPS"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' title='EPS materiālu pretenzijas' href="?mTools=mnEPS">EPS</a>
+					<a id='<?php if ($_SESSION['PREFIKS']=="IEK"){echo 'mnaToolsSel';} else {echo 'mnaTools';} ?>' title='Iekšējās pretenzijas' href="?mTools=mnIEK">IEK</a>
 
-				</ul>	<br>
+<!-- 				</ul>	<br> -->	
 			</div><!--divTools    -->
-		
+			<div id='divTextCenter'>
+				<span id="spantitle">Pretenziju saraksts</span>
+			</div>
 			<ul>
 				<?php // HORIZONTĀLAIS menju
-				if ($_SESSION['STATUS'] != "EVENT" && $_SESSION['STATUS'] != "NEWEVENT") { ?>
-					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnLists">Saraksts</a></li>
-				<?php }
 				if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEdit">Labot</a></li>
 				<?php } ?>
 				<?php if ($_SESSION['STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 				<?php } ?>
-				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
-					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnTasks">Uzdevumi</a></li>
-				<?php } ?>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnTasks">Mani uzdevumi</a></li>
 				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi <?php echo $_SESSION['NOTIKUMU_SK'] ?></a></li>
 				<?php } ?>
