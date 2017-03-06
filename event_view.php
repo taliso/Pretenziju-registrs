@@ -57,7 +57,7 @@
 	 		 	<?php } ?>
 	        	<?php if (strlen($one_event['log_cilv'])>1) { ?>
 	        	<tr> <!-- R #2. -->
-	 				<td><span id="evspan1"> Loģistika: __</span><span id="evspan2"><?php echo $one_event['teh_cilv']; ?></span></td>
+	 				<td><span id="evspan1"> Loģistika: __</span><span id="evspan2"><?php echo $one_event['log_cilv']; ?></span></td>
 	 				<td><span id="evspan2"> <?php echo $one_event['uzd_log']; ?></span></td>
 	 				<td><span id="evspan2"> <?php echo $one_event['dat_log']; ?></span></td>
 	 				<td><span id="evspan2"> <?php echo $one_event['log_atbild']; ?></span></td>

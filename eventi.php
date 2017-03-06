@@ -69,9 +69,11 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 <?php
 foreach ($pret_events as $one_event){?>
 	<div id="divEventForm"> 
+	
 		<div id="divEventFormTitle">
 			<span id= "spantitle">Notikums Nr.<?php echo $one_event['event_id'] ?></span>
 		</div>   <!-- <divEventFormTitle>  -->
+		
 		<?php 
 			$cilv='';
 			if (strlen($one_event['teh_cilv'])>1) {
