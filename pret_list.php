@@ -12,6 +12,7 @@ $rin="";
 for($kk=0;$kk<=$col_count;$kk++){
   	$rin=$rin.'<td class="htcol'.$kk.'">'.$col_name[$kk].'</td>';
   }
+  msg($rin);
 echo $rin;
 
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
