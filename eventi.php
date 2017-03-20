@@ -9,8 +9,10 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 }
 $event_sk=count($pret_events);
 $izd_sum=0;
+$event_count=0;
 foreach ($pret_events as $one_event){
 	$izd_sum=$izd_sum + $one_event['izdevumi'];
+	$event_count=$event_count+1;
 }
 $_SESSION['NOTIKUMU_SK']=$event_sk;
 $_SESSION['IZDEVUMI']=$izd_sum;
@@ -67,16 +69,25 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 	
 </div>   <!-- <divEventForm>  -->
 <?php
+
 foreach ($pret_events as $one_event){?>
 <?php 
 $fields=" persona, struktura_kods, uzdevums, uzd_datums, atbilde, atbild_datums, file_atbild ";
 $ftabula="personas_notikums";
-$fwhere=" id_event='".$one_event['ID']."'";
+$fwhere=" event_id='".$one_event['event_id']."'";
 
-	$evPersonas=sqltoarray($fields,$ftabula,$fwhere,$db)?>
+	$evPersonas=sqltoarray($fields,$ftabula,$fwhere,$db);
+	var_dump($evPersonas);
+	$visaspersonas="";
+	foreach ($evPersonas as $pers) {
+		$visaspersonas=$visaspersonas.$pers['persona'].", ";
+	}
+	?>
 	<div id="divEventForm"> 
 		<?php 
 		include 'event_view1.php'; ?>
 	</div>
-<?php } ?>
+<?php 
+
+} ?>
 

@@ -40,27 +40,9 @@ function file_upload($fails,$target_dir,$regnr){
             $keys[] = $k;
             $kluda = 0;
             //Failu apstrāde
-msg("Upload:".$k." - ".$regnr);
+			msg("Upload:".$k." - ".$regnr);
 
-                        
-            switch ($k) {
-                case "filePas":
-                    $grupa = "pas";
-                    break;
-                case "fileApr":
-                    $grupa = "apr";                    
-                    break;
-                case "fileFoto":
-                    $grupa = "foto";
-                    break;
-                case "fileOblDoc";
-	                $grupa = "dok";
-	                break;
-                default:
-                    echo "Kļūda";
-            }
-
-            $faila_nos=faila_nos($regnr,$grupa,basename($fails[$k]["name"]));
+            $faila_nos=$regnr.'-'.basename($fails[$k]["name"]);
             $target_file =$target_dir.$faila_nos;
             if ($fails[$k]["size"] > MAX_FILE_SIZE) {
                 echo "Atvainojiet, faila izmērs ir par lielu.";

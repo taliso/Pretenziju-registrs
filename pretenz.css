@@ -859,12 +859,17 @@ tr td {
 	font-size: 18px;
 }
 
+#span_14_br {
+	color: #804040 ;
+	font-family: verdana;
+	font-size: 14px;
+}
 
-
-
-
-
-
+#span_14_bl {
+	color: #0000a0 ;
+	font-family: verdana;
+	font-size: 14px;
+}
 
 
 

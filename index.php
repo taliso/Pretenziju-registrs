@@ -259,7 +259,7 @@ if (isset($_POST['user_to_event'])) {
 		e_pasts=:e_pasts";
 
 	$q = $db->prepare($sql);
-
+echo "_SESSION['EVENT_ID']=".$_SESSION['EVENT_ID'];
 	$data = array(
 			':persona'=>$muser['agents'],
 			':strukturas_kods'=>$muser['struktura_kods'],
@@ -511,7 +511,7 @@ if(isset($_SESSION['AGENTS'])){
 	</div><!--divGalva    -->	
 
 	<!-- ##################################################################################################################   -->
-	<?php echo "Title".$_SESSION['TITLE']; 
+	<?php  
 	if ($autor_ir==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
 	<div id="divDarba"><!--divDarba    -->
 		<div id="divFormNavig"><!--divFormNavig    -->
