@@ -1,22 +1,7 @@
 <?php
-session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-include "config.php";
-include "funkcijas.php";
-include "konekcija.php";
-
-//	$sql ="SELECT * FROM kl_agenti";
-//	$q = $db->query($sql);
-//	$lietotaji="";
-//	while($r = $q->fetch(PDO::FETCH_ASSOC)){
-//		$lietotaji[]=$r;
-//	}
 
 $lietotaji=sqltoarray('*','kl_agenti','',$db);
 		
-	var_dump($lietotaji);
  if (isset($_GET['cilv'])){
   	 	$cilv=$_GET['cilv'];
  } 

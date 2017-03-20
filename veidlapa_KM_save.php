@@ -41,6 +41,7 @@ $apraksts = $_POST['apraksts'];
 $file_foto = "";
 $file_pas = "";
 $file_apr = "";
+$file_obl_doc = "";
 $status = $_SESSION['PRET_STATUS'];
 $budzets = 0;
 $nosutits_admin = 0;
@@ -101,6 +102,7 @@ $sql=$sql."
 		file_foto=:file_foto,
 		file_pas=:file_pas,
 		file_apr=:file_apr,
+		file_obl_doc=:file_obl_doc;
 		status=:status,
 		notikumu_sk=:notikumu_sk,
 		atbildigais=:atbildigais,
@@ -118,7 +120,6 @@ $sql=$sql."
 		vienosanas=:vienosanas";
 
 if ($_SESSION['PRET_STATUS']=="REGISTER") {
-	//ECHO "3_SESSION['PRET_STATUS']=".$_SESSION['PRET_STATUS'];
 	$sql = $sql." WHERE pret_id='".$_SESSION['PRET_ID']."'";
 }
 
@@ -164,6 +165,7 @@ if ($_SESSION['PRET_STATUS']=="REGISTER") {
 			':file_foto'=>$file_foto,
 			':file_pas'=>$file_pas,
 			':file_apr'=>$file_apr,
+			':file_obl_doc'=>$file_obl_doc,
 			':status'=>$status,
 			':notikumu_sk'=>0,
 			':atbildigais'=>$atbildigais,
@@ -182,7 +184,9 @@ if ($_SESSION['PRET_STATUS']=="REGISTER") {
 			':beigu_dat'=>$beigu_dat );
 					
 		$q->execute($data);
-
+		msg("KM_save $target_dir= ".$target_dir."  $reg_nr=".$reg_nr);
+		file_upload($_FILES,$target_dir,$reg_nr);
+		
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['FORMA'] = 'pret_list.php';
 		

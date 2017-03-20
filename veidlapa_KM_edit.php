@@ -135,6 +135,7 @@ if (isset ( $_POST ['pret_save'] )) {
 	include 'veidlapa_KM_save.php';
 	$_SESSION ['STATUS'] = "LIST";
 	$_SESSION ['FORMA'] = 'pret_list.php';
+	$_SESSION['TITLE'] = "Pretenziju saraksts";
 	if ($_SESSION ['PRET_STATUS'] == 'NEW') {
 		$to = 'talis@tenax.lv';
 		$sub = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION ['PRET_ID'];
@@ -249,8 +250,8 @@ if (isset ( $_POST ['pret_cancel'] )) {
 					(pievienot pasūtījuma kopiju pielikumā)
 				</td>
 				<td class="atstarpe"></td>
-				<td class="ievade"><input ID="text_pret" type="text"
-					name="pasutijuma_nr" value="<?php echo $pasutijuma_nr; ?>"></td>
+				<td class="ievade"><input ID="text_pret" type="text" name="pasutijuma_nr" value="<?php echo $pasutijuma_nr; ?>">
+									<input type="file" name="fileDoc" id="fileDoc"></td>
 			</tr>
 
 

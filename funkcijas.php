@@ -26,18 +26,21 @@ return $datums;
 
 }
 
+/**
+ * 
+ * @param unknown $fails
+ * @param unknown $target_dir
+ * @param unknown $regnr
+ */
 function file_upload($fails,$target_dir,$regnr){
-    echo "<pre>";
-//    var_dump($fails);
-    echo "</pre>";
-
+ var_dump($fails);
     $keys = array();
     foreach (array_keys($fails) as $k) {
         if ($fails[$k]["name"] != "") {
             $keys[] = $k;
             $kluda = 0;
             //Failu apstrāde
-
+msg("Upload:".$k." - ".$regnr);
 
                         
             switch ($k) {
@@ -50,6 +53,9 @@ function file_upload($fails,$target_dir,$regnr){
                 case "fileFoto":
                     $grupa = "foto";
                     break;
+                case "fileOblDoc";
+	                $grupa = "dok";
+	                break;
                 default:
                     echo "Kļūda";
             }
@@ -253,6 +259,9 @@ function MailTo($to,$sub,$body){
 
 // ========================  SQL pieprasījums uz masīvu ========================================
 function sqltoarray($fields,$ftabula,$fwhere,$db) {
+	
+	$myarray=array();
+	
 	$sql ="SELECT ".$fields." FROM ".$ftabula;
 	if (strlen($fwhere)>0){
 		$sql=$sql." where ".$fwhere ;
@@ -263,9 +272,6 @@ function sqltoarray($fields,$ftabula,$fwhere,$db) {
 	while($r = $q->fetch(PDO::FETCH_ASSOC)){
 		$myarray[]=$r;
 	}
-	
-	var_dump($myarray);
-	
 	return $myarray;
 
 }

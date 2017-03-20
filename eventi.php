@@ -1,7 +1,7 @@
 <?php
 $event_sk=0;
 $pret_events=array();
-$izd_sum=0;
+
 $sql = "SELECT * FROM notikumi where pret_id='".$_SESSION['PRET_ID']."'";
 $q = $db->query($sql);
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
@@ -59,7 +59,7 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 
 	<?php 
 	if ($_SESSION['STATUS']=='NEWEVENT') {
-		include 'newevent.php';
+		include 'newevent1.php';
 	}?>
 	
 	
@@ -68,29 +68,15 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 </div>   <!-- <divEventForm>  -->
 <?php
 foreach ($pret_events as $one_event){?>
+<?php 
+$fields=" persona, struktura_kods, uzdevums, uzd_datums, atbilde, atbild_datums, file_atbild ";
+$ftabula="personas_notikums";
+$fwhere=" id_event='".$one_event['ID']."'";
+
+	$evPersonas=sqltoarray($fields,$ftabula,$fwhere,$db)?>
 	<div id="divEventForm"> 
-	
-		<div id="divEventFormTitle">
-			<span id= "spantitle">Notikums Nr.<?php echo $one_event['event_id'] ?></span>
-		</div>   <!-- <divEventFormTitle>  -->
-		
 		<?php 
-			$cilv='';
-			if (strlen($one_event['teh_cilv'])>1) {
-				$cilv=$cilv.$one_event['teh_cilv']." ," ;
-			}	
-			
-			if (strlen($one_event['lab_cilv'])>1) {
-				$cilv=$cilv.$one_event['lab_cilv']." ," ;
-			}
-				
-			if (strlen($one_event['log_cilv'])>1) {
-				$cilv=$cilv.$one_event['log_cilv']." ," ;
-			}
-				
-			
-			$ev_dat=	$one_event['event_date'] ;
-		include 'event_view.php'; ?>
+		include 'event_view1.php'; ?>
 	</div>
 <?php } ?>
 
