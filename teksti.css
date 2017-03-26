@@ -1,0 +1,108 @@
+
+h1 {
+    color: white;
+    text-align: center;
+    font-family: verdana;
+    font-size: 24px;
+	padding: 2px;
+}
+h2 {
+    color: white;
+    text-align: center;
+}
+h3 {
+    color: white;
+    text-align: center;
+}
+
+  /* #########################  SPAN       ######################################*/
+ /* #########  CENTER    #############*/
+#fspan1{
+	font-size: 16px;
+	color: #ff8000;
+	font-family: verdana;
+	text-align: center;
+}
+
+#fspan3{
+	font-size: 14px;
+	float: left;
+	font-family: verdana;
+	text-align: center;
+	color: #c7e62f;
+	width: 100%;
+}
+/* #########  RIGHT    #############*/
+#span_14_right_yellow{
+	font-size: 14px;
+	color: #ffff00;
+	float: right;
+	font-family: verdana;
+	
+	
+}
+
+ /* #########  LEFT    #############*/
+#fspan2{
+	font-size: 16px;
+	color: #800000;
+	float: left;
+	font-family: verdana;
+	text-align: left;
+}
+
+#evspan1{
+	font-size: 14px;
+	float: left;
+	font-family: verdana;
+	color: #804040 ;
+}
+#evspan2{
+	font-size: 14px;
+	font-family: verdana;
+	color: #0000a0 ;
+	margin: 10px;
+}
+
+#evspan3{
+	font-size: 16px;
+	float: left;
+	font-family: verdana;
+}
+#list_span{
+	color:#000080;
+	font-family: verdana;
+	font-size: 12px;
+	
+}
+#spantitle {
+	color: aliceblue;
+	font-family: verdana;
+	font-size: 18px;
+}
+
+#span_14_br {
+	color: #804040 ;
+	font-family: verdana;
+	font-size: 14px;
+}
+
+#span_14_bl {
+	color: #0000a0 ;
+	font-family: verdana;
+	font-size: 14px;
+}
+
+#span_18_gaish {
+	color: aliceblue;
+	font-family: verdana;
+	font-size: 18px;
+}
+#span_18_yealow {
+	color: #ffff00;
+	font-family: verdana;
+	font-size: 18px;
+}
+#mnaEvent{
+	font-weight: normal;
+}

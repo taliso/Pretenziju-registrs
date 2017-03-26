@@ -2,21 +2,7 @@
 body {
     background-color: white;
 }
-h1 {
-    color: white;
-    text-align: center;
-    font-family: verdana;
-    font-size: 24px;
-	padding: 2px;
-}
-h2 {
-    color: white;
-    text-align: center;
-}
-h3 {
-    color: white;
-    text-align: center;
-}
+
 #logo {
   float: left;
   padding:1px;
@@ -355,7 +341,28 @@ a:hover {
     display: block;
     padding: 0px;	
 }
-
+#mnaEvent{
+	font-size: 14px;
+	font-family: verdana;
+	margin: 2px;
+	float:left;
+}
+#mnAddEvents{
+	display: inline;
+    border: 3px solid indigo;
+	padding: 3px;
+    background: lightcyan;
+	border-radius: 5px;
+	height: 16px;
+	width: 7%;
+	text-align: center;
+	margin-right: 8px;
+	float: right;
+	font-size: 14px;
+	font-family: verdana;
+	margin: 2px;
+	
+}
 #divMaster{
 /*	width:1800px;*/
 /*	height:1000px;*/
@@ -802,80 +809,22 @@ tr td {
     margin-bottom: 12px;
 }
 
-
-  /* #########################  SPAN       ######################################*/
-
-#fspan1{
-	font-size: 16px;
-	color: #ff8000;
-	font-family: verdana;
+#mnEventi{
+	display: inline;
+	border: 3px solid #844d18;
+	padding: 3px;
+	background: #d5a314;
+	border-radius: 5px;
+	height: 20px;
+	width: 207px;
 	text-align: center;
-}
-
-#fspan2{
-	font-size: 16px;
-	color: #800000;
+	margin-right: 8px;
 	float: left;
-	font-family: verdana;
-	text-align: left;
-}
-
-#fspan3{
-	font-size: 14px;
-	float: left;
-	font-family: verdana;
-	text-align: center;
-	color: #c7e62f;
-	width: 100%;
-}
-
-#evspan1{
-	font-size: 14px;
-	float: left;
-	font-family: verdana;
-	color: #804040 ;
-}
-#evspan2{
 	font-size: 14px;
 	font-family: verdana;
-	color: #0000a0 ;
-	margin: 10px;
+	margin: 2px;
+	color: #efe636;
 }
-
-#evspan3{
-	font-size: 16px;
-	float: left;
-	font-family: verdana;
-}
-#list_span{
-	color:#000080;
-	font-family: verdana;
-	font-size: 12px;
-	
-}
-#spantitle {
-	color: aliceblue;
-	font-family: verdana;
-	font-size: 18px;
-}
-
-#span_14_br {
-	color: #804040 ;
-	font-family: verdana;
-	font-size: 14px;
-}
-
-#span_14_bl {
-	color: #0000a0 ;
-	font-family: verdana;
-	font-size: 14px;
-}
-
-
-
-
-
-
 
 
 

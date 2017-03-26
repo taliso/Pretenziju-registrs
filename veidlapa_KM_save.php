@@ -53,7 +53,14 @@ $saskanots_ar_klientu = "0000-00-00";
 $vienosanas = "";
 $beigu_dat = "0000-00-00";
 $registr_datums = date("Y-m-d");
-$sakuma_datums= "0000-00-00";
+$atbildigais='';
+$sakuma_datums = "0000-00-00";
+
+$fields=' * ';
+$tabula='tmp_files';
+$where='';
+
+$tmp_fil=sqltoarray($fields,$tabula,$where,$db);
 
 if ($_SESSION['PRET_STATUS']=="NEW") {
 	$sql = "INSERT INTO pretenzijas SET ";
@@ -61,7 +68,6 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 } else {
 	$sql = "UPDATE pretenzijas SET ";
 }
-
 $sql=$sql."
 		reg_nr=:reg_nr,
 		veids=:veids,
@@ -105,10 +111,7 @@ $sql=$sql."
 		file_obl_doc=:file_obl_doc;
 		status=:status,
 		notikumu_sk=:notikumu_sk,
-		atbildigais=:atbildigais,
 		budzets=:budzets,
-		uzd_izpilda=:uzd_izpilda,
-		akt_uzdevums=:akt_uzdevums,
 		uzd_termins=:uzd_termins,
 		sakuma_datums=:sakuma_datums,
 		nosutits_admin=:nosutits_admin,
@@ -168,10 +171,7 @@ if ($_SESSION['PRET_STATUS']=="REGISTER") {
 			':file_obl_doc'=>$file_obl_doc,
 			':status'=>$status,
 			':notikumu_sk'=>0,
-			':atbildigais'=>$atbildigais,
 			':budzets'=>$budzets,
-			':uzd_izpilda'=>$uzd_izpilda,
-			':akt_uzdevums'=>$akt_uzdevums,
 			':uzd_termins'=>"0000-00-00",
 			':sakuma_datums'=>$sakuma_datums,
 			':nosutits_admin'=>$nosutits_admin,
@@ -182,10 +182,78 @@ if ($_SESSION['PRET_STATUS']=="REGISTER") {
 			':saskanots_ar_klientu'=>$saskanots_ar_klientu,
 			':vienosanas'=>$vienosanas,
 			':beigu_dat'=>$beigu_dat );
-					
+
 		$q->execute($data);
-		msg("KM_save $target_dir= ".$target_dir."  $reg_nr=".$reg_nr);
-		file_upload($_FILES,$target_dir,$reg_nr);
+
+		
+		
+//#########################  FAILU UPLOADS   ################################################################
+		
+//^^^^^^^^^^^^^^^^^^    Saglabājam faili sarakstu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		
+if (isset($tmp_fil)){
+	foreach ($tmp_fil as $tmpf){
+		var_dump($tmpf);		
+		
+		$submit_name=$tmpf['submit_name'];
+		$source=$tmpf['source'];
+		$identif=$tmpf['identif'];
+		$name=$tmpf['name'];
+		$type=$tmpf['type'];
+		$tmp_name=$tmpf['tmp_name'];
+		$size=$tmpf['size'];
+		$cmdDel=$tmpf['cmdDel'];
+		$konv_name=substr($source,0,4).'_'.$identif.'_'.$name;
+		
+		if ($cmdDel==0){
+			$sql = "INSERT INTO faili SET ";
+			$sql=$sql."
+			orginal_name=:orginal_name ,
+			konvert_name=:konvert_name ,
+			path=:path ,
+			source=:source ,
+			ident=:ident ,
+			size=:size ,
+			submit_name=:submit_name";
+			
+			$q = $db->prepare($sql);
+			
+			
+			$data = array(
+					':orginal_name'=> $name ,
+					':konvert_name'=> $konv_name ,
+					':path'=> "uploads/" ,
+					':source'=>$source  ,
+					':ident'=>$identif  ,
+					':size'=>$size  ,
+					':submit_name'=>$submit_name  );
+			
+			$q->execute($data);
+			
+			f_upload($name,$tmp_name,$konv_name,$target_dir);
+		}
+	}
+	
+}
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['FORMA'] = 'pret_list.php';

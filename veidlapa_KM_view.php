@@ -10,7 +10,7 @@ if (isset($_POST['pret_risinajums'])) {
 	
 	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 	$sql ="UPDATE pretenzijas SET sakuma_datums='".$sakuma_datums."', status='REGISTER' WHERE pret_id='".$_SESSION['PRET_ID']."'";
-	
+	$_SESSION['PRET_STATUS']='REGISTER';
 	$q = $dbf->query($sql);
 	
 }
@@ -173,7 +173,10 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="teksts">Šī dokumenta noformēšanas datums</td>
 	    <td class="atstarpe"></td>
 	    <td class="ievade">
-	    	<?php echo "<span id='list_span'>".$dokumenta_datums."</span>" ; ?>
+	    	<?php
+	    	me('Dokumenta datums',$dokumenta_datums);
+	    	echo "<span id='list_span'>".$dokumenta_datums."</span>" ; 
+	    	?>
 	    </td>
 	  </tr>
 
@@ -300,10 +303,11 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 			?>
 	  	</td>
 	  </tr>
-	
 	</table>
-	<?php if ($_SESSION['LOMA']=="Q" && $sakuma_datums=='0000-00-00') { ?>
-		<input type="submit" name="pret_risinajums" value="Risinājums">
+	<?php
+
+	if ($_SESSION['LOMA']=="Q" && $_SESSION['PRET_STATUS']=='NEW') { ?>
+		<input type="submit" name="pret_risinajums" value="Sākt">
 	<?php }	 ?>
   </form>
 

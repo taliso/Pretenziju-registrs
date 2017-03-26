@@ -147,3 +147,17 @@ uasort() 	Sorts an array by values using a user-defined comparison function
 uksort() 	Sorts an array by keys using a user-defined comparison function
 usort() 	Sorts an array using a user-defined comparison function
 
+PERSONAS-UZDEVUMS
+
+ID
+persona
+struktura_kods
+event_id
+uzdevums
+uzd_datums
+atbilde
+atbild_datums
+izdevumi
+izd_apstipr
+file_atbild
+

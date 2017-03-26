@@ -131,46 +131,22 @@ if ($_SESSION ['PRET_STATUS'] == "NEW") {
 		$beigu_dat = $pret ['beigu_dat'];
 	}
 }
-if (isset ( $_POST ['pret_save'] )) {
-	include 'veidlapa_KM_save.php';
-	$_SESSION ['STATUS'] = "LIST";
-	$_SESSION ['FORMA'] = 'pret_list.php';
-	$_SESSION['TITLE'] = "Pretenziju saraksts";
-	if ($_SESSION ['PRET_STATUS'] == 'NEW') {
-		$to = 'talis@tenax.lv';
-		$sub = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION ['PRET_ID'];
-		$body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION ['PRET_ID'] . '. Ludzu nozimet atbildigos.';
-		
-		$mail->addAddress ( $to ); // Name is optional
-		$mail->Subject = $sub;
-		$mail->Body = $body;
-		
-		if (! $mail->send ()) {
-			echo 'Message could not be sent.';
-			echo 'Mailer Error: ' . $mail->ErrorInfo;
-		} else {
-			echo 'E-pasts ir nosūtīts. Par jaunu pretenziju.';
-		}
-	} else {
-		
-		$to = 'service@tenax.lv';
-		$sub = 'Pretenzija Nr. ' . $_SESSION ['PRET_ID'] . ' ir labota.';
-		$body = 'Pretenzija Nr. ' . $_SESSION ['PRET_ID'] . ' ir labota.';
-		
-		$mail->addAddress ( $to ); // Name is optional
-		$mail->Subject = $sub;
-		$mail->Body = $body;
-		
-		if (! $mail->send ()) {
-			echo 'Message could not be sent.';
-			echo 'Mailer Error: ' . $mail->ErrorInfo;
-		} else {
-			echo 'E-pasts ir nosūtīts. Par labošanu.';
-		}
-	}
-}
-if (isset ( $_POST ['pret_cancel'] )) {
-}
+$ident=$_SESSION['PRET_ID'];
+
+$where=" submit_name='vd_6_file' and identif='".$ident."'" ;
+$fl_vd_6=sqltoarray('name','tmp_files',$where,$db);
+
+$where=" submit_name='vd_8_file' and identif='".$ident."'" ;
+$fl_vd_8=sqltoarray('name','tmp_files',$where,$db);
+
+$where=" submit_name='vd_10_file' and identif='".$ident."'" ;
+$fl_vd_10=sqltoarray('name','tmp_files',$where,$db);
+
+$where=" submit_name='vd_11_file' and identif='".$ident."'" ;
+$fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
+
+
+
 ?>
 
 <div id="saturs">
@@ -250,8 +226,36 @@ if (isset ( $_POST ['pret_cancel'] )) {
 					(pievienot pasūtījuma kopiju pielikumā)
 				</td>
 				<td class="atstarpe"></td>
-				<td class="ievade"><input ID="text_pret" type="text" name="pasutijuma_nr" value="<?php echo $pasutijuma_nr; ?>">
-									<input type="file" name="fileDoc" id="fileDoc"></td>
+				<td class="ievade">
+				<!-- ##############################  Failu izvēle ######################################################################## -->					
+					<div id="divVeidSad" style="float:left;  width:70%; height:100%; margin: 2px;">
+						<input ID="text_pret" type="text" name="pasutijuma_nr" value="<?php echo $pasutijuma_nr; ?>">
+					</div>	
+						
+					<div id="divEventFaili" style="float:left;  width:26%; border: 1px solid darkgray; height:100%; margin: 2px;">
+						<div id="" style="width:99%;border: 2px solid darkgray;text-align: center; height:25px;background-color:darkgray;">
+							 <span id="fspan3" style="margin: 0px; width:60%; color:#5b5d51;"> FAILI </span>
+							 <input style="float:right; margin: 0px;" type="submit" name="doc_to_pret" value="Pievienot" >
+							 
+						</div>
+						<table>
+							<tr>
+								<td> 
+									<?php 
+ 									foreach ($fl_vd_6 as $faili){
+										echo $faili['name'].'<br>';
+ 									}
+									?>
+								</td>
+							</tr> 
+						</table>
+						<div id="divFailiMenu">
+					  		<input type="file" name="vd_6_file" id="fileDoc" style="margin:4px;">
+						</div>
+					</div>
+				<!-- ##############################  Failu izvēle ######################################################################## -->					
+									
+				</td>
 			</tr>
 
 
@@ -282,7 +286,35 @@ if (isset ( $_POST ['pret_cancel'] )) {
 					pretenzijas aprakstu pielikumā)
 				</td>
 				<td class="atstarpe"></td>
-				<td class="ievade"><textarea name="apraksts" style="width:100%;"><?php echo $apraksts; ?></textarea>
+				<td class="ievade">
+					<!-- ##############################  Failu izvēle ######################################################################## -->					
+					<div id="divVeidSad" style="float:left;  width:70%; height:100%; margin: 2px;">
+						<textarea name="apraksts" style="width:100%;"><?php echo $apraksts; ?></textarea>
+					</div>	
+						
+					<div id="divEventFaili" style="float:left;  width:26%; border: 1px solid darkgray; height:100%; margin: 2px;">
+						<div id="" style="width:99%;border: 2px solid darkgray;text-align: center; height:25px;background-color:darkgray;">
+							 <span id="fspan3" style="margin: 0px; width:60%; color:#5b5d51;"> FAILI </span>
+							 <input style="float:right; margin: 0px;" type="submit" name="doc_to_pret" value="Pievienot" >
+							 
+						</div>
+						<table>
+							<tr>
+								<td> 
+									<?php 
+ 									foreach ($fl_vd_8 as $faili){
+										echo $faili['name'].'<br>';
+ 									}
+									?>
+								</td>
+							</tr> 
+						</table>
+						<div id="divFailiMenu">
+					  		<input type="file" name="vd_8_file" id="fileDoc" style="margin:4px;">
+						</div>
+					</div>
+				<!-- ##############################  Failu izvēle ######################################################################## -->					
+					
 				</td>
 			</tr>
 
@@ -311,12 +343,37 @@ if (isset ( $_POST ['pret_cancel'] )) {
 				</td>
 				<td class="atstarpe"></td>
 				<td class="ievade">
-		 <?php
-			StatCheckBox ( 'iesniegts_nav', $iesniegts_nav, 'Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)', '<br>', '' );
-			StatCheckBox ( 'iesniegts_panel_foto', $iesniegts_panel_foto, 'Ir saņemtas preces fotofiksācija', '<br>', '' );
-			StatCheckBox ( 'iesniegts_mark_foto', $iesniegts_mark_foto, ' Ir saņemtas marķējuma fotofiksācijas', '', '' );
-			?>
-	  	</td>
+					<div id="divVeidSad" style="float:left;  width:70%; height:100%; margin: 2px;">
+						 <?php
+							StatCheckBox ( 'iesniegts_nav', $iesniegts_nav, 'Sūdzība attiecas uz piegādes laiku (foto nav nepieciešams)', '<br>', '' );
+							StatCheckBox ( 'iesniegts_panel_foto', $iesniegts_panel_foto, 'Ir saņemtas preces fotofiksācija', '<br>', '' );
+							StatCheckBox ( 'iesniegts_mark_foto', $iesniegts_mark_foto, ' Ir saņemtas marķējuma fotofiksācijas', '', '' );
+							?>
+					</div>	
+						
+					<div id="divEventFaili" style="float:left;  width:26%; border: 1px solid darkgray; height:100%; margin: 2px;">
+						<div id="" style="width:99%;border: 2px solid darkgray;text-align: center; height:25px;background-color:darkgray;">
+							 <span id="fspan3" style="margin: 0px; width:60%; color:#5b5d51;"> FAILI </span>
+							 <input style="float:right; margin: 0px;" type="submit" name="doc_to_pret" value="Pievienot" >
+							 
+						</div>
+						<table>
+							<tr>
+								<td> 
+									<?php 
+ 									foreach ($fl_vd_10 as $faili){
+										echo $faili['name'].'<br>';
+ 									}
+									?>
+								</td>
+							</tr> 
+						</table>
+						<div id="divFailiMenu">
+					  		<input type="file" name="vd_10_file" id="fileDoc" style="margin:4px;">
+						</div>
+					</div>
+			
+	  		</td>
 			</tr>
 
 
@@ -328,10 +385,37 @@ if (isset ( $_POST ['pret_cancel'] )) {
 				</td>
 				<td class="atstarpe"></td>
 				<td class="ievade">
-			<?php
-			StatCheckBox ( 'obl_dok_crm', $obl_dok_crm, 'CMR', '<br>', '' );
-			StatCheckBox ( 'obl_dok_akts', $obl_dok_akts, ' Pieņemšanas - nodošanas akts', '', '' );
-			?>
+	    	<!-- ##############################  Failu izvēle ######################################################################## -->					
+					<div id="divVeidSad" style="float:left;  width:70%; height:100%; margin: 2px;">
+						<?php
+						StatCheckBox ( 'obl_dok_crm', $obl_dok_crm, 'CMR', '<br>', '' );
+						StatCheckBox ( 'obl_dok_akts', $obl_dok_akts, ' Pieņemšanas - nodošanas akts', '', '' );
+						?>
+	
+					</div>	
+						
+					<div id="divEventFaili" style="float:left;  width:26%; border: 1px solid darkgray; height:100%; margin: 2px;">
+						<div id="" style="width:99%;border: 2px solid darkgray;text-align: center; height:25px;background-color:darkgray;">
+							 <span id="fspan3" style="margin: 0px; width:60%; color:#5b5d51;"> FAILI </span>
+							 <input style="float:right; margin: 0px;" type="submit" name="doc_to_pret" value="Pievienot" >
+							 
+						</div>
+						<table>
+							<tr>
+								<td> 
+									<?php 
+ 									foreach ($fl_vd_11 as $faili){
+										echo $faili['name'].'<br>';
+ 									}
+									?>
+								</td>
+							</tr> 
+						</table>
+						<div id="divFailiMenu">
+					  		<input type="file" name="vd_11_file" id="fileDoc" style="margin:4px;">
+						</div>
+					</div>
+				<!-- ##############################  Failu izvēle ######################################################################## -->					
 	    	
 	    	
 	  	</td>

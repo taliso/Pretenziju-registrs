@@ -2,12 +2,15 @@
 $event_sk=0;
 $pret_events=array();
 
+$kl_events = sqltoarray(' * ','kl_notikumi','',$db);
+
 $sql = "SELECT * FROM notikumi where pret_id='".$_SESSION['PRET_ID']."'";
 $q = $db->query($sql);
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
 	$pret_events[]=$r;
 }
 $event_sk=count($pret_events);
+
 $izd_sum=0;
 $event_count=0;
 foreach ($pret_events as $one_event){
@@ -16,52 +19,58 @@ foreach ($pret_events as $one_event){
 }
 $_SESSION['NOTIKUMU_SK']=$event_sk;
 $_SESSION['IZDEVUMI']=$izd_sum;
-
-//var_dump($pret_events);
-
 ?>
- 
+
 
  <div id="divEventForm">
 	<div id="divEventFormTitle">
-	<span id= "spantitle">Pretenzijas risinājums</span>
+		<table style="width:100%;">
+			<tr>
+				<td>
+					<span id= "span_18_gaish">Pretenzijas</span>
+					<span id= "span_18_yealow"> <?php echo $_SESSION['PRET_ID']; ?></span>
+					<span id= "span_18_gaish"> risinājums</span>
+					</td>
+				<td>
+					<span id= "span_18_gaish">Sākums:</span>
+					<span id= "span_18_yealow"> <?php echo $_SESSION['SAKUMA_DATUMS']; ?> </span>
+					</td>
+				<td>
+					<span id= "span_18_gaish">Beigas:</span>
+					<span id= "span_18_yealow"><?php echo $_SESSION['BEIGU_DAT']; ?> </span>
+					</td>
+			</tr>
+		</table>
+		
 	</div>   <!-- <divEventFormTitle>  -->
 	<table style="width:100%;">
 		<tr>
 			
-			<td style="width:25%;">
-				<span id="evspan1">Nr.</span><span id="evspan2"><?php echo $_SESSION['PRET_ID']; ?></span></td>
+			<td style="width:5%;">
+				<span id="evspan2">Pievienot:</span></td>
 			
+			<td style="width:80%;">
+	
+					<a id='mnaEvent' href="?addev=mnTask">Uzdevumu</a>
+					<a id='mnaEvent' href="?addev=mnInfo">Ziņojumu</a>
+					<a id='mnaEvent' href="?addev=mnRezult">Lēmumu</a>
+					<a id='mnaEvent' href="?addev=mnKorekt">Korektīvās darbības</a>
 			
-			<td style="width:45%;">
-				<span id="evspan1">Sākuma dat.:</span><span id="evspan2"> <?php echo $_SESSION['SAKUMA_DATUMS']; ?> </span></td>
-			
+			</td>
 
 			<td style="width:15%;">
-				<span id="evspan1">Notikumu sk.:</span><?php echo $_SESSION['NOTIKUMU_SK']; ?>  </td>
-			
-			<td style="width:5%;">
+				<span id="span_14_br"><?php  echo  $ev_nos;  ?></span>
+				<?php  if(strlen($ev_nos)>0) {  ?>
+					<input type="submit" style="float:right;" name="new_event_create" value="Pievienot">
+				<?php } ?>	
 			</td>
-
 		</tr>	
-		<tr>
-			
-			<td>
-			</td>
-			<td>
-				<span id="evspan1">Beigu dat.:</span><span id="evspan2"> <?php echo $_SESSION['BEIGU_DAT']; ?> </span>
-			</td>
-			<td>
-				<span id="evspan1">Izdevumi:</span><span id="evspan2"> <?php echo $_SESSION['IZDEVUMI']; ?> </span>
-			</td>
-			<td>
-			</td>
-		</tr>			
 	</table>	
 
 	<?php 
-	if ($_SESSION['STATUS']=='NEWEVENT') {
-		include 'newevent1.php';
+	
+	if ($_SESSION['STATUS']=='NEWEVENT'&&strlen($_SESSION['EVENT_FORMA'])>0) {
+		include $_SESSION['EVENT_FORMA'];
 	}?>
 	
 	
@@ -77,7 +86,6 @@ $ftabula="personas_notikums";
 $fwhere=" event_id='".$one_event['event_id']."'";
 
 	$evPersonas=sqltoarray($fields,$ftabula,$fwhere,$db);
-	var_dump($evPersonas);
 	$visaspersonas="";
 	foreach ($evPersonas as $pers) {
 		$visaspersonas=$visaspersonas.$pers['persona'].", ";
