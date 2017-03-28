@@ -193,7 +193,7 @@ if ($_SESSION['PRET_STATUS']=="REGISTER") {
 		
 if (isset($tmp_fil)){
 	foreach ($tmp_fil as $tmpf){
-		var_dump($tmpf);		
+//		var_dump($tmpf);		
 		
 		$submit_name=$tmpf['submit_name'];
 		$source=$tmpf['source'];
@@ -229,8 +229,8 @@ if (isset($tmp_fil)){
 					':submit_name'=>$submit_name  );
 			
 			$q->execute($data);
-			
-			f_upload($name,$tmp_name,$konv_name,$target_dir);
+
+//			f_upload($name,$tmp_name,$konv_name,$target_dir);
 		}
 	}
 	

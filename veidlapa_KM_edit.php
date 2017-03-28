@@ -133,20 +133,17 @@ if ($_SESSION ['PRET_STATUS'] == "NEW") {
 }
 $ident=$_SESSION['PRET_ID'];
 
-$where=" submit_name='vd_6_file' and identif='".$ident."'" ;
+$where=" submit_name='SD6' and identif='".$ident."'" ;
 $fl_vd_6=sqltoarray('name','tmp_files',$where,$db);
 
-$where=" submit_name='vd_8_file' and identif='".$ident."'" ;
+$where=" submit_name='SD8' and identif='".$ident."'" ;
 $fl_vd_8=sqltoarray('name','tmp_files',$where,$db);
 
-$where=" submit_name='vd_10_file' and identif='".$ident."'" ;
+$where=" submit_name='SD10' and identif='".$ident."'" ;
 $fl_vd_10=sqltoarray('name','tmp_files',$where,$db);
 
-$where=" submit_name='vd_11_file' and identif='".$ident."'" ;
+$where=" submit_name='SD11' and identif='".$ident."'" ;
 $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
-
-
-
 ?>
 
 <div id="saturs">
@@ -242,7 +239,8 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 							<tr>
 								<td> 
 									<?php 
- 									foreach ($fl_vd_6 as $faili){
+									foreach ($fl_vd_6 as $faili){
+										me('SD6',$faili['name']);
 										echo $faili['name'].'<br>';
  									}
 									?>
@@ -250,7 +248,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 							</tr> 
 						</table>
 						<div id="divFailiMenu">
-					  		<input type="file" name="vd_6_file" id="fileDoc" style="margin:4px;">
+					  		<input type="file" name="SD6" id="fileDoc" style="margin:4px;">
 						</div>
 					</div>
 				<!-- ##############################  Failu izvēle ######################################################################## -->					
@@ -303,6 +301,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 								<td> 
 									<?php 
  									foreach ($fl_vd_8 as $faili){
+ 										me('SD8',$faili['name']);
 										echo $faili['name'].'<br>';
  									}
 									?>
@@ -310,7 +309,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 							</tr> 
 						</table>
 						<div id="divFailiMenu">
-					  		<input type="file" name="vd_8_file" id="fileDoc" style="margin:4px;">
+					  		<input type="file" name="SD8" id="fileDoc" style="margin:4px;">
 						</div>
 					</div>
 				<!-- ##############################  Failu izvēle ######################################################################## -->					
@@ -362,6 +361,8 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 								<td> 
 									<?php 
  									foreach ($fl_vd_10 as $faili){
+ 										me('SD10',$faili['name']);
+ 											
 										echo $faili['name'].'<br>';
  									}
 									?>
@@ -369,7 +370,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 							</tr> 
 						</table>
 						<div id="divFailiMenu">
-					  		<input type="file" name="vd_10_file" id="fileDoc" style="margin:4px;">
+					  		<input type="file" name="SD10" id="fileDoc" style="margin:4px;">
 						</div>
 					</div>
 			
@@ -405,6 +406,8 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 								<td> 
 									<?php 
  									foreach ($fl_vd_11 as $faili){
+ 										me('SD11',$faili['name']);
+ 											
 										echo $faili['name'].'<br>';
  									}
 									?>
@@ -412,7 +415,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 							</tr> 
 						</table>
 						<div id="divFailiMenu">
-					  		<input type="file" name="vd_11_file" id="fileDoc" style="margin:4px;">
+					  		<input type="file" name="SD11" id="fileDoc" style="margin:4px;">
 						</div>
 					</div>
 				<!-- ##############################  Failu izvēle ######################################################################## -->					

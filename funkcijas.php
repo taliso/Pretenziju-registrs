@@ -267,7 +267,12 @@ function file_manage($array_files) {
 }
 function me($teksts, $vertiba) {
 	if ($_SESSION ['DEBUG'] == "ON") {
-		echo $teksts . " - " . $vertiba;
+		var_dump(debug_backtrace());
+		$dati=debug_backtrace();
+		$fil=basename($dati['file']);
+		$lin=$dati['line'];
+		
+		echo $teksts . " - " . $vertiba.' >>>>========= '.$lin.' ======== '.$fil;
 		echo '<br>';
 	}
 }

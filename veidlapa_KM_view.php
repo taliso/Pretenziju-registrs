@@ -143,6 +143,19 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 		$saskanots_ar_klientu=$pret['saskanots_ar_klientu'];
 		$vienosanas=$pret['vienosanas'];
 		$beigu_dat=$pret['beigu_dat'];
+
+		$sql ="SELECT * FROM faili where ident='$pret_id' and source='VEIDLAPA'";
+		$q = $db->query($sql);
+		$faili="";
+		while($r = $q->fetch(PDO::FETCH_ASSOC)){
+			$faili=$r;
+		}
+		var_dump($faili);
+		me("pret_id ",$pret_id);
+		$file_sd6="";
+		$file_sd8="";
+		$file_sd10="";
+		$file_sd11="";
 		
 		
 		

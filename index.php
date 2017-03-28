@@ -96,53 +96,27 @@ if (isset($_SESSION['INFO'])){
  		$cmdDel=0;
  			
  		
- 		
+ 		me('PRET_ID',$_SESSION['PRET_ID']);
  		$name=$_FILES[$f_key]['name'];
  		$type=$_FILES[$f_key]['type'];
  		$tmp_name=$_FILES[$f_key]['tmp_name'];
  		$size=$_FILES[$f_key]['size'];
  		$source='VEIDLAPA';
  		$identif=$_SESSION['PRET_ID'];
- 			
- 		me('Key',$f_key);
- 		me('name',$name);
- 		
- 		if ($f_key=='vd_6_file') {
- 			$submit_name='vd_6_file';
+ 		$konv_name=substr($source,0,4).'_'.$identif.'_'.$f_key.'_'.$name;
+  		
+ 			$submit_name=$f_key;
    			me('Submit_name',$submit_name);
- 		}
- 		if ($f_key=='vd_8_file') {
- 			$submit_name='vd_8_file';
-  			me('Submit_name',$submit_name);
- 			
- 		}
- 		if ($f_key=='vd_10_file') {
- 			$submit_name='vd_10_file';
- 			me('Submit_name',$submit_name);
- 			
- 		}
- 		if ($f_key=='vd_11_file') {
- 			$submit_name='vd_11_file';
- 			me('Submit_name',$submit_name);
- 			
- 		}
- 		me('Submit_name2',$submit_name);
+
  		if (strlen($name)>0) {
- 			me('Saglabajam',0);
- 			
- 			// TESTS
- 			if (is_uploaded_file($_FILES[$f_key]['tmp_name'])) { 				
- 				$path = "C:\\EasyPHP\\eds-www\\Pretenziju-registrs\\uploads\\" . $_FILES[$f_key]['name'];
- 				if (move_uploaded_file($_FILES[$f_key]['tmp_name'], $path)) {
- 					echo "The file was uploaded successfully.";
- 				} else {
- 					echo "The file was not uploaded successfully.";
- 				}
+ 			$konv_name='tmp\\'.$konv_name;
+ 			me('konv_name',$konv_name);
+ 			me('tmp_name',$tmp_name);
+ 			me('f_key',$f_key);
  				
- 			} else {
- 				//...
- 			}
- 			// TESTS
+			$a = copy($tmp_name,$konv_name);
+ 			
+ 			me('Parkopets',0);
  			
  			$sql = "INSERT INTO tmp_files SET ";
  			$sql=$sql."
@@ -164,7 +138,7 @@ if (isset($_SESSION['INFO'])){
  					':identif'=>$identif,
  					':name'=>$name,
  					':type'=>$type,
- 					':tmp_name'=>$tmp_name,
+ 					':tmp_name'=>$konv_name,
  					':size'=>$size,
  					':cmdDel'=>$cmdDel);
  				
