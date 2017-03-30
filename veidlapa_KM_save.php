@@ -1,10 +1,11 @@
 <?php
-
+me('Veidlapa_SAVE',$_SESSION['PRET_ID']);
+me('Veidlapa_STATUS',$_SESSION['STATUS']);
 if ($_SESSION['PRET_STATUS']=="NEW") {
 	$Nr=NextID($_SESSION['PREFIKS']);
 	$Nr=$Nr + 1;
 	$_SESSION['PRET_ID']=$_SESSION['PREFIKS']."-".$Nr;
-	
+	me('Jaunais PRET_ID',$_SESSION['PRET_ID']);
 	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 	$sql ="UPDATE tp_pretenzijas.menju SET reg_nr=".$Nr." WHERE prefiks='".$_SESSION['PREFIKS']."'";
 
@@ -62,7 +63,7 @@ $where='';
 
 $tmp_fil=sqltoarray($fields,$tabula,$where,$db);
 
-if ($_SESSION['PRET_STATUS']=="NEW") {
+if ($_SESSION['STATUS']=="NEW") {
 	$sql = "INSERT INTO pretenzijas SET ";
 
 } else {
@@ -122,10 +123,10 @@ $sql=$sql."
 		saskanots_ar_klientu=:saskanots_ar_klientu,
 		vienosanas=:vienosanas";
 
-if ($_SESSION['PRET_STATUS']=="REGISTER") {
+if ($_SESSION['STATUS']=="EDIT") {
 	$sql = $sql." WHERE pret_id='".$_SESSION['PRET_ID']."'";
 }
-
+me('Veidlapa KM save',$sql);
 	$q = $db->prepare($sql);
 		
 		$data = array(
@@ -235,35 +236,4 @@ if (isset($tmp_fil)){
 	}
 	
 }
-		
-		
-		
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		$_SESSION['STATUS'] = "LIST";
-		$_SESSION['FORMA'] = 'pret_list.php';
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		

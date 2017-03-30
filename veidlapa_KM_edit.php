@@ -1,12 +1,7 @@
-
- 
- 
-
-
 <?php
 $agents = $_SESSION ['AGENTS'];
-
-if ($_SESSION ['PRET_STATUS'] == "NEW") {
+me('PRET_STATUS',$_SESSION ['STATUS']);
+if ($_SESSION ['STATUS'] == "NEW") {
 	$reg_nr = "";
 	$veids = "";
 	$dokumenta_datums = "";
@@ -63,8 +58,12 @@ if ($_SESSION ['PRET_STATUS'] == "NEW") {
 	$saskanots_ar_klientu = "";
 	$vienosanas = "";
 	$beigu_dat = "";
+	$_SESSION ['PRET_ID'] = $_SESSION ['PREFIKS'] . " - " . ($_SESSION ['REG_NR'] + 1);
+	$pret_id = $_SESSION ['PRET_ID'];
+	me('Jaunais PRET_ID',$_SESSION['PRET_ID']);
 } else {
 	if (strlen ( $_SESSION ['PRET_ID'] ) > 0) {
+		me('PRET_ID',$_SESSION ['PRET_ID']);
 		$pret_id = $_SESSION ['PRET_ID'];
 		$sql = "SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
 		$q = $db->query ( $sql );
@@ -129,8 +128,19 @@ if ($_SESSION ['PRET_STATUS'] == "NEW") {
 		$saskanots_ar_klientu = $pret ['saskanots_ar_klientu'];
 		$vienosanas = $pret ['vienosanas'];
 		$beigu_dat = $pret ['beigu_dat'];
+		
+		//########## Pārbaudam vai nav piesaistīto failu. Ielādējam iekš tmp_faili  #########
+		
+		$where=" source='VEIDLAPA' and ident = '".$_SESSION['PRET_ID']."'";
+		me('where',$where);
+		$fl_pret=sqltoarray('orginal_name','faili',$where,$db);
+		if (isset($fl_pret)) {
+			var_dump($fl_pret);
+		}
+		
 	}
 }
+
 $ident=$_SESSION['PRET_ID'];
 
 $where=" submit_name='SD6' and identif='".$ident."'" ;
@@ -149,12 +159,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 <div id="saturs">
 	<form action="#" method="post">
 	<?php
-	if ($_SESSION ['STATUS'] == "NEW") {
-		$pret_id = $_SESSION ['PREFIKS'] . " - " . ($_SESSION ['REG_NR'] + 1);
-	} else {
-		$pret_id = $_SESSION ['PREFIKS'] . " - " . $_SESSION ['REG_NR'];
-	}
-	
+
 	echo "<div id='divFormTitle'>Pretenzija Nr. " . $pret_id . "  </div>";
 	?>
 <!-- ###################   TABULA            ################################################# -->

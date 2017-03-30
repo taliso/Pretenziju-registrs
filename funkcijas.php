@@ -267,13 +267,18 @@ function file_manage($array_files) {
 }
 function me($teksts, $vertiba) {
 	if ($_SESSION ['DEBUG'] == "ON") {
-		var_dump(debug_backtrace());
+		$_SESSION['ME_ID']=$_SESSION['ME_ID']+1;
 		$dati=debug_backtrace();
-		$fil=basename($dati['file']);
-		$lin=$dati['line'];
+		foreach ($dati as $d){
+			echo '====================================================='.'<br>';
+//			var_dump($d);
+		}
 		
-		echo $teksts . " - " . $vertiba.' >>>>========= '.$lin.' ======== '.$fil;
-		echo '<br>';
+		$fil=basename($dati[0]['file']);
+		$lin=$dati[0]['line'];
+		
+		echo $_SESSION['ME_ID'].":  ".$teksts . " - " . $vertiba.' >>=== {'.$fil.' / '.$lin.' }';
+		echo '<br>';echo '-----------------------------------------------------------------------------'.'<br>';
 	}
 }
 

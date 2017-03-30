@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -73,19 +72,9 @@ if (isset($_SESSION['INFO'])){
   	$q = $db->query($sql);
   	$r = $q->fetch(PDO::FETCH_ASSOC);
    	 $versija=$r['versija'];
-   	  
-   	 
-// if (isset($_POST['submitCancel'])) {   // Atcelt formas saglabāšanu
-// 	$_SESSION['FORMA'] = 'pret_list.php';
-//    	$_SESSION['STATUS'] = "LIST";
-//    	$_SESSION['TITLE'] = "Pretenziju saraksts";
-//    	msg("L:83   _SESSION['TITLE']=".$_SESSION['TITLE']);
-//  }
- 
+
  //#######################    Failu pievienošana veidlapā  ##########################################
  if (isset($_POST['doc_to_pret'])) {
- 	
- 	
  	
  	$file_get_list=array_keys($_FILES);
  	foreach ($file_get_list as $f_key) {
@@ -94,9 +83,8 @@ if (isset($_SESSION['INFO'])){
  		$source='';
  		$identif='';
  		$cmdDel=0;
- 			
  		
- 		me('PRET_ID',$_SESSION['PRET_ID']);
+ 		me('Failu piev. PRET_ID',$_SESSION['PRET_ID']);
  		$name=$_FILES[$f_key]['name'];
  		$type=$_FILES[$f_key]['type'];
  		$tmp_name=$_FILES[$f_key]['tmp_name'];
@@ -110,13 +98,10 @@ if (isset($_SESSION['INFO'])){
 
  		if (strlen($name)>0) {
  			$konv_name='tmp\\'.$konv_name;
- 			me('konv_name',$konv_name);
- 			me('tmp_name',$tmp_name);
  			me('f_key',$f_key);
  				
 			$a = copy($tmp_name,$konv_name);
- 			
- 			me('Parkopets',0);
+ 			me('Parkopets',$a);
  			
  			$sql = "INSERT INTO tmp_files SET ";
  			$sql=$sql."
@@ -154,22 +139,26 @@ if (isset($_GET['pret_id'])){
  	$pret_id=$_GET['pret_id'];
 	$_SESSION['PRET_ID']=$pret_id;
  	$_SESSION['STATUS']="VIEW";
+ 	$_SESSION['WAY']="CLAIM";
+	
+	
  	$sql = 'SELECT * FROM pretenzijas where pret_id="'.$pret_id.'"';
  	$q = $db->query($sql);
  	$r = $q->fetch(PDO::FETCH_ASSOC);
+ 	
+ 	$_SESSION['PRET_STATUS']=$r['status'];
  	$_SESSION['ID_PRET']=$r['ID'];
  	$_SESSION['REG_NR'] = $r['reg_nr'];
  	$_SESSION['PREFIKS'] = $r['veids'];
- 	$_SESSION['FORMA']="veidlapa_KM_view.php";
  	$_SESSION['PASUT_NR'] = $r['pasutijuma_nr'];
  	$_SESSION['KLIENTS'] = $r['iesniedzejs'];
 	$_SESSION['SAKUMA_DATUMS']=$r['sakuma_datums'];
 	$_SESSION['NOTIKUMU_SK']=$r['notikumu_sk'];
 	$_SESSION['BEIGU_DAT']=$r['beigu_dat'];
 	$_SESSION['IZDEVUMI']=$r['izdevumi'];
-   	$_SESSION['PRET_STATUS']=$r['status'];
    	$_SESSION['TITLE'] = "Pretenzijas veidlapa";
- 	$form=$_SESSION['FORMA'];
+   	
+// 	$form=$_SESSION['FORMA'];
    	 } else {
    	 	$pret_id="";
 }
@@ -219,40 +208,47 @@ if(isset($_GET['mTools'])){
 		$_SESSION['FORMA'] = 'pret_list.php';
 		$_SESSION['PREFIKS'] ="EPS";
 		$_SESSION['STATUS'] = "LIST";
+		$_SESSION['WAY']='CLAIM';
 	}
 	if ($arKey=="mnKM"){
 		$_SESSION['FORMA'] = 'pret_list.php';
 		$_SESSION['PREFIKS'] ="KM";
 		$_SESSION['STATUS'] = "LIST";
+		$_SESSION['WAY']='CLAIM';
 	}
 	if ($arKey=="mnIEK"){
 		$_SESSION['FORMA'] = 'pret_list.php';
 		$_SESSION['PREFIKS'] ="IEK";
 		$_SESSION['STATUS'] = "LIST";
+		$_SESSION['WAY']='CLAIM';
 	}
 }
 
 
 if(isset($_GET['navig'])){
+	
 	$_SESSION['NAVIG']=$_GET['navig'];
 	$navig=$_GET['navig'];
+	me('Navig',$_SESSION['NAVIG']);
 	
 	if($navig=='mnLists'){
 		$_SESSION['STATUS'] = "LIST";
-		$_SESSION['FORMA'] = 'pret_list.php';
+		$_SESSION['WAY']="CLAIM";
+		
 	}
 	
 	if($navig=='mnEdit'){
 		$_SESSION['STATUS'] = "EDIT";
-		$_SESSION['FORMA'] = 'veidlapa_KM_edit.php';
+		
 	}
 
 	if($navig=='mnNew'){
 
-		if ($_SESSION['STATUS'] == "VIEW" or $_SESSION['STATUS'] == "LIST"){
-				$_SESSION['STATUS'] = "EDIT";
-				$_SESSION['PRET_STATUS']="NEW";
+		if ($_SESSION['WAY'] == 'CLAIM'){
+				
+				$_SESSION['STATUS'] = "NEW";
 				$_SESSION['PRET_ID'] = "";
+		
 				//********************************************************************************************************
 				// Registracijas numura apdeitosana +1
 				$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
@@ -262,29 +258,33 @@ if(isset($_GET['navig'])){
 				$reg_nr=$reg_nr+1;
 				$_SESSION['REG_NR']=$reg_nr;
 				// Registracijas numura apdeitosana +1
+				$_SESSION['PRET_ID']=$_SESSION['PREFIKS']."-".$_SESSION['REG_NR'];
+				me('Jaunais PRET_ID',$_SESSION['PRET_ID']);
+				
 				//*********************************************************************************************************
+					
 				if ($_SESSION['PREFIKS'] =="EPS"){
-					$_SESSION['FORMA']="veidlapa_EPS_edit.php";
 					$_SESSION['TITLE'] = "EPS pretenzijas veidlapa. Jauna.";
 				} //$_SESSION['PREFIKS'] =="EPS"
+
 				if ($_SESSION['PREFIKS'] =="KM"){
-					$_SESSION['FORMA']="veidlapa_KM_edit.php";
 					$_SESSION['TITLE'] = "KM pretenzijas veidlapa. Jauna.";
 				} //$_SESSION['PREFIKS'] =="KM"
+
 		}	//$_SESSION['STATUS'] == "VIEW"
 		
-		if ($_SESSION['STATUS'] == "EVENTS"){
+		if ($_SESSION['WAY'] == "EVENT"){
 			if ($_SESSION['LOMA']=="Q") {
 				$_SESSION['TITLE'] = "Jauna notikuma pievienošana";
-				$_SESSION['STATUS']="NEWEVENT";
+				$_SESSION['STATUS']="NEW";
 				$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
 				$q = $db->query($sql);
 				
 				$sql="DELETE FROM `tp_pretenzijas`.`tmp_personas_notikums`";
 				$q = $db->query($sql);
 				
-				
 			} // $_SESSION['LOMA']=="Q"  
+
 			else {
 			//alert('Jums nav nepieciešamo tiesību');
 			}
@@ -294,21 +294,22 @@ if(isset($_GET['navig'])){
 	}  //$navig=='mnNew'
 	
 	if($navig=='mnTasks'){
-		$_SESSION['FORMA'] = 'tasks.php';
-		$_SESSION['STATUS'] = "TASKS";
+		$_SESSION['WAY'] = 'TASK';
+		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['TITLE'] = "Tavu uzdevumu saraksts";
 		}
 		
 	if($navig=='mnEvent'){
-		//$_SESSION['FORMA'] = 'notikumi.php';
-		$_SESSION['FORMA'] = 'eventi.php';
-		if ($_SESSION['STATUS'] != "NEWEVENT"){	$_SESSION['STATUS'] = "EVENTS";}
+		$_SESSION['WAY'] = 'EVENT';
+		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['TITLE'] = "Notikumu saraksts";
 	}
 	if($navig=='mnAdmin'){
-		$_SESSION['FORMA'] = 'admin_agenti.php';
-		$_SESSION['STATUS'] = "ADMIN";
+		$_SESSION['WAY'] = "ADMIN";
+		$_SESSION['STATUS'] = "LIST";
 	}
+	
+	
 }
 
 if(isset($_SESSION['AGENTS'])){
@@ -322,9 +323,6 @@ if(isset($_SESSION['AGENTS'])){
 //#########################  PRETENZIJAS  SAVE   ################################################################
 if (isset ( $_POST ['pret_save'] )) {
 	include 'veidlapa_KM_save.php';
-
-	$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
-	$q = $db->query($sql);
 	 
 	$_SESSION ['STATUS'] = "LIST";
 	$_SESSION ['FORMA'] = 'pret_list.php';
@@ -361,6 +359,8 @@ if (isset ( $_POST ['pret_save'] )) {
 			echo 'E-pasts ir nosūtīts. Par labošanu.';
 		}
 	}
+
+	$_SESSION ['STATUS'] = "LIST";
 }
 //#########################  PRETENZIJAS  CANCEL   ################################################################
 if (isset ( $_POST ['pret_cancel'] )) {
@@ -370,6 +370,83 @@ if (isset ( $_POST ['pret_cancel'] )) {
 	$_SESSION ['FORMA'] = 'pret_list.php';
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
 	me('FORMA',$_SESSION ['FORMA']);
+}
+if ($autor_ir==2){
+		//<<<<<<<<<<<<<   Formas izvēle   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		if 	($_SESSION['WAY']=='CLAIM'){
+			if ($_SESSION['STATUS'] == "LIST") {
+				$_SESSION['FORMA'] = 'pret_list.php';
+			}
+			
+			if ($_SESSION['STATUS'] == "EDIT") {
+				$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
+				$q = $db->query($sql);
+				
+				if ($_SESSION['PREFIKS'] =="KM"){
+					$_SESSION['FORMA'] = 'veidlapa_KM_edit.php';
+				}
+				if ($_SESSION['PREFIKS'] =="EPS"){
+					$_SESSION['FORMA'] = "veidlapa_EPS_edit.php";
+				}
+				if ($_SESSION['PREFIKS'] =="IEK"){
+					$_SESSION['FORMA'] = "veidlapa_IEK_edit.php";
+				}
+			}
+
+			if ($_SESSION['STATUS'] == "NEW") {
+				$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
+				$q = $db->query($sql);
+				
+				if ($_SESSION['PREFIKS'] =="KM"){
+					$_SESSION['FORMA'] = 'veidlapa_KM_edit.php';
+				}
+				if ($_SESSION['PREFIKS'] =="EPS"){
+					$_SESSION['FORMA'] = "veidlapa_EPS_edit.php";
+				}
+				if ($_SESSION['PREFIKS'] =="IEK"){
+					$_SESSION['FORMA'] = "veidlapa_IEK_edit.php";
+				}
+		
+			}
+			if ($_SESSION['STATUS'] == "VIEW") {
+				if ($_SESSION['PREFIKS'] =="KM"){
+					$_SESSION['FORMA'] = 'veidlapa_KM_view.php';
+				}
+				if ($_SESSION['PREFIKS'] =="EPS"){
+					$_SESSION['FORMA'] = "veidlapa_EPS_view.php";
+				}
+				if ($_SESSION['PREFIKS'] =="IEK"){
+					$_SESSION['FORMA'] = "veidlapa_IEK_view.php";
+				}
+			}
+		}
+		
+		if 	($_SESSION['WAY']=='EVENT'){
+			$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
+			$q = $db->query($sql);
+				
+			$_SESSION['FORMA'] = 'eventi.php';
+		}
+		
+		if 	($_SESSION['WAY']=='TASK'){
+			$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
+			$q = $db->query($sql);
+				
+			$_SESSION['FORMA'] = 'tasks.php';
+		}
+		
+		if 	($_SESSION['WAY']=='ADMIN'){
+			if ($_SESSION['STATUS'] == "LIST") {
+				$_SESSION['FORMA'] = 'admin_agenti.php';
+			}
+			if ($_SESSION['STATUS'] == "EDIT") {
+		
+			}
+			if ($_SESSION['STATUS'] == "NEW") {
+		
+			}
+		
+		}
 }
 
 ?>
@@ -474,7 +551,8 @@ if (isset ( $_POST ['pret_cancel'] )) {
 				<?php 
 					if(isset($_SESSION['FORMA'])) {
 						// Pretenzijas forma
-						me('Index INCLUDE forma',$_SESSION['FORMA']);
+						me('F forma',$_SESSION['FORMA']);
+						me('F forma Status',$_SESSION['STATUS']);
 						include $_SESSION['FORMA'];
 					}
 				?>

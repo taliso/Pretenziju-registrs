@@ -10,14 +10,17 @@ $_SESSION['FORMA'] = 'pret_list.php';
 $_SESSION['FORM_TITLE'] = -1;
 $_SESSION['NAVIG'] = -1;
 $_SESSION['VERSIJA'] = $versija;
-$_SESSION['PRET_ID'] = "";
 $_SESSION['REG_NR'] = "";
 $_SESSION['PREFIKS'] = "KM";
 $_SESSION['PASUT_NR'] = "";
 $_SESSION['KLIENTS'] = "";
-$_SESSION['STATUS'] = "LIST"; // 'VIEW','EDIT',"VIEW_EVENT","EDIT_EVENT",'LIST'
-$_SESSION['ID_PRET']="";
-$_SESSION['PRET_STATUS']=""; // "NEW","REGISTER","DELETE","ARCHIVE"
+
+$_SESSION['PRET_ID'] = "";
+$_SESSION['PRET_STATUS']=""; // "LOADED","REGISTERED","PROCESS","DECISION" - lēmums,"ACCEPTED","CORRECTIVE"
+$_SESSION['WAY'] = "CLAIM";  //"CLAIM"-pretenzija, "EVENT"-notikums,"TASK"- uzdevums
+$_SESSION['STATUS'] = "LIST"; // 'VIEW','EDIT','LIST'
+$_SESSION['ID_PRET']=0;
+
 $_SESSION['SAKUMA_DATUMS']="0000-00-00";
 $_SESSION['NOTIKUMU_SK']="";
 $_SESSION['IZDEVUMI']="";
@@ -27,4 +30,5 @@ $_SESSION['EVENT_ID']="";
 $_SESSION['TITLE'] = "Pretenziju saraksts";
 $_SESSION['EVENT_FORMA'] ='';
 $_SESSION['DEBUG'] ='';
+$_SESSION['ME_ID'] =0;
 session_write_close();
