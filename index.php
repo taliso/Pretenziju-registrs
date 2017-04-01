@@ -25,7 +25,7 @@ $form="";
 if (isset($_SESSION['INFO'])){
 	$MainInfo=$_SESSION['INFO'];
 }
-
+timer_start();
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +84,7 @@ if (isset($_SESSION['INFO'])){
  		$identif='';
  		$cmdDel=0;
  		
- 		me('Failu piev. PRET_ID',$_SESSION['PRET_ID']);
+ 		me("1",'Failu piev. PRET_ID',$_SESSION['PRET_ID']);
  		$name=$_FILES[$f_key]['name'];
  		$type=$_FILES[$f_key]['type'];
  		$tmp_name=$_FILES[$f_key]['tmp_name'];
@@ -94,14 +94,14 @@ if (isset($_SESSION['INFO'])){
  		$konv_name=substr($source,0,4).'_'.$identif.'_'.$f_key.'_'.$name;
   		
  			$submit_name=$f_key;
-   			me('Submit_name',$submit_name);
+   			me("1",'Submit_name',$submit_name);
 
  		if (strlen($name)>0) {
  			$konv_name='tmp\\'.$konv_name;
- 			me('f_key',$f_key);
+ 			me("1",'f_key',$f_key);
  				
 			$a = copy($tmp_name,$konv_name);
- 			me('Parkopets',$a);
+ 			me("1",'Parkopets',$a);
  			
  			$sql = "INSERT INTO tmp_files SET ";
  			$sql=$sql."
@@ -140,7 +140,6 @@ if (isset($_GET['pret_id'])){
 	$_SESSION['PRET_ID']=$pret_id;
  	$_SESSION['STATUS']="VIEW";
  	$_SESSION['WAY']="CLAIM";
-	
 	
  	$sql = 'SELECT * FROM pretenzijas where pret_id="'.$pret_id.'"';
  	$q = $db->query($sql);
@@ -229,7 +228,7 @@ if(isset($_GET['navig'])){
 	
 	$_SESSION['NAVIG']=$_GET['navig'];
 	$navig=$_GET['navig'];
-	me('Navig',$_SESSION['NAVIG']);
+	me("1",'Navig',$_SESSION['NAVIG']);
 	
 	if($navig=='mnLists'){
 		$_SESSION['STATUS'] = "LIST";
@@ -248,20 +247,6 @@ if(isset($_GET['navig'])){
 				
 				$_SESSION['STATUS'] = "NEW";
 				$_SESSION['PRET_ID'] = "";
-		
-				//********************************************************************************************************
-				// Registracijas numura apdeitosana +1
-				$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
-				$q = $db->query($sql);
-				$r = $q->fetch(PDO::FETCH_ASSOC);
-				$reg_nr=$r['reg_nr'];
-				$reg_nr=$reg_nr+1;
-				$_SESSION['REG_NR']=$reg_nr;
-				// Registracijas numura apdeitosana +1
-				$_SESSION['PRET_ID']=$_SESSION['PREFIKS']."-".$_SESSION['REG_NR'];
-				me('Jaunais PRET_ID',$_SESSION['PRET_ID']);
-				
-				//*********************************************************************************************************
 					
 				if ($_SESSION['PREFIKS'] =="EPS"){
 					$_SESSION['TITLE'] = "EPS pretenzijas veidlapa. Jauna.";
@@ -322,10 +307,10 @@ if(isset($_SESSION['AGENTS'])){
 }
 //#########################  PRETENZIJAS  SAVE   ################################################################
 if (isset ( $_POST ['pret_save'] )) {
+	me(2,'PRET_ID',$_SESSION['PRET_ID']);
 	include 'veidlapa_KM_save.php';
-	 
+	 echo 'Pēc save:'.timer_end();
 	$_SESSION ['STATUS'] = "LIST";
-	$_SESSION ['FORMA'] = 'pret_list.php';
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
 	if ($_SESSION ['PRET_STATUS'] == 'NEW') {
 		$to = 'talis@tenax.lv';
@@ -360,7 +345,7 @@ if (isset ( $_POST ['pret_save'] )) {
 		}
 	}
 
-	$_SESSION ['STATUS'] = "LIST";
+	$_SESSION ['STATUS'] = "VIEW";
 }
 //#########################  PRETENZIJAS  CANCEL   ################################################################
 if (isset ( $_POST ['pret_cancel'] )) {
@@ -369,7 +354,7 @@ if (isset ( $_POST ['pret_cancel'] )) {
 	$_SESSION ['STATUS'] = "LIST";
 	$_SESSION ['FORMA'] = 'pret_list.php';
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
-	me('FORMA',$_SESSION ['FORMA']);
+	me("1",'FORMA',$_SESSION ['FORMA']);
 }
 if ($autor_ir==2){
 		//<<<<<<<<<<<<<   Formas izvēle   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -551,15 +536,15 @@ if ($autor_ir==2){
 				<?php 
 					if(isset($_SESSION['FORMA'])) {
 						// Pretenzijas forma
-						me('F forma',$_SESSION['FORMA']);
-						me('F forma Status',$_SESSION['STATUS']);
+						me("1",'F forma',$_SESSION['FORMA']);
+						me("1",'F forma Status',$_SESSION['STATUS']);
 						include $_SESSION['FORMA'];
 					}
 				?>
 			</div><!--divView    -->	
 		</div><!--divForma    -->
 	</div><!--divDarba    -->
-	<?php } ?>				
+	<?php } echo 'Cikla laiks:'.timer_end(); ?>				
 </div><!--divMaster    -->				
 </form>	
 </body>

@@ -265,8 +265,8 @@ function sqlinsert($ftabula, $db) {
 }
 function file_manage($array_files) {
 }
-function me($teksts, $vertiba) {
-	if ($_SESSION ['DEBUG'] == "ON") {
+function me($key,$teksts, $vertiba) {
+	if ($_SESSION ['DEBUG'] == "ON" && $key=="2") {
 		$_SESSION['ME_ID']=$_SESSION['ME_ID']+1;
 		$dati=debug_backtrace();
 		foreach ($dati as $d){
@@ -277,12 +277,21 @@ function me($teksts, $vertiba) {
 		$fil=basename($dati[0]['file']);
 		$lin=$dati[0]['line'];
 		
-		echo $_SESSION['ME_ID'].":  ".$teksts . " - " . $vertiba.' >>=== {'.$fil.' / '.$lin.' }';
+		echo $_SESSION['ME_ID'].":  ".$teksts . " - " . $vertiba.' >> Status:'.$_SESSION['STATUS'].' >> PRET_ID:'.$_SESSION['PRET_ID'].' === {'.$fil.' / '.$lin.' }';
 		echo '<br>';echo '-----------------------------------------------------------------------------'.'<br>';
 	}
 }
-
-
+function timer_start() {
+	global $timeparts,$starttime;
+	$timeparts = explode(" ",microtime());
+	$starttime = $timeparts[1].substr($timeparts[0],1);
+	$timeparts = explode(" ",microtime());
+}
+function timer_end() {
+	global $timeparts,$starttime;
+	$endtime = $timeparts[1].substr($timeparts[0],1);
+	return bcsub($endtime,$starttime,6);
+}
 
 
 

@@ -1,4 +1,4 @@
-1. failu ievilksana ieladei
+﻿1. failu ievilksana ieladei
 2. e-pastu izsutisana
 3. vizuals apstiprinajums
 4. datu verifikacija
@@ -147,17 +147,24 @@ uasort() 	Sorts an array by values using a user-defined comparison function
 uksort() 	Sorts an array by keys using a user-defined comparison function
 usort() 	Sorts an array using a user-defined comparison function
 
-PERSONAS-UZDEVUMS
 
-ID
-persona
-struktura_kods
-event_id
-uzdevums
-uzd_datums
-atbilde
-atbild_datums
-izdevumi
-izd_apstipr
-file_atbild
 
+12:21 29.03.2017 
+>> Šodien jauni SESSION - WAY
+>> Nozīme:
+		PRET_STATUS     LOADED
+				REGISTERED
+				PROCESS
+				DECISION
+				ACCEPTED
+				CORRECTIVE
+
+		WAY		CLAIM
+				EVENT
+				TASK
+				ADMIN
+
+		STATUS	LIST
+				EDIT
+				NEW
+				VIEW

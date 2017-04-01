@@ -1,16 +1,9 @@
 <?php
-me('Veidlapa_SAVE',$_SESSION['PRET_ID']);
-me('Veidlapa_STATUS',$_SESSION['STATUS']);
+me('2',"veidlapa_KM_save","IN");
+me("1",'Veidlapa_SAVE', $_SESSION ['PRET_ID'] );
+me("1",'Veidlapa_STATUS', $_SESSION['STATUS']);
 if ($_SESSION['PRET_STATUS']=="NEW") {
 	$Nr=NextID($_SESSION['PREFIKS']);
-	$Nr=$Nr + 1;
-	$_SESSION['PRET_ID']=$_SESSION['PREFIKS']."-".$Nr;
-	me('Jaunais PRET_ID',$_SESSION['PRET_ID']);
-	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
-	$sql ="UPDATE tp_pretenzijas.menju SET reg_nr=".$Nr." WHERE prefiks='".$_SESSION['PREFIKS']."'";
-
-	$q = $dbf->query($sql);
-	$_SESSION['REG_NR']=$Nr;
 }
 $veids = $_SESSION['PREFIKS'];
 
@@ -62,7 +55,7 @@ $tabula='tmp_files';
 $where='';
 
 $tmp_fil=sqltoarray($fields,$tabula,$where,$db);
-
+me("1",'tmp_file',"Izvilkts");
 if ($_SESSION['STATUS']=="NEW") {
 	$sql = "INSERT INTO pretenzijas SET ";
 
@@ -114,19 +107,12 @@ $sql=$sql."
 		notikumu_sk=:notikumu_sk,
 		budzets=:budzets,
 		uzd_termins=:uzd_termins,
-		sakuma_datums=:sakuma_datums,
-		nosutits_admin=:nosutits_admin,
-		nosutits_razosana=:nosutits_razosana,
-		nosutits_logistika=:nosutits_logistika,
-		nosutits_tehniki=:nosutits_tehniki,
-		atbildes_datums=:atbildes_datums,
-		saskanots_ar_klientu=:saskanots_ar_klientu,
-		vienosanas=:vienosanas";
+		sakuma_datums=:sakuma_datums";
 
 if ($_SESSION['STATUS']=="EDIT") {
 	$sql = $sql." WHERE pret_id='".$_SESSION['PRET_ID']."'";
 }
-me('Veidlapa KM save',$sql);
+me("1",'Veidlapa KM save',$sql);
 	$q = $db->prepare($sql);
 		
 		$data = array(
@@ -175,18 +161,11 @@ me('Veidlapa KM save',$sql);
 			':budzets'=>$budzets,
 			':uzd_termins'=>"0000-00-00",
 			':sakuma_datums'=>$sakuma_datums,
-			':nosutits_admin'=>$nosutits_admin,
-			':nosutits_razosana'=>$nosutits_razosana,
-			':nosutits_logistika'=>$nosutits_logistika,
-			':nosutits_tehniki'=>$nosutits_tehniki,
-			':atbildes_datums'=>$atbildes_datums,
-			':saskanots_ar_klientu'=>$saskanots_ar_klientu,
-			':vienosanas'=>$vienosanas,
 			':beigu_dat'=>$beigu_dat );
 
 		$q->execute($data);
-
-		
+me("2",'Update_PRET',$sql);
+me("2",'PRET_ID',$pret_id);
 		
 //#########################  FAILU UPLOADS   ################################################################
 		
@@ -195,7 +174,7 @@ me('Veidlapa KM save',$sql);
 if (isset($tmp_fil)){
 	foreach ($tmp_fil as $tmpf){
 //		var_dump($tmpf);		
-		
+		me("1",'Katrs tmp_file',$tmpf['name']);
 		$submit_name=$tmpf['submit_name'];
 		$source=$tmpf['source'];
 		$identif=$tmpf['identif'];
@@ -231,9 +210,9 @@ if (isset($tmp_fil)){
 			
 			$q->execute($data);
 
-//			f_upload($name,$tmp_name,$konv_name,$target_dir);
 		}
 	}
 	
 }
-		
+echo 'Save laiks:'.timer_end();		
+me('2',"veidlapa_KM_save","OUT");

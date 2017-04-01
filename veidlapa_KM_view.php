@@ -2,7 +2,7 @@
  
  
 <?php
-
+me('2',"veidlapa_KM_view","IN");
 $agents=$_SESSION['AGENTS'];
 if (isset($_POST['pret_risinajums'])) {
 	
@@ -151,7 +151,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 			$faili=$r;
 		}
 		var_dump($faili);
-		me("pret_id ",$pret_id);
+		me("1","pret_id ",$pret_id);
 		$file_sd6="";
 		$file_sd8="";
 		$file_sd10="";
@@ -187,7 +187,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	    <td class="atstarpe"></td>
 	    <td class="ievade">
 	    	<?php
-	    	me('Dokumenta datums',$dokumenta_datums);
+	    	me("1",'Dokumenta datums',$dokumenta_datums);
 	    	echo "<span id='list_span'>".$dokumenta_datums."</span>" ; 
 	    	?>
 	    </td>

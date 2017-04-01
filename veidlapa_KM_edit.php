@@ -1,7 +1,14 @@
 <?php
-$agents = $_SESSION ['AGENTS'];
-me('PRET_STATUS',$_SESSION ['STATUS']);
-if ($_SESSION ['STATUS'] == "NEW") {
+me('2',"veidlapa_KM_edit","IN");
+$agents = $_SESSION['AGENTS'];
+
+$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
+$q = $db->query($sql);
+$reg_nr = $q->fetch(PDO::FETCH_ASSOC);
+
+$_SESSION['REG_NR']=$reg_nr['reg_nr'];
+
+if ($_SESSION['STATUS'] == "NEW") {
 	$reg_nr = "";
 	$veids = "";
 	$dokumenta_datums = "";
@@ -60,10 +67,10 @@ if ($_SESSION ['STATUS'] == "NEW") {
 	$beigu_dat = "";
 	$_SESSION ['PRET_ID'] = $_SESSION ['PREFIKS'] . " - " . ($_SESSION ['REG_NR'] + 1);
 	$pret_id = $_SESSION ['PRET_ID'];
-	me('Jaunais PRET_ID',$_SESSION['PRET_ID']);
+	me("2",'Jaunais PRET_ID',$_SESSION['PRET_ID']);
 } else {
 	if (strlen ( $_SESSION ['PRET_ID'] ) > 0) {
-		me('PRET_ID',$_SESSION ['PRET_ID']);
+		me("1",'PRET_ID',$_SESSION ['PRET_ID']);
 		$pret_id = $_SESSION ['PRET_ID'];
 		$sql = "SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
 		$q = $db->query ( $sql );
@@ -132,7 +139,7 @@ if ($_SESSION ['STATUS'] == "NEW") {
 		//########## Pārbaudam vai nav piesaistīto failu. Ielādējam iekš tmp_faili  #########
 		
 		$where=" source='VEIDLAPA' and ident = '".$_SESSION['PRET_ID']."'";
-		me('where',$where);
+		me("1",'where',$where);
 		$fl_pret=sqltoarray('orginal_name','faili',$where,$db);
 		if (isset($fl_pret)) {
 			var_dump($fl_pret);
@@ -245,7 +252,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 								<td> 
 									<?php 
 									foreach ($fl_vd_6 as $faili){
-										me('SD6',$faili['name']);
+										me("1",'SD6',$faili['name']);
 										echo $faili['name'].'<br>';
  									}
 									?>
@@ -306,7 +313,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 								<td> 
 									<?php 
  									foreach ($fl_vd_8 as $faili){
- 										me('SD8',$faili['name']);
+ 										me("1",'SD8',$faili['name']);
 										echo $faili['name'].'<br>';
  									}
 									?>
@@ -366,7 +373,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 								<td> 
 									<?php 
  									foreach ($fl_vd_10 as $faili){
- 										me('SD10',$faili['name']);
+ 										me("1",'SD10',$faili['name']);
  											
 										echo $faili['name'].'<br>';
  									}
@@ -411,7 +418,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 								<td> 
 									<?php 
  									foreach ($fl_vd_11 as $faili){
- 										me('SD11',$faili['name']);
+ 										me("1",'SD11',$faili['name']);
  											
 										echo $faili['name'].'<br>';
  									}
@@ -430,6 +437,7 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 			</tr>
 
 		</table>
+		<?php me(2,'PRET_ID',$_SESSION['PRET_ID']); ?>
 		<input type="submit" name="pret_save" value="Saglabāt"><input type="submit" name="pret_cancel" value="Atcelt">
 	</form>
 	<script>
@@ -441,3 +449,4 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 </script>
 
 </div>
+<?php me('2',"veidlapa_KM_edit","OUT"); ?>
