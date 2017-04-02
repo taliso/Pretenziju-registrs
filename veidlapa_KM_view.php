@@ -80,7 +80,7 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 	//$pret_id= $_SESSION['PRET_ID'];
 	if (strlen($pret_id)>0){
 		
-		$sql ="SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
+		$sql ="SELECT * FROM pretenzijas where pret_id='$pret_id'";
 		$q = $db->query($sql);
 		$pret="";
 		while($r = $q->fetch(PDO::FETCH_ASSOC)){

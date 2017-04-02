@@ -183,9 +183,11 @@ function NextID($mveids) {
 	$r = $q->fetch ( PDO::FETCH_ASSOC );
 	
 	$reg_nr = $r ['reg_nr'];
-	$reg_nr = $reg_nr ++;
-	
-	$sql = "UPDATE tp_pretenzijas.menju SET reg_nr=" . $reg_nr . " WHERE prefiks=" . $mveids;
+	me(2,"REG_NR  ",$reg_nr);
+	$reg_nr = $reg_nr + 1;
+	me(2,"REG_NR  ",$reg_nr);
+	$sql = "UPDATE menju SET reg_nr=" . $reg_nr . " WHERE prefiks='" . $mveids."'";
+	me(2,"Update menju ",$sql);
 	$q = $dbf->query ( $sql );
 	
 	return $reg_nr;
@@ -199,13 +201,13 @@ function check($mvert) {
 }
 function StatText($mname, $mvalue, $msize) {
 	$mteksts = "";
-	if ($_SESSION ['STATUS'] == 'NEW') {
+	if ($_SESSION['STATUS'] == 'NEW') {
 		$mteksts = '<input type="text" name="' . $mname . '" value="" size="' . $msize . '">';
 	}
-	if ($_SESSION ['STATUS'] == 'VIEW') {
+	if ($_SESSION['STATUS'] == 'VIEW') {
 		$mteksts = $mvalue;
 	}
-	if ($_SESSION ['STATUS'] == 'EDIT') {
+	if ($_SESSION['STATUS'] == 'EDIT') {
 		$mteksts = '<input type="text" name="' . $mname . '" value="' . $mvalue . '" size="' . $msize . '">';
 	}
 	echo $mteksts;
@@ -266,7 +268,7 @@ function sqlinsert($ftabula, $db) {
 function file_manage($array_files) {
 }
 function me($key,$teksts, $vertiba) {
-	if ($_SESSION ['DEBUG'] == "ON" && $key=="2") {
+	if ($_SESSION['DEBUG'] == "ON" && $key=="2") {
 		$_SESSION['ME_ID']=$_SESSION['ME_ID']+1;
 		$dati=debug_backtrace();
 		foreach ($dati as $d){

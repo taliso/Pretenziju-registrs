@@ -65,13 +65,13 @@ if ($_SESSION['STATUS'] == "NEW") {
 	$saskanots_ar_klientu = "";
 	$vienosanas = "";
 	$beigu_dat = "";
-	$_SESSION ['PRET_ID'] = $_SESSION ['PREFIKS'] . " - " . ($_SESSION ['REG_NR'] + 1);
-	$pret_id = $_SESSION ['PRET_ID'];
+	$_SESSION['PRET_ID'] = $_SESSION['PREFIKS'] . " - " . ($_SESSION['REG_NR'] + 1);
+	$pret_id = $_SESSION['PRET_ID'];
 	me("2",'Jaunais PRET_ID',$_SESSION['PRET_ID']);
 } else {
-	if (strlen ( $_SESSION ['PRET_ID'] ) > 0) {
-		me("1",'PRET_ID',$_SESSION ['PRET_ID']);
-		$pret_id = $_SESSION ['PRET_ID'];
+	if (strlen ( $_SESSION['PRET_ID'] ) > 0) {
+		me("1",'PRET_ID',$_SESSION['PRET_ID']);
+		$pret_id = $_SESSION['PRET_ID'];
 		$sql = "SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
 		$q = $db->query ( $sql );
 		$pret = "";
@@ -101,11 +101,6 @@ if ($_SESSION['STATUS'] == "NEW") {
 		$par_daudzumu = $pret ['par_daudzumu'];
 		$par_bojats = $pret ['par_bojats'];
 		$par_kvalitati = $pret ['par_kvalitati'];
-		$par_izkr_trans = $pret ['par_izkr_trans'];
-		$par_izkr_iepak = $pret ['par_izkr_iepak'];
-		$par_izkr_izpak = $pret ['par_izkr_izpak'];
-		$par_piemont_jaun = $pret ['par_piemont_jaun'];
-		$par_piemont_ekspl = $pret ['par_piemont_ekspl'];
 		$beigu_dat = $pret ['beigu_dat'];
 		$noform_pardev = $pret ['noform_pardev'];
 		$noform_e_pasts = $pret ['noform_e_pasts'];
@@ -121,20 +116,11 @@ if ($_SESSION['STATUS'] == "NEW") {
 		$file_apr = $pret ['file_apr'];
 		$status = $pret ['status'];
 		$notikumu_sk = $pret ['notikumu_sk'];
-		$atbildigais = $pret ['atbildigais'];
 		$budzets = $pret ['budzets'];
-		$uzd_izpilda = $pret ['uzd_izpilda'];
-		$akt_uzdevums = $pret ['akt_uzdevums'];
-		$uzd_termins = $pret ['uzd_termins'];
 		$sakuma_datums = $pret ['sakuma_datums'];
-		$nosutits_admin = $pret ['nosutits_admin'];
-		$nosutits_razosana = $pret ['nosutits_razosana'];
-		$nosutits_logistika = $pret ['nosutits_logistika'];
-		$nosutits_tehniki = $pret ['nosutits_tehniki'];
-		$atbildes_datums = $pret ['atbildes_datums'];
-		$saskanots_ar_klientu = $pret ['saskanots_ar_klientu'];
-		$vienosanas = $pret ['vienosanas'];
 		$beigu_dat = $pret ['beigu_dat'];
+		$izdevumi = $pret ['izdevumi'];
+		
 		
 		//########## Pārbaudam vai nav piesaistīto failu. Ielādējam iekš tmp_faili  #########
 		

@@ -1,10 +1,17 @@
 <?php
 me('2',"veidlapa_KM_save","IN");
-me("1",'Veidlapa_SAVE', $_SESSION ['PRET_ID'] );
+me("1",'Veidlapa_SAVE', $_SESSION['PRET_ID'] );
 me("1",'Veidlapa_STATUS', $_SESSION['STATUS']);
-if ($_SESSION['PRET_STATUS']=="NEW") {
+if ($_SESSION['STATUS']=="NEW") {
 	$Nr=NextID($_SESSION['PREFIKS']);
 }
+
+$dbf = new PDO ( "mysql:host=" . HOST . ";dbname=" . DB, USER, PASS, array (
+		PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
+) );
+
+
+
 $veids = $_SESSION['PREFIKS'];
 
 $dokumenta_datums =(strlen( $_POST['dokumenta_datums'])==0) ? "0000-00-00" : $_POST['dokumenta_datums'];
@@ -38,16 +45,8 @@ $file_apr = "";
 $file_obl_doc = "";
 $status = $_SESSION['PRET_STATUS'];
 $budzets = 0;
-$nosutits_admin = 0;
-$nosutits_razosana = 0;
-$nosutits_logistika = 0;
-$nosutits_tehniki = 0;
-$atbildes_datums = "0000-00-00";
-$saskanots_ar_klientu = "0000-00-00";
-$vienosanas = "";
 $beigu_dat = "0000-00-00";
 $registr_datums = date("Y-m-d");
-$atbildigais='';
 $sakuma_datums = "0000-00-00";
 
 $fields=' * ';
@@ -84,11 +83,6 @@ $sql=$sql."
 		par_daudzumu=:par_daudzumu,
 		par_bojats=:par_bojats,
 		par_kvalitati=:par_kvalitati,
-		par_izkr_trans=:par_izkr_trans,
-		par_izkr_iepak=:par_izkr_iepak,
-		par_izkr_izpak=:par_izkr_izpak,
-		par_piemont_jaun=:par_piemont_jaun,
-		par_piemont_ekspl=:par_piemont_ekspl,
 		beigu_dat=:beigu_dat,
 		noform_pardev=:noform_pardev,
 		noform_e_pasts=:noform_e_pasts,
@@ -106,14 +100,13 @@ $sql=$sql."
 		status=:status,
 		notikumu_sk=:notikumu_sk,
 		budzets=:budzets,
-		uzd_termins=:uzd_termins,
 		sakuma_datums=:sakuma_datums";
 
 if ($_SESSION['STATUS']=="EDIT") {
 	$sql = $sql." WHERE pret_id='".$_SESSION['PRET_ID']."'";
 }
 me("1",'Veidlapa KM save',$sql);
-	$q = $db->prepare($sql);
+	$q = $dbf->prepare($sql);
 		
 		$data = array(
 			':reg_nr'=>$reg_nr,
@@ -137,11 +130,6 @@ me("1",'Veidlapa KM save',$sql);
 			':par_daudzumu'=>$par_daudzumu,
 			':par_bojats'=>$par_bojats,
 			':par_kvalitati'=>$par_kvalitati,
-			':par_izkr_trans'=>0,
-			':par_izkr_iepak'=>0,
-			':par_izkr_izpak'=>0,
-			':par_piemont_jaun'=>0,
-			':par_piemont_ekspl'=>0,
 			':beigu_dat'=>$beigu_dat,
 			':noform_pardev'=>0,
 			':noform_e_pasts'=>0,
@@ -159,14 +147,13 @@ me("1",'Veidlapa KM save',$sql);
 			':status'=>$status,
 			':notikumu_sk'=>0,
 			':budzets'=>$budzets,
-			':uzd_termins'=>"0000-00-00",
 			':sakuma_datums'=>$sakuma_datums,
 			':beigu_dat'=>$beigu_dat );
 
 		$q->execute($data);
 me("2",'Update_PRET',$sql);
 me("2",'PRET_ID',$pret_id);
-		
+die("SAVE");		
 //#########################  FAILU UPLOADS   ################################################################
 		
 //^^^^^^^^^^^^^^^^^^    Saglabājam faili sarakstu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

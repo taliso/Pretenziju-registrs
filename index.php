@@ -246,8 +246,7 @@ if(isset($_GET['navig'])){
 		if ($_SESSION['WAY'] == 'CLAIM'){
 				
 				$_SESSION['STATUS'] = "NEW";
-				$_SESSION['PRET_ID'] = "";
-					
+//				$_SESSION['PRET_ID'] = "";
 				if ($_SESSION['PREFIKS'] =="EPS"){
 					$_SESSION['TITLE'] = "EPS pretenzijas veidlapa. Jauna.";
 				} //$_SESSION['PREFIKS'] =="EPS"
@@ -267,7 +266,6 @@ if(isset($_GET['navig'])){
 				
 				$sql="DELETE FROM `tp_pretenzijas`.`tmp_personas_notikums`";
 				$q = $db->query($sql);
-				
 			} // $_SESSION['LOMA']=="Q"  
 
 			else {
@@ -310,12 +308,12 @@ if (isset ( $_POST ['pret_save'] )) {
 	me(2,'PRET_ID',$_SESSION['PRET_ID']);
 	include 'veidlapa_KM_save.php';
 	 echo 'Pēc save:'.timer_end();
-	$_SESSION ['STATUS'] = "LIST";
+	$_SESSION['STATUS'] = "LIST";
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
-	if ($_SESSION ['PRET_STATUS'] == 'NEW') {
+	if ($_SESSION['PRET_STATUS'] == 'NEW') {
 		$to = 'talis@tenax.lv';
-		$sub = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION ['PRET_ID'];
-		$body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION ['PRET_ID'] . '. Ludzu nozimet atbildigos.';
+		$sub = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET_ID'];
+		$body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET_ID'] . '. Ludzu nozimet atbildigos.';
 		 
 		$mail->addAddress ( $to ); // Name is optional
 		$mail->Subject = $sub;
@@ -330,8 +328,8 @@ if (isset ( $_POST ['pret_save'] )) {
 	} else {
 		 
 		$to = 'service@tenax.lv';
-		$sub = 'Pretenzija Nr. ' . $_SESSION ['PRET_ID'] . ' ir labota.';
-		$body = 'Pretenzija Nr. ' . $_SESSION ['PRET_ID'] . ' ir labota.';
+		$sub = 'Pretenzija Nr. ' . $_SESSION['PRET_ID'] . ' ir labota.';
+		$body = 'Pretenzija Nr. ' . $_SESSION['PRET_ID'] . ' ir labota.';
 		 
 		$mail->addAddress ( $to ); // Name is optional
 		$mail->Subject = $sub;
@@ -345,16 +343,16 @@ if (isset ( $_POST ['pret_save'] )) {
 		}
 	}
 
-	$_SESSION ['STATUS'] = "VIEW";
+//	$_SESSION['STATUS'] = "VIEW";
 }
 //#########################  PRETENZIJAS  CANCEL   ################################################################
 if (isset ( $_POST ['pret_cancel'] )) {
 	$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
 	$q = $db->query($sql);
-	$_SESSION ['STATUS'] = "LIST";
-	$_SESSION ['FORMA'] = 'pret_list.php';
+	$_SESSION['STATUS'] = "LIST";
+	$_SESSION['FORMA'] = 'pret_list.php';
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
-	me("1",'FORMA',$_SESSION ['FORMA']);
+	me("1",'FORMA',$_SESSION['FORMA']);
 }
 if ($autor_ir==2){
 		//<<<<<<<<<<<<<   Formas izvēle   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
