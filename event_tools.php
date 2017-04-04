@@ -25,14 +25,17 @@ if(isset($_GET['addev'])){
 		$ev_veid="actions";
 		$ev_nos="Korektīvās darbības";
 	}
-	me('Eventa forma',$_SESSION['EVENT_FORMA']);
 }
 
 //###################  GRIBU JAUNU EVENTU  ################################################
 if (isset($_POST['new_event_create'])) {
 	// ***********  Izvelkam notikuma veidu  ******************************
 	$_SESSION['STATUS']='NEWEVENT';
-	$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
+
+	$sql="DELETE FROM `tmp_files`";
+	$q = $db->query($sql);
+
+	$sql="DELETE FROM `tmp_personas_notikums`";
 	$q = $db->query($sql);
 	
 }
@@ -42,12 +45,16 @@ if (isset($_POST['new_event_cancel'])) {
 	// ***********  Atceļam notikumpievienošanu ******************************
 	$_SESSION['EVENT_FORMA'] = '';
 	$_SESSION['STATUS']='EVENT';
-	$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
+
+	$sql="DELETE FROM `tmp_files`";
+	$q = $db->query($sql);
+	
+	$sql="DELETE FROM `tmp_personas_notikums`";
 	$q = $db->query($sql);
 	
 }
 
-//###################  APSTIPRINU  NEWEVENT  ################################################date("Y-m-d")
+//###################  APSTIPRINU  NEWEVENT  ################################################ date("Y-m-d")
 if (isset($_POST['new_event_accept'])) {
 	$_SESSION['STATUS']="EVENTS";
 	$id_pret=$_SESSION['ID_PRET'];
@@ -77,7 +84,7 @@ if (isset($_POST['new_event_accept'])) {
 	sqlupdate('notikumu_sk',$npk,'pretenzijas','pret_id="'.$pret_id.'"',$db);
 	sqlupdate('status','PROCESSED','pretenzijas','pret_id="'.$pret_id.'"',$db);
 
-	//###############   Saglabājam datus par personām  ###############################################
+//###############   Saglabājam datus par personām  ###############################################
 
 	$fields =" persona, strukturas_kods, uzdevums, event_id, e_pasts ";
 	$ftabula="tmp_personas_notikums";
@@ -105,10 +112,43 @@ if (isset($_POST['new_event_accept'])) {
 				':uzdevums'=>$OneUser['uzdevums'],
 				':e_pasts'=>$OneUser['e_pasts'],
 				':uzd_datums'=>date("Y-m-d"));
-			
+			$uzdevums=$OneUser['uzdevums'];
 		$q->execute($data);
+	}
+// END  ###############   Saglabājam datus par personām  ###############################################
+//###############   Saglabājam datus par failiem  ###############################################
 
-
+		$fields =" source, identif, name, tmp_name, size, cmdDel ";
+		$ftabula="tmp_files";
+		$fwhere="";
+		
+		$event_files = sqltoarray($fields,$ftabula,$fwhere,$db);
+		
+		foreach ($event_files as $OneFile) {
+			// var_dump($OneUser);
+			$sql = "INSERT INTO faili SET ";
+			$sql=$sql."
+				 	  	orginal_name=:orginal_name ,
+				 	  	konvert_name=:konvert_name ,
+						source=:source ,
+				 	  	ident=:ident ,
+						size=:size ,
+				   		submit_name=:submit_name";
+		
+			$q = $db->prepare($sql);
+			$konv_name=substr($OneFile['source'],0,4).'_'.$OneFile['identif'].'_'.$OneFile['name'];
+			$data = array(
+					':orginal_name'=>$OneFile['name'],
+					':konvert_name'=>$konv_name,
+					':source'=>'NOTIKUMS',
+					':ident'=>$OneFile['identif'],
+					':size'=>$OneFile['size'],
+					':submit_name'=>'doc_to_event');
+				
+			$q->execute($data);
+//  END  ###############   Saglabājam datus par failiem  ###############################################
+		
+		
 		// Uzdevumu veidošana
 		$sql = "INSERT INTO uzdevumi SET ";
 		$sql=$sql."
@@ -126,12 +166,18 @@ if (isset($_POST['new_event_accept'])) {
 				':id_source'=> 0,
 				':identifikators'=>$OneUser['event_id'],
 				':datums'=>date("Y-m-d"),
-				':uzdevums'=>$OneUser['uzdevums'],
+				':uzdevums'=>$uzdevums,
 				':termins'=>date("Y-m-d"));
 			
 		$q->execute($data);
 
-
+// TMP failu datu dzesana *******************************************************
+		$sql="DELETE FROM `tmp_files`";
+		$q = $db->query($sql);
+		
+		$sql="DELETE FROM `tmp_personas_notikums`";
+		$q = $db->query($sql);
+		
 
 		//E-pastu nosūtīšana
 
@@ -187,6 +233,7 @@ if (isset($_POST['doc_to_event'])) {
 	$npk=$_SESSION['NOTIKUMU_SK']+1;
 	$event_id=$pret_id."-".$npk;
 
+	me(2,'Faila SQL',$sql);
 
 	$data = array(
 			':submit_name'=>"fileUzdev",
@@ -199,5 +246,6 @@ if (isset($_POST['doc_to_event'])) {
 			':cmdDel'=>0);
 
 	$q->execute($data);
+//die('TMP fails');
 
 }

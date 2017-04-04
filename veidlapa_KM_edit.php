@@ -65,14 +65,12 @@ if ($_SESSION['STATUS'] == "NEW") {
 	$saskanots_ar_klientu = "";
 	$vienosanas = "";
 	$beigu_dat = "";
-	$_SESSION['PRET_ID'] = $_SESSION['PREFIKS'] . " - " . ($_SESSION['REG_NR'] + 1);
+	$_SESSION['PRET_ID'] = $_SESSION['PREFIKS'] . " - " . ($_SESSION['REG_NR']);
 	$pret_id = $_SESSION['PRET_ID'];
-	me("2",'Jaunais PRET_ID',$_SESSION['PRET_ID']);
 } else {
 	if (strlen ( $_SESSION['PRET_ID'] ) > 0) {
-		me("1",'PRET_ID',$_SESSION['PRET_ID']);
 		$pret_id = $_SESSION['PRET_ID'];
-		$sql = "SELECT * FROM tp_pretenzijas.pretenzijas where pret_id='$pret_id'";
+		$sql = "SELECT * FROM pretenzijas where pret_id='$pret_id'";
 		$q = $db->query ( $sql );
 		$pret = "";
 		while ( $r = $q->fetch ( PDO::FETCH_ASSOC ) ) {
@@ -125,11 +123,7 @@ if ($_SESSION['STATUS'] == "NEW") {
 		//########## Pārbaudam vai nav piesaistīto failu. Ielādējam iekš tmp_faili  #########
 		
 		$where=" source='VEIDLAPA' and ident = '".$_SESSION['PRET_ID']."'";
-		me("1",'where',$where);
 		$fl_pret=sqltoarray('orginal_name','faili',$where,$db);
-		if (isset($fl_pret)) {
-			var_dump($fl_pret);
-		}
 		
 	}
 }
@@ -147,6 +141,10 @@ $fl_vd_10=sqltoarray('name','tmp_files',$where,$db);
 
 $where=" submit_name='SD11' and identif='".$ident."'" ;
 $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
+
+$where=" loma='A' " ;
+$agents=sqltoarray('agents','kl_agenti',$where,$db);
+
 ?>
 
 <div id="saturs">
@@ -176,8 +174,21 @@ $fl_vd_11=sqltoarray('name','tmp_files',$where,$db);
 				<td class="teksts">TENAPORS pārdevēja vārds un uzvārds, kas ir
 					pieņēmis pretenziju</td>
 				<td class="atstarpe"></td>
-				<td class="ievade"><input ID="text_pret" type="text" name="agents"
-					value="<?php echo $agents;  ?>"></td>
+				
+				
+				
+				<td class="ievade">
+						<select name="agents" style="width:100%; margin:2px;">
+							  <?php 
+							  foreach ($agents as $user) {?>
+							 	 <option value="<?php echo $user['agents'] ?>"><?php echo $user['agents'] ?></option>
+									   <?php }
+							  ?>
+			  			</select>
+				
+<!-- 				<input ID="text_pret" type="text" name="agents" value="<?php echo $agents;  ?>">-->
+
+					</td>
 			</tr>
 
 

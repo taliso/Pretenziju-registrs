@@ -183,11 +183,8 @@ function NextID($mveids) {
 	$r = $q->fetch ( PDO::FETCH_ASSOC );
 	
 	$reg_nr = $r ['reg_nr'];
-	me(2,"REG_NR  ",$reg_nr);
 	$reg_nr = $reg_nr + 1;
-	me(2,"REG_NR  ",$reg_nr);
 	$sql = "UPDATE menju SET reg_nr=" . $reg_nr . " WHERE prefiks='" . $mveids."'";
-	me(2,"Update menju ",$sql);
 	$q = $dbf->query ( $sql );
 	
 	return $reg_nr;

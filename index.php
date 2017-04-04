@@ -228,7 +228,6 @@ if(isset($_GET['navig'])){
 	
 	$_SESSION['NAVIG']=$_GET['navig'];
 	$navig=$_GET['navig'];
-	me("1",'Navig',$_SESSION['NAVIG']);
 	
 	if($navig=='mnLists'){
 		$_SESSION['STATUS'] = "LIST";
@@ -261,11 +260,6 @@ if(isset($_GET['navig'])){
 			if ($_SESSION['LOMA']=="Q") {
 				$_SESSION['TITLE'] = "Jauna notikuma pievienošana";
 				$_SESSION['STATUS']="NEW";
-				$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
-				$q = $db->query($sql);
-				
-				$sql="DELETE FROM `tp_pretenzijas`.`tmp_personas_notikums`";
-				$q = $db->query($sql);
 			} // $_SESSION['LOMA']=="Q"  
 
 			else {
@@ -362,8 +356,6 @@ if ($autor_ir==2){
 			}
 			
 			if ($_SESSION['STATUS'] == "EDIT") {
-				$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
-				$q = $db->query($sql);
 				
 				if ($_SESSION['PREFIKS'] =="KM"){
 					$_SESSION['FORMA'] = 'veidlapa_KM_edit.php';
@@ -377,8 +369,6 @@ if ($autor_ir==2){
 			}
 
 			if ($_SESSION['STATUS'] == "NEW") {
-				$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
-				$q = $db->query($sql);
 				
 				if ($_SESSION['PREFIKS'] =="KM"){
 					$_SESSION['FORMA'] = 'veidlapa_KM_edit.php';
@@ -405,15 +395,11 @@ if ($autor_ir==2){
 		}
 		
 		if 	($_SESSION['WAY']=='EVENT'){
-			$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
-			$q = $db->query($sql);
 				
 			$_SESSION['FORMA'] = 'eventi.php';
 		}
 		
 		if 	($_SESSION['WAY']=='TASK'){
-			$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
-			$q = $db->query($sql);
 				
 			$_SESSION['FORMA'] = 'tasks.php';
 		}

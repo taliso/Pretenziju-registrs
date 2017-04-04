@@ -43,7 +43,7 @@ $file_foto = "";
 $file_pas = "";
 $file_apr = "";
 $file_obl_doc = "";
-$status = $_SESSION['PRET_STATUS'];
+//$status = $_SESSION['PRET_STATUS'];
 $budzets = 0;
 $beigu_dat = "0000-00-00";
 $registr_datums = date("Y-m-d");
@@ -96,8 +96,7 @@ $sql=$sql."
 		file_foto=:file_foto,
 		file_pas=:file_pas,
 		file_apr=:file_apr,
-		file_obl_doc=:file_obl_doc;
-		status=:status,
+		file_obl_doc=:file_obl_doc,
 		notikumu_sk=:notikumu_sk,
 		budzets=:budzets,
 		sakuma_datums=:sakuma_datums";
@@ -144,7 +143,6 @@ me("1",'Veidlapa KM save',$sql);
 			':file_pas'=>$file_pas,
 			':file_apr'=>$file_apr,
 			':file_obl_doc'=>$file_obl_doc,
-			':status'=>$status,
 			':notikumu_sk'=>0,
 			':budzets'=>$budzets,
 			':sakuma_datums'=>$sakuma_datums,
@@ -152,8 +150,6 @@ me("1",'Veidlapa KM save',$sql);
 
 		$q->execute($data);
 me("2",'Update_PRET',$sql);
-me("2",'PRET_ID',$pret_id);
-die("SAVE");		
 //#########################  FAILU UPLOADS   ################################################################
 		
 //^^^^^^^^^^^^^^^^^^    Saglabājam faili sarakstu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -161,7 +157,6 @@ die("SAVE");
 if (isset($tmp_fil)){
 	foreach ($tmp_fil as $tmpf){
 //		var_dump($tmpf);		
-		me("1",'Katrs tmp_file',$tmpf['name']);
 		$submit_name=$tmpf['submit_name'];
 		$source=$tmpf['source'];
 		$identif=$tmpf['identif'];
