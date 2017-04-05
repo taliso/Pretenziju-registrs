@@ -17,7 +17,7 @@ if ($_SESSION['STATUS'] == "NEW") {
 	$konstat_datums = "";
 	$pret_id = "";
 	$iesniedzejs = "";
-	$agents = "";
+	$agent = "";
 	$produkcija = "";
 	$pasutijuma_nr = "";
 	$daudzums_viss = "";
@@ -65,7 +65,7 @@ if ($_SESSION['STATUS'] == "NEW") {
 	$saskanots_ar_klientu = "";
 	$vienosanas = "";
 	$beigu_dat = "";
-	$_SESSION['PRET_ID'] = $_SESSION['PREFIKS'] . " - " . ($_SESSION['REG_NR']);
+	$_SESSION['PRET_ID'] = $_SESSION['PREFIKS'] . " - " . ($_SESSION['REG_NR']+1);
 	$pret_id = $_SESSION['PRET_ID'];
 } else {
 	if (strlen ( $_SESSION['PRET_ID'] ) > 0) {
@@ -85,7 +85,7 @@ if ($_SESSION['STATUS'] == "NEW") {
 		$konstat_datums = $pret ['konstat_datums'];
 		$pret_id = $pret ['pret_id'];
 		$iesniedzejs = $pret ['iesniedzejs'];
-		$agents = $pret ['agents'];
+		$agent = $pret ['agents'];
 		$produkcija = $pret ['produkcija'];
 		$pasutijuma_nr = $pret ['pasutijuma_nr'];
 		$daudzums_viss = $pret ['daudzums_viss'];
@@ -178,14 +178,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 				
 				
 				<td class="ievade">
-						<select name="agents" style="width:100%; margin:2px;">
-							  <?php 
-							  foreach ($agents as $user) {?>
-							 	 <option value="<?php echo $user['agents'] ?>"><?php echo $user['agents'] ?></option>
-									   <?php }
-							  ?>
-			  			</select>
-				
+					<?php dropbox_select($agents,'agents',$agent); ?>
 <!-- 				<input ID="text_pret" type="text" name="agents" value="<?php echo $agents;  ?>">-->
 
 					</td>

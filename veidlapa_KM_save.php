@@ -5,18 +5,19 @@ me("1",'Veidlapa_STATUS', $_SESSION['STATUS']);
 if ($_SESSION['STATUS']=="NEW") {
 	$Nr=NextID($_SESSION['PREFIKS']);
 }
-
+me('2',"SESSION['REG_NR']",$_SESSION['REG_NR']);
 $dbf = new PDO ( "mysql:host=" . HOST . ";dbname=" . DB, USER, PASS, array (
 		PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
 ) );
 
-
+me('2',"SESSION['REG_NR']",$_SESSION['REG_NR']);
 
 $veids = $_SESSION['PREFIKS'];
 
 $dokumenta_datums =(strlen( $_POST['dokumenta_datums'])==0) ? "0000-00-00" : $_POST['dokumenta_datums'];
 $sanemsanas_datums = (strlen( $_POST['sanemsanas_datums'])==0) ? "0000-00-00" : $_POST['sanemsanas_datums'];
 $pret_id = $_SESSION['PRET_ID'];
+me('2',"SESSION['REG_NR']",$_SESSION['REG_NR']);
 $reg_nr=$_SESSION['REG_NR'];
 $iesniedzejs = $_POST['iesniedzejs'];
 $agents = $_POST['agents'];
@@ -149,7 +150,7 @@ me("1",'Veidlapa KM save',$sql);
 			':beigu_dat'=>$beigu_dat );
 
 		$q->execute($data);
-me("2",'Update_PRET',$sql);
+me("1",'Update_PRET',$sql);
 //#########################  FAILU UPLOADS   ################################################################
 		
 //^^^^^^^^^^^^^^^^^^    Saglabājam faili sarakstu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -165,7 +166,7 @@ if (isset($tmp_fil)){
 		$tmp_name=$tmpf['tmp_name'];
 		$size=$tmpf['size'];
 		$cmdDel=$tmpf['cmdDel'];
-		$konv_name=substr($source,0,4).'_'.$identif.'_'.$name;
+		$konv_name=substr($source,0,4).'_'.$identif.'_'.$submit_name.'_'.$name;
 		
 		if ($cmdDel==0){
 			$sql = "INSERT INTO faili SET ";
@@ -176,6 +177,7 @@ if (isset($tmp_fil)){
 			source=:source ,
 			ident=:ident ,
 			size=:size ,
+			datums=:datums,
 			submit_name=:submit_name";
 			
 			$q = $db->prepare($sql);
@@ -188,10 +190,12 @@ if (isset($tmp_fil)){
 					':source'=>$source  ,
 					':ident'=>$identif  ,
 					':size'=>$size  ,
+					':datums'=>date("Y-m-d"),
 					':submit_name'=>$submit_name  );
 			
 			$q->execute($data);
-
+			me('2',"konv_name",$konv_name);
+			copy('tmp\\'.$konv_name,'uploads\\'.$konv_name);
 		}
 	}
 	

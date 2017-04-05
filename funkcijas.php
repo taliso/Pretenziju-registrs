@@ -175,6 +175,7 @@ function list_row($col_count, $var_array) {
 	return $tab_row;
 }
 function NextID($mveids) {
+	
 	$dbf = new PDO ( "mysql:host=" . HOST . ";dbname=" . DB, USER, PASS, array (
 			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8' 
 	) );
@@ -186,7 +187,8 @@ function NextID($mveids) {
 	$reg_nr = $reg_nr + 1;
 	$sql = "UPDATE menju SET reg_nr=" . $reg_nr . " WHERE prefiks='" . $mveids."'";
 	$q = $dbf->query ( $sql );
-	
+	me('2',"Next ID",$reg_nr);
+	$_SESSION['REG_NR']=$reg_nr;
 	return $reg_nr;
 }
 function check($mvert) {
@@ -195,19 +197,6 @@ function check($mvert) {
 		$vert = "checked ";
 	}
 	return $vert;
-}
-function StatText($mname, $mvalue, $msize) {
-	$mteksts = "";
-	if ($_SESSION['STATUS'] == 'NEW') {
-		$mteksts = '<input type="text" name="' . $mname . '" value="" size="' . $msize . '">';
-	}
-	if ($_SESSION['STATUS'] == 'VIEW') {
-		$mteksts = $mvalue;
-	}
-	if ($_SESSION['STATUS'] == 'EDIT') {
-		$mteksts = '<input type="text" name="' . $mname . '" value="' . $mvalue . '" size="' . $msize . '">';
-	}
-	echo $mteksts;
 }
 function StatCheckBox($mname, $mvariable, $koments, $nobeig, $status) {
 	if ($mvariable == 1) {
@@ -292,22 +281,16 @@ function timer_end() {
 	return bcsub($endtime,$starttime,6);
 }
 
+function dropbox_select($marray,$mkey,$mselect){
+$rinda='<select name="agents" style="width:100%; margin:2px;">';
+echo $rinda;
+foreach ($marray as $mone) {
+	if (strlen($mselect)>0 && $mselect==$mone[$mkey]) {
+		echo "<option value='".$mone[$mkey]."' selected>".$mone[$mkey]."</option>";
+	} else {
+		echo "<option value='".$mone[$mkey]."'>".$mone[$mkey]."</option>";
+		}
+}	
+$rinda='</select>';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
