@@ -168,35 +168,38 @@ if (isset($tmp_fil)){
 		$cmdDel=$tmpf['cmdDel'];
 		$konv_name=substr($source,0,4).'_'.$identif.'_'.$submit_name.'_'.$name;
 		
-		if ($cmdDel==0){
-			$sql = "INSERT INTO faili SET ";
-			$sql=$sql."
-			orginal_name=:orginal_name ,
-			konvert_name=:konvert_name ,
-			path=:path ,
-			source=:source ,
-			ident=:ident ,
-			size=:size ,
-			datums=:datums,
-			submit_name=:submit_name";
-			
-			$q = $db->prepare($sql);
-			
-			
-			$data = array(
-					':orginal_name'=> $name ,
-					':konvert_name'=> $konv_name ,
-					':path'=> "uploads/" ,
-					':source'=>$source  ,
-					':ident'=>$identif  ,
-					':size'=>$size  ,
-					':datums'=>date("Y-m-d"),
-					':submit_name'=>$submit_name  );
-			
-			$q->execute($data);
-			me('2',"konv_name",$konv_name);
-			copy('tmp\\'.$konv_name,'uploads\\'.$konv_name);
-		}
+		$parbaude=sqltoarray(' * ', 'faili', " konvert_name= '$konv_name' ", $db);
+		if (isset($parbaude)==false) {				
+				if ($cmdDel==0){
+					$sql = "INSERT INTO faili SET ";
+					$sql=$sql."
+					orginal_name=:orginal_name ,
+					konvert_name=:konvert_name ,
+					path=:path ,
+					source=:source ,
+					ident=:ident ,
+					size=:size ,
+					datums=:datums,
+					submit_name=:submit_name";
+					
+					$q = $db->prepare($sql);
+					
+					
+					$data = array(
+							':orginal_name'=> $name ,
+							':konvert_name'=> $konv_name ,
+							':path'=> "uploads/" ,
+							':source'=>$source  ,
+							':ident'=>$identif  ,
+							':size'=>$size  ,
+							':datums'=>date("Y-m-d"),
+							':submit_name'=>$submit_name  );
+					
+					$q->execute($data);
+					me('2',"konv_name",$konv_name);
+					copy('tmp\\'.$konv_name,'uploads\\'.$konv_name);
+				}
+		}		
 	}
 	
 }

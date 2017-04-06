@@ -15,7 +15,8 @@ if (isset($_POST['pret_risinajums'])) {
 	
 }
 
-if ($_SESSION['PRET_STATUS']=="NEW") {
+if ($_SESSION['STATUS']=="NEW") {
+	
 	$ID="";
 	$reg_nr="";
 	$veids="";
@@ -76,8 +77,8 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 } else {
 
 
-	$_SESSION['STATUS'] = "VIEW";
 	//$pret_id= $_SESSION['PRET_ID'];
+	me('2',"pret_id",$pret_id);
 	if (strlen($pret_id)>0){
 		
 		$sql ="SELECT * FROM pretenzijas where pret_id='$pret_id'";
@@ -86,7 +87,6 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 		while($r = $q->fetch(PDO::FETCH_ASSOC)){
 			$pret=$r;
 		}
-		
 		$reg_nr=$pret['reg_nr'];
 		$veids=$pret['veids'];
 		$dokumenta_datums=$pret['dokumenta_datums'];
@@ -134,12 +134,21 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 		while($r = $q->fetch(PDO::FETCH_ASSOC)){
 			$faili=$r;
 		}
-		$file_sd6="";
-		$file_sd8="";
-		$file_sd10="";
-		$file_sd11="";
+		$fields=' orginal_name,konvert_name,source,ident,submit_name ';
+		$fwhere=" source='VEIDLAPA' && ident = '".$pret_id."' && submit_name='SD6' ";
+		$fil_sd6=sqltoarray($fields, ' faili ', $fwhere, $db);
+
+		$fields=' orginal_name,konvert_name,source,ident,submit_name ';
+		$fwhere=" source='VEIDLAPA' && ident = '".$pret_id."' && submit_name='SD8' ";
+		$fil_sd8=sqltoarray($fields, ' faili ', $fwhere, $db);
+
+		$fields=' orginal_name,konvert_name,source,ident,submit_name ';
+		$fwhere=" source='VEIDLAPA' && ident = '".$pret_id."' && submit_name='SD10' ";
+		$fil_sd10=sqltoarray($fields, ' faili ', $fwhere, $db);
 		
-		
+		$fields=' orginal_name,konvert_name,source,ident,submit_name ';
+		$fwhere=" source='VEIDLAPA' && ident = '".$pret_id."' && submit_name='SD11' ";
+		$fil_sd11=sqltoarray($fields, ' faili ', $fwhere, $db);
 		
 	}
 }	
@@ -222,6 +231,13 @@ if ($_SESSION['PRET_STATUS']=="NEW") {
 		<td class="atstarpe"></td>
 	    <td class="ievade">
 		    	<?php echo "<span id='list_span'>".$pasutijuma_nr."</span>"; ?>
+		    	<div>
+		    		<?php if (isset($fil_sd6)){
+		    					foreach ($fil_sd6 as $fil) {
+		    						echo "<a href='uploads\\".$fil['konvert_name']."'>".$fil['orginal_name']."</a>";
+		    					}
+				    		} ?>
+		    	</div>
     	</td>
 	  </tr>
 	  
