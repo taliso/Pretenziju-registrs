@@ -4,11 +4,13 @@ $agents = $_SESSION['AGENTS'];
 
 $sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
 $q = $db->query($sql);
-$reg_nr = $q->fetch(PDO::FETCH_ASSOC);
+$newreg_nr = $q->fetch(PDO::FETCH_ASSOC);
 
-$_SESSION['REG_NR']=$reg_nr['reg_nr'];
-
+me('2',"nreg_nr",$newreg_nr['reg_nr']);
+//$_SESSION['REG_NR']=$reg_nr['reg_nr'];
+me('2',"reg_nr",$reg_nr);
 if ($_SESSION['STATUS'] == "NEW") {
+	me('2',"reg_nr",$reg_nr);
 	$reg_nr = "";
 	$veids = "";
 	$dokumenta_datums = "";
@@ -65,7 +67,10 @@ if ($_SESSION['STATUS'] == "NEW") {
 	$saskanots_ar_klientu = "";
 	$vienosanas = "";
 	$beigu_dat = "";
-	$_SESSION['PRET_ID'] = $_SESSION['PREFIKS'] . " - " . ($_SESSION['REG_NR']+1);
+	me('2'," PREFIKS:",$_SESSION['PREFIKS']);
+	me('2'," newreg_nr:",$newreg_nr['reg_nr']);
+	$_SESSION['PRET_ID'] = $_SESSION['PREFIKS']."-".($newreg_nr['reg_nr']+1);
+	me('2',"PRET_ID",$_SESSION['PRET_ID']);
 	$pret_id = $_SESSION['PRET_ID'];
 } else {
 	if (strlen ( $_SESSION['PRET_ID'] ) > 0) {
@@ -127,7 +132,7 @@ if ($_SESSION['STATUS'] == "NEW") {
 		
 	}
 }
-
+me('2',"reg_nr",$reg_nr);
 $ident=$_SESSION['PRET_ID'];
 
 $where=" submit_name='SD6' and identif='".$ident."'" ;
@@ -151,7 +156,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 	<form action="#" method="post">
 	<?php
 
-	echo "<div id='divFormTitle'>Pretenzija Nr. " . $pret_id . "  </div>";
+	echo "<div id='divFormTitle'>Pretenzija Nr. " . $_SESSION['PRET_ID'] . "  </div>";
 	?>
 <!-- ###################   TABULA            ################################################# -->
 		<table>

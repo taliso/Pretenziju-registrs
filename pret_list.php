@@ -15,10 +15,24 @@ for($kk=0;$kk<=$col_count;$kk++){
 echo $rin;
 
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
-
-	me('1','Statusi',$r['status']);
-
 	$stat="---";
+	switch ($r['status']){
+		case 'NEW':
+			$stat='0';
+			break;
+		case 'PROCESSED':
+			$stat='1';
+			break;
+		default:
+			$stat='X';
+			break;
+	
+	}
+	
+	
+	
+	
+	
 	$pret_list=array($r['pret_id'],$r['dokumenta_datums'],$r['pasutijuma_nr'],$r['iesniedzejs'],$r['produkcija'],$r['agents'],$stat);
 $rin="";
 $rin=list_row($col_count,$pret_list);

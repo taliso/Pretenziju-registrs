@@ -10,7 +10,6 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 	$pret_events[]=$r;
 }
 $event_sk=count($pret_events);
-
 $izd_sum=0;
 $event_count=0;
 foreach ($pret_events as $one_event){
@@ -68,7 +67,6 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 	</table>	
 
 	<?php 
-	
 	if ($_SESSION['STATUS']=='NEWEVENT'&&strlen($_SESSION['EVENT_FORMA'])>0) {
 		include $_SESSION['EVENT_FORMA'];
 	}?>
@@ -78,6 +76,11 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 	
 </div>   <!-- <divEventForm>  -->
 <?php
+$sql = "SELECT * FROM notikumi where pret_id='".$_SESSION['PRET_ID']."'";
+$q = $db->query($sql);
+while($r = $q->fetch(PDO::FETCH_ASSOC)){
+	$pret_events[]=$r;
+}
 
 foreach ($pret_events as $one_event){?>
 <?php 

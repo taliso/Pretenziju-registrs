@@ -1,5 +1,6 @@
 <?php
 //var_dump($one_event);
+me(2,"Fails event_view1.php","IN");
 if ($event_count>0) {
 	$event_nr=1;
 	if(isset($_GET['eventnr'])){
@@ -15,6 +16,17 @@ if ($event_count>0) {
 
 	}
 }
+// #############  IESAISTĪTIE CILVĒKI  #######################################
+foreach ($evPersonas as $ePers){
+	
+	
+}
+
+
+// #############  IESAISTĪTIE FAILI  #######################################
+
+
+
 	
 ?>
 <div id="divEventView" style=" width:100%;">
@@ -35,3 +47,4 @@ if ($event_count>0) {
 	</div>
 	
 </div>
+<?php me(2,"Fails event_view1.php","IN"); ?>

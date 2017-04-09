@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 include "config.php";
 include "funkcijas.php";
 include "konekcija.php";
-include "\phpmailer\mailset.php";
+include "\\phpmailer\\mailset.php";
 
 $datums=datums();
 define("MAX_FILE_SIZE",5000000);
@@ -21,6 +21,8 @@ $pref="";
 $reg_nr="";
 $MainInfo="";
 $form="";
+
+
 
 if (isset($_SESSION['INFO'])){
 	$MainInfo=$_SESSION['INFO'];
@@ -43,10 +45,14 @@ timer_start();
  
   <title>Pretenzijas</title>
 </head>
- 
+
 <body>
- 
+
 	<?php 
+if (isset($_SESSION['DEBUG'])){
+	me(2,'INDEX','IN');
+
+}
   	//*********  IELĀDĒJAM AĢENTU SARAKSTU MASĪVĀ $agent_list ******************************
   	
   	$sql = "SELECT * FROM kl_agenti";
@@ -144,7 +150,7 @@ if (isset($_GET['pret_id'])){
  	$sql = 'SELECT * FROM pretenzijas where pret_id="'.$pret_id.'"';
  	$q = $db->query($sql);
  	$r = $q->fetch(PDO::FETCH_ASSOC);
- 	
+ //	var_dump($r );
  	$_SESSION['PRET_STATUS']=$r['status'];
  	$_SESSION['ID_PRET']=$r['ID'];
  	$_SESSION['REG_NR'] = $r['reg_nr'];
@@ -156,8 +162,9 @@ if (isset($_GET['pret_id'])){
 	$_SESSION['BEIGU_DAT']=$r['beigu_dat'];
 	$_SESSION['IZDEVUMI']=$r['izdevumi'];
    	$_SESSION['TITLE'] = "Pretenzijas veidlapa";
-   	
-// 	$form=$_SESSION['FORMA'];
+
+   	me('2',"GET PRET_ID",$_SESSION['REG_NR']);
+
    	 } else {
    	 	$pret_id="";
 }
@@ -290,6 +297,7 @@ if(isset($_GET['navig'])){
 }
 
 if(isset($_SESSION['AGENTS'])){
+	me('2',"REG_Nr",$_SESSION['REG_NR']);
 	$lAgents=$_SESSION['AGENTS'];
 	$lUsername=$_SESSION['USER'];
 	$lTiesibas=$_SESSION['TIESIBAS'];
@@ -300,6 +308,7 @@ if(isset($_SESSION['AGENTS'])){
 //#########################  PRETENZIJAS  SAVE   ################################################################
 if (isset ( $_POST ['pret_save'] )) {
 	me(2,'PRET_ID',$_SESSION['PRET_ID']);
+	me('2',"SESSION['REG_NR']",$_SESSION['REG_NR']);
 	include 'veidlapa_KM_save.php';
 	 echo 'Pēc save:'.timer_end();
 	$_SESSION['STATUS'] = "LIST";
@@ -528,7 +537,11 @@ if ($autor_ir==2){
 			</div><!--divView    -->	
 		</div><!--divForma    -->
 	</div><!--divDarba    -->
-	<?php } echo 'Cikla laiks:'.timer_end(); ?>				
+	<?php } 
+	if (isset($_SESSION['DEBUG'])){
+	 	me(2,'INDEX','OUT');
+	}	
+	echo 'Cikla laiks:'.timer_end(); ?>				
 </div><!--divMaster    -->				
 </form>	
 </body>

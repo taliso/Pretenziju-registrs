@@ -1,4 +1,7 @@
 <?php
+/**
+ * @return array
+ */
 function datums() {
 	$datums = array ();
 	// $sd=string; Error ????
@@ -208,7 +211,14 @@ function StatCheckBox($mname, $mvariable, $koments, $nobeig, $status) {
 	$mteksts = '<input type="checkbox" name="' . $mname . '"' . $mcheckstat . $status . '> ' . $koments . $nobeig;
 	echo $mteksts;
 }
-function MailTo($to, $sub, $body) {
+
+/**
+ * @param $to
+ * @param $sub
+ * @param $body
+ * @param $mail
+ */
+function MailTo($to, $sub, $body, $mail) {
 	$mail->addAddress ( $to ); // Name is optional
 	$mail->Subject = $sub;
 	$mail->Body = $body;
@@ -253,8 +263,15 @@ function sqlinsert($ftabula, $db) {
 }
 function file_manage($array_files) {
 }
-function me($key,$teksts, $vertiba) {
+
+/**
+ * @param $key
+ * @param $teksts
+ * @param $vertiba
+ */
+function me($key, $teksts, $vertiba) {
 	if ($_SESSION['DEBUG'] == "ON" && $key=="2") {
+		$file = fopen("tmp\\log.txt","a");
 		$_SESSION['ME_ID']=$_SESSION['ME_ID']+1;
 		$dati=debug_backtrace();
 		foreach ($dati as $d){
@@ -265,10 +282,15 @@ function me($key,$teksts, $vertiba) {
 		$fil=basename($dati[0]['file']);
 		$lin=$dati[0]['line'];
 		
-		echo $_SESSION['ME_ID'].":  ".$teksts . " - " . $vertiba.' >> Status:'.$_SESSION['STATUS'].' >> PRET_ID:'.$_SESSION['PRET_ID'].' === {'.$fil.' / '.$lin.' }';
+		$strings="F:[".$fil." / ".$lin." }  =>  WIEV:".$_SESSION['WAY']."  STATUS:".$_SESSION['STATUS']."   REG_NR:".$_SESSION['REG_NR'].chr(13) ;
+		echo fputs($file,$strings)."<br>";
+		echo $_SESSION['ME_ID'].":  ".$teksts . " - " . $vertiba.' >> Status:'.$_SESSION['STATUS'].' >> PRET_ID:'.$_SESSION['PRET_ID'].' >>REG_NR:'.$_SESSION['REG_NR'].' === {'.$fil.' / '.$lin.' }';
 		echo '<br>';echo '-----------------------------------------------------------------------------'.'<br>';
+		fclose($file);	
 	}
 }
+
+
 function timer_start() {
 	global $timeparts,$starttime;
 	$timeparts = explode(" ",microtime());

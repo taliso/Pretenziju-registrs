@@ -6,12 +6,6 @@
   $teh_dala=0;
   $laboratorija=0;
   $logistika=0;
-  $teh_cilv="";
-  $lab_cilv="";
-  $log_cilv="";
-  $uzd_teh="";
-  $uzd_lab="";
-  $uzd_log="";
   $event_date="0000-00-00";
   $lemums="";
   $izdevumi="";

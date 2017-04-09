@@ -1,7 +1,6 @@
 <?php
 me('2',"veidlapa_KM_save","IN");
-me("1",'Veidlapa_SAVE', $_SESSION['PRET_ID'] );
-me("1",'Veidlapa_STATUS', $_SESSION['STATUS']);
+me('2',"REG_NR",$_SESSION['REG_NR']);
 if ($_SESSION['STATUS']=="NEW") {
 	$Nr=NextID($_SESSION['PREFIKS']);
 }
@@ -154,7 +153,7 @@ me("1",'Update_PRET',$sql);
 //#########################  FAILU UPLOADS   ################################################################
 		
 //^^^^^^^^^^^^^^^^^^    Saglabājam faili sarakstu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		
+		var_dump($tmp_fil);
 if (isset($tmp_fil)){
 	foreach ($tmp_fil as $tmpf){
 //		var_dump($tmpf);		
@@ -197,6 +196,7 @@ if (isset($tmp_fil)){
 					
 					$q->execute($data);
 					me('2',"konv_name",$konv_name);
+					me(2,"Kopējam ",'tmp\\'.$konv_name." uz ".'uploads\\'.$konv_name);
 					copy('tmp\\'.$konv_name,'uploads\\'.$konv_name);
 				}
 		}		
