@@ -83,20 +83,10 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 }
 
 foreach ($pret_events as $one_event){?>
-<?php 
-$fields=" persona, struktura_kods, uzdevums, uzd_datums, atbilde, atbild_datums, file_atbild ";
-$ftabula="personas_notikums";
-$fwhere=" event_id='".$one_event['event_id']."'";
-
-	$evPersonas=sqltoarray($fields,$ftabula,$fwhere,$db);
-	$visaspersonas="";
-	foreach ($evPersonas as $pers) {
-		$visaspersonas=$visaspersonas.$pers['persona'].", ";
-	}
-	?>
-	<div id="divEventForm"> 
+	<div id="divEventForm">
 		<?php 
-		include 'event_view1.php'; ?>
+		 //include 'event_view1.php';
+        include 'ev_task_view.php';?>
 	</div>
 <?php 
 

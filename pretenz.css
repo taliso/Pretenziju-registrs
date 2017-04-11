@@ -825,7 +825,18 @@ tr td {
 	color: #efe636;
 }
 
+#ev_task{
+	border: 2px solid cadetblue;
+	float: left;
+	margin-bottom: 12px;
+}
 
+#ev_task_title{
+	border: 2px solid cadetblue;
+	float: left;
+	margin-bottom: -2px;
+	background: #3982d5;
+}
 
 
 
