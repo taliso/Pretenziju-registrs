@@ -38,6 +38,8 @@ if (isset($_POST['new_event_create'])) {
 	$sql="DELETE FROM `tmp_personas_notikums`";
 	$q = $db->query($sql);
 	
+	// Izveidojam uzdevumus visiem dalībniekiem
+	//Izsūtam piestiprinātos failus visiem dalībniekiem
 }
 
 //###################  ATCEĻU  NEWEVENT  ################################################

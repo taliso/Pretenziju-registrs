@@ -231,10 +231,10 @@ if ($_SESSION['STATUS']=="NEW") {
 		<td class="atstarpe"></td>
 	    <td class="ievade">
 		    	<?php echo "<span id='list_span'>".$pasutijuma_nr."</span>"; ?>
-		    	<div>
+		    	<div style="float: right;">
 		    		<?php if (isset($fil_sd6)){
 		    					foreach ($fil_sd6 as $fil) {
-		    						echo "<a href='uploads\\".$fil['konvert_name']."'>".$fil['orginal_name']."</a>";
+		    						echo "<a id='span_12_blue_italic' href='uploads\\".$fil['konvert_name']."'>".$fil['orginal_name']."</a>";
 		    					}
 				    		} ?>
 		    	</div>
@@ -267,7 +267,15 @@ if ($_SESSION['STATUS']=="NEW") {
 		    <textarea disabled rows="4" cols="80">
 		    	<?php echo $apraksts; ?>
 			</textarea>
-	  	</td>
+            <div style="float: right;">
+                <?php if (isset($fil_sd8)){
+                    foreach ($fil_sd8 as $fil) {
+                        echo "<a id='span_12_blue_italic' href='uploads\\".$fil['konvert_name']."'>".$fil['orginal_name']."</a>";
+                    }
+                } ?>
+            </div>
+
+        </td>
 	  </tr>
 
 	
@@ -297,9 +305,16 @@ if ($_SESSION['STATUS']=="NEW") {
 				StatCheckBox('iesniegts_panel_foto',$iesniegts_panel_foto,'Ir saņemtas preces fotofiksācija','<br>',' disabled') ;
 				StatCheckBox('iesniegts_mark_foto',$iesniegts_mark_foto,' Ir saņemtas marķējuma fotofiksācijas','',' disabled'); 
 			?>
-	    	
-	    	
-	  	</td>
+            <div style="float: right;">
+                <?php if (isset($fil_sd10)){
+                    foreach ($fil_sd10 as $fil) {
+                        echo "<a id='span_12_blue_italic' href='uploads\\".$fil['konvert_name']."'>".$fil['orginal_name']."</a>";
+                    }
+                } ?>
+            </div>
+
+
+        </td>
 	  </tr>
 
 
@@ -312,7 +327,15 @@ if ($_SESSION['STATUS']=="NEW") {
 				StatCheckBox('obl_dok_crm',$obl_dok_crm,'CMR','<br>',' disabled') ;
 				StatCheckBox('obl_dok_akts',$obl_dok_akts,' Pieņemšanas - nodošanas akts','',' disabled'); 
 			?>
-	  	</td>
+            <div style="float: right;">
+                <?php if (isset($fil_sd11)){
+                    foreach ($fil_sd11 as $fil) {
+                        echo "<a id='span_12_blue_italic' href='uploads\\".$fil['konvert_name']."'>".$fil['orginal_name']."</a>";
+                    }
+                } ?>
+            </div>
+
+        </td>
 	  </tr>
 	</table>
 	<?php

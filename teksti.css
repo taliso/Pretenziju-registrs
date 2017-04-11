@@ -106,3 +106,10 @@ h3 {
 #mnaEvent{
 	font-weight: normal;
 }
+#span_12_blue_italic {
+	color: #0f1573;
+	font-family: verdana;
+	font-size: 12px;
+	font-style: italic;
+	font-weight: unset;
+}

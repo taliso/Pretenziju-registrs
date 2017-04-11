@@ -45,10 +45,10 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 	<table style="width:100%;">
 		<tr>
 			
-			<td style="width:5%;">
-				<span id="evspan2">Pievienot:</span></td>
+			<td style="width:12%;">
+				<span id="evspan2">Pievienot jaunu notikumu >:</span></td>
 			
-			<td style="width:80%;">
+			<td style="width:100%; float:left;">
 	
 					<a id='mnaEvent' href="?addev=mnTask">Uzdevumu</a>
 					<a id='mnaEvent' href="?addev=mnInfo">Ziņojumu</a>
@@ -57,7 +57,7 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 			
 			</td>
 
-			<td style="width:15%;">
+			<td style="width:10%;">
 				<span id="span_14_br"><?php  echo  $ev_nos;  ?></span>
 				<?php  if(strlen($ev_nos)>0) {  ?>
 					<input type="submit" style="float:right;" name="new_event_create" value="Pievienot">

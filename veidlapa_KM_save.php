@@ -52,8 +52,8 @@ $sakuma_datums = "0000-00-00";
 $fields=' * ';
 $tabula='tmp_files';
 $where='';
-
-$tmp_fil=sqltoarray($fields,$tabula,$where,$db);
+$tmp_fil=tmp_fil_to_array($db);
+//$tmp_fil=sqltoarray($fields,$tabula,$where,$db);
 me("1",'tmp_file',"Izvilkts");
 if ($_SESSION['STATUS']=="NEW") {
 	$sql = "INSERT INTO pretenzijas SET ";
@@ -153,55 +153,9 @@ me("1",'Update_PRET',$sql);
 //#########################  FAILU UPLOADS   ################################################################
 		
 //^^^^^^^^^^^^^^^^^^    Saglabājam faili sarakstu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		var_dump($tmp_fil);
+//		var_dump($tmp_fil);
 if (isset($tmp_fil)){
-	foreach ($tmp_fil as $tmpf){
-//		var_dump($tmpf);		
-		$submit_name=$tmpf['submit_name'];
-		$source=$tmpf['source'];
-		$identif=$tmpf['identif'];
-		$name=$tmpf['name'];
-		$type=$tmpf['type'];
-		$tmp_name=$tmpf['tmp_name'];
-		$size=$tmpf['size'];
-		$cmdDel=$tmpf['cmdDel'];
-		$konv_name=substr($source,0,4).'_'.$identif.'_'.$submit_name.'_'.$name;
-		
-		$parbaude=sqltoarray(' * ', 'faili', " konvert_name= '$konv_name' ", $db);
-		if (isset($parbaude)==false) {				
-				if ($cmdDel==0){
-					$sql = "INSERT INTO faili SET ";
-					$sql=$sql."
-					orginal_name=:orginal_name ,
-					konvert_name=:konvert_name ,
-					path=:path ,
-					source=:source ,
-					ident=:ident ,
-					size=:size ,
-					datums=:datums,
-					submit_name=:submit_name";
-					
-					$q = $db->prepare($sql);
-					
-					
-					$data = array(
-							':orginal_name'=> $name ,
-							':konvert_name'=> $konv_name ,
-							':path'=> "uploads/" ,
-							':source'=>$source  ,
-							':ident'=>$identif  ,
-							':size'=>$size  ,
-							':datums'=>date("Y-m-d"),
-							':submit_name'=>$submit_name  );
-					
-					$q->execute($data);
-					me('2',"konv_name",$konv_name);
-					me(2,"Kopējam ",'tmp\\'.$konv_name." uz ".'uploads\\'.$konv_name);
-					copy('tmp\\'.$konv_name,'uploads\\'.$konv_name);
-				}
-		}		
-	}
-	
+    $fail_sk=tmp_fil_save('VEIDLAPA',$db);
 }
 echo 'Save laiks:'.timer_end();		
 me('2',"veidlapa_KM_save","OUT");

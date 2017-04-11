@@ -316,3 +316,68 @@ foreach ($marray as $mone) {
 $rinda='</select>';
 
 }
+function tmp_fil_to_array($db){
+	$fields=' * ';
+	$tabula='tmp_files';
+	$where='';
+
+	$tmp_fil=sqltoarray($fields,$tabula,$where,$db);
+	return $tmp_fil;
+	
+}
+
+/**
+ *
+ */
+function tmp_fil_save($source, $db){
+    $tmp_fil=tmp_fil_to_array($db);
+    if (isset($tmp_fil)){
+        $fail_sk=0;
+        foreach ($tmp_fil as $tmpf){
+//		var_dump($tmpf);
+            $submit_name=$tmpf['submit_name'];
+            $source=$tmpf['source'];
+            $identif=$tmpf['identif'];
+            $name=$tmpf['name'];
+            $type=$tmpf['type'];
+            $tmp_name=$tmpf['tmp_name'];
+            $size=$tmpf['size'];
+            $cmdDel=$tmpf['cmdDel'];
+            $konv_name=substr($source,0,4).'_'.$identif.'_'.$submit_name.'_'.$name;
+
+            $parbaude=sqltoarray(' * ', 'faili', " konvert_name= '$konv_name' ", $db);
+            if (count($parbaude)==0) {
+                if ($cmdDel==0){
+                    $sql = "INSERT INTO faili SET ";
+                    $sql=$sql."
+					orginal_name=:orginal_name ,
+					konvert_name=:konvert_name ,
+					path=:path ,
+					source=:source ,
+					ident=:ident ,
+					size=:size ,
+					datums=:datums,
+					submit_name=:submit_name";
+
+                    $q = $db->prepare($sql);
+
+                    $data = array(
+                        ':orginal_name'=> $name ,
+                        ':konvert_name'=> $konv_name ,
+                        ':path'=> "uploads/" ,
+                        ':source'=>$source  ,
+                        ':ident'=>$identif  ,
+                        ':size'=>$size  ,
+                        ':datums'=>date("Y-m-d"),
+                        ':submit_name'=>$submit_name  );
+
+                    $q->execute($data);
+                    copy('tmp\\'.$konv_name,'uploads\\'.$konv_name);
+                    $fail_sk= $fail_sk+1;
+                }
+            }
+        }
+    }
+
+return $fail_sk;
+}

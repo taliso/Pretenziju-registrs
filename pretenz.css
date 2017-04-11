@@ -356,12 +356,11 @@ a:hover {
 	height: 16px;
 	width: 7%;
 	text-align: center;
-	margin-right: 8px;
 	float: right;
 	font-size: 14px;
 	font-family: verdana;
 	margin: 2px;
-	
+
 }
 #divMaster{
 /*	width:1800px;*/
@@ -736,7 +735,7 @@ tr td {
 }
 
 .ievade textarea {
-	width: 100%;
+	width: 80%;
 }
 
 #mnEvNavig {
