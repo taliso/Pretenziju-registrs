@@ -92,6 +92,11 @@ h3 {
 	font-family: verdana;
 	font-size: 14px;
 }
+#span_14_yea {
+	color: #ffeb05;
+	font-family: verdana;
+	font-size: 14px;
+}
 
 #span_18_gaish {
 	color: aliceblue;
@@ -103,6 +108,23 @@ h3 {
 	font-family: verdana;
 	font-size: 18px;
 }
+#span_18_brown {
+	color: #370310;
+	font-family: verdana;
+	font-size: 18px;
+}
+#span_16_yealow {
+	color: #ffff00;
+	font-family: verdana;
+	font-size: 16px;
+}
+#span_16_brown {
+	color: #370310;
+	font-family: verdana;
+	font-size: 16px;
+}
+
+
 #mnaEvent{
 	font-weight: normal;
 }
@@ -118,4 +140,14 @@ h3 {
 	font-family: verdana;
 	font-size: 12px;
 	font-weight: unset;
+}
+#span_13_yealow {
+	color: #ffeb05;
+	font-family: verdana;
+	font-size: 13px;
+	font-weight: unset;
+}
+#text_pret_garss {
+	width:65%;
+
 }

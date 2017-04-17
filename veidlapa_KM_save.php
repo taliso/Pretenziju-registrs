@@ -54,7 +54,7 @@ $tabula='tmp_files';
 $where='';
 $tmp_fil=tmp_fil_to_array($db);
 //$tmp_fil=sqltoarray($fields,$tabula,$where,$db);
-me("1",'tmp_file',"Izvilkts");
+
 if ($_SESSION['STATUS']=="NEW") {
 	$sql = "INSERT INTO pretenzijas SET ";
 
@@ -104,7 +104,6 @@ $sql=$sql."
 if ($_SESSION['STATUS']=="EDIT") {
 	$sql = $sql." WHERE pret_id='".$_SESSION['PRET_ID']."'";
 }
-me("1",'Veidlapa KM save',$sql);
 	$q = $dbf->prepare($sql);
 		
 		$data = array(
@@ -145,17 +144,15 @@ me("1",'Veidlapa KM save',$sql);
 			':file_obl_doc'=>$file_obl_doc,
 			':notikumu_sk'=>0,
 			':budzets'=>$budzets,
-			':sakuma_datums'=>$sakuma_datums,
-			':beigu_dat'=>$beigu_dat );
+			':sakuma_datums'=>$sakuma_datums );
 
 		$q->execute($data);
-me("1",'Update_PRET',$sql);
+        $id_pret=max_id('pretenzijas',$db);
+        $_SESSION['ID_PRET']=$id_pret;
 //#########################  FAILU UPLOADS   ################################################################
 		
 //^^^^^^^^^^^^^^^^^^    Saglabājam faili sarakstu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //		var_dump($tmp_fil);
 if (isset($tmp_fil)){
-    $fail_sk=tmp_fil_save('VEIDLAPA',$db);
+    $fail_sk=tmp_fil_save('pretenzijas',$id_pret,$db);
 }
-echo 'Save laiks:'.timer_end();		
-me('2',"veidlapa_KM_save","OUT");

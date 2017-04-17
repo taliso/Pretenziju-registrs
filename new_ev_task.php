@@ -23,7 +23,7 @@
   // #############    tmp_files   ###########################
   $fields =" name,size,cmdDel ";
   $ftabula="tmp_files";
-  $fwhere=" source='NOTIKUMS' and identif='".$event_id."'";
+  $fwhere=" source='notikumi' and identif='".$event_id."'";
    me(2,'fwhere',$fwhere);
   $event_files= sqltoarray($fields,$ftabula,$fwhere,$db);
   // #############    tmp_personas_notikums   ###########################
@@ -66,7 +66,7 @@
 					</td>
 					<td style="width:10%;"><span id="span_14_right_yellow"> Uzdevums:</span></td>
 					<td style="width:50%;"><input type="text" name="uzdevums" value="" style=" margin:2px; width:60%; float:left;"></td>
-					<td style="width:10%;"><input type="submit" name="user_to_event" value="Pievienot"></td>
+					<td style="width:10%;"><input type="submit" name="user_to_event" value="Pievienot personu"></td>
 				</tr>
 			</table>
 		</div>
@@ -102,7 +102,7 @@
 		</div>
 	
 		<div id="divFailiMenu">
-	  		<input type="file" name="fileUzdev" id="fileDoc" style="margin:4px;"><input style="float:right; margin: 4px;" type="submit" name="doc_to_event" value="Pievienot" >
+	  		<input type="file" name="fileUzdev" id="fileDoc" style="margin:4px;"><input style="float:right; margin: 4px;" type="submit" name="doc_to_event" value="Pievienot failu" >
 	  					  <table>	  	
 			  <?php 
 		if (isset($event_files)){
@@ -124,8 +124,6 @@
 	
 	</div>
 				  
-	  <div id="divFaili" style="width:24%; float:left; border: 1px solid brown;">
-	  </div>
-	  <div id="divNewEventTitle"><input type="submit" name="new_event_cancel" value="Atcelt" style="float:right; margin: 4px;"><input type="submit" name="new_event_accept" value="Pievienot" style="float:right; margin: 4px;">
+	  <div id="divNewEventTitle"><input type="submit" name="new_event_cancel" value="Atcelt" style="float:right; margin: 4px;"><input type="submit" name="new_event_accept" value="Saglabāt" style="float:right; margin: 4px;">
 	  </div>
  </div>

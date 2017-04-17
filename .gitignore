@@ -4,3 +4,9 @@ mlog.log
 \phpmailer
 .buildpath
 .project
+\install
+\jquery
+\tmp
+\icons
+\uploads
+\.idea

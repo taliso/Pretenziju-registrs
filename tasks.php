@@ -19,11 +19,12 @@ $tasks_count= count($tasks_list);
 		<table style="width:100%;">
 	 		 	<tr> <!-- R # 1. -->
 	 		 		<td style="width:3%;"><span id="evspan1" style="width:100%;text-align:center;">N.p.k.</span></td>
-	 				<td style="width:7%;"><span id="evspan1" style="width:100%;text-align:center;">Avots</span></td>
-	 				<td style="width:7%;"><span id="evspan1" style="width:100%;text-align:center;">Ident.</span></td>
-	 				<td style="width:8%;"><span id="evspan1" style="width:100%;text-align:center;">Datums</span></td>
-	 				<td style="width:35%;"><span id="evspan1" style="width:100%;text-align:center;">Uzdevums</span></td>
-	 				<td style="width:8%;"><span id="evspan1" style="width:100%;text-align:center;">Termins</span></td>
+	 				<td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;">Avots</span></td>
+	 				<td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;">Ident.</span></td>
+	 				<td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;">Datums</span></td>
+	 				<td style="width:55%;"><span id="evspan1" style="width:100%;text-align:center;">Uzdevums</span></td>
+	 				<td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;">Termins</span></td>
+                    <td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;">Atbildets</span></td>
 	  				<td style="width:1%;"><span id="evspan1" style="width:100%;text-align:center;">Stat.</span></td>
 	 			</tr>
 		</table>
@@ -43,44 +44,81 @@ if ($tasks_count>0) {
 		}
 		
 	}
-	
+//@@@___________ Katrs uzdevums ________@@@@@@@@@@@@@@@@@@@@@@@@@
+    $tmp_file=tmp_fil_to_array($db);
+
 	foreach ($tasks_list as $OneTask) {	?>
 		
 		<div id="divTask">
 					<table style="width:100%;">
 						<tr> 
 							<td style="width:3%; color:blue;"><a id='mnaTasks' href="?tasknr=<?php echo $task_nr; ?>"> Nr.<?php echo $task_nr; ?></a></td>
-							<td style="width:7%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['avots'] ?></span></td>
-							<td style="width:7%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['identifikators'] ?></span></td>
-							<td style="width:8%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['datums'] ?></span></td>
-							<td style="width:35%;"><span id="evspan1" style="width:100%;text-align:left;"><?php echo $OneTask['uzdevums'] ?></span></td>
-							<td style="width:8%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['termins'] ?></span></td>
+							<td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['avots'] ?></span></td>
+							<td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['identifikators'] ?></span></td>
+							<td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['datums'] ?></span></td>
+							<td style="width:55%;"><span id="evspan1" style="width:100%;text-align:left;"><?php echo $OneTask['uzdevums'] ?></span></td>
+							<td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['termins'] ?></span></td>
+                            <td style="width:5%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['izpild_dat'] ?></span></td>
 							<td style="width:1%;"><span id="evspan1" style="width:100%;text-align:center;"><?php echo $OneTask['status'] ?></span></td>
 						</tr>
 					</table>
 			<?php 
 			if ($_SESSION['TASK_NR']==$task_nr) {
 				$disp=''; 
-				$_SESSION['TASK_ID']=$OneTask['identifikators']; } else {  $disp='none'; 
-					}
-					?>
-			<div class="invisible" style="display:<?php echo $disp ; ?>;"> <!--  invisible -->
-				<table>
-					<tr>
-						<td style="width:3%;"><span id="evspan1"> Atbilde:</span></td>
-						<td style="width:94%;"><textarea name="atbilde" style="width:99%;font-family: verdana;font-size: 9px;"><?php echo $OneTask['atbilde']; ?></textarea></td>
-						<td style="width:2%;"><input type="submit" name="task_save" value="Nosūtīt"></td>
-					</tr>
-					<tr>
-						<td style="width:3%;"></td>
-						<td style="width:94%;"><input type="file" name="fileAtbilde" id="fileDoc"></td>
-						<td style="width:2%;"></td>
-					</tr>
-					
-				</table>
-			</div> <!--  class="invisible" -->
+				$_SESSION['TASK_ID']=$OneTask['identifikators'];
+                $_SESSION['ID_TASK']=$OneTask['id'];
+                $task_fil=sqltoarray(' * ','faili',' id_master ='.$OneTask['id'],$db);
+                ?>
+                <div class="invisible" > <!--  invisible -->
+                    <table>
+                        <tr>
+                            <td style="width:3%;"><span id="evspan1"> Atbilde:</span></td>
+                            <td style="width:52%;"><textarea name="atbilde[]" style="width:75%;font-family: verdana;font-size: 11px;"><?php echo $OneTask['atbilde']; ?></textarea></td>
+                            <td style="width:15%;">
+                                <div style="width:100%; text-align: center; float:left;background: burlywood;"><span id="evspan1"> Pievienotie faili</span></div>
+                                 <?php if ($OneTask['status']==0) {?>
+                                    <input type="file" name="fileTask" id="fileDoc"><input type="submit" name="add_task_file" value="Pievienot">
+                                 <?php } ?>
+                                <table style="float:left; width:100%;">
+
+                                       <?php  foreach($tmp_file as $OneTmp){
+                                          if ($OneTmp['identif']==$_SESSION['TASK_ID']){ ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo "<a id='span_12_blue_italic' href='".$OneTmp['tmp_name']."'>".$OneTmp['name']."</a>"; ?>
+                                                        </td>
+                                                    </tr>
+
+                                          <?php   }
+                                      }?>
+                                    <?php  foreach($task_fil as $OneFil){   ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo "<a id='span_12_blue_italic' href='".$OneFil['konvert_name']."'>".$OneFil['orginal_name']."</a>"; ?>
+                                                </td>
+                                            </tr>
+
+                                        <?php   } ?>
+
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td ></td>
+                            <td >
+                                <?php if ($OneTask['status']==0) {?>
+                                    <input type="submit" name="task_save" value="Nosūtīt">
+                                <?php } ?>
+                            </td>
+                            <td ></td>
+                        </tr>
+
+                    </table>
+                </div> <!--  class="invisible" -->
+            <?php } ?>
 		</div>
 <?php
+
 		$task_nr = $task_nr + 1;
 		
 	} // foreach

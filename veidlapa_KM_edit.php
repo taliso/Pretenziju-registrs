@@ -196,8 +196,8 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 				<td class="teksts">Pretenzijas iesniedzējs (Uzņēmuma/privātpersonas
 					nosaukums)</td>
 				<td class="atstarpe"></td>
-				<td><input ID="text_pret" type="text" name="iesniedzejs"
-					value="<?php echo $iesniedzejs ;	?>"></td>
+				<td>
+                    <input ID="text_pret_garss" type="text" name="iesniedzejs" value="<?php echo $iesniedzejs ;	?>"></td>
 			</tr>
 
 
@@ -218,7 +218,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 				<td class="teksts">Produkta tips un biezums u.c. informācija, par
 					kuru izteikta pretenzija</td>
 				<td class="atstarpe"></td>
-				<td class="ievade"><input ID="text_pret" type="text"
+				<td class="ievade"><input id="text_pret_garss" type="text"
 					name="produkcija" value="<?php echo $produkcija; ?>" size="100"></td>
 			</tr>
 
@@ -247,7 +247,6 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 								<td> 
 									<?php 
 									foreach ($fl_vd_6 as $faili){
-										me("1",'SD6',$faili['name']);
 										echo $faili['name'].'<br>';
  									}
 									?>
@@ -277,10 +276,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 						StatCheckBox ( 'daudzums_atsev_paneli', $daudzums_atsev_paneli, 'Atsevišķi paneļi, veidņi  ', '', '' );
 						echo "<input ID='text_pret' type='text' name='daudzums_kvmet' value='" . $daudzums_kvmet . "'>  kv.m. piegādes partijā (s) Nr.  <input ID='text_pret' type='text' name='no_partijas' value='" . $no_partijas . "'>";
 						?>
-	    	
-	    	
-	    	 
-    	</td>
+    	        </td>
 			</tr>
 
 
@@ -308,8 +304,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 								<td> 
 									<?php 
  									foreach ($fl_vd_8 as $faili){
- 										me("1",'SD8',$faili['name']);
-										echo $faili['name'].'<br>';
+ 										echo $faili['name'].'<br>';
  									}
 									?>
 								</td>

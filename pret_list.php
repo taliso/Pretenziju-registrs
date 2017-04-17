@@ -21,12 +21,14 @@ while($r = $q->fetch(PDO::FETCH_ASSOC)){
 			$stat='0';
 			break;
 		case 'PROCESSED':
-			$stat='1';
+			$stat='2';
 			break;
+		case 'REGISTER':
+            $stat='1';
+            break;
 		default:
 			$stat='X';
 			break;
-	
 	}
 	
 	

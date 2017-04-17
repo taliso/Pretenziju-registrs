@@ -251,7 +251,6 @@ function sqlupdate($field, $variable, $ftabula, $fwhere, $db) {
 	$sql = "UPDATE " . $ftabula . " SET " . $field . "='" . $variable . "' WHERE " . $fwhere;
 	$q = $db->query ( $sql );
 	msg ( "sqlupdate=" . $sql );
-	echo $sql;
 	return 'true';
 }
 function sqlinsert($ftabula, $db) {
@@ -304,7 +303,7 @@ function timer_end() {
 }
 
 function dropbox_select($marray,$mkey,$mselect){
-$rinda='<select name="agents" style="width:100%; margin:2px;">';
+$rinda='<select name="agents" id="user_select">';
 echo $rinda;
 foreach ($marray as $mone) {
 	if (strlen($mselect)>0 && $mselect==$mone[$mkey]) {
@@ -329,12 +328,11 @@ function tmp_fil_to_array($db){
 /**
  *
  */
-function tmp_fil_save($source, $db){
+function tmp_fil_save($source,$id_master, $db){
     $tmp_fil=tmp_fil_to_array($db);
     if (isset($tmp_fil)){
         $fail_sk=0;
         foreach ($tmp_fil as $tmpf){
-//		var_dump($tmpf);
             $submit_name=$tmpf['submit_name'];
             $source=$tmpf['source'];
             $identif=$tmpf['identif'];
@@ -350,6 +348,7 @@ function tmp_fil_save($source, $db){
                 if ($cmdDel==0){
                     $sql = "INSERT INTO faili SET ";
                     $sql=$sql."
+                    id_master=:id_master ,
 					orginal_name=:orginal_name ,
 					konvert_name=:konvert_name ,
 					path=:path ,
@@ -362,6 +361,7 @@ function tmp_fil_save($source, $db){
                     $q = $db->prepare($sql);
 
                     $data = array(
+                        ':id_master'=> $id_master ,
                         ':orginal_name'=> $name ,
                         ':konvert_name'=> $konv_name ,
                         ':path'=> "uploads/" ,
@@ -380,4 +380,54 @@ function tmp_fil_save($source, $db){
     }
 
 return $fail_sk;
+}
+function to_tmp_file($source,$identif,$submit_name,$db){
+
+     $cmdDel=0;
+
+    $name=$_FILES[$submit_name]['name'];
+    $type=$_FILES[$submit_name]['type'];
+    $tmp_name=$_FILES[$submit_name]['tmp_name'];
+    $size=$_FILES[$submit_name]['size'];
+    $konv_name=substr($source,0,4).'_'.$identif.'_'.$submit_name.'_'.$name;
+    $konv_name='tmp\\'.$konv_name;
+    if(strlen($name)>0) {
+        $a = copy($tmp_name, $konv_name);
+
+
+        $sql = "INSERT INTO tmp_files SET ";
+        $sql = $sql . "
+                    submit_name=:submit_name ,
+                    source=:source ,
+                    identif=:identif ,
+                    name=:name ,
+                    type=:type ,
+                    tmp_name=:tmp_name ,
+                    size=:size ,
+                    cmdDel=:cmdDel";
+
+        $q = $db->prepare($sql);
+
+
+        $data = array(
+            ':submit_name' => $submit_name,
+            ':source' => $source,
+            ':identif' => $identif,
+            ':name' => $name,
+            ':type' => $type,
+            ':tmp_name' => $konv_name,
+            ':size' => $size,
+            ':cmdDel' => 0);
+
+        $q->execute($data);
+    }
+}
+
+
+function max_id($table,$db){
+    $sql = "select MAX(ID) as max_id from ".$table ;
+    $q = $db->query($sql);
+    $m = $q->fetch(PDO::FETCH_ASSOC);
+    $max_id=$m['max_id'];
+    return $max_id;
 }

@@ -42,32 +42,30 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 		</table>
 		
 	</div>   <!-- <divEventFormTitle>  -->
-	<table style="width:100%;">
+	<table style="width:100%; background:bisque;">
 		<tr>
 			
 			<td style="width:12%;">
-				<span id="evspan2">Pievienot jaunu notikumu >:</span></td>
-			
+                <?php  if ($_SESSION['LOMA']=='Q') {?>
+				    <span id="evspan2">Jauns notikums :</span></td>
+                <?php }?>
 			<td style="width:100%; float:left;">
-	
-					<a id='mnaEvent' href="?addev=mnTask">Uzdevumu</a>
-					<a id='mnaEvent' href="?addev=mnInfo">Ziņojumu</a>
-					<a id='mnaEvent' href="?addev=mnRezult">Lēmumu</a>
-					<a id='mnaEvent' href="?addev=mnKorekt">Korektīvās darbības</a>
-			
+                <?php  if ($_SESSION['LOMA']=='Q') {?>
+                    <input type="submit" name="new_event_create" value="Uzdevums">
+                    <input type="submit" name="new_event_create" value="Ziņojums">
+                    <input type="submit" name="new_event_create" value="Lēmums">
+                    <input type="submit" name="new_event_create" value="Korekcijas">
+                <?php }?>
 			</td>
 
 			<td style="width:10%;">
 				<span id="span_14_br"><?php  echo  $ev_nos;  ?></span>
-				<?php  if(strlen($ev_nos)>0) {  ?>
-					<input type="submit" style="float:right;" name="new_event_create" value="Pievienot">
-				<?php } ?>	
 			</td>
 		</tr>	
 	</table>	
 
 	<?php 
-	if ($_SESSION['STATUS']=='NEWEVENT'&&strlen($_SESSION['EVENT_FORMA'])>0) {
+	if ($_SESSION['EVENT_STATUS']=='NEW'&&strlen($_SESSION['EVENT_FORMA'])>0) {
 		include $_SESSION['EVENT_FORMA'];
 	}?>
 	
@@ -76,16 +74,10 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 	
 </div>   <!-- <divEventForm>  -->
 <?php
-$sql = "SELECT * FROM notikumi where pret_id='".$_SESSION['PRET_ID']."'";
-$q = $db->query($sql);
-while($r = $q->fetch(PDO::FETCH_ASSOC)){
-	$pret_events[]=$r;
-}
 
 foreach ($pret_events as $one_event){?>
 	<div id="divEventForm">
 		<?php 
-		 //include 'event_view1.php';
         include 'ev_task_view.php';?>
 	</div>
 <?php 

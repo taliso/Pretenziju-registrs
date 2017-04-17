@@ -153,6 +153,13 @@ asd
 
 
 
+						<select name="agents" style="width:100%; margin:2px;">
+							  <?php 
+							  foreach ($agents as $user) {?>
+							 	 <option value="<?php echo $user['agents'] ?>"><?php echo $user['agents'] ?></option>
+									   <?php }
+							  ?>
+			  			</select>
 
 
 

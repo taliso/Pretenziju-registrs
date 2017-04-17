@@ -96,7 +96,8 @@ td.tcol0 {
  td.tcol3 {
    	width:20%;
 	font-size: 12px;
-	font-family: verdana; 
+	font-family: verdana;
+	 margin-left: 10px;
  }
  
  td.tcol4 {
@@ -378,24 +379,22 @@ a:hover {
  	background-color: #4a47bf;
 	float:left;
 	color:red;
-	width:10%;
+	width:190px;
 	height:76px;
 }
 #divTitle{
-	background-color: #4a47bf;
+	background-color: #002060;
 	float:left;
-	color:red;
-	width:90%;
-	height:50px;
-	border-bottom: 1px solid;
-	border-bottom-color: #1992d4;
+	width:87%;
+	height:43px;
+	text-align: right;
 }
 #divInfo{
-	background-color: #4a47bf;
+	background-color: #0070c0;
 	float:left;
 	color:red;
-	width:90%;
-	height:25px;
+	width:87%;
+	height:26px;
 }
 
 #divAdmin{
@@ -595,6 +594,7 @@ a:hover {
 #divEventForm{
 	width:100%;
 	background:ivory;
+	margin-bottom: 9px;
 }
 
 td.hapraksts1{
@@ -824,19 +824,66 @@ tr td {
 	margin: 2px;
 	color: #efe636;
 }
-
 #ev_task{
 	border: 2px solid cadetblue;
 	float: left;
 	margin-bottom: 12px;
+	background: cornsilk;
 }
-
 #ev_task_title{
 	border: 2px solid cadetblue;
 	float: left;
 	margin-bottom: -2px;
-	background: #3982d5;
+	background: burlywood;
 }
+#user_select{
+	width:20%;
+	margin:2px;
+}
+#divLietSar{
+	float:left;
+	width:60%;
+	border-right: 1px solid #4b0082;
+	color: #3bff2f;
+}
+#divLietKart{
+	float:left;
+	width:39%;
+}
+#divAdminTitle {
+	background: black;
+	text-align: center;
+	float:left;
+	width:100%;
+}
+#divAdminForma {
+	background: #303030;
+	text-align: center;
+	float:left;
+	width: 100%;
 
+}
+#divAdminMenju {
+	text-align: left;
+	margin-left: 5px;
+	margin-top: 40px;
+	float:left;
+	width:10%;
+	border: 2px solid #474444;
+}
+#divAdminWork {
+	background: #565c59;
+	text-align: left;
+	float:left;
+	width: 89%;
 
-
+}
+#mnAdmin {
+	text-align: left;
+	margin-left: 20px;
+	float:left;
+	text-decoration: underline;
+	color: #15d117;
+	font-family: verdana;
+	font-size: 13px;
+}

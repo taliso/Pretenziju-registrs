@@ -90,25 +90,21 @@ if (isset($_SESSION['DEBUG'])){
  		$identif='';
  		$cmdDel=0;
  		
- 		me("1",'Failu piev. PRET_ID',$_SESSION['PRET_ID']);
  		$name=$_FILES[$f_key]['name'];
  		$type=$_FILES[$f_key]['type'];
  		$tmp_name=$_FILES[$f_key]['tmp_name'];
  		$size=$_FILES[$f_key]['size'];
- 		$source='VEIDLAPA';
+ 		$source='pretenzijas';
  		$identif=$_SESSION['PRET_ID'];
  		$konv_name=substr($source,0,4).'_'.$identif.'_'.$f_key.'_'.$name;
   		
  			$submit_name=$f_key;
-   			me("1",'Submit_name',$submit_name);
 
  		if (strlen($name)>0) {
  			$konv_name='tmp\\'.$konv_name;
- 			me("1",'f_key',$f_key);
- 				
+
 			$a = copy($tmp_name,$konv_name);
- 			me("1",'Parkopets',$a);
- 			
+
  			$sql = "INSERT INTO tmp_files SET ";
  			$sql=$sql."
 			 	  	submit_name=:submit_name ,
@@ -162,8 +158,6 @@ if (isset($_GET['pret_id'])){
 	$_SESSION['BEIGU_DAT']=$r['beigu_dat'];
 	$_SESSION['IZDEVUMI']=$r['izdevumi'];
    	$_SESSION['TITLE'] = "Pretenzijas veidlapa";
-
-   	me('2',"GET PRET_ID",$_SESSION['REG_NR']);
 
    	 } else {
    	 	$pret_id="";
@@ -415,7 +409,7 @@ if ($autor_ir==2){
 		
 		if 	($_SESSION['WAY']=='ADMIN'){
 			if ($_SESSION['STATUS'] == "LIST") {
-				$_SESSION['FORMA'] = 'admin_agenti.php';
+				$_SESSION['FORMA'] = 'admin_general.php';
 			}
 			if ($_SESSION['STATUS'] == "EDIT") {
 		
@@ -432,10 +426,12 @@ if ($autor_ir==2){
 <div id="divMaster"><!--divMaster    -->
 	<div id="divGalva"><!--divGalva    -->
 		<div id="divLogo"><!--divLogo    -->
-			<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:101px;height:56px;margin:10px">
+<!--			<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:101px;height:56px;margin:10px">-->
+            <img id="logo" src="Title.png" alt="Tenapors logo" >
 		</div>	<!--divLogo    -->
 		<div id="divTitle"><!--divTitle    -->
-			<h1>Pretenziju reģistrācijas sistēma</h1>
+<!--			<h1>Pretenziju reģistrācijas sistēma</h1>-->
+                 <span id="span_13_yealow">Pretenziju pārvaldības sistēma</span>
 		</div><!--divTitle    -->
 		<div id="divInfo"><!--divInfo    -->
 			<div id="divLoginInfo"><!--divLoginInfo    -->
@@ -477,7 +473,7 @@ if ($autor_ir==2){
 			</div><!--divLoginInfo    -->
 				<?php 	if (isset($_SESSION['DEBUG'])){?>
 				<div id="divAdmin">
-					<input type="submit" name="btdebug" value="Debug <?php echo $_SESSION['DEBUG']; ?>">
+<!--					<input type="submit" name="btdebug" value="Debug --><?php //echo $_SESSION['DEBUG']; ?><!--">-->
 				</div>
 				<?php } ?>
 			<div id="divPapildInfo">
@@ -486,8 +482,12 @@ if ($autor_ir==2){
 				<div id="divVersija">
 				</div><!--divVersija    -->
 			</div><!--divPapildInfo    -->
-		</div><!--divInfo    -->
-	</div><!--divGalva    -->	
+            <div style="background: #00b0f0; width:100%;height:7px;float: left;">
+
+            </div>
+
+        </div><!--divInfo    -->
+ 	</div><!--divGalva    -->
 
 	<!-- ##################################################################################################################   -->
 	<?php  
@@ -510,11 +510,11 @@ if ($autor_ir==2){
 				if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEdit">Labot</a></li>
 				<?php } ?>
-				<?php if ($_SESSION['STATUS'] != "NEW") { ?>
+				<?php if ($_SESSION['WAY']=='CLAIM') { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 				<?php } ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnTasks">Mani uzdevumi</a></li>
-				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['STATUS'] != "NEW") { ?>
+				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['PRET_STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi <?php echo $_SESSION['NOTIKUMU_SK'] ?></a></li>
 				<?php } ?>
 				<?php if ($_SESSION['LOMA'] =="S") { ?>
@@ -529,8 +529,6 @@ if ($autor_ir==2){
 				<?php 
 					if(isset($_SESSION['FORMA'])) {
 						// Pretenzijas forma
-						me("1",'F forma',$_SESSION['FORMA']);
-						me("1",'F forma Status',$_SESSION['STATUS']);
 						include $_SESSION['FORMA'];
 					}
 				?>
@@ -541,8 +539,8 @@ if ($autor_ir==2){
 	if (isset($_SESSION['DEBUG'])){
 	 	me(2,'INDEX','OUT');
 	}	
-	echo 'Cikla laiks:'.timer_end(); ?>				
-</div><!--divMaster    -->				
+ ?>
+</div><!--divMaster    -->
 </form>	
 </body>
 </html>

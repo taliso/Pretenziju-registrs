@@ -27,10 +27,13 @@ if(isset($_GET['addev'])){
 	}
 }
 
-//###################  GRIBU JAUNU EVENTU  ################################################
+//###################  GRIBU JAUNU NOTIKUMU  ################################################
 if (isset($_POST['new_event_create'])) {
 	// ***********  Izvelkam notikuma veidu  ******************************
-	$_SESSION['STATUS']='NEWEVENT';
+    $_SESSION['EVENT_STATUS']='NEW';
+    $_SESSION['EVENT_FORMA']="new_ev_task.php";
+    $ev_veid="task";
+    $ev_nos="Uzdevums";
 
 	$sql="DELETE FROM `tmp_files`";
 	$q = $db->query($sql);
@@ -56,8 +59,10 @@ if (isset($_POST['new_event_cancel'])) {
 	
 }
 
-//###################  APSTIPRINU  NEWEVENT  ################################################ date("Y-m-d")
+//####['new_event_accept']###############  APSTIPRINU  NEWEVENT  ################################################ date("Y-m-d")
+//####['new_event_accept']#### INSERT notikums
 if (isset($_POST['new_event_accept'])) {
+    $_SESSION['EVENT_STATUS']='LIST';
 	$_SESSION['STATUS']="EVENTS";
 	$id_pret=$_SESSION['ID_PRET'];
 	$pret_id=$_SESSION['PRET_ID'];
@@ -83,21 +88,24 @@ if (isset($_POST['new_event_accept'])) {
 			':event_date'=>$event_date);
 		
 	$q->execute($data);
+    $_SESSION['ID_EVENT']= max_id('notikumi',$db);
 	sqlupdate('notikumu_sk',$npk,'pretenzijas','pret_id="'.$pret_id.'"',$db);
 	sqlupdate('status','PROCESSED','pretenzijas','pret_id="'.$pret_id.'"',$db);
 
 //###############   Saglabājam datus par personām  ###############################################
 
-	$fields =" persona, strukturas_kods, uzdevums, event_id, e_pasts ";
+	$fields =" id_pers, persona, strukturas_kods, uzdevums, event_id, e_pasts ";
 	$ftabula="tmp_personas_notikums";
 	$fwhere="";
 
 	$event_users = sqltoarray($fields,$ftabula,$fwhere,$db);
-
+    $rek_sk=0;
 	foreach ($event_users as $OneUser) {
 		// var_dump($OneUser);
 		$sql = "INSERT INTO personas_notikums SET ";
 		$sql=$sql."
+		id_pers=:id_pers ,
+		id_event=:id_event ,
  	  	event_id=:event_id ,
  	  	persona=:persona ,
 		struktura_kods=:struktura_kods ,
@@ -108,70 +116,61 @@ if (isset($_POST['new_event_accept'])) {
 		$q = $db->prepare($sql);
 
 		$data = array(
+                ':id_pers'=>$OneUser['id_pers'],
+		        ':id_event'=>$_SESSION['ID_EVENT'],
 				':event_id'=>$OneUser['event_id'],
 				':persona'=>$OneUser['persona'],
 				':struktura_kods'=>$OneUser['strukturas_kods'],
 				':uzdevums'=>$OneUser['uzdevums'],
 				':e_pasts'=>$OneUser['e_pasts'],
 				':uzd_datums'=>date("Y-m-d"));
-			$uzdevums=$OneUser['uzdevums'];
-		$q->execute($data);
-	}
-// END  ###############   Saglabājam datus par personām  ###############################################
-//###############   Saglabājam datus par failiem  ###############################################
 
-		$fields =" source, identif, name, tmp_name, size, cmdDel ";
-		$ftabula="tmp_files";
-		$fwhere="";
-		
-		$event_files = sqltoarray($fields,$ftabula,$fwhere,$db);
-		
-		foreach ($event_files as $OneFile) {
-			// var_dump($OneUser);
-			$sql = "INSERT INTO faili SET ";
-			$sql=$sql."
-				 	  	orginal_name=:orginal_name ,
-				 	  	konvert_name=:konvert_name ,
-						source=:source ,
-				 	  	ident=:ident ,
-						size=:size ,
-				   		submit_name=:submit_name";
-		
-			$q = $db->prepare($sql);
-			$konv_name=substr($OneFile['source'],0,4).'_'.$OneFile['identif'].'_'.$OneFile['name'];
-			$data = array(
-					':orginal_name'=>$OneFile['name'],
-					':konvert_name'=>$konv_name,
-					':source'=>'NOTIKUMS',
-					':ident'=>$OneFile['identif'],
-					':size'=>$OneFile['size'],
-					':submit_name'=>'doc_to_event');
-				
-			$q->execute($data);
-//  END  ###############   Saglabājam datus par failiem  ###############################################
-		
-		
-		// Uzdevumu veidošana
-		$sql = "INSERT INTO uzdevumi SET ";
-		$sql=$sql."
+		$q->execute($data);
+        $id_pn=max_id('personas_notikums',$db);
+ //###############   Veidojam uzdevumus personām  ###############################################
+        // Uzdevumu veidošana
+        $sql = "INSERT INTO uzdevumi SET ";
+        $sql=$sql."
+        persona=:persona ,
  	  	avots=:avots ,
  	  	id_source=:id_source ,
+ 	  	id_master=:id_master ,
+ 	  	id_pers=:id_pers ,
 		identifikators=:identifikators ,
  	  	datums=:datums ,
 		uzdevums=:uzdevums ,
    		termins=:termins";
 
-		$q = $db->prepare($sql);
+        $q = $db->prepare($sql);
 
-		$data = array(
-				':avots'=>'notikumi',
-				':id_source'=> 0,
-				':identifikators'=>$OneUser['event_id'],
-				':datums'=>date("Y-m-d"),
-				':uzdevums'=>$uzdevums,
-				':termins'=>date("Y-m-d"));
-			
-		$q->execute($data);
+        $data = array(
+            ':persona'=>$OneUser['persona'],
+            ':avots'=>'notikumi',
+            ':id_source'=>$id_pn ,
+            ':id_master'=>$_SESSION['ID_EVENT'] ,
+            ':id_pers'=>$OneUser['id_pers'] ,
+			':identifikators'=>$OneUser['event_id'],
+			':datums'=>date("Y-m-d"),
+			':uzdevums'=>$OneUser['uzdevums'],
+			':termins'=>date("Y-m-d"));
+
+        $q->execute($data);
+//----------- END --------------   Veidojam uzdevumus personām  ###############################################
+
+
+        $rek_sk=$rek_sk+1;
+
+    }
+    //   Fiksējam rindiņu skaitu
+    sqlupdate('rec_sk',$rek_sk,'notikumi',' id='.$_SESSION['ID_EVENT'],$db);
+// END  ###############   Saglabājam datus par personām  ###############################################
+//###############   Saglabājam datus par failiem  ###############################################
+
+    tmp_fil_save('notikumi',$_SESSION['ID_EVENT'],$db);
+
+
+//  END  -----------------  Saglabājam datus par failiem  -----------------------------------------
+
 
 // TMP failu datu dzesana *******************************************************
 		$sql="DELETE FROM `tmp_files`";
@@ -183,19 +182,19 @@ if (isset($_POST['new_event_accept'])) {
 
 		//E-pastu nosūtīšana
 
-	}
 
-}
+}  //#########  ['new_event_accept']  END
 //###########   Pievienot personu jaunam eventam     #########################################################
 if (isset($_POST['user_to_event'])) {
 
-	// ***********  Izvelkam personu  ******************************
+    // ***********  Izvelkam personu  ******************************
 	$pers=$_POST['persona'];
 	$sql="select * from kl_agenti where agents='".$pers."'";
 	$q = $db->query($sql);
 	$muser = $q->fetch(PDO::FETCH_ASSOC);
 	$sql = "INSERT INTO tmp_personas_notikums SET ";
 	$sql=$sql."
+        id_pers=:id_pers ,            
  	  	persona=:persona ,
  	  	strukturas_kods=:strukturas_kods ,
 		uzdevums=:uzdevums ,
@@ -206,6 +205,7 @@ if (isset($_POST['user_to_event'])) {
 	$q = $db->prepare($sql);
 
 	$data = array(
+            ':id_pers'=>$muser['ID'],
 			':persona'=>$muser['agents'],
 			':strukturas_kods'=>$muser['struktura_kods'],
 			':uzd_datums'=>'0000-00-00',
@@ -214,40 +214,13 @@ if (isset($_POST['user_to_event'])) {
 			':e_pasts'=>$muser['epasts']);
 
 	$q->execute($data);
+
 }
 
 //###########   Pievienot failu jaunam eventam     #########################################################
 if (isset($_POST['doc_to_event'])) {
-	$sql = "INSERT INTO tmp_files SET ";
-	$sql=$sql."
- 	  	submit_name=:submit_name ,
- 	  	source=:source ,
- 	  	identif=:identif ,
-		name=:name ,
- 	  	type=:type ,
-   		tmp_name=:tmp_name ,
- 		size=:size ,
-   		cmdDel=:cmdDel";
-
-	$q = $db->prepare($sql);
-
-	$pret_id=$_SESSION['PRET_ID'];
+    $pret_id=$_SESSION['PRET_ID'];
 	$npk=$_SESSION['NOTIKUMU_SK']+1;
 	$event_id=$pret_id."-".$npk;
-
-	me(2,'Faila SQL',$sql);
-
-	$data = array(
-			':submit_name'=>"fileUzdev",
-			':source'=>'NOTIKUMS',
-			':identif'=>$event_id,
-			':name'=>$_FILES['fileUzdev']['name'],
-			':type'=>$_FILES['fileUzdev']['type'],
-			':tmp_name'=>$_FILES['fileUzdev']['tmp_name'],
-			':size'=>$_FILES['fileUzdev']['size'],
-			':cmdDel'=>0);
-
-	$q->execute($data);
-//die('TMP fails');
-
+    to_tmp_file('notikumi',$event_id,'fileUzdev',$db);
 }

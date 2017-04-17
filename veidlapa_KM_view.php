@@ -135,19 +135,19 @@ if ($_SESSION['STATUS']=="NEW") {
 			$faili=$r;
 		}
 		$fields=' orginal_name,konvert_name,source,ident,submit_name ';
-		$fwhere=" source='VEIDLAPA' && ident = '".$pret_id."' && submit_name='SD6' ";
+		$fwhere=" source='pretenzijas' && ident = '".$pret_id."' && submit_name='SD6' ";
 		$fil_sd6=sqltoarray($fields, ' faili ', $fwhere, $db);
 
 		$fields=' orginal_name,konvert_name,source,ident,submit_name ';
-		$fwhere=" source='VEIDLAPA' && ident = '".$pret_id."' && submit_name='SD8' ";
+		$fwhere=" source='pretenzijas' && ident = '".$pret_id."' && submit_name='SD8' ";
 		$fil_sd8=sqltoarray($fields, ' faili ', $fwhere, $db);
 
 		$fields=' orginal_name,konvert_name,source,ident,submit_name ';
-		$fwhere=" source='VEIDLAPA' && ident = '".$pret_id."' && submit_name='SD10' ";
+		$fwhere=" source='pretenzijas' && ident = '".$pret_id."' && submit_name='SD10' ";
 		$fil_sd10=sqltoarray($fields, ' faili ', $fwhere, $db);
 		
 		$fields=' orginal_name,konvert_name,source,ident,submit_name ';
-		$fwhere=" source='VEIDLAPA' && ident = '".$pret_id."' && submit_name='SD11' ";
+		$fwhere=" source='pretenzijas' && ident = '".$pret_id."' && submit_name='SD11' ";
 		$fil_sd11=sqltoarray($fields, ' faili ', $fwhere, $db);
 		
 	}
@@ -178,8 +178,7 @@ if ($_SESSION['STATUS']=="NEW") {
 	    <td class="atstarpe"></td>
 	    <td class="ievade">
 	    	<?php
-	    	me("1",'Dokumenta datums',$dokumenta_datums);
-	    	echo "<span id='list_span'>".$dokumenta_datums."</span>" ; 
+	    	echo "<span id='list_span'>".$dokumenta_datums."</span>" ;
 	    	?>
 	    </td>
 	  </tr>

@@ -26,7 +26,11 @@ $_SESSION['NOTIKUMU_SK']="";
 $_SESSION['IZDEVUMI']="";
 $_SESSION['TASK_NR']=0;
 $_SESSION['TASK_ID']="";
+$_SESSION['ID_TASK']="";
+
+$_SESSION['ID_EVENT']="";
 $_SESSION['EVENT_ID']="";
+$_SESSION['EVENT_STATUS']="LIST"; //"NEW","LIST","VIEW","",
 $_SESSION['TITLE'] = "Pretenziju saraksts";
 $_SESSION['EVENT_FORMA'] ='';
 $_SESSION['DEBUG'] ='';
