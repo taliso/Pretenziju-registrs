@@ -18,7 +18,7 @@ $ev_faili=sqltoarray(' * ','faili',$where,$db);
         <table style="width: 100%;">
             <tr>
                 <td style="width: 25%;">
-                    <span id="span_14_br">UZDEVUMS</span>
+                    <span id="span_14_br">ZIŅOJUMS</span>
                 </td>
                 <td style="width: 50%;">
                     <span id="span_16_yealow">ID: </span>

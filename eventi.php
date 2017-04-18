@@ -51,10 +51,11 @@ $_SESSION['IZDEVUMI']=$izd_sum;
                 <?php }?>
 			<td style="width:100%; float:left;">
                 <?php  if ($_SESSION['LOMA']=='Q') {?>
-                    <input type="submit" name="new_event_create" value="Uzdevums">
-                    <input type="submit" name="new_event_create" value="Ziņojums">
-                    <input type="submit" name="new_event_create" value="Lēmums">
-                    <input type="submit" name="new_event_create" value="Korekcijas">
+                    <input type="submit" name="new_event_task_create" value="Uzdevums">
+                    <input type="submit" name="new_event_report_create" value="Ziņojums">
+                    <input type="submit" name="new_event_order_create" value="Lēmums">
+                    <input type="submit" name="new_event_summary_create" value="Kopsavilkums">
+                    <input type="submit" name="new_event_action_create" value="Korekcijas">
                 <?php }?>
 			</td>
 

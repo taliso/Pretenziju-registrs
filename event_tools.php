@@ -27,8 +27,8 @@ if(isset($_GET['addev'])){
 	}
 }
 
-//###################  GRIBU JAUNU NOTIKUMU  ################################################
-if (isset($_POST['new_event_create'])) {
+//###################  GRIBU JAUNU NOTIKUMU - UZDEVUMS  ################################################
+if (isset($_POST['new_event_task_create'])) {
 	// ***********  Izvelkam notikuma veidu  ******************************
     $_SESSION['EVENT_STATUS']='NEW';
     $_SESSION['EVENT_FORMA']="new_ev_task.php";
@@ -43,6 +43,23 @@ if (isset($_POST['new_event_create'])) {
 	
 	// Izveidojam uzdevumus visiem dalībniekiem
 	//Izsūtam piestiprinātos failus visiem dalībniekiem
+}
+//###################  GRIBU JAUNU NOTIKUMU - ZINOJUMS  ################################################
+if (isset($_POST['new_event_report_create'])) {
+    // ***********  Izvelkam notikuma veidu  ******************************
+    $_SESSION['EVENT_STATUS']='NEW';
+    $_SESSION['EVENT_FORMA']="new_ev_report.php";
+    $ev_veid="task";
+    $ev_nos="Ziņokums";
+
+    $sql="DELETE FROM `tmp_files`";
+    $q = $db->query($sql);
+
+    $sql="DELETE FROM `tmp_personas_notikums`";
+    $q = $db->query($sql);
+
+    // Izveidojam uzdevumus visiem dalībniekiem
+    //Izsūtam piestiprinātos failus visiem dalībniekiem
 }
 
 //###################  ATCEĻU  NEWEVENT  ################################################
@@ -197,7 +214,6 @@ if (isset($_POST['user_to_event'])) {
         id_pers=:id_pers ,            
  	  	persona=:persona ,
  	  	strukturas_kods=:strukturas_kods ,
-		uzdevums=:uzdevums ,
 		uzd_datums=:uzd_datums ,
 		event_id=:event_id ,
 		e_pasts=:e_pasts";
@@ -209,7 +225,6 @@ if (isset($_POST['user_to_event'])) {
 			':persona'=>$muser['agents'],
 			':strukturas_kods'=>$muser['struktura_kods'],
 			':uzd_datums'=>'0000-00-00',
-			':uzdevums'=>$_POST['uzdevums'],
 			':event_id'=>$_SESSION['EVENT_ID'],
 			':e_pasts'=>$muser['epasts']);
 
