@@ -24,64 +24,74 @@ $event_id=$pret_id."-".$npk;
 $fields =" name,size,cmdDel ";
 $ftabula="tmp_files";
 $fwhere=" source='notikumi' and identif='".$event_id."'";
-me(2,'fwhere',$fwhere);
 $event_files= sqltoarray($fields,$ftabula,$fwhere,$db);
+
+// #############    Izvelkam aģentu no pretenzijas  ###########################
+$fields =" agents ";
+$ftabula="pretenzijas";
+$fwhere=" pret_id='".$_SESSION['PRET_ID']."'";
+$users = sqltoarray($fields,$ftabula,$fwhere,$db);
+
+if (empty()) {
+$pers=$users[0];
+$sql="select * from kl_agenti where agents='".$pers['agents']."'";
+$q = $db->query($sql);
+$muser = $q->fetch(PDO::FETCH_ASSOC);
+$sql = "INSERT INTO tmp_personas_notikums SET ";
+$sql=$sql."
+        id_pers=:id_pers ,            
+ 	  	persona=:persona ,
+ 	  	strukturas_kods=:strukturas_kods ,
+		uzd_datums=:uzd_datums ,
+		event_id=:event_id ,
+		e_pasts=:e_pasts";
+
+$q = $db->prepare($sql);
+
+$data = array(
+    ':id_pers'=>$muser['ID'],
+    ':persona'=>$muser['agents'],
+    ':strukturas_kods'=>$muser['struktura_kods'],
+    ':uzd_datums'=>'0000-00-00',
+    ':event_id'=>$_SESSION['EVENT_ID'],
+    ':e_pasts'=>$muser['epasts']);
+
+$q->execute($data);
+
+
 // #############    tmp_personas_notikums   ###########################
 $fields =" persona, strukturas_kods, uzdevums ";
 $ftabula="tmp_personas_notikums";
 $fwhere="";
-
 $event_users = sqltoarray($fields,$ftabula,$fwhere,$db);
 
-// #############    Izvelkam aģentu   ###########################
-$fields =" agents, tiesibas, loma, epasts, struktura_kods ";
-$ftabula="kl_agenti";
-$fwhere=" aktivs>0 and loma='A' ";
 
-$users = sqltoarray($fields,$ftabula,$fwhere,$db);
+
 $_SESSION['EVENT_ID']=$event_id;
 ?>
 <div id="divNewEvent" style="width:100%; margin: 7px;">
     <div id="divNewEventTitle">
-        <span id="spantitle" style="width:100%;"> Jauns ZIŅOJUMS  [<?php echo $_SESSION['EVENT_ID'] ?>]</span><br>
+        <span id="spantitle" style="width:100%;"> Jauns UZDEVUMS         [<?php echo $_SESSION['EVENT_ID'] ?>]</span><br>
     </div>
 
 
     <div id="divEventPersonas" style="float:left; width:78%; border: 2px solid black; margin:2px;">
-     <div id="dKreisais" style="width:50%;" >
-        <div id="" style="width:100%;border: 2px solid darkseagreen;text-align: center; height:20px; background-color:blue;">
-            <span id="fspan3"> AĢENTS</span>
-        </div>
-        <div id="jauns"style="width:99%;border: 1px solid darkseagreen;text-align: center; height:25px; background-color:green; padding:5px;">
-            <table style="width:99%;">
-                <tr>
-                    <td style="width:10%;"><span id="span_14_right_yellow"> Persona:</span></td>
-                    <td style="width:20%;">
-                        <select name="persona" style="width:100%; margin:2px;">
-                            <?php
-                            foreach ($users as $user) {?>
-                                <option value="<?php echo $user['agents'] ?>"><?php echo $user['agents'] ?></option>
-                            <?php }
-                            ?>
-                        </select>
-                    </td>
-                    <td style="width:10%;"><input type="submit" name="user_to_event" value="Pievienot personu"></td>
-                </tr>
-            </table>
-        </div>
+
         <div id="divKreisais" style="width:100%; float:left;">
             <table style="width:100%;">
                 <tr> <!-- R # 1. -->
-                    <td style="width:10%; border: 1px solid darkgreen;"><span id="fspan3" style=" color:darkgreen;">Strukt.</span></td>
-                    <td style="width:90%; border: 1px solid darkgreen;"><span id="fspan3" style=" color:darkgreen;">Aģents</span></td>
+                    <td style="width:3%; border: 1px solid darkgreen;"><span id="fspan3" style=" color:#34AE53;background-color:#2e4703;">Strukt.</span></td>
+                    <td style="width:15%; border: 1px solid darkgreen;"><span id="fspan3" style=" color:#34AE53;background-color:#2e4703;">Aģents</span></td>
+                    <td style="width:80%; border: 1px solid darkgreen;"><span id="fspan3" style=" color:#34AE53;background-color:#2e4703;">Ziņojums</span></td>
                 </tr>
                 <?php
 
                 if (isset($event_users)){
                     foreach ($event_users as $evUser) {	?>
                         <tr> <!-- R # 1. -->
-                            <td style="width:10%; background: white;"><span id="list_span"><?php echo $evUser['strukturas_kods'] ?></span></td>
-                            <td style="width:90%; background: white;"><span id="list_span"><?php echo $evUser['persona'] ?></span></td>
+                            <td style=" background: white;"><span id="list_span"><?php echo $evUser['strukturas_kods'] ?></span></td>
+                            <td style=" background: white;"><span id="list_span"><?php echo $evUser['persona'] ?></span></td>
+                            <td style=" background: white;"><input style="width:99%;" type="text" name="uzdevums" value="<?php echo $evUser['uzdevums'] ?>" </td>
                         </tr>
                         <?php
                     }
@@ -89,13 +99,12 @@ $_SESSION['EVENT_ID']=$event_id;
                 ?>
             </table>
         </div>
-     </div>
 
     </div>
 
 
     <div id="divEventFaili" style="float:left;  width:21%; border: 2px solid black; height:100%; margin: 2px;">
-        <div id="" style="width:99%;border: 2px solid darkseagreen;text-align: center; height:20px;background-color:blue;">
+        <div id="" style="width:99%;border: 2px solid darkseagreen;text-align: center; height:20px;background-color:#2e4703;">
             <span id="fspan3"> FAILI </span>
         </div>
 
