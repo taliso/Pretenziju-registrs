@@ -16,8 +16,8 @@ foreach ($pret_events as $one_event){
 	$izd_sum=$izd_sum + $one_event['izdevumi'];
 	$event_count=$event_count+1;
 }
-$_SESSION['NOTIKUMU_SK']=$event_sk;
-$_SESSION['IZDEVUMI']=$izd_sum;
+$_SESSION['PRET']['NOTIKUMU_SK']=$event_sk;
+$_SESSION['PRET']['IZDEVUMI']=$izd_sum;
 ?>
 
 
@@ -27,16 +27,16 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 			<tr>
 				<td>
 					<span id= "span_18_gaish">Pretenzijas</span>
-					<span id= "span_18_yealow"> <?php echo $_SESSION['PRET_ID']; ?></span>
+					<span id= "span_18_yealow"> <?php echo $_SESSION['PRET']['ID']; ?></span>
 					<span id= "span_18_gaish"> risinājums</span>
 					</td>
 				<td>
 					<span id= "span_18_gaish">Sākums:</span>
-					<span id= "span_18_yealow"> <?php echo $_SESSION['SAKUMA_DATUMS']; ?> </span>
+					<span id= "span_18_yealow"> <?php echo $_SESSION['PRET']['SAKUMS']; ?> </span>
 					</td>
 				<td>
 					<span id= "span_18_gaish">Beigas:</span>
-					<span id= "span_18_yealow"><?php echo $_SESSION['BEIGU_DAT']; ?> </span>
+					<span id= "span_18_yealow"><?php echo $_SESSION['PRET']['BEIGAS']; ?> </span>
 					</td>
 			</tr>
 		</table>
@@ -46,11 +46,11 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 		<tr>
 			
 			<td style="width:12%;">
-                <?php  if ($_SESSION['LOMA']=='Q') {?>
+                <?php  if ($_SESSION['USER']['LOMA']=='Q') {?>
 				    <span id="evspan2">Jauns notikums :</span></td>
                 <?php }?>
 			<td style="width:100%; float:left;">
-                <?php  if ($_SESSION['LOMA']=='Q') {?>
+                <?php  if ($_SESSION['USER']['LOMA']=='Q') {?>
                     <input type="submit" name="new_event_task_create" value="Uzdevums">
                     <input type="submit" name="new_event_report_create" value="Ziņojums">
                     <input type="submit" name="new_event_order_create" value="Lēmums">
@@ -66,8 +66,8 @@ $_SESSION['IZDEVUMI']=$izd_sum;
 	</table>	
 
 	<?php 
-	if ($_SESSION['EVENT_STATUS']=='NEW'&&strlen($_SESSION['EVENT_FORMA'])>0) {
-		include $_SESSION['EVENT_FORMA'];
+	if ($_SESSION['EVENTS']['STATUS']=='NEW'&&strlen($_SESSION['EVENTS']['FORMA'])>0) {
+		include $_SESSION['EVENTS']['FORMA'];
 	}?>
 	
 	

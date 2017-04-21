@@ -3,35 +3,36 @@
 $ev_veid="";
 $ev_nos="";
 //var_dump($pret_events);
-if(isset($_GET['addev'])){
-	$addev=$_GET['addev'];
-	if($addev=='mnTask'){
-		$_SESSION['EVENT_FORMA']="new_ev_task.php";
-		$ev_veid="task";
-		$ev_nos="Uzdevums";
-	}
-	if($addev=='mnInfo'){
-		$_SESSION['EVENT_FORMA']="new_ev_report.php";
-		$ev_veid="report";
-		$ev_nos="Ziņojums";
-	}
-	if($addev=='mnRezult'){
-		$_SESSION['EVENT_FORMA']="new_ev_order.php";
-		$ev_veid="order";
-		$ev_nos="Lēmums";
-	}
-	if($addev=='mnKorekt'){
-		$_SESSION['EVENT_FORMA']="new_ev_actions.php";
-		$ev_veid="actions";
-		$ev_nos="Korektīvās darbības";
-	}
-}
+//if(isset($_GET['addev'])){
+//	$addev=$_GET['addev'];
+//    $_SESSION['EVENTS']['STATUS']='NEW';
+//	if($addev=='mnTask'){
+//        $_SESSION['EVENTS']['FORMA']="new_ev_task.php";
+//        $ev_veid="task";
+//		$ev_nos="Uzdevums";
+//	}
+//	if($addev=='mnInfo'){
+//		$_SESSION['EVENTS']['FORMA']="new_ev_report.php";
+//		$ev_veid="report";
+//		$ev_nos="Ziņojums";
+//	}
+//	if($addev=='mnRezult'){
+//		$_SESSION['EVENTS']['FORMA']="new_ev_order.php";
+//		$ev_veid="order";
+//		$ev_nos="Lēmums";
+//	}
+//	if($addev=='mnKorekt'){
+//		$_SESSION['EVENTS']['FORMA']="new_ev_actions.php";
+//		$ev_veid="actions";
+//		$ev_nos="Korektīvās darbības";
+//	}
+//}
 
 //###################  GRIBU JAUNU NOTIKUMU - UZDEVUMS  ################################################
 if (isset($_POST['new_event_task_create'])) {
 	// ***********  Izvelkam notikuma veidu  ******************************
-    $_SESSION['EVENT_STATUS']='NEW';
-    $_SESSION['EVENT_FORMA']="new_ev_task.php";
+    $_SESSION['EVENTS']['STATUS']='NEW';
+    $_SESSION['EVENTS']['FORMA']="new_ev_task.php";
     $ev_veid="task";
     $ev_nos="Uzdevums";
 
@@ -47,8 +48,8 @@ if (isset($_POST['new_event_task_create'])) {
 //###################  GRIBU JAUNU NOTIKUMU - ZINOJUMS  ################################################
 if (isset($_POST['new_event_report_create'])) {
     // ***********  Izvelkam notikuma veidu  ******************************
-    $_SESSION['EVENT_STATUS']='NEW';
-    $_SESSION['EVENT_FORMA']="new_ev_report.php";
+    $_SESSION['EVENTS']['STATUS']='NEW';
+    $_SESSION['EVENTS']['FORMA']="new_ev_report.php";
     $ev_veid="task";
     $ev_nos="Ziņokums";
 
@@ -65,8 +66,9 @@ if (isset($_POST['new_event_report_create'])) {
 //###################  ATCEĻU  NEWEVENT  ################################################
 if (isset($_POST['new_event_cancel'])) {
 	// ***********  Atceļam notikumpievienošanu ******************************
-	$_SESSION['EVENT_FORMA'] = '';
-	$_SESSION['STATUS']='EVENT';
+	$_SESSION['EVENTS']['FORMA'] = '';
+    $_SESSION['EVENTS']['STATUS']='LIST';
+	$_SESSION['WAY']='EVENT';
 
 	$sql="DELETE FROM `tmp_files`";
 	$q = $db->query($sql);
@@ -76,14 +78,16 @@ if (isset($_POST['new_event_cancel'])) {
 	
 }
 
+
+
 //####['new_event_accept']###############  APSTIPRINU  NEWEVENT  ################################################ date("Y-m-d")
 //####['new_event_accept']#### INSERT notikums
 if (isset($_POST['new_event_accept'])) {
-    $_SESSION['EVENT_STATUS']='LIST';
-	$_SESSION['STATUS']="EVENTS";
-	$id_pret=$_SESSION['ID_PRET'];
-	$pret_id=$_SESSION['PRET_ID'];
-	$npk=$_SESSION['NOTIKUMU_SK']+1;
+    $_SESSION['EVENTS']['STATUS']='LIST';
+    $_SESSION['WAY']="EVENTS";
+	$id_pret=$_SESSION['PRET']['ID'];
+	$pret_id=$_SESSION['PRET']['ID'];
+	$npk=$_SESSION['PRET']['NOTIKUMU_SK']+1;
 	$event_date=date("Y-m-d");
 	$event_id=$pret_id."-".$npk;
 		
@@ -105,6 +109,7 @@ if (isset($_POST['new_event_accept'])) {
 			':event_date'=>$event_date);
 		
 	$q->execute($data);
+//####['new_event_accept']#### INSERT notikums
     $_SESSION['ID_EVENT']= max_id('notikumi',$db);
 	sqlupdate('notikumu_sk',$npk,'pretenzijas','pret_id="'.$pret_id.'"',$db);
 	sqlupdate('status','PROCESSED','pretenzijas','pret_id="'.$pret_id.'"',$db);
@@ -117,6 +122,7 @@ if (isset($_POST['new_event_accept'])) {
 
 	$event_users = sqltoarray($fields,$ftabula,$fwhere,$db);
     $rek_sk=0;
+//####['new_event_accept']#### INSERT katru personu no tmp_personam
 	foreach ($event_users as $OneUser) {
 		// var_dump($OneUser);
 		$sql = "INSERT INTO personas_notikums SET ";
@@ -179,11 +185,11 @@ if (isset($_POST['new_event_accept'])) {
 
     }
     //   Fiksējam rindiņu skaitu
-    sqlupdate('rec_sk',$rek_sk,'notikumi',' id='.$_SESSION['ID_EVENT'],$db);
+    sqlupdate('rec_sk',$rek_sk,'notikumi',' id='.$_SESSION['EVENTS']['ID'],$db);
 // END  ###############   Saglabājam datus par personām  ###############################################
 //###############   Saglabājam datus par failiem  ###############################################
 
-    tmp_fil_save('notikumi',$_SESSION['ID_EVENT'],$db);
+    tmp_fil_save('notikumi',$_SESSION['EVENTS']['ID'],$db);
 
 
 //  END  -----------------  Saglabājam datus par failiem  -----------------------------------------
@@ -214,6 +220,7 @@ if (isset($_POST['user_to_event'])) {
         id_pers=:id_pers ,            
  	  	persona=:persona ,
  	  	strukturas_kods=:strukturas_kods ,
+ 	  	uzdevums=:uzdevums ,
 		uzd_datums=:uzd_datums ,
 		event_id=:event_id ,
 		e_pasts=:e_pasts";
@@ -224,8 +231,9 @@ if (isset($_POST['user_to_event'])) {
             ':id_pers'=>$muser['ID'],
 			':persona'=>$muser['agents'],
 			':strukturas_kods'=>$muser['struktura_kods'],
+			':uzdevums'=>$_POST['uzdevums'],
 			':uzd_datums'=>'0000-00-00',
-			':event_id'=>$_SESSION['EVENT_ID'],
+			':event_id'=>$_SESSION['EVENTS']['ID'],
 			':e_pasts'=>$muser['epasts']);
 
 	$q->execute($data);
@@ -234,8 +242,8 @@ if (isset($_POST['user_to_event'])) {
 
 //###########   Pievienot failu jaunam eventam     #########################################################
 if (isset($_POST['doc_to_event'])) {
-    $pret_id=$_SESSION['PRET_ID'];
-	$npk=$_SESSION['NOTIKUMU_SK']+1;
+    $pret_id=$_SESSION['PRET']['ID'];
+	$npk=$_SESSION['PRET']['NOTIKUMU_SK']+1;
 	$event_id=$pret_id."-".$npk;
     to_tmp_file('notikumi',$event_id,'fileUzdev',$db);
 }

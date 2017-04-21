@@ -25,37 +25,6 @@ function datums() {
 	return $datums;
 }
 
-/**
- *
- * @param unknown $fails        	
- * @param unknown $target_dir        	
- * @param unknown $regnr        	
- */
-function file_upload($fails, $target_dir, $regnr) {
-	// var_dump($fails);
-	$keys = array ();
-	foreach ( array_keys ( $fails ) as $k ) {
-		if ($fails [$k] ["name"] != "") {
-			$keys [] = $k;
-			$kluda = 0;
-			// Failu apstrāde
-			msg ( "Upload:" . $k . " - " . $regnr );
-			
-			$faila_nos = $regnr . '-' . basename ( $fails [$k] ["name"] );
-			$target_file = $target_dir . $faila_nos;
-			if ($fails [$k] ["size"] > MAX_FILE_SIZE) {
-				echo "Atvainojiet, faila izmērs ir par lielu.";
-				$kluda = 1;
-			} else {
-				if (move_uploaded_file ( $fails [$k] ["tmp_name"], $target_file )) {
-					echo "The file " . basename ( $fails [$k] ["name"] ) . " has been uploaded.";
-				} else {
-					echo "Sorry, there was an error uploading your file.";
-				}
-			}
-		}
-	}
-}
 function f_upload($file, $tmp_file, $target_file, $target_dir) {
 	if ($file != "") {
 		
@@ -78,82 +47,6 @@ function f_upload($file, $tmp_file, $target_file, $target_dir) {
 	}
 }
 
-// ====================== DIENA_SELECT ======================================================
-function diena_select($fixdat) {
-	// Ja nav norādīts fixdat, pielīdzinam to šodienai
-	$fd = 0;
-	
-	$fd = date ( "d", $fixdat );
-	$mselect_dienas = "";
-	for($d = 1; $d <= 31; $d ++) {
-		$sd = ( string ) $d;
-		if (strlen ( $sd ) == 1) {
-			$sd = "0" . $sd;
-		}
-		if ($fd == $sd) {
-			$mselect_dienas = $mselect_dienas . "<option value='" . $sd . "' selected>" . $sd . " </option>" . "<br>";
-		} else {
-			$mselect_dienas = $mselect_dienas . "<option value='" . $sd . "'>" . $sd . "</option>" . "<br>";
-		}
-	}
-	return $mselect_dienas;
-}
-// ====================== MENES_SELECT ======================================================
-function menes_select($fixdat) {
-	// Ja nav norādīts fixdat, pielīdzinam to šodienai
-	// $fixdat="";
-	$fm = 0;
-	$fm = date ( "m", $fixdat );
-	$mmenes_select = "";
-	for($m = 1; $m <= 12; $m ++) {
-		$sm = ( string ) $m;
-		if (strlen ( $sm ) == 1) {
-			$sm = "0" . $sm;
-		}
-		if ($fm == $sm) {
-			$mmenes_select = $mmenes_select . "<option value='" . $sm . "' selected>" . $sm . " </option>" . "<br>";
-		} else {
-			$mmenes_select = $mmenes_select . "<option value='" . $sm . "'>" . $sm . "</option>" . "<br>";
-		}
-	}
-	return $mmenes_select;
-}
-
-// ====================== GADS_SELECT ======================================================
-function gads_select($fixdat) {
-	// Ja nav norādīts fixdat, pielīdzinam to šodienai
-	// $fixdat="";
-	$fy = 0;
-	$fy = date ( "Y", $fixdat );
-	$mgads_select = "";
-	for($y = $fy - 1; $y <= $fy + 1; $y ++) {
-		$sy = ( string ) $y;
-		if ($fy == $sy) {
-			$mgads_select = $mgads_select . "<option value='" . $sy . "' selected>" . $sy . " </option>" . "<br>";
-		} else {
-			$mgads_select = $mgads_select . "<option value='" . $sy . "'>" . $sy . "</option>" . "<br>";
-		}
-	}
-	return $mgads_select;
-}
-
-// ====================== DATUMS_SELECT ======================================================
-function datums_select($fixdat, $lauka_prefiks) {
-	msg ( "datums selsct=" . $fixdat . "-" . $lauka_prefiks );
-	if (empty ( $fixdat )) {
-		$fixdat = time ();
-	} else {
-		$fixdat = date_create ( $fixdat );
-		$fixdat = date_timestamp_get ( $fixdat );
-	}
-	
-	$diena = diena_select ( $fixdat );
-	$menes = menes_select ( $fixdat );
-	$gads = gads_select ( $fixdat );
-	$mdatums_select = "<select name='" . $lauka_prefiks . "_diena'>" . $diena . "</select><select name='" . $lauka_prefiks . "_menes'>" . $menes . "</select><select name='" . $lauka_prefiks . "_gads'>" . $gads . "</select>";
-	return $mdatums_select;
-}
-// ===============================================================================================
 function msg($mteksts) {
 	$log = fopen ( LOGFILE, 'a+' );
 	fwrite ( $log, $mteksts . "\n" );
@@ -430,4 +323,30 @@ function max_id($table,$db){
     $m = $q->fetch(PDO::FETCH_ASSOC);
     $max_id=$m['max_id'];
     return $max_id;
+}
+function inser_pers_to_tmp($id_pers,$db){
+    $sql="select * from kl_agenti where id=".$id_pers;
+    $q = $db->query($sql);
+    $muser = $q->fetch(PDO::FETCH_ASSOC);
+    $sql = "INSERT INTO tmp_personas_notikums SET ";
+    $sql=$sql."
+        id_pers=:id_pers ,            
+ 	  	persona=:persona ,
+ 	  	strukturas_kods=:strukturas_kods ,
+		uzd_datums=:uzd_datums ,
+		event_id=:event_id ,
+		e_pasts=:e_pasts";
+
+    $q = $db->prepare($sql);
+
+    $data = array(
+        ':id_pers'=>$muser['ID'],
+        ':persona'=>$muser['agents'],
+        ':strukturas_kods'=>$muser['struktura_kods'],
+        ':uzd_datums'=>'0000-00-00',
+        ':event_id'=>$_SESSION['EVENTS']['KODS'],
+        ':e_pasts'=>$muser['epasts']);
+
+    $q->execute($data);
+
 }

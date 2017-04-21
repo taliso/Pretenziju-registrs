@@ -1,14 +1,12 @@
 <?php
 me('2',"veidlapa_KM_edit","IN");
-$agents = $_SESSION['AGENTS'];
+$agents = $_SESSION['AGENTS']['VARDS'];
 
-$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PREFIKS']."'";
+$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PRET']['PREFIKS']."'";
 $q = $db->query($sql);
 $newreg_nr = $q->fetch(PDO::FETCH_ASSOC);
 
-me('2',"nreg_nr",$newreg_nr['reg_nr']);
-//$_SESSION['REG_NR']=$reg_nr['reg_nr'];
-me('2',"reg_nr",$reg_nr);
+
 if ($_SESSION['STATUS'] == "NEW") {
 	me('2',"reg_nr",$reg_nr);
 	$reg_nr = "";
@@ -67,14 +65,11 @@ if ($_SESSION['STATUS'] == "NEW") {
 	$saskanots_ar_klientu = "";
 	$vienosanas = "";
 	$beigu_dat = "";
-	me('2'," PREFIKS:",$_SESSION['PREFIKS']);
-	me('2'," newreg_nr:",$newreg_nr['reg_nr']);
-	$_SESSION['PRET_ID'] = $_SESSION['PREFIKS']."-".($newreg_nr['reg_nr']+1);
-	me('2',"PRET_ID",$_SESSION['PRET_ID']);
-	$pret_id = $_SESSION['PRET_ID'];
+	$_SESSION['PRET']['ID'] = $_SESSION['PRET']['PREFIKS']."-".($newreg_nr['reg_nr']+1);
+	$pret_id = $_SESSION['PRET']['ID'];
 } else {
-	if (strlen ( $_SESSION['PRET_ID'] ) > 0) {
-		$pret_id = $_SESSION['PRET_ID'];
+	if (strlen ( $_SESSION['PRET']['ID'] ) > 0) {
+		$pret_id = $_SESSION['PRET']['ID'];
 		$sql = "SELECT * FROM pretenzijas where pret_id='$pret_id'";
 		$q = $db->query ( $sql );
 		$pret = "";
@@ -127,13 +122,13 @@ if ($_SESSION['STATUS'] == "NEW") {
 		
 		//########## Pārbaudam vai nav piesaistīto failu. Ielādējam iekš tmp_faili  #########
 		
-		$where=" source='VEIDLAPA' and ident = '".$_SESSION['PRET_ID']."'";
+		$where=" source='VEIDLAPA' and ident = '".$_SESSION['PRET']['ID']."'";
 		$fl_pret=sqltoarray('orginal_name','faili',$where,$db);
 		
 	}
 }
 me('2',"reg_nr",$reg_nr);
-$ident=$_SESSION['PRET_ID'];
+$ident=$_SESSION['PRET']['ID'];
 
 $where=" submit_name='SD6' and identif='".$ident."'" ;
 $fl_vd_6=sqltoarray('name','tmp_files',$where,$db);
@@ -156,7 +151,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 	<form action="#" method="post">
 	<?php
 
-	echo "<div id='divFormTitle'>Pretenzija Nr. " . $_SESSION['PRET_ID'] . "  </div>";
+	echo "<div id='divFormTitle'>Pretenzija Nr. " . $_SESSION['PRET']['ID'] . "  </div>";
 	?>
 <!-- ###################   TABULA            ################################################# -->
 		<table>
@@ -408,8 +403,6 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 								<td> 
 									<?php 
  									foreach ($fl_vd_11 as $faili){
- 										me("1",'SD11',$faili['name']);
- 											
 										echo $faili['name'].'<br>';
  									}
 									?>
@@ -427,7 +420,6 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 			</tr>
 
 		</table>
-		<?php me(2,'PRET_ID',$_SESSION['PRET_ID']); ?>
 		<input type="submit" name="pret_save" value="Saglabāt"><input type="submit" name="pret_cancel" value="Atcelt">
 	</form>
 	<script>
@@ -439,4 +431,3 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 </script>
 
 </div>
-<?php me('2',"veidlapa_KM_edit","OUT"); ?>

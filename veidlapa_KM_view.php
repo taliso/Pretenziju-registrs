@@ -2,8 +2,7 @@
  
  
 <?php
-me('2',"veidlapa_KM_view","IN");
-$agents=$_SESSION['AGENTS'];
+$agents=$_SESSION['AGENTS']['VARDS'];
 if (isset($_POST['pret_risinajums'])) {
 	
 	$sakuma_datums = date("Y-m-d");
@@ -78,7 +77,6 @@ if ($_SESSION['STATUS']=="NEW") {
 
 
 	//$pret_id= $_SESSION['PRET_ID'];
-	me('2',"pret_id",$pret_id);
 	if (strlen($pret_id)>0){
 		
 		$sql ="SELECT * FROM pretenzijas where pret_id='$pret_id'";
@@ -160,9 +158,9 @@ if ($_SESSION['STATUS']=="NEW") {
 
 	<?php
 	if($_SESSION['STATUS']=="NEW"){
-		$pret_id=$_SESSION['PREFIKS']." - ".($_SESSION['REG_NR']+1);
+		$pret_id=$_SESSION['PRET']['PREFIKS']." - ".($_SESSION['PRET']['REG_NR']+1);
 	} else {
-		$pret_id=$_SESSION['PREFIKS']." - ".$_SESSION['REG_NR'];
+		$pret_id=$_SESSION['PRET']['PREFIKS']." - ".$_SESSION['PRET']['REG_NR'];
 	}
 	
 	
@@ -339,7 +337,7 @@ if ($_SESSION['STATUS']=="NEW") {
 	</table>
 	<?php
 
-	if ($_SESSION['LOMA']=="Q" && $_SESSION['PRET_STATUS']=='NEW') { ?>
+	if ($_SESSION['USER']['LOMA']=="Q" && $_SESSION['PRET']['STATUS']=='NEW') { ?>
 		<input type="submit" name="pret_risinajums" value="Sākt">
 	<?php }	 ?>
   </form>

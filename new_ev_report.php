@@ -32,7 +32,6 @@ $ftabula="pretenzijas";
 $fwhere=" pret_id='".$_SESSION['PRET_ID']."'";
 $users = sqltoarray($fields,$ftabula,$fwhere,$db);
 
-if (empty()) {
 $pers=$users[0];
 $sql="select * from kl_agenti where agents='".$pers['agents']."'";
 $q = $db->query($sql);
@@ -90,8 +89,11 @@ $_SESSION['EVENT_ID']=$event_id;
                     foreach ($event_users as $evUser) {	?>
                         <tr> <!-- R # 1. -->
                             <td style=" background: white;"><span id="list_span"><?php echo $evUser['strukturas_kods'] ?></span></td>
-                            <td style=" background: white;"><span id="list_span"><?php echo $evUser['persona'] ?></span></td>
-                            <td style=" background: white;"><input style="width:99%;" type="text" name="uzdevums" value="<?php echo $evUser['uzdevums'] ?>" </td>
+                            <td style=" background: white;"><span id="list_span"><?php echo $evUser['persona'] ?></span>
+                                <input type="text" name="persona" value="<?php echo $evUser['persona'] ?>"></td>
+                            <td style=" background: white;"><textarea name="uzdevums" style="width:80%;font-family: verdana;font-size: 11px;"><?php echo $evUser['uzdevums']; ?></textarea>
+                                <input type="submit" name="user_to_event" value="Saglabāts">
+                            </td>
                         </tr>
                         <?php
                     }
@@ -131,6 +133,6 @@ $_SESSION['EVENT_ID']=$event_id;
 
     </div>
 
-    <div id="divNewEventTitle"><input type="submit" name="new_event_cancel" value="Atcelt" style="float:right; margin: 4px;"><input type="submit" name="new_event_accept" value="Saglabāt" style="float:right; margin: 4px;">
+    <div id="divNewEventTitle"><input type="submit" name="new_event_cancel" value="Atcelt" style="float:right; margin: 4px;"><input type="submit" name="new_event_accept" value="Pievienot notikumiem" style="float:right; margin: 4px;">
     </div>
 </div>

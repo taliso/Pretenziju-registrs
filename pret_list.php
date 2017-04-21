@@ -1,6 +1,6 @@
 <?php
 
-$pref=$_SESSION['PREFIKS'];
+$pref=$_SESSION['PRET']['PREFIKS'];
 $sql = 'SELECT * FROM pretenzijas where veids="'.$pref.'"';
 $q = $db->query($sql);
 me('1','SQL pret',$sql);

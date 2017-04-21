@@ -2,7 +2,7 @@
 
 $tasks_list=array();
 
-$sql = "SELECT * FROM uzdevumi where persona='".$_SESSION['AGENTS']."'";
+$sql = "SELECT * FROM uzdevumi where persona='".$_SESSION['AGENTS']['VARDS']."'";
 $q = $db->query($sql);
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
 	$tasks_list[]=$r;
@@ -82,7 +82,7 @@ if ($tasks_count>0) {
                                 <table style="float:left; width:100%;">
 
                                        <?php  foreach($tmp_file as $OneTmp){
-                                          if ($OneTmp['identif']==$_SESSION['TASK_ID']){ ?>
+                                          if ($OneTmp['identif']==$_SESSION['TASK']['ID']){ ?>
                                                     <tr>
                                                         <td>
                                                             <?php echo "<a id='span_12_blue_italic' href='".$OneTmp['tmp_name']."'>".$OneTmp['name']."</a>"; ?>
