@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
 //	var_dump($r);
 	if ($r != false) {
 		session_regenerate_id();
-		$_SESSION['AGENTS'] = $user;
+		$_SESSION['AGENTS']['VARDS'] = $user;
 //		$_SESSION['TEST'] = $r['agents'];
 		session_write_close();
 		
@@ -24,14 +24,14 @@ if (isset($_POST['logout'])) {
 }
 
 
-if (isset($_SESSION['AGENTS'])) {
-	echo "SESIJA: " . $_SESSION['AGENTS']['agents'];
+if (isset($_SESSION['AGENTS']['VARDS'])) {
+	echo "SESIJA: " . $_SESSION['AGENTS']['VARDS'];
 }
 
 
 ?>
 
-<?php if(isset($_SESSION['AGENTS'])): ?>
+<?php if(isset($_SESSION['AGENTS']['VARDS'])): ?>
 
 
 <form action="#" method="post">

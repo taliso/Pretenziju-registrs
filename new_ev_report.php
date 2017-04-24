@@ -1,76 +1,27 @@
 <?php
-$id_pret="";
-$pret_id="";
-$pasut_nr="";
-$event_id="";
-$teh_dala=0;
-$laboratorija=0;
-$logistika=0;
-$event_date="0000-00-00";
-$lemums="";
-$izdevumi="";
-$pedejais="";
-$izpildes_dat="0000-00-00";
-$apraksts="";
-$file_doc="";
-$filstr="";
-$kods="";
-
-$pret_id=$_SESSION['PRET_ID'];
-$npk=$_SESSION['NOTIKUMU_SK']+1;
-$event_id=$pret_id."-".$npk;
-
-// #############    tmp_files   ###########################
-$fields =" name,size,cmdDel ";
-$ftabula="tmp_files";
-$fwhere=" source='notikumi' and identif='".$event_id."'";
-$event_files= sqltoarray($fields,$ftabula,$fwhere,$db);
-
-// #############    Izvelkam aģentu no pretenzijas  ###########################
-$fields =" agents ";
-$ftabula="pretenzijas";
-$fwhere=" pret_id='".$_SESSION['PRET_ID']."'";
-$users = sqltoarray($fields,$ftabula,$fwhere,$db);
-
-$pers=$users[0];
-$sql="select * from kl_agenti where agents='".$pers['agents']."'";
-$q = $db->query($sql);
-$muser = $q->fetch(PDO::FETCH_ASSOC);
-$sql = "INSERT INTO tmp_personas_notikums SET ";
-$sql=$sql."
-        id_pers=:id_pers ,            
- 	  	persona=:persona ,
- 	  	strukturas_kods=:strukturas_kods ,
-		uzd_datums=:uzd_datums ,
-		event_id=:event_id ,
-		e_pasts=:e_pasts";
-
-$q = $db->prepare($sql);
-
-$data = array(
-    ':id_pers'=>$muser['ID'],
-    ':persona'=>$muser['agents'],
-    ':strukturas_kods'=>$muser['struktura_kods'],
-    ':uzd_datums'=>'0000-00-00',
-    ':event_id'=>$_SESSION['EVENT_ID'],
-    ':e_pasts'=>$muser['epasts']);
-
-$q->execute($data);
-
-
 // #############    tmp_personas_notikums   ###########################
-$fields =" persona, strukturas_kods, uzdevums ";
+
+$fields =" * ";
 $ftabula="tmp_personas_notikums";
 $fwhere="";
 $event_users = sqltoarray($fields,$ftabula,$fwhere,$db);
+$evUser=$event_users[0];
 
+$fields=" teksts_out ";
+$ftabula="tmp_teksts_notikums";
+$fwhere=" id_master=".$_SESSION['EVENTS']['ID']." and id_pers=".$evUser['id_pers'];
+$event_teksts = sqltoarray($fields,$ftabula,$fwhere,$db);
 
-
-$_SESSION['EVENT_ID']=$event_id;
+if (empty($event_teksts)) {
+    $tekst="";
+} else {
+    $ev_tekst = $event_teksts[0];
+    $tekst=$ev_tekst['teksts_out'];
+}
 ?>
 <div id="divNewEvent" style="width:100%; margin: 7px;">
     <div id="divNewEventTitle">
-        <span id="spantitle" style="width:100%;"> Jauns UZDEVUMS         [<?php echo $_SESSION['EVENT_ID'] ?>]</span><br>
+        <span id="spantitle" style="width:100%;"> Jauns ZIŅOJUMS    [<?php echo $_SESSION['EVENTS']['KODS'] ?>]</span><br>
     </div>
 
 
@@ -89,10 +40,9 @@ $_SESSION['EVENT_ID']=$event_id;
                     foreach ($event_users as $evUser) {	?>
                         <tr> <!-- R # 1. -->
                             <td style=" background: white;"><span id="list_span"><?php echo $evUser['strukturas_kods'] ?></span></td>
-                            <td style=" background: white;"><span id="list_span"><?php echo $evUser['persona'] ?></span>
-                                <input type="text" name="persona" value="<?php echo $evUser['persona'] ?>"></td>
-                            <td style=" background: white;"><textarea name="uzdevums" style="width:80%;font-family: verdana;font-size: 11px;"><?php echo $evUser['uzdevums']; ?></textarea>
-                                <input type="submit" name="user_to_event" value="Saglabāts">
+                            <td style=" background: white;"><span id="list_span"><?php echo $evUser['persona'] ?></span></td>
+                            <td style=" background: white;"><textarea name="zinojums" style="width:80%;font-family: verdana;font-size: 11px;"><?php echo $tekst; ?></textarea>
+                                <input type="submit" name="teksts_to_event" value="Saglabāt">
                             </td>
                         </tr>
                         <?php

@@ -8,7 +8,9 @@ include "config.php";
 include "funkcijas.php";
 include "konekcija.php";
 include "\\phpmailer\\mailset.php";
-
+if (!isset($_SESSION['USER']['STATUS'])){
+    include 'sesion_list.php';
+}
 $datums=datums();
 define("MAX_FILE_SIZE",5000000);
 $target_dir = 'uploads';
@@ -27,7 +29,7 @@ $form="";
 if (isset($_SESSION['INFO'])){
 	$MainInfo=$_SESSION['INFO'];
 }
-timer_start();
+//timer_start();
 ?>
 
 <!DOCTYPE html>
@@ -63,12 +65,12 @@ timer_start();
   		$liet_list[]=$r;
    	}
    	//*********  IELĀDĒJAM MENJU SARAKSTU MASĪVĀ $menju_list ******************************
-  	
-  	$sql = "SELECT * FROM menju";
-  	$q = $db->query($sql);
-  	while($r = $q->fetch(PDO::FETCH_ASSOC)){
-  		$menju_list[]=$r;
-  	}
+//
+//  	$sql = "SELECT * FROM menju";
+//  	$q = $db->query($sql);
+//  	while($r = $q->fetch(PDO::FETCH_ASSOC)){
+//  		$menju_list[]=$r;
+//  	}
   	//*********  IELĀDĒJAM SISTĒMAS DATUS ***************************************************
   	$sql = "SELECT * FROM dati";
   	$q = $db->query($sql);
@@ -91,7 +93,7 @@ timer_start();
  		$tmp_name=$_FILES[$f_key]['tmp_name'];
  		$size=$_FILES[$f_key]['size'];
  		$source='pretenzijas';
- 		$identif=$_SESSION['PRET_ID'];
+ 		$identif=$_SESSION['PRET']['KODS'];
  		$konv_name=substr($source,0,4).'_'.$identif.'_'.$f_key.'_'.$name;
   		
  			$submit_name=$f_key;
@@ -114,7 +116,7 @@ timer_start();
  		
  			$q = $db->prepare($sql);
  		
- 			$pret_id=$_SESSION['PRET']['ID'];
+ 			$pret_id=$_SESSION['PRET']['KODS'];
  			$data = array(
  					':submit_name'=>$submit_name,
  					':source'=>$source,
@@ -134,26 +136,40 @@ timer_start();
  
 //***   IZVELE NO SARAKSTA  ********************************************************************   	 
 if (isset($_GET['pret_id'])){
- 	$pret_id=$_GET['pret_id'];
-	$_SESSION['PRET_ID']=$pret_id;
+    $_SESSION['PRET']['KODS']=$_GET['pret_id'];
+
  	$_SESSION['STATUS']="VIEW";
  	$_SESSION['WAY']="CLAIM";
-	
- 	$sql = 'SELECT * FROM pretenzijas where pret_id="'.$pret_id.'"';
- 	$q = $db->query($sql);
- 	$r = $q->fetch(PDO::FETCH_ASSOC);
+// VISI dati par pretenziju => SESSION['PRET']
+ 	$fwhere=" pret_id='".$_SESSION['PRET']['KODS']."'";
+    $pretenz=sqltoarray(' * ', 'pretenzijas', $fwhere, $db);
+ 	$r=$pretenz[0];
+
  //	var_dump($r );
- 	$_SESSION['PRET_STATUS']=$r['status'];
- 	$_SESSION['ID_PRET']=$r['ID'];
- 	$_SESSION['REG_NR'] = $r['reg_nr'];
- 	$_SESSION['PREFIKS'] = $r['veids'];
- 	$_SESSION['PASUT_NR'] = $r['pasutijuma_nr'];
- 	$_SESSION['KLIENTS'] = $r['iesniedzejs'];
-	$_SESSION['SAKUMA_DATUMS']=$r['sakuma_datums'];
-	$_SESSION['NOTIKUMU_SK']=$r['notikumu_sk'];
-	$_SESSION['BEIGU_DAT']=$r['beigu_dat'];
-	$_SESSION['IZDEVUMI']=$r['izdevumi'];
+ 	$_SESSION['PRET']['STATUS']=$r['status'];
+ 	$_SESSION['PRET']['ID']=$r['ID'];
+ 	$_SESSION['PRET']['REG_NR'] = $r['reg_nr'];
+ 	$_SESSION['PRET']['PREFIKS'] = $r['veids'];
+ 	$_SESSION['PRET']['PASUT_NR'] = $r['pasutijuma_nr'];
+ 	$_SESSION['PRET']['KLIENTS'] = $r['iesniedzejs'];
+	$_SESSION['PRET']['SAKUMS']=$r['sakuma_datums'];
+	$_SESSION['PRET']['NOTIKUMU_SK']=$r['notikumu_sk'];
+	$_SESSION['PRET']['BEIGAS']=$r['beigu_dat'];
+	$_SESSION['PRET']['IZDEVUMI']=$r['izdevumi'];
    	$_SESSION['TITLE'] = "Pretenzijas veidlapa";
+// IELĀDĒJAM datus par AGENTU
+    if(strlen($r['agents'])>0){
+        $fwhere=" agents='".$r['agents']."'";
+        $agenti=sqltoarray(' * ', 'kl_agenti', $fwhere, $db);
+        $agents=$agenti[0];
+
+        $_SESSION['AGENTS']['VARDS'] = $agents['agents'];
+        $_SESSION['AGENTS']['PASTS'] = $agents['epasts'];
+        $_SESSION['AGENTS']['ID'] = $agents['ID'];
+        $_SESSION['AGENTS']['STRUKT'] = $agents['struktura_kods'];
+    }
+
+// IELĀDEJAM DATUS par KLIENTU
 
    	 } else {
    	 	$pret_id="";
@@ -164,19 +180,21 @@ if (isset($_GET['pret_id'])){
 
 	$user = $_POST['user'];
 	$psw = $_POST['psw'];
-	foreach($liet_list as $row){
-		$lUsername=$row['username'];
-		$lPsw=$row['pasword'];
-		if($lUsername==$_POST['user']){
-			$autor_ir = 1;  					// Autorizācijas pirmais solis - username sakrita
-			if($lPsw==$_POST['psw']){
-				
-				$lAgenta_id=$row['agenta_id'];
-				$lAgents=$row['agents'];
-				$lTiesibas=$row['tiesibas'];
-				$lLoma=$row['loma'];
-				$lStrukt=$row['struktura_kods'];
-			include 'sesion_list.php';
+	foreach($liet_list as $usr){
+        $luser=$usr['username'];
+		$lPsw=$usr['pasword'];
+		if($luser==$user){
+            $_SESSION['USER']['STATUS'] = 1;  					// Autorizācijas pirmais solis - username sakrita
+			if($lPsw=$psw){
+
+		//	    include 'sesion_list.php';
+
+                $_SESSION['USER']['ID']=$usr['ID'];
+                $_SESSION['USER']['VARDS']=$usr['agents'];
+                $_SESSION['USER']['TIESIBAS']=$usr['tiesibas'];
+                $_SESSION['USER']['LOMA']=$usr['loma'];
+                $_SESSION['USER']['STRUKT']=$usr['struktura_kods'];
+                $_SESSION['USER']['STATUS'] = 2;
 				$MainInfo="Autorizācija ir veiksmīga";
 			}
 		}
@@ -189,7 +207,7 @@ include 'task_tools.php';
 
 //###################  IZIET  ############################################################
 if (isset($_POST['btIziet'])) {
-	unset($_SESSION['AGENTS']);
+	$_SESSION['USER']['STATUS']=0;
 }
 if (isset($_POST['btdebug'])) {
 	if($_SESSION['DEBUG']=='ON'){
@@ -202,19 +220,19 @@ if(isset($_GET['mTools'])){
 	$arKey=$_GET['mTools'];
 	if ($arKey=="mnEPS"){
 		$_SESSION['FORMA'] = 'pret_list.php';
-		$_SESSION['PREFIKS'] ="EPS";
+		$_SESSION['PRET']['PREFIKS'] ="EPS";
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['WAY']='CLAIM';
 	}
 	if ($arKey=="mnKM"){
 		$_SESSION['FORMA'] = 'pret_list.php';
-		$_SESSION['PREFIKS'] ="KM";
+		$_SESSION['PRET']['PREFIKS'] ="KM";
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['WAY']='CLAIM';
 	}
 	if ($arKey=="mnIEK"){
 		$_SESSION['FORMA'] = 'pret_list.php';
-		$_SESSION['PREFIKS'] ="IEK";
+		$_SESSION['PRET']['PREFIKS'] ="IEK";
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['WAY']='CLAIM';
 	}
@@ -242,28 +260,33 @@ if(isset($_GET['navig'])){
 		if ($_SESSION['WAY'] == 'CLAIM'){
 				
 				$_SESSION['STATUS'] = "NEW";
-//				$_SESSION['PRET_ID'] = "";
-				if ($_SESSION['PREFIKS'] =="EPS"){
+                $_SESSION['PRET']['ID']=max_id('pretenzijas',$db)+1;
+                $_SESSION['PRET']['STATUS']="NULL";
+				if ($_SESSION['PRET']['PREFIKS'] =="EPS"){
 					$_SESSION['TITLE'] = "EPS pretenzijas veidlapa. Jauna.";
-				} //$_SESSION['PREFIKS'] =="EPS"
+                    $_SESSION['PRET']['REG_NR']=NextNR('pretenzija','veids',$_SESSION['PRET']['PREFIKS'],$db);
+                    $_SESSION['PRET']['KODS'] =$_SESSION['PRET']['PREFIKS']."-".$_SESSION['PRET']['REG_NR'];
+				} //$_SESSION['PRET']['PREFIKS'] =="EPS"
 
-				if ($_SESSION['PREFIKS'] =="KM"){
+				if ($_SESSION['PRET']['PREFIKS'] =="KM"){
 					$_SESSION['TITLE'] = "KM pretenzijas veidlapa. Jauna.";
-				} //$_SESSION['PREFIKS'] =="KM"
+                    $_SESSION['PRET']['REG_NR']=NextNR('pretenzija','veids',$_SESSION['PRET']['PREFIKS'],$db);
+                    $_SESSION['PRET']['KODS'] =$_SESSION['PRET']['PREFIKS']."-".$_SESSION['PRET']['REG_NR'];
+				} //$_SESSION['PRET']['PREFIKS'] =="KM"
 
 		}	//$_SESSION['STATUS'] == "VIEW"
 		
-		if ($_SESSION['WAY'] == "EVENT"){
-			if ($_SESSION['LOMA']=="Q") {
-				$_SESSION['TITLE'] = "Jauna notikuma pievienošana";
-				$_SESSION['STATUS']="NEW";
-			} // $_SESSION['LOMA']=="Q"  
-
-			else {
+//		if ($_SESSION['WAY'] == "EVENT"){
+//			if ($_SESSION['LOMA']=="Q") {
+//				$_SESSION['TITLE'] = "Jauna notikuma pievienošana";
+//				$_SESSION['STATUS']="NEW";
+//			} // $_SESSION['LOMA']=="Q"
+//
+//			else {
 			//alert('Jums nav nepieciešamo tiesību');
-			}
+		//	}
 		
-		} //$_SESSION['STATUS'] == "EVENTS"
+	//	} //$_SESSION['STATUS'] == "EVENTS"
 		
 	}  //$navig=='mnNew'
 	
@@ -271,17 +294,15 @@ if(isset($_GET['navig'])){
 		$_SESSION['WAY'] = 'TASK';
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['TITLE'] = "Tavu uzdevumu saraksts";
-		}
+	}
 		
 	if($navig=='mnEvent'){
 		$_SESSION['WAY'] = 'EVENT';
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['TITLE'] = "Notikumu saraksts";
         $_SESSION['EVENTS']['AGENTS'] = $_SESSION['AGENTS'];
-
-
-
 	}
+
 	if($navig=='mnAdmin'){
 		$_SESSION['WAY'] = "ADMIN";
 		$_SESSION['STATUS'] = "LIST";
@@ -290,24 +311,25 @@ if(isset($_GET['navig'])){
 	
 }
 
-if(isset($_SESSION['AGENTS'])){
-	$lAgents=$_SESSION['AGENTS']['VARDS'];
-	$lUsername=$_SESSION['USER']['VARDS'];
-	$lTiesibas=$_SESSION['USER']['TIESIBAS'];
-	$lAgenta_id=$_SESSION['AGENTS']['ID'];
-	$title=$_SESSION['FORM_TITLE'];
-	$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
-}
+//if(isset($_SESSION['AGENTS']['VARDS'])){
+//	$lAgents=$_SESSION['AGENTS']['VARDS'];
+//	$lUsername=$_SESSION['USER']['VARDS'];
+//	$lTiesibas=$_SESSION['USER']['TIESIBAS'];
+//	$lAgenta_id=$_SESSION['AGENTS']['ID'];
+//	$title=$_SESSION['FORM_TITLE'];
+//	$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
+//    $_SESSION['USER']['STATUS']=2;
+//}
 //#########################  PRETENZIJAS  SAVE   ################################################################
 if (isset ( $_POST ['pret_save'] )) {
 	include 'veidlapa_KM_save.php';
 	 echo 'Pēc save:'.timer_end();
 	$_SESSION['STATUS'] = "LIST";
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
-	if ($_SESSION['PRET_STATUS'] == 'NEW') {
+	if ($_SESSION['PRET']['STATUS'] == 'NEW') {
 		$to = 'talis@tenax.lv';
-		$sub = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['ID'];
-		$body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['ID'] . '. Ludzu nozimet atbildigos.';
+		$sub = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'];
+		$body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '. Ludzu nozimet atbildigos.';
 		 
 		$mail->addAddress ( $to ); // Name is optional
 		$mail->Subject = $sub;
@@ -322,8 +344,8 @@ if (isset ( $_POST ['pret_save'] )) {
 	} else {
 		 
 		$to = 'service@tenax.lv';
-		$sub = 'Pretenzija Nr. ' .  $_SESSION['PRET']['ID'] . ' ir labota.';
-		$body = 'Pretenzija Nr. ' .  $_SESSION['PRET']['ID'] . ' ir labota.';
+		$sub = 'Pretenzija Nr. ' .  $_SESSION['PRET']['KODS'] . ' ir labota.';
+		$body = 'Pretenzija Nr. ' .  $_SESSION['PRET']['KODS'] . ' ir labota.';
 		 
 		$mail->addAddress ( $to ); // Name is optional
 		$mail->Subject = $sub;
@@ -341,14 +363,14 @@ if (isset ( $_POST ['pret_save'] )) {
 }
 //#########################  PRETENZIJAS  CANCEL   ################################################################
 if (isset ( $_POST ['pret_cancel'] )) {
-	$sql="DELETE FROM `tp_pretenzijas`.`tmp_files`";
+	$sql="DELETE FROM `tmp_files`";
 	$q = $db->query($sql);
 	$_SESSION['STATUS'] = "LIST";
 	$_SESSION['FORMA'] = 'pret_list.php';
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
 	me("1",'FORMA',$_SESSION['FORMA']);
 }
-if ($autor_ir==2){
+if ($_SESSION['USER']['STATUS']==2){
 		//<<<<<<<<<<<<<   Formas izvēle   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		if 	($_SESSION['WAY']=='CLAIM'){
 			if ($_SESSION['STATUS'] == "LIST") {
@@ -433,35 +455,35 @@ if ($autor_ir==2){
 		<div id="divInfo"><!--divInfo    -->
 			<div id="divLoginInfo"><!--divLoginInfo    -->
 				<div id="divLUser"><!--divLUser    -->
-					<?php 	if ($autor_ir==2){?>
+					<?php 	if ($_SESSION['USER']['STATUS']==2){?>
 					<?php 	;} else {?>
 						Lietotājs:
-					<?php	}?>
+                    <?php	}?>
 				</div><!--divLUser    -->
 				<div id="divAgents"><!--divAgents    -->
-					<?php 	if ($autor_ir==2){
-						echo( $lAgents);
+					<?php 	if ($_SESSION['USER']['STATUS']==2){
+						echo( $_SESSION['USER']['VARDS']);
 					} 
 					else {?>
 						<input type="text" name="user" value="" size="20">
 					<?php	}?>
 				</div><!--divAgents    -->
 				<div id="divPswTxt"><!--divPswTxt    -->
-					<?php 	if ($autor_ir==2){?>
+					<?php 	if ($_SESSION['USER']['STATUS']==2){?>
 						<input type="submit" name="btIziet" value="Iziet">
 					<?php 	;} else {?>
 						Parole:
 					<?php } ?>
 				</div><!--divPswTxt    -->
 				<div id="divPswIev"><!--divPswIev    -->
-					<?php 	if ($autor_ir==2){?>
+					<?php 	if ($_SESSION['USER']['STATUS']==2){?>
 						
 					<?php 	;} else {?>
 						<input type="password" name="psw" value="" size="8">		
 					<?php }?>
 				</div><!--divPswIev    -->
 				<div id="divIeIz"><!--divIeIz    -->
-					<?php 	if ($autor_ir==2){?>
+					<?php 	if ($_SESSION['USER']['STATUS']==2){?>
 								
 					<?php 	} else { ?>
 								<input type="submit" name="btIeiet" value="Ieiet">
@@ -486,7 +508,7 @@ if ($autor_ir==2){
 
 	<!-- ##################################################################################################################   -->
 	<?php  
-	if ($autor_ir==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
+	if ($_SESSION['USER']['STATUS']==2){ //====================  PĒC AUTORIZĀCIJAS  ==================================================?>
 	<div id="divDarba"><!--divDarba    -->
 		<div id="divFormNavig"><!--divFormNavig    -->
 			<div id="divTools">
@@ -510,7 +532,7 @@ if ($autor_ir==2){
 				<?php } ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnTasks">Mani uzdevumi</a></li>
 				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['PRET']['STATUS'] != "NEW") { ?>
-					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi <?php echo $_SESSION['NOTIKUMU_SK'] ?></a></li>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi <?php echo $_SESSION['PRET']['NOTIKUMU_SK'] ?></a></li>
 				<?php } ?>
 				<?php if ($_SESSION['USER']['LOMA'] =="S") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnAdmin">Iestatījumi</a></li>

@@ -4,7 +4,7 @@ $pret_events=array();
 
 $kl_events = sqltoarray(' * ','kl_notikumi','',$db);
 
-$sql = "SELECT * FROM notikumi where pret_id='".$_SESSION['PRET_ID']."'";
+$sql = "SELECT * FROM notikumi where id_pret='".$_SESSION['PRET']['ID']."'";
 $q = $db->query($sql);
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
 	$pret_events[]=$r;
@@ -27,7 +27,7 @@ $_SESSION['PRET']['IZDEVUMI']=$izd_sum;
 			<tr>
 				<td>
 					<span id= "span_18_gaish">Pretenzijas</span>
-					<span id= "span_18_yealow"> <?php echo $_SESSION['PRET']['ID']; ?></span>
+					<span id= "span_18_yealow"> <?php echo $_SESSION['PRET']['KODS']; ?></span>
 					<span id= "span_18_gaish"> risinājums</span>
 					</td>
 				<td>
@@ -60,13 +60,13 @@ $_SESSION['PRET']['IZDEVUMI']=$izd_sum;
 			</td>
 
 			<td style="width:10%;">
-				<span id="span_14_br"><?php  echo  $ev_nos;  ?></span>
+				<span id="span_14_br"><?php  echo $_SESSION['EVENTS']['VEIDS_NOS'];  ?></span>
 			</td>
 		</tr>	
 	</table>	
 
 	<?php 
-	if ($_SESSION['EVENTS']['STATUS']=='NEW'&&strlen($_SESSION['EVENTS']['FORMA'])>0) {
+	if ($_SESSION['EVENTS']['STATUS']=='NULL'&&strlen($_SESSION['EVENTS']['FORMA'])>0) {
 		include $_SESSION['EVENTS']['FORMA'];
 	}?>
 	

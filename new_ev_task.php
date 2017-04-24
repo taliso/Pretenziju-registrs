@@ -16,8 +16,8 @@
   $filstr="";
   $kods="";
 
-  $pret_id=$_SESSION['PRET_ID'];
-  $npk=$_SESSION['NOTIKUMU_SK']+1;
+  $pret_id=$_SESSION['PRET']['KODS'];
+  $npk=$_SESSION['PRET']['NOTIKUMU_SK']+1;
   $event_id=$pret_id."-".$npk;
   
   // #############    tmp_files   ###########################
@@ -39,11 +39,11 @@
   $fwhere=" aktivs>0 and loma='T' ";
   
   $users = sqltoarray($fields,$ftabula,$fwhere,$db);
-  $_SESSION['EVENT_ID']=$event_id;
+  $_SESSION['EVENTS']['KODS']=$event_id;
 ?>
   <div id="divNewEvent" style="width:100%; margin: 7px;">
 	<div id="divNewEventTitle">
-		<span id="spantitle" style="width:100%;"> Jauns UZDEVUMS         [<?php echo $_SESSION['EVENT_ID'] ?>]</span><br>
+		<span id="spantitle" style="width:100%;"> Jauns UZDEVUMS         [<?php echo $_SESSION['EVENTS']['KODS'] ?>]</span><br>
 	</div>
 
 	

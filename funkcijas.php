@@ -1,7 +1,4 @@
 <?php
-/**
- * @return array
- */
 function datums() {
 	$datums = array ();
 	// $sd=string; Error ????
@@ -24,7 +21,6 @@ function datums() {
 	
 	return $datums;
 }
-
 function f_upload($file, $tmp_file, $target_file, $target_dir) {
 	if ($file != "") {
 		
@@ -46,14 +42,12 @@ function f_upload($file, $tmp_file, $target_file, $target_dir) {
 		}
 	}
 }
-
 function msg($mteksts) {
 	$log = fopen ( LOGFILE, 'a+' );
 	fwrite ( $log, $mteksts . "\n" );
 	fwrite ( $log, "====================================================" . date ( 'd', time () ) . "=" . date ( 'm', time () ) . "======\n" );
 	fclose ( $log );
 }
-// ====================== LIST_ROW ======================================================
 function list_row($col_count, $var_array) {
 	// $row_array- Masīva struktūra: 1-mainīgais,2-nosaukums, 3-klase,
 	// $var_array- parādāmo vērtību masīva, kolonnu skaitam jāsakrīt,
@@ -69,23 +63,6 @@ function list_row($col_count, $var_array) {
 	}
 	$tab_row = $tab_row . '</tr>';
 	return $tab_row;
-}
-function NextID($mveids) {
-	
-	$dbf = new PDO ( "mysql:host=" . HOST . ";dbname=" . DB, USER, PASS, array (
-			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8' 
-	) );
-	$sql = "SELECT * FROM menju where prefiks='" . $mveids . "'";
-	$q = $dbf->query ( $sql );
-	$r = $q->fetch ( PDO::FETCH_ASSOC );
-	
-	$reg_nr = $r ['reg_nr'];
-	$reg_nr = $reg_nr + 1;
-	$sql = "UPDATE menju SET reg_nr=" . $reg_nr . " WHERE prefiks='" . $mveids."'";
-	$q = $dbf->query ( $sql );
-	me('2',"Next ID",$reg_nr);
-	$_SESSION['REG_NR']=$reg_nr;
-	return $reg_nr;
 }
 function check($mvert) {
 	$vert = "";
@@ -104,13 +81,6 @@ function StatCheckBox($mname, $mvariable, $koments, $nobeig, $status) {
 	$mteksts = '<input type="checkbox" name="' . $mname . '"' . $mcheckstat . $status . '> ' . $koments . $nobeig;
 	echo $mteksts;
 }
-
-/**
- * @param $to
- * @param $sub
- * @param $body
- * @param $mail
- */
 function MailTo($to, $sub, $body, $mail) {
 	$mail->addAddress ( $to ); // Name is optional
 	$mail->Subject = $sub;
@@ -123,8 +93,6 @@ function MailTo($to, $sub, $body, $mail) {
 		echo 'E-pasts ir nosūtīts ';
 	}
 }
-
-// ======================== SQL pieprasījums uz masīvu ========================================
 function sqltoarray($fields, $ftabula, $fwhere, $db) {
 	$myarray = array ();
 	
@@ -143,7 +111,6 @@ function sqltoarray($fields, $ftabula, $fwhere, $db) {
 function sqlupdate($field, $variable, $ftabula, $fwhere, $db) {
 	$sql = "UPDATE " . $ftabula . " SET " . $field . "='" . $variable . "' WHERE " . $fwhere;
 	$q = $db->query ( $sql );
-	msg ( "sqlupdate=" . $sql );
 	return 'true';
 }
 function sqlinsert($ftabula, $db) {
@@ -153,14 +120,6 @@ function sqlinsert($ftabula, $db) {
 	
 	return 'true';
 }
-function file_manage($array_files) {
-}
-
-/**
- * @param $key
- * @param $teksts
- * @param $vertiba
- */
 function me($key, $teksts, $vertiba) {
 	if ($_SESSION['DEBUG'] == "ON" && $key=="2") {
 		$file = fopen("tmp\\log.txt","a");
@@ -174,15 +133,13 @@ function me($key, $teksts, $vertiba) {
 		$fil=basename($dati[0]['file']);
 		$lin=$dati[0]['line'];
 		
-		$strings="F:[".$fil." / ".$lin." }  =>  WIEV:".$_SESSION['WAY']."  STATUS:".$_SESSION['STATUS']."   REG_NR:".$_SESSION['REG_NR'].chr(13) ;
+		$strings="F:[".$fil." / ".$lin." }  =>  WIEV:".$_SESSION['WAY']."  STATUS:".$_SESSION['PRET']['STATUS']."   REG_NR:".$_SESSION['PRET']['REG_NR'].chr(13) ;
 		echo fputs($file,$strings)."<br>";
-		echo $_SESSION['ME_ID'].":  ".$teksts . " - " . $vertiba.' >> Status:'.$_SESSION['STATUS'].' >> PRET_ID:'.$_SESSION['PRET_ID'].' >>REG_NR:'.$_SESSION['REG_NR'].' === {'.$fil.' / '.$lin.' }';
+		echo $_SESSION['ME_ID'].":  ".$teksts . " - " . $vertiba.' >> Status:'.$_SESSION['STATUS'].' >> PRET_ID:'.$_SESSION['PRET']['KODS'].' >>REG_NR:'.$_SESSION['PRET']['REG_NR'].' === {'.$fil.' / '.$lin.' }';
 		echo '<br>';echo '-----------------------------------------------------------------------------'.'<br>';
 		fclose($file);	
 	}
 }
-
-
 function timer_start() {
 	global $timeparts,$starttime;
 	$timeparts = explode(" ",microtime());
@@ -194,7 +151,6 @@ function timer_end() {
 	$endtime = $timeparts[1].substr($timeparts[0],1);
 	return bcsub($endtime,$starttime,6);
 }
-
 function dropbox_select($marray,$mkey,$mselect){
 $rinda='<select name="agents" id="user_select">';
 echo $rinda;
@@ -217,10 +173,6 @@ function tmp_fil_to_array($db){
 	return $tmp_fil;
 	
 }
-
-/**
- *
- */
 function tmp_fil_save($source,$id_master, $db){
     $tmp_fil=tmp_fil_to_array($db);
     if (isset($tmp_fil)){
@@ -315,14 +267,26 @@ function to_tmp_file($source,$identif,$submit_name,$db){
         $q->execute($data);
     }
 }
-
-
 function max_id($table,$db){
     $sql = "select MAX(ID) as max_id from ".$table ;
     $q = $db->query($sql);
     $m = $q->fetch(PDO::FETCH_ASSOC);
     $max_id=$m['max_id'];
     return $max_id;
+}
+function NextNR($table, $filter, $filter_value,$db) {
+
+    $sql = "select MAX(reg_nr) as max_nr from ".$table." where ".$filter." = '".$filtr_vert."'" ;
+    $q = $dbf->query ( $sql );
+    $r = $q->fetch ( PDO::FETCH_ASSOC );
+
+    $reg_nr = $r ['reg_nr'];
+    $reg_nr = $reg_nr + 1;
+    $sql = "UPDATE menju SET reg_nr=" . $reg_nr . " WHERE prefiks='" . $mveids."'";
+    $q = $dbf->query ( $sql );
+    me('2',"Next ID",$reg_nr);
+    $_SESSION['PRET']['REG_NR']=$reg_nr;
+    return $reg_nr;
 }
 function inser_pers_to_tmp($id_pers,$db){
     $sql="select * from kl_agenti where id=".$id_pers;
@@ -343,10 +307,105 @@ function inser_pers_to_tmp($id_pers,$db){
         ':id_pers'=>$muser['ID'],
         ':persona'=>$muser['agents'],
         ':strukturas_kods'=>$muser['struktura_kods'],
-        ':uzd_datums'=>'0000-00-00',
+        ':uzd_datums'=>date("Y-m-d"),
         ':event_id'=>$_SESSION['EVENTS']['KODS'],
         ':e_pasts'=>$muser['epasts']);
 
     $q->execute($data);
+
+}
+function inser_text_to_tmp($id_pers,$db){
+    $sql="select * from kl_agenti where id=".$id_pers;
+    $q = $db->query($sql);
+    $muser = $q->fetch(PDO::FETCH_ASSOC);
+    $sql = "INSERT INTO tmp_teksts_notikums SET ";
+    $sql=$sql."
+        id_master=:id_master ,
+        source=:source ,
+		identif=:identif ,
+        id_pers=:id_pers ,
+        persona=:persona ,
+        datums=:datums";
+
+    $q = $db->prepare($sql);
+
+    $data = array(
+        ':id_master'=>$_SESSION['EVENTS']['ID'],
+        ':source'=>'notikumi',
+        ':identif'=>$_SESSION['EVENTS']['KODS'],
+        ':id_pers'=>$muser['ID'],
+        ':persona'=>$muser['agents'],
+        ':datums'=>date("Y-m-d"));
+
+    $q->execute($data);
+
+}
+function tmp_text_save($db){
+
+    $sql="select * from tmp_teksts_notikums";
+    $q = $db->query($sql);
+    $mtext = $q->fetch(PDO::FETCH_ASSOC);
+
+
+
+    foreach($mtext as $mtx) {
+
+        $fwhere=" identif='".$_SESSION['EVENTS']['KODS']."' and id_pers=".$mtx['id_pers']." and source='".$mtx['source']."'";
+        $exist=sqltoarray(' * ', 'teksts_notikums', $fwhere, $db);
+
+        if (empty($exist)) {
+            $sql = "INSERT INTO teksts_notikums SET ";
+            $sql = $sql . "
+                    id_master
+                    source=:source ,
+                    identif=:identif ,
+                    id_pers=:id_pers
+                    persona=:persona ,
+                    teksts_out=:teksts_out ,
+                    teksts_in=:teksts_in ,
+                    datums=:datums";
+
+            $q = $db->prepare($sql);
+
+            $data = array(
+                ':source' => $mtx['source'],
+                ':identif' => $mtx['identif'],
+                ':id_pers' => $mtx['id_pers'],
+                ':persona' => $mtx['persona'],
+                ':teksts_out' => $mtx['teksts_out'],
+                ':teksts_in' => $mtx['teksts_in'],
+                ':datums' => date("Y-m-d"));
+
+            $q->execute($data);
+        } else {
+            $ex=$exist[0];
+            $sql = "UPDATE teksts_notikums SET ";
+            $sql = $sql . "
+                    id_master
+                    source=:source ,
+                    identif=:identif ,
+                    id_pers=:id_pers
+                    persona=:persona ,
+                    teksts_out=:teksts_out ,
+                    teksts_in=:teksts_in ,
+                    datums=:datums
+             where ID=".$ex['ID'];
+
+            $q = $db->prepare($sql);
+
+            $data = array(
+                ':source' => $mtx['source'],
+                ':identif' => $mtx['identif'],
+                ':id_pers' => $mtx['id_pers'],
+                ':persona' => $mtx['persona'],
+                ':teksts_out' => $mtx['teksts_out'],
+                ':teksts_in' => $mtx['teksts_in'],
+                ':datums' => date("Y-m-d"));
+        }
+    }
+
+
+
+
 
 }

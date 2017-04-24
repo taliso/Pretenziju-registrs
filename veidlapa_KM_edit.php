@@ -1,14 +1,7 @@
 <?php
-me('2',"veidlapa_KM_edit","IN");
 $agents = $_SESSION['AGENTS']['VARDS'];
 
-$sql = "SELECT reg_nr FROM menju where prefiks='".$_SESSION['PRET']['PREFIKS']."'";
-$q = $db->query($sql);
-$newreg_nr = $q->fetch(PDO::FETCH_ASSOC);
-
-
-if ($_SESSION['STATUS'] == "NEW") {
-	me('2',"reg_nr",$reg_nr);
+if ($_SESSION['PRET']['STATUS']=="NULL") {
 	$reg_nr = "";
 	$veids = "";
 	$dokumenta_datums = "";
@@ -65,18 +58,14 @@ if ($_SESSION['STATUS'] == "NEW") {
 	$saskanots_ar_klientu = "";
 	$vienosanas = "";
 	$beigu_dat = "";
-	$_SESSION['PRET']['ID'] = $_SESSION['PRET']['PREFIKS']."-".($newreg_nr['reg_nr']+1);
-	$pret_id = $_SESSION['PRET']['ID'];
+//	$_SESSION['PRET']['KODS'] = $_SESSION['PRET']['PREFIKS']."-".($newreg_nr['reg_nr']+1);
+	$pret_id = $_SESSION['PRET']['KODS'];
 } else {
-	if (strlen ( $_SESSION['PRET']['ID'] ) > 0) {
-		$pret_id = $_SESSION['PRET']['ID'];
-		$sql = "SELECT * FROM pretenzijas where pret_id='$pret_id'";
-		$q = $db->query ( $sql );
-		$pret = "";
-		while ( $r = $q->fetch ( PDO::FETCH_ASSOC ) ) {
-			$pret = $r;
-		}
-		
+	if ($_SESSION['PRET']['ID'] > 0) {
+        $fwhere=" ID = ".$_SESSION['PRET']['ID'];
+        $pretenz=sqltoarray(' * ', 'pretenzijas', $fwhere, $db);
+        $pret=$pretenz[0];
+
 		$reg_nr = $pret ['reg_nr'];
 		$veids = $pret ['veids'];
 		$dokumenta_datums = $pret ['dokumenta_datums'];
@@ -122,13 +111,13 @@ if ($_SESSION['STATUS'] == "NEW") {
 		
 		//########## Pārbaudam vai nav piesaistīto failu. Ielādējam iekš tmp_faili  #########
 		
-		$where=" source='VEIDLAPA' and ident = '".$_SESSION['PRET']['ID']."'";
+		$where=" source='VEIDLAPA' and ident = '".$_SESSION['PRET']['KODS']."'";
 		$fl_pret=sqltoarray('orginal_name','faili',$where,$db);
 		
 	}
 }
 me('2',"reg_nr",$reg_nr);
-$ident=$_SESSION['PRET']['ID'];
+$ident=$_SESSION['PRET']['KODS'];
 
 $where=" submit_name='SD6' and identif='".$ident."'" ;
 $fl_vd_6=sqltoarray('name','tmp_files',$where,$db);
@@ -151,7 +140,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 	<form action="#" method="post">
 	<?php
 
-	echo "<div id='divFormTitle'>Pretenzija Nr. " . $_SESSION['PRET']['ID'] . "  </div>";
+	echo "<div id='divFormTitle'>Pretenzija Nr. " . $_SESSION['PRET']['KODS'] . "  </div>";
 	?>
 <!-- ###################   TABULA            ################################################# -->
 		<table>

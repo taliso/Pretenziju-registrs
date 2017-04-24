@@ -76,7 +76,7 @@ if ($_SESSION['STATUS']=="NEW") {
 } else {
 
 
-	//$pret_id= $_SESSION['PRET_ID'];
+	$pret_id= $_SESSION['PRET']['KODS'];
 	if (strlen($pret_id)>0){
 		
 		$sql ="SELECT * FROM pretenzijas where pret_id='$pret_id'";

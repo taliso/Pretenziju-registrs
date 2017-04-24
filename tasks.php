@@ -2,7 +2,7 @@
 
 $tasks_list=array();
 
-$sql = "SELECT * FROM uzdevumi where persona='".$_SESSION['AGENTS']['VARDS']."'";
+$sql = "SELECT * FROM uzdevumi where id_pers='".$_SESSION['USER']['ID']."'";
 $q = $db->query($sql);
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
 	$tasks_list[]=$r;
@@ -35,11 +35,11 @@ if ($tasks_count>0) {
 	if(isset($_GET['tasknr'])){
 		$thisTask=$_GET['tasknr'];
 		
-		if ($thisTask==$_SESSION['TASK_NR']) {
-			$_SESSION['TASK_NR']= 0; 
+		if ($thisTask==$_SESSION['TASK']['NR']) {
+            $_SESSION['TASK']['NR']= 0;
 			
 		} else {
-			$_SESSION['TASK_NR']=$thisTask; 
+            $_SESSION['TASK']['NR']=$thisTask;
 			
 		}
 		
@@ -63,10 +63,10 @@ if ($tasks_count>0) {
 						</tr>
 					</table>
 			<?php 
-			if ($_SESSION['TASK_NR']==$task_nr) {
-				$disp=''; 
-				$_SESSION['TASK_ID']=$OneTask['identifikators'];
-                $_SESSION['ID_TASK']=$OneTask['id'];
+			if ($_SESSION['TASK']['NR']==$task_nr) {
+				$disp='';
+                $_SESSION['TASK']['KODS']=$OneTask['identifikators'];
+                $_SESSION['TASK']['ID']=$OneTask['id'];
                 $task_fil=sqltoarray(' * ','faili',' id_master ='.$OneTask['id'],$db);
                 ?>
                 <div class="invisible" > <!--  invisible -->
