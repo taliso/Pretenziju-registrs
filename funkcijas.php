@@ -276,15 +276,14 @@ function max_id($table,$db){
 }
 function NextNR($table, $filter, $filter_value,$db) {
 
-    $sql = "select MAX(reg_nr) as max_nr from ".$table." where ".$filter." = '".$filtr_vert."'" ;
-    $q = $dbf->query ( $sql );
+    $sql = "select MAX(reg_nr) as max_nr from ".$table." where ".$filter." = '".$filter_value."'" ;
+    $q = $db->query ( $sql );
     $r = $q->fetch ( PDO::FETCH_ASSOC );
 
-    $reg_nr = $r ['reg_nr'];
+    $reg_nr = $r ['max_nr'];
     $reg_nr = $reg_nr + 1;
-    $sql = "UPDATE menju SET reg_nr=" . $reg_nr . " WHERE prefiks='" . $mveids."'";
-    $q = $dbf->query ( $sql );
-    me('2',"Next ID",$reg_nr);
+    $sql = "UPDATE menju SET reg_nr=" . $reg_nr . " WHERE prefiks='" . $filter_value."'";
+    $q = $db->query ( $sql );
     $_SESSION['PRET']['REG_NR']=$reg_nr;
     return $reg_nr;
 }

@@ -66,8 +66,8 @@ $_SESSION['PRET']['IZDEVUMI']=$izd_sum;
 	</table>	
 
 	<?php 
-	if ($_SESSION['EVENTS']['STATUS']=='NULL'&&strlen($_SESSION['EVENTS']['FORMA'])>0) {
-		include $_SESSION['EVENTS']['FORMA'];
+	if ($_SESSION['EVENTS']['STATUS']=='NULL'&&strlen($_SESSION['EVENTS']['NEWFORMA'])>0) {
+		include $_SESSION['EVENTS']['NEWFORMA'];
 	}?>
 	
 	
@@ -78,8 +78,29 @@ $_SESSION['PRET']['IZDEVUMI']=$izd_sum;
 
 foreach ($pret_events as $one_event){?>
 	<div id="divEventForm">
-		<?php 
-        include 'ev_task_view.php';?>
+		<?php
+        switch($one_event['veids']){
+            case 'T':
+                $_SESSION['EVENTS']['FORMA']="ev_task_view.php";
+                break;
+            case 'R':
+                $_SESSION['EVENTS']['FORMA']="ev_report_view.php";
+                break;
+            case 'O':
+                $_SESSION['EVENTS']['FORMA']="ev_order_view.php";
+                break;
+            case 'S':
+                $_SESSION['EVENTS']['FORMA']="ev_sumary_view.php";
+                break;
+            case 'P':
+                $_SESSION['EVENTS']['FORMA']="ev_preventive_view.php";
+                break;
+            default:
+                $_SESSION['EVENTS']['FORMA']="";
+        }
+        if (strlen( $_SESSION['EVENTS']['FORMA'])>0) {
+            include $_SESSION['EVENTS']['FORMA'];
+        }?>
 	</div>
 <?php 
 

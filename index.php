@@ -58,13 +58,24 @@ if (isset($_SESSION['INFO'])){
   	while($r = $q->fetch(PDO::FETCH_ASSOC)){
   		if ($r['loma']=='A') {
   			$agent_list[]=$r;
-  		}	
-  		if ($r['loma']=='T') {
-  			$teh_list[]=$r;
   		}
+        if ($r['loma']=='T') {
+            $teh_list[]=$r;
+        }
+        if ($r['loma']=='Q') {
+            $qual_list[]=$r;
+        }
+
   		$liet_list[]=$r;
    	}
-   	//*********  IELĀDĒJAM MENJU SARAKSTU MASĪVĀ $menju_list ******************************
+   	//______________  IELĀDĒJAM KVALITĀTES PERSONU _________________________________________
+    $_SESSION['QUALITY']['ID'] =  $qual_list['id'];
+    $_SESSION['QUALITY']['VARDS'] = $qual_list['agents'];
+    $_SESSION['QUALITY']['TIESIBAS'] = $qual_list['tiesibas'];
+    $_SESSION['QUALITY']['LOMA'] = $qual_list['loma'];
+    $_SESSION['QUALITY']['EPASTS']=$qual_list['epasts'];
+
+    //*********  IELĀDĒJAM MENJU SARAKSTU MASĪVĀ $menju_list ******************************
 //
 //  	$sql = "SELECT * FROM menju";
 //  	$q = $db->query($sql);
@@ -238,7 +249,7 @@ if(isset($_GET['mTools'])){
 	}
 }
 
-
+//###################  PRETENZIJAS NAVIGĀCIJA  ################################################
 if(isset($_GET['navig'])){
 	
 	$_SESSION['NAVIG']=$_GET['navig'];
@@ -262,15 +273,16 @@ if(isset($_GET['navig'])){
 				$_SESSION['STATUS'] = "NEW";
                 $_SESSION['PRET']['ID']=max_id('pretenzijas',$db)+1;
                 $_SESSION['PRET']['STATUS']="NULL";
+
 				if ($_SESSION['PRET']['PREFIKS'] =="EPS"){
 					$_SESSION['TITLE'] = "EPS pretenzijas veidlapa. Jauna.";
-                    $_SESSION['PRET']['REG_NR']=NextNR('pretenzija','veids',$_SESSION['PRET']['PREFIKS'],$db);
+                    $_SESSION['PRET']['REG_NR']=NextNR('pretenzijas','veids',$_SESSION['PRET']['PREFIKS'],$db);
                     $_SESSION['PRET']['KODS'] =$_SESSION['PRET']['PREFIKS']."-".$_SESSION['PRET']['REG_NR'];
 				} //$_SESSION['PRET']['PREFIKS'] =="EPS"
 
 				if ($_SESSION['PRET']['PREFIKS'] =="KM"){
 					$_SESSION['TITLE'] = "KM pretenzijas veidlapa. Jauna.";
-                    $_SESSION['PRET']['REG_NR']=NextNR('pretenzija','veids',$_SESSION['PRET']['PREFIKS'],$db);
+                    $_SESSION['PRET']['REG_NR']=NextNR('pretenzijas','veids',$_SESSION['PRET']['PREFIKS'],$db);
                     $_SESSION['PRET']['KODS'] =$_SESSION['PRET']['PREFIKS']."-".$_SESSION['PRET']['REG_NR'];
 				} //$_SESSION['PRET']['PREFIKS'] =="KM"
 
@@ -311,36 +323,21 @@ if(isset($_GET['navig'])){
 	
 }
 
-//if(isset($_SESSION['AGENTS']['VARDS'])){
-//	$lAgents=$_SESSION['AGENTS']['VARDS'];
-//	$lUsername=$_SESSION['USER']['VARDS'];
-//	$lTiesibas=$_SESSION['USER']['TIESIBAS'];
-//	$lAgenta_id=$_SESSION['AGENTS']['ID'];
-//	$title=$_SESSION['FORM_TITLE'];
-//	$autor_ir = 2; 					// Autorizācijas otrais solis - password sakrita
-//    $_SESSION['USER']['STATUS']=2;
-//}
 //#########################  PRETENZIJAS  SAVE   ################################################################
 if (isset ( $_POST ['pret_save'] )) {
 	include 'veidlapa_KM_save.php';
-	 echo 'Pēc save:'.timer_end();
+	// echo 'Pēc save:'.timer_end();
 	$_SESSION['STATUS'] = "LIST";
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
-	if ($_SESSION['PRET']['STATUS'] == 'NEW') {
-		$to = 'talis@tenax.lv';
-		$sub = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'];
-		$body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '. Ludzu nozimet atbildigos.';
-		 
-		$mail->addAddress ( $to ); // Name is optional
-		$mail->Subject = $sub;
-		$mail->Body = $body;
-		 
-		if (! $mail->send ()) {
-			echo 'Message could not be sent.';
-			echo 'Mailer Error: ' . $mail->ErrorInfo;
-		} else {
-			echo 'E-pasts ir nosūtīts. Par jaunu pretenziju.';
-		}
+	if ($_SESSION['PRET']['STATUS'] == 'NULL'&&$_SESSION['MAIL'] == 'Y') {
+
+        $to = $_SESSION['QUALITY']['EPASTS'];
+        $sub = 'Jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'];
+        $body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '.
+        Pretenziju ievadīja '.$_SESSION['USER']['VARDS'].'
+        Ludzu nozimet atbildigos.';
+        MailTo($to, $sub, $body, $mail);
+
 	} else {
 		 
 		$to = 'service@tenax.lv';

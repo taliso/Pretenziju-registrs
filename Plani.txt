@@ -1,0 +1,4 @@
+Insert > uzdevums > id_master id no personas_notikums
+Veidojot atbildi personas_notikumi <= id_master=id
+
+Veidojot jaunu notikumu - kamēr nav saglabāts - neredz pievienotos failus

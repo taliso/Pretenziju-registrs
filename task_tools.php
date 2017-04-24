@@ -3,7 +3,7 @@
 if (isset($_POST['task_save'])) {
     $atbilde = $_POST['atbilde'];
 
-    $thistask=sqltoarray(' * ', 'uzdevumi', " ID='".$_SESSION['ID_TASK']."' ", $db);
+    $thistask=sqltoarray(' * ', 'uzdevumi', " ID='".$_SESSION['TASK']['ID']."' ", $db);
     $OneTask=$thistask[0];
     FOREACH ($atbilde as $atb) {
         if (strlen($atb)) {
@@ -11,19 +11,19 @@ if (isset($_POST['task_save'])) {
             $field = " atbilde ";
             $variable = $atb;
             $ftabula = 'personas_notikums';
-            $fwhere = " ID = " . $OneTask['id_source'] . " ";
+            $fwhere = " ID = " . $OneTask['id_master'] . " ";
             sqlupdate($field, $variable, $ftabula, $fwhere, $db);
 
             $field = " atbild_datums ";
             $variable = date("Y-m-d");
             $ftabula = 'personas_notikums';
-            $fwhere = " ID = " . $OneTask['id_source'] . " ";
+            $fwhere = " ID = " . $OneTask['id_master'] . " ";
             sqlupdate($field, $variable, $ftabula, $fwhere, $db);
 
             $field = " status ";
             $variable = 1;
             $ftabula = 'personas_notikums';
-            $fwhere = " ID = " . $OneTask['id_source'] . " ";
+            $fwhere = " ID = " . $OneTask['id_master'] . " ";
             sqlupdate($field, $variable, $ftabula, $fwhere, $db);
 
 
@@ -100,5 +100,5 @@ if (isset($_POST['task_save'])) {
 }
 //###################  tmp failu pievienošana  ################################################
 if (isset($_POST['add_task_file'])) {
-     to_tmp_file('uzdevumi',$_SESSION['TASK_ID'],'fileTask',$db);
+     to_tmp_file('uzdevumi',$_SESSION['TASK']['KODS'],'fileTask',$db);
 }
