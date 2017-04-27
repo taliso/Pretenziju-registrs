@@ -21,11 +21,11 @@
   $event_id=$pret_id."-".$npk;
   
   // #############    tmp_files   ###########################
-  $fields =" name,size,cmdDel ";
+  $fields =" * ";
   $ftabula="tmp_files";
-  $fwhere=" source='notikumi' and identif='".$event_id."'";
-   me(2,'fwhere',$fwhere);
-  $event_files= sqltoarray($fields,$ftabula,$fwhere,$db);
+  $fwhere="";
+   $event_files= sqltoarray($fields,$ftabula,$fwhere,$db);
+
   // #############    tmp_personas_notikums   ###########################
   $fields =" persona, strukturas_kods, uzdevums ";
   $ftabula="tmp_personas_notikums";

@@ -69,16 +69,14 @@ $_SESSION['PRET']['IZDEVUMI']=$izd_sum;
 	if ($_SESSION['EVENTS']['STATUS']=='NULL'&&strlen($_SESSION['EVENTS']['NEWFORMA'])>0) {
 		include $_SESSION['EVENTS']['NEWFORMA'];
 	}?>
-	
-	
-	
-	
+
 </div>   <!-- <divEventForm>  -->
 <?php
 
 foreach ($pret_events as $one_event){?>
 	<div id="divEventForm">
 		<?php
+        $_SESSION['EVENTS']['ID']=$one_event['ID'];
         switch($one_event['veids']){
             case 'T':
                 $_SESSION['EVENTS']['FORMA']="ev_task_view.php";

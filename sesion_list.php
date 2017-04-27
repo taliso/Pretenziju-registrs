@@ -9,6 +9,7 @@ $_SESSION['FORM_TITLE'] = -1;
 $_SESSION['NAVIG'] = -1;
 $_SESSION['VERSIJA'] = '';
 $_SESSION['MAIL'] = 'N';
+$_SESSION['SAVESTATUS']=0;
 
 $_SESSION['AGENTS']['VARDS'] = '';
 $_SESSION['AGENTS']['PASTS'] = '';

@@ -15,30 +15,30 @@ for($kk=0;$kk<=$col_count;$kk++){
 echo $rin;
 
 while($r = $q->fetch(PDO::FETCH_ASSOC)){
-	$stat="---";
-	switch ($r['status']){
-		case 'NEW':
-			$stat='0';
-			break;
-		case 'PROCESSED':
-			$stat='2';
-			break;
-		case 'REGISTER':
-            $stat='1';
-            break;
-		default:
-			$stat='X';
-			break;
-	}
-	
-	
-	
-	
-	
-	$pret_list=array($r['pret_id'],$r['dokumenta_datums'],$r['pasutijuma_nr'],$r['iesniedzejs'],$r['produkcija'],$r['agents'],$stat);
+
+$pret_list=array($r['pret_id'],$r['dokumenta_datums'],$r['pasutijuma_nr'],$r['iesniedzejs'],$r['produkcija'],$r['agents'],$r['status']);
 $rin="";
-$rin=list_row($col_count,$pret_list);
-echo $rin;
+//$rin=list_row($col_count,$pret_list);
+    $tab_row = "";
+    $tab_row = '<tr>';
+    $tab_col="";
+    $k = 0;
+
+    for($k = 0; $k <= $col_count; $k ++) {
+        if ($k == 0) {
+            $tab_col = '<td class="tcol0"><a href="?pret_id=' . $pret_list [$k] . '">' . $pret_list [$k] . '</td>';
+        } else {
+            if ($k == $col_count) {
+                $tab_col = '<td class="tcol' . $k . '">'. BarIndikator09($r['status']) . '</td>';
+            } else {
+                       $tab_col = '<td class="tcol' . $k . '">' . $pret_list [$k].'</td>';
+        			}
+         }
+        $tab_row = $tab_row . $tab_col ;
+    }
+    $tab_row = $tab_row . '</tr>';
+
+echo $tab_row;
 
 }
 

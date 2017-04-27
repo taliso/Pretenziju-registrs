@@ -131,7 +131,7 @@ if (isset($_POST['new_event_cancel'])) {
 
 }
 //####['new_event_accept']###############  APSTIPRINU  NEWEVENT - TASKS    ############################################
-//####['new_event_accept']#### INSERT notikums
+    //####['new_event_accept']#### INSERT notikums
 if (isset($_POST['new_event_accept'])) {
     $_SESSION['EVENTS']['STATUS']="NEW";
     $_SESSION['WAY']="EVENTS";
@@ -168,15 +168,64 @@ if (isset($_POST['new_event_accept'])) {
 	//####['new_event_accept']#### INSERT notikums
     $_SESSION['EVENTS']['ID']= max_id('notikumi',$db);
 	sqlupdate('notikumu_sk',$_SESSION['PRET']['NOTIKUMU_SK']+1,'pretenzijas',' ID="'.$_SESSION['PRET']['ID'].'"',$db);
-	sqlupdate('status','PROCESSED','pretenzijas',' ID="'.$_SESSION['PRET']['ID'].'"',$db);
+
+	switch ($_SESSION['EVENTS']['VEIDS']){
+	    case 'T':
+	        $prstatus=2;
+	        break;
+        case 'R':
+            $prstatus=4;
+            break;
+
+        case 'O':
+            $prstatus=6;
+            break;
+
+        case 'S':
+            $prstatus=7;
+            break;
+
+        case 'A':
+            $prstatus=8;
+            break;
+    }
+    if ($_SESSION['PRET']['STATUS']<$prstatus){
+        $_SESSION['PRET']['STATUS']=$prstatus;
+    }
+	sqlupdate('status',$_SESSION['PRET']['STATUS'],'pretenzijas',' ID="'.$_SESSION['PRET']['ID'].'"',$db);
 
 	//###############   Saglabājam tekstus, ja tādi ir  ###############################################
 
     if (isset($_POST['zinojums'])){
+        $teksts=$_POST['zinojums'];
         $tmp_id=max_id('tmp_teksts_notikums',$db);
         $teksts=$_POST['zinojums'];
         $fwhere=" ID=".$tmp_id;
         sqlupdate(' teksts_out ' , $teksts, ' tmp_teksts_notikums ', $fwhere, $db);
+
+        $sql = "INSERT INTO teksts_notikums SET ";
+        $sql=$sql."
+ 	  	id_master=:id_master ,
+ 	  	id_pers=:id_pers ,
+ 	  	teksts_out=:teksts_out ,
+ 	  	datums=:datums ,
+ 	  	identif=:identif ,
+ 	  	source=:source ,
+ 	  	persona=:persona";
+        
+        $q = $db->prepare($sql);
+        
+        	$data = array(
+			':id_master'=>$_SESSION['EVENTS']['ID'],
+            ':id_pers'=>$_SESSION['AGENTS']['ID'],
+			':teksts_out'=>$teksts,
+			':datums'=>date("Y-m-d"),
+			':identif'=>$_SESSION['EVENTS']['KODS'],
+			':source'=>'notikumi',
+	        ':persona'=>$_SESSION['AGENTS']['VARDS']);
+
+	$q->execute($data);
+
     }
 
 

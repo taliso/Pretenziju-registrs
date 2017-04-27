@@ -23,7 +23,7 @@ $pref="";
 $reg_nr="";
 $MainInfo="";
 $form="";
-
+$prstatus="";
 
 
 if (isset($_SESSION['INFO'])){
@@ -69,11 +69,11 @@ if (isset($_SESSION['INFO'])){
   		$liet_list[]=$r;
    	}
    	//______________  IELĀDĒJAM KVALITĀTES PERSONU _________________________________________
-    $_SESSION['QUALITY']['ID'] =  $qual_list['id'];
-    $_SESSION['QUALITY']['VARDS'] = $qual_list['agents'];
-    $_SESSION['QUALITY']['TIESIBAS'] = $qual_list['tiesibas'];
-    $_SESSION['QUALITY']['LOMA'] = $qual_list['loma'];
-    $_SESSION['QUALITY']['EPASTS']=$qual_list['epasts'];
+    $_SESSION['QUALITY']['ID'] =  $qual_list[0]['ID'];
+    $_SESSION['QUALITY']['VARDS'] = $qual_list[0]['agents'];
+    $_SESSION['QUALITY']['TIESIBAS'] = $qual_list[0]['tiesibas'];
+    $_SESSION['QUALITY']['LOMA'] = $qual_list[0]['loma'];
+    $_SESSION['QUALITY']['EPASTS']=$qual_list[0]['epasts'];
 
     //*********  IELĀDĒJAM MENJU SARAKSTU MASĪVĀ $menju_list ******************************
 //
@@ -86,7 +86,13 @@ if (isset($_SESSION['INFO'])){
   	$sql = "SELECT * FROM dati";
   	$q = $db->query($sql);
   	$r = $q->fetch(PDO::FETCH_ASSOC);
-   	 $versija=$r['versija'];
+    $_SESSION['VERSIJA']=$r['versija_koncep'].'-'.$r['versija_db'].'-'.$r['versija_kods'];
+    $_SESSION['MAIL']=$r['mail'];
+
+
+
+
+
 
  //#######################    Failu pievienošana veidlapā  ##########################################
  if (isset($_POST['doc_to_pret'])) {
@@ -258,12 +264,10 @@ if(isset($_GET['navig'])){
 	if($navig=='mnLists'){
 		$_SESSION['STATUS'] = "LIST";
 		$_SESSION['WAY']="CLAIM";
-		
 	}
 	
 	if($navig=='mnEdit'){
 		$_SESSION['STATUS'] = "EDIT";
-		
 	}
 
 	if($navig=='mnNew'){
@@ -285,21 +289,7 @@ if(isset($_GET['navig'])){
                     $_SESSION['PRET']['REG_NR']=NextNR('pretenzijas','veids',$_SESSION['PRET']['PREFIKS'],$db);
                     $_SESSION['PRET']['KODS'] =$_SESSION['PRET']['PREFIKS']."-".$_SESSION['PRET']['REG_NR'];
 				} //$_SESSION['PRET']['PREFIKS'] =="KM"
-
 		}	//$_SESSION['STATUS'] == "VIEW"
-		
-//		if ($_SESSION['WAY'] == "EVENT"){
-//			if ($_SESSION['LOMA']=="Q") {
-//				$_SESSION['TITLE'] = "Jauna notikuma pievienošana";
-//				$_SESSION['STATUS']="NEW";
-//			} // $_SESSION['LOMA']=="Q"
-//
-//			else {
-			//alert('Jums nav nepieciešamo tiesību');
-		//	}
-		
-	//	} //$_SESSION['STATUS'] == "EVENTS"
-		
 	}  //$navig=='mnNew'
 	
 	if($navig=='mnTasks'){
@@ -319,44 +309,48 @@ if(isset($_GET['navig'])){
 		$_SESSION['WAY'] = "ADMIN";
 		$_SESSION['STATUS'] = "LIST";
 	}
-	
-	
 }
 
 //#########################  PRETENZIJAS  SAVE   ################################################################
 if (isset ( $_POST ['pret_save'] )) {
-	include 'veidlapa_KM_save.php';
-	// echo 'Pēc save:'.timer_end();
-	$_SESSION['STATUS'] = "LIST";
-	$_SESSION['TITLE'] = "Pretenziju saraksts";
-	if ($_SESSION['PRET']['STATUS'] == 'NULL'&&$_SESSION['MAIL'] == 'Y') {
 
-        $to = $_SESSION['QUALITY']['EPASTS'];
-        $sub = 'Jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'];
-        $body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '.
-        Pretenziju ievadīja '.$_SESSION['USER']['VARDS'].'
-        Ludzu nozimet atbildigos.';
-        MailTo($to, $sub, $body, $mail);
+    if ($_SESSION['SAVESTATUS'] =="0") {
+        include 'veidlapa_KM_save.php';
+        // echo 'Pēc save:'.timer_end();
+        $_SESSION['STATUS'] = "LIST";
+        $_SESSION['TITLE'] = "Pretenziju saraksts";
+        if ($_SESSION['PRET']['STATUS'] == 'NULL' && $_SESSION['MAIL'] == 'Y') {
 
-	} else {
-		 
-		$to = 'service@tenax.lv';
-		$sub = 'Pretenzija Nr. ' .  $_SESSION['PRET']['KODS'] . ' ir labota.';
-		$body = 'Pretenzija Nr. ' .  $_SESSION['PRET']['KODS'] . ' ir labota.';
-		 
-		$mail->addAddress ( $to ); // Name is optional
-		$mail->Subject = $sub;
-		$mail->Body = $body;
-		 
-		if (! $mail->send ()) {
-			echo 'Message could not be sent.';
-			echo 'Mailer Error: ' . $mail->ErrorInfo;
-		} else {
-			echo 'E-pasts ir nosūtīts. Par labošanu.';
-		}
-	}
+            $to = $_SESSION['QUALITY']['EPASTS'];
+            $sub = 'Jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'];
+            $body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '.
+            Pretenziju ievadīja ' . $_SESSION['USER']['VARDS'] . '
+            Ludzu nozimet atbildigos.';
+            MailTo($to, $sub, $body, $mail);
 
-//	$_SESSION['STATUS'] = "VIEW";
+        } else {
+
+            $to = 'service@tenax.lv';
+            $sub = 'Pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . ' ir labota.';
+            $body = 'Pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . ' ir labota.';
+
+            $mail->addAddress($to); // Name is optional
+            $mail->Subject = $sub;
+            $mail->Body = $body;
+
+            if (!$mail->send()) {
+                echo 'Message could not be sent.';
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            } else {
+                echo 'E-pasts ir nosūtīts. Par labošanu.';
+            }
+        }
+    } else {
+        $_SESSION['STATUS'] = "LIST";
+        $_SESSION['TITLE'] = "Pretenziju saraksts";
+    }
+    $_SESSION['SAVESTATUS'] ="1";
+ //   header('Location: http://www.example.com/');
 }
 //#########################  PRETENZIJAS  CANCEL   ################################################################
 if (isset ( $_POST ['pret_cancel'] )) {
@@ -441,13 +435,13 @@ if ($_SESSION['USER']['STATUS']==2){
 <form action="#" method="post" enctype="multipart/form-data">
 <div id="divMaster"><!--divMaster    -->
 	<div id="divGalva"><!--divGalva    -->
-		<div id="divLogo"><!--divLogo    -->
-<!--			<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:101px;height:56px;margin:10px">-->
-            <img id="logo" src="Title.png" alt="Tenapors logo" >
-		</div>	<!--divLogo    -->
+<!--		<div id="divLogo"><!--divLogo    -->
+<!--<!--			<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:101px;height:56px;margin:10px">-->
+<!--<!--            <img id="logo" src="Title.png" alt="Tenapors logo" >-->
+<!--		</div>	<!--divLogo    -->
 		<div id="divTitle"><!--divTitle    -->
 <!--			<h1>Pretenziju reģistrācijas sistēma</h1>-->
-                 <span id="span_13_yealow">Pretenziju pārvaldības sistēma</span>
+                 <span id="span_16_yealow">Pretenziju pārvaldības sistēma</span>
 		</div><!--divTitle    -->
 		<div id="divInfo"><!--divInfo    -->
 			<div id="divLoginInfo"><!--divLoginInfo    -->
@@ -527,7 +521,7 @@ if ($_SESSION['USER']['STATUS']==2){
 				<?php if ($_SESSION['WAY']=='CLAIM') { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 				<?php } ?>
-					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnTasks">Mani uzdevumi</a></li>
+					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnTasks">Uzdevumi</a></li>
 				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['PRET']['STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi <?php echo $_SESSION['PRET']['NOTIKUMU_SK'] ?></a></li>
 				<?php } ?>

@@ -80,28 +80,28 @@ td.tcol0 {
  }
  
  td.tcol1 {
- 	width:8%;
+ 	width:5%;
  	text-align: center;
  	font-size: 12px;
 	font-family: verdana; 	
  }
  
  td.tcol2 {
-  	width:8%;
+  	width:5%;
  	text-align: center;
  	font-size: 12px;
  	font-family: verdana;
  }
  
  td.tcol3 {
-   	width:20%;
+   	width:10%;
 	font-size: 12px;
 	font-family: verdana;
 	 margin-left: 10px;
  }
  
  td.tcol4 {
- 	width:20%;
+ 	width:42%;
  	font-size: 12px;
  	font-family: verdana;
  }
@@ -113,7 +113,7 @@ td.tcol0 {
  }
  
  td.tcol6 {
- 	width: 10%;
+ 	width: 5%;
 	font-size: 12px;
  	font-family: verdana;
  }
@@ -385,15 +385,15 @@ a:hover {
 #divTitle{
 	background-color: #002060;
 	float:left;
-	width:87%;
+	width:100%;
 	height:43px;
-	text-align: right;
+	text-align: center;
 }
 #divInfo{
 	background-color: #0070c0;
 	float:left;
 	color:red;
-	width:87%;
+	width:100%;
 	height:26px;
 }
 

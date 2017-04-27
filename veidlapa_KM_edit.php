@@ -2,6 +2,7 @@
 $agents = $_SESSION['AGENTS']['VARDS'];
 
 if ($_SESSION['PRET']['STATUS']=="NULL") {
+    $_SESSION['SAVESTATUS']="0";
 	$reg_nr = "";
 	$veids = "";
 	$dokumenta_datums = "";
@@ -62,6 +63,7 @@ if ($_SESSION['PRET']['STATUS']=="NULL") {
 	$pret_id = $_SESSION['PRET']['KODS'];
 } else {
 	if ($_SESSION['PRET']['ID'] > 0) {
+        $_SESSION['SAVESTATUS']="0";
         $fwhere=" ID = ".$_SESSION['PRET']['ID'];
         $pretenz=sqltoarray(' * ', 'pretenzijas', $fwhere, $db);
         $pret=$pretenz[0];
@@ -116,7 +118,8 @@ if ($_SESSION['PRET']['STATUS']=="NULL") {
 		
 	}
 }
-me('2',"reg_nr",$reg_nr);
+$prstatus="0";
+
 $ident=$_SESSION['PRET']['KODS'];
 
 $where=" submit_name='SD6' and identif='".$ident."'" ;
@@ -181,7 +184,8 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 					nosaukums)</td>
 				<td class="atstarpe"></td>
 				<td>
-                    <input ID="text_pret_garss" type="text" name="iesniedzejs" value="<?php echo $iesniedzejs ;	?>"></td>
+                    <input ID="text_pret_garss" type="text" name="iesniedzejs" value="<?php echo $iesniedzejs ;	?>">
+                 </td>
 			</tr>
 
 

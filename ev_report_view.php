@@ -11,6 +11,11 @@ $ev_pers=sqltoarray(' * ','personas_notikums',$where,$db);
 $where=" source='notikumi' && id_master =".$one_event['ID'];
 $ev_faili=sqltoarray(' * ','faili',$where,$db);
 
+$fields=" teksts_out, teksts_in ";
+$ftabula="teksts_notikums";
+$fwhere=" id_master=".$_SESSION['EVENTS']['ID']." and id_pers=".$_SESSION['AGENTS']['ID'];
+$event_teksts = sqltoarray($fields,$ftabula,$fwhere,$db);
+$evtekst=$event_teksts[0];
 
 ?>
 <div id="ev_task"  style="width: 100%;">
@@ -43,7 +48,7 @@ $ev_faili=sqltoarray(' * ','faili',$where,$db);
                 </td>
                 <td style="width: 33%;border-bottom: 2px solid silver;background: darkgoldenrod;border-left: 2px solid burlywood;">
 
-                    <span id="span_13_yealow">Uzdevums</span>
+                    <span id="span_13_yealow">Ziņojums</span>
 
                 </td>
                 <td style="width: 33%;border-bottom: 2px solid silver;background: darkgoldenrod;border-left: 2px solid burlywood;">
@@ -81,12 +86,12 @@ $ev_faili=sqltoarray(' * ','faili',$where,$db);
 
                 </td>
                 <td  style="width: 33%;">
-
-                    <span id="span_12_blue"><?php echo $one_ev_pers['uzdevums'] ?></span>
+                    <?php echo $evtekst['teksts_out'] ?>
+<!--                    <span id="span_12_blue">--><?php //echo $evtekst ?><!--</span>-->
 
                 </td>
                 <td  style="width: 33%;">
-                    <span id="span_12_blue"><?php echo $one_ev_pers['atbilde'] ?></span>
+<!--                    <span id="span_12_blue">--><?php //echo $one_ev_pers['atbilde'] ?><!--</span>-->
 
                 </td>
                 <td  style="width: 5%;">

@@ -109,7 +109,12 @@ function sqltoarray($fields, $ftabula, $fwhere, $db) {
 	return $myarray;
 }
 function sqlupdate($field, $variable, $ftabula, $fwhere, $db) {
-	$sql = "UPDATE " . $ftabula . " SET " . $field . "='" . $variable . "' WHERE " . $fwhere;
+    if (strlen($fwhere)>0) {
+        $sql = "UPDATE " . $ftabula . " SET " . $field . "='" . $variable . "' WHERE " . $fwhere;
+    } else {
+        $sql = "UPDATE " . $ftabula . " SET " . $field . "='" . $variable . "'";
+    }
+
 	$q = $db->query ( $sql );
 	return 'true';
 }
@@ -152,16 +157,16 @@ function timer_end() {
 	return bcsub($endtime,$starttime,6);
 }
 function dropbox_select($marray,$mkey,$mselect){
-$rinda='<select name="agents" id="user_select">';
-echo $rinda;
-foreach ($marray as $mone) {
-	if (strlen($mselect)>0 && $mselect==$mone[$mkey]) {
-		echo "<option value='".$mone[$mkey]."' selected>".$mone[$mkey]."</option>";
-	} else {
-		echo "<option value='".$mone[$mkey]."'>".$mone[$mkey]."</option>";
-		}
-}	
-$rinda='</select>';
+    $rinda='<select name="agents" id="user_select">';
+    echo $rinda;
+    foreach ($marray as $mone) {
+        if (strlen($mselect)>0 && $mselect==$mone[$mkey]) {
+            echo "<option value='".$mone[$mkey]."' selected>".$mone[$mkey]."</option>";
+        } else {
+            echo "<option value='".$mone[$mkey]."'>".$mone[$mkey]."</option>";
+            }
+    }
+    $rinda='</select>';
 
 }
 function tmp_fil_to_array($db){
@@ -339,18 +344,18 @@ function inser_text_to_tmp($id_pers,$db){
     $q->execute($data);
 
 }
-function tmp_text_save($db){
+function tmp_text_save($db)
+{
 
-    $sql="select * from tmp_teksts_notikums";
+    $sql = "select * from tmp_teksts_notikums";
     $q = $db->query($sql);
     $mtext = $q->fetch(PDO::FETCH_ASSOC);
 
 
+    foreach ($mtext as $mtx) {
 
-    foreach($mtext as $mtx) {
-
-        $fwhere=" identif='".$_SESSION['EVENTS']['KODS']."' and id_pers=".$mtx['id_pers']." and source='".$mtx['source']."'";
-        $exist=sqltoarray(' * ', 'teksts_notikums', $fwhere, $db);
+        $fwhere = " identif='" . $_SESSION['EVENTS']['KODS'] . "' and id_pers=" . $mtx['id_pers'] . " and source='" . $mtx['source'] . "'";
+        $exist = sqltoarray(' * ', 'teksts_notikums', $fwhere, $db);
 
         if (empty($exist)) {
             $sql = "INSERT INTO teksts_notikums SET ";
@@ -377,7 +382,7 @@ function tmp_text_save($db){
 
             $q->execute($data);
         } else {
-            $ex=$exist[0];
+            $ex = $exist[0];
             $sql = "UPDATE teksts_notikums SET ";
             $sql = $sql . "
                     id_master
@@ -388,7 +393,7 @@ function tmp_text_save($db){
                     teksts_out=:teksts_out ,
                     teksts_in=:teksts_in ,
                     datums=:datums
-             where ID=".$ex['ID'];
+             where ID=" . $ex['ID'];
 
             $q = $db->prepare($sql);
 
@@ -402,9 +407,56 @@ function tmp_text_save($db){
                 ':datums' => date("Y-m-d"));
         }
     }
+}
+function BarIndikator05 ($value){
+    $rin="";
+if ($value==0){
+    $clr="red";
+}
+if ($value>0&&$value<=1){
+     $clr="orange";
+}
+if ($value>1&&$value<5){
+    $clr="#ffeb05";
+}
+if ($value==5){
+    $clr="green";
+}
 
 
 
 
+    for($v = 0; $v <= $value; $v++) {
+        $frag=' <div style="background:'.$clr.'; width:10px; float:left; color:'.$clr.';">'.'.'.'</div>';
+        $rin=$rin.$frag;
+        $frag= ' <div style="background:#ffffff; width:2px; float:left; color:#ffffff;">'.'.'.'</div>';
+        $rin=$rin.$frag;
+    }
+    return $rin;
+}
+function BarIndikator09 ($value){
+    $rin="";
+    if ($value>=0&&$value<=1){
+        $clr="red";
+    }
+    if ($value>=2&&$value<=4){
+        $clr="orange";
+    }
+    if ($value>=5&&$value<=7){
+        $clr="#ffeb05";
+    }
+    if ($value==8){
+        $clr="green";
+    }
 
+
+
+
+    for($v = 0; $v <= $value; $v++) {
+        $frag=' <div style="background:'.$clr.'; width:10px; float:left; color:'.$clr.';">'.'.'.'</div>';
+        $rin=$rin.$frag;
+        $frag= ' <div style="background:#ffffff; width:2px; float:left; color:#ffffff;">'.'.'.'</div>';
+        $rin=$rin.$frag;
+    }
+    return $rin;
 }

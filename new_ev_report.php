@@ -12,6 +12,12 @@ $ftabula="tmp_teksts_notikums";
 $fwhere=" id_master=".$_SESSION['EVENTS']['ID']." and id_pers=".$evUser['id_pers'];
 $event_teksts = sqltoarray($fields,$ftabula,$fwhere,$db);
 
+$fields=" * ";
+$ftabula="tmp_files";
+$fwhere="";
+$event_files = sqltoarray($fields,$ftabula,$fwhere,$db);
+
+
 if (empty($event_teksts)) {
     $tekst="";
 } else {

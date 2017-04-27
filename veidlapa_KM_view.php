@@ -7,10 +7,13 @@ if (isset($_POST['pret_risinajums'])) {
 	
 	$sakuma_datums = date("Y-m-d");
 	
-	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
-	$sql ="UPDATE pretenzijas SET sakuma_datums='".$sakuma_datums."', status='REGISTER' WHERE ID='".$_SESSION['PRET']['ID']."'";
-    $_SESSION['PRET']['STATUS']='REGISTER';
-	$q = $dbf->query($sql);
+//	$dbf = new PDO("mysql:host=".HOST.";dbname=".DB,USER,PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+//	$sql ="UPDATE pretenzijas SET sakuma_datums='".$sakuma_datums."', status='REGISTER' WHERE ID='".$_SESSION['PRET']['ID']."'";
+    $fwhere= " ID=".$_SESSION['PRET']['ID'];
+    sqlupdate('status', 1, 'pretenzijas', $fwhere, $db);
+    sqlupdate('sakuma_datums', $sakuma_datums, 'pretenzijas', $fwhere, $db);
+    $_SESSION['PRET']['STATUS']='1';
+//	$q = $dbf->query($sql);
 	
 }
 
@@ -337,7 +340,7 @@ if ($_SESSION['STATUS']=="NEW") {
 	</table>
 	<?php
 
-	if ($_SESSION['USER']['LOMA']=="Q" && $_SESSION['PRET']['STATUS']=='NEW') { ?>
+	if ($_SESSION['USER']['LOMA']=="Q" && $_SESSION['PRET']['STATUS']=='0') { ?>
 		<input type="submit" name="pret_risinajums" value="Sākt">
 	<?php }	 ?>
   </form>

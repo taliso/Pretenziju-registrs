@@ -47,8 +47,9 @@ if ($tasks_count>0) {
 //@@@___________ Katrs uzdevums ________@@@@@@@@@@@@@@@@@@@@@@@@@
     $tmp_file=tmp_fil_to_array($db);
 
-	foreach ($tasks_list as $OneTask) {	?>
-		
+	foreach ($tasks_list as $OneTask) {
+        ?>
+
 		<div id="divTask">
 					<table style="width:100%;">
 						<tr> 
@@ -67,7 +68,8 @@ if ($tasks_count>0) {
 				$disp='';
                 $_SESSION['TASK']['KODS']=$OneTask['identifikators'];
                 $_SESSION['TASK']['ID']=$OneTask['id'];
-                $task_fil=sqltoarray(' * ','faili',' id_master ='.$OneTask['id'],$db);
+                $tmp_file=sqltoarray(' * ','tmp_files','',$db);
+                $task_fil=sqltoarray(' * ','faili'," ident='".$_SESSION['TASK']['KODS']."'",$db);
                 ?>
                 <div class="invisible" > <!--  invisible -->
                     <table>
@@ -82,7 +84,7 @@ if ($tasks_count>0) {
                                 <table style="float:left; width:100%;">
 
                                        <?php  foreach($tmp_file as $OneTmp){
-                                          if ($OneTmp['identif']==$_SESSION['TASK']['ID']){ ?>
+                                          if ($OneTmp['identif']==$_SESSION['TASK']['KODS']){ ?>
                                                     <tr>
                                                         <td>
                                                             <?php echo "<a id='span_12_blue_italic' href='".$OneTmp['tmp_name']."'>".$OneTmp['name']."</a>"; ?>
