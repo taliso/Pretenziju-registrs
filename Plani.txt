@@ -1,4 +1,25 @@
-Insert > uzdevums > id_master id no personas_notikums
-Veidojot atbildi personas_notikumi <= id_master=id
+#Insert > uzdevums > id_master id no personas_notikums
+#Veidojot atbildi personas_notikumi <= id_master=id
 
-Veidojot jaunu notikumu - kamēr nav saglabāts - neredz pievienotos failus
+#Veidojot jaunu notikumu - kamēr nav saglabāts - neredz pievienotos failus
+
+=29.04
+Atverot notikumu sarakstu vajag sakārtošanu. Kārtības izmaiņa arī dinamiski.
+
+Dažādot dažādu notikumu izskatu
+
+### Izmaiņa izskatā ja uz ziņojumu un uzdevumu ir visas atbildes. Vai daļējas.
+
+Neļaut atkārtoti pievienot to pašu failu no tmp_faili.
+
+### Ja atbildot uz uzdevumu pievieno failu, to neredz notikumos.
+
+Failu pievienošanas klase ?
+
+### Uzdevumam jaunpievienotos failus citā krāsā
+
+Novērst POST atkārtotu nolasīšanu arī notikumos.
+
+Autorizējoties jārāda arī loma
+
+Administrācijas panelis.

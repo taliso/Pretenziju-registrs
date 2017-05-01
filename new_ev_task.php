@@ -43,16 +43,16 @@
 ?>
   <div id="divNewEvent" style="width:100%; margin: 7px;">
 	<div id="divNewEventTitle">
-		<span id="spantitle" style="width:100%;"> Jauns UZDEVUMS         [<?php echo $_SESSION['EVENTS']['KODS'] ?>]</span><br>
+		<span id="spantitle" style="width:100%;color: #44FF28;"> Jauns UZDEVUMS         [<?php echo $_SESSION['EVENTS']['KODS'] ?>]</span><br>
 	</div>
 
 	
-	<div id="divEventPersonas" style="float:left; width:78%; border: 2px solid black; margin:2px;">
-		<div id="" style="width:100%;border: 2px solid darkseagreen;text-align: center; height:20px; background-color:blue;">
+	<div id="divEventPersonas" style="float:left; width:78%;margin:0px;">
+		<div id="" style="width:100%;border: 2px solid darkseagreen;text-align: center; height:20px; background-color:#008B8B;">
 			 <span id="fspan3"> IESAISTĪTĀS PERSONAS</span>
 		</div>
 		<div id="jauns"style="width:99%;border: 1px solid darkseagreen;text-align: center; height:25px; background-color:green; padding:5px;"> 
-			<table style="width:99%;">
+			<table style="width:99%;margin: -1px;">
 				<tr>
 					<td style="width:10%;"><span id="span_14_right_yellow"> Persona:</span></td>
 					<td style="width:20%;">
@@ -65,8 +65,8 @@
 			  			</select>
 					</td>
 					<td style="width:10%;"><span id="span_14_right_yellow"> Uzdevums:</span></td>
-					<td style="width:50%;"><input type="text" name="uzdevums" value="" style=" margin:2px; width:60%; float:left;"></td>
-					<td style="width:10%;"><input type="submit" name="user_to_event" value="Pievienot personu"></td>
+					<td style="width:58%;"><input type="text" name="uzdevums" value="" style=" margin:2px; width:96%; float:left;"></td>
+					<td style="width:10%;"><input type="submit" name="user_to_event" value="+"></td>
 				</tr>
 			</table>
 		</div>
@@ -96,14 +96,14 @@
 	</div>
 
 
-	<div id="divEventFaili" style="float:left;  width:21%; border: 2px solid black; height:100%; margin: 2px;">
-		<div id="" style="width:99%;border: 2px solid darkseagreen;text-align: center; height:20px;background-color:blue;">
+	<div id="divEventFaili" style="float:left;  width:21%;height:100%; margin: 0px;">
+		<div id="" style="width:104%;border: 2px solid darkseagreen;text-align: center; height:20px;background:#008B8B;">
 			 <span id="fspan3"> FAILI </span>
 		</div>
 	
 		<div id="divFailiMenu">
-	  		<input type="file" name="fileUzdev" id="fileDoc" style="margin:4px;"><input style="float:right; margin: 4px;" type="submit" name="doc_to_event" value="Pievienot failu" >
-	  					  <table>	  	
+	  		<input type="file" name="fileUzdev" id="fileDoc" style="margin:4px;"><input style="float:right; margin: 4px;" type="submit" name="doc_to_event" value="+" >
+	  		  <table>
 			  <?php 
 		if (isset($event_files)){
 			  foreach ($event_files as $evFile) {	?>	

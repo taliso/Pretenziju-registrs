@@ -135,6 +135,14 @@ h3 {
 	font-style: italic;
 	font-weight: unset;
 }
+#span_12_red_italic {
+	color: #b80000;
+	font-family: verdana;
+	font-size: 12px;
+	font-style: italic;
+	font-weight: unset;
+}
+
 #span_12_blue {
 	color: #0f1573;
 	font-family: verdana;
@@ -149,5 +157,12 @@ h3 {
 }
 #text_pret_garss {
 	width:65%;
+
+}
+#tx_12_dzigs {
+	color: #cdd73c;
+	margin-left: 20px;
+	font-family: verdana;
+	font-size: 13px;
 
 }

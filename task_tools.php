@@ -58,7 +58,7 @@ if (isset($_POST['task_save'])) {
         foreach ($fil_to_ev as $fev) {
             $submit_name='fileUzdev';
             $source='notikumi';
-            $id_master=$OneTask['id_master'];
+            $id_master=$OneTask['id_source'];
             $identif=$fev['ident'];
             $name=$fev['orginal_name'];
             $konv_name=$fev['konvert_name'];

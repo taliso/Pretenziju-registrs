@@ -79,7 +79,7 @@ if ($tasks_count>0) {
                             <td style="width:15%;">
                                 <div style="width:100%; text-align: center; float:left;background: burlywood;"><span id="evspan1"> Pievienotie faili</span></div>
                                  <?php if ($OneTask['status']==0) {?>
-                                    <input type="file" name="fileTask" id="fileDoc"><input type="submit" name="add_task_file" value="Pievienot">
+                                    <input type="file" name="fileTask" id="fileDoc"><input type="submit" name="add_task_file" value="+">
                                  <?php } ?>
                                 <table style="float:left; width:100%;">
 
@@ -87,7 +87,7 @@ if ($tasks_count>0) {
                                           if ($OneTmp['identif']==$_SESSION['TASK']['KODS']){ ?>
                                                     <tr>
                                                         <td>
-                                                            <?php echo "<a id='span_12_blue_italic' href='".$OneTmp['tmp_name']."'>".$OneTmp['name']."</a>"; ?>
+                                                            <?php echo "<a id='span_12_red_italic' href='".$OneTmp['tmp_name']."'>".$OneTmp['name']."</a>"; ?>
                                                         </td>
                                                     </tr>
 

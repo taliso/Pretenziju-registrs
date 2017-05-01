@@ -60,7 +60,7 @@ $_SESSION['PRET']['IZDEVUMI']=$izd_sum;
 			</td>
 
 			<td style="width:10%;">
-				<span id="span_14_br"><?php  echo $_SESSION['EVENTS']['VEIDS_NOS'];  ?></span>
+<!--				<span id="span_14_br">--><?php // echo $_SESSION['EVENTS']['VEIDS_NOS'];  ?><!--</span>-->
 			</td>
 		</tr>	
 	</table>	

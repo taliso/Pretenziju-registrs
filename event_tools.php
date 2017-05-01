@@ -52,7 +52,7 @@ if (isset($_POST['new_event_report_create'])) {
 if (isset($_POST['new_event_order_create'])) {
     // ***********  Izvelkam notikuma veidu  ******************************
     $_SESSION['EVENTS']['STATUS']='NULL';
-    $_SESSION['EVENTS']['NEWFORMA']="new_ev_task.php";
+    $_SESSION['EVENTS']['NEWFORMA']="new_ev_order.php";
     $_SESSION['EVENTS']['FORMA']="ev_order_view.php";
     $_SESSION['EVENTS']['NR']=$_SESSION['PRET']['NOTIKUMU_SK']+1;
     $_SESSION['EVENTS']['KODS']=$_SESSION['PRET']['KODS']."-".$_SESSION['EVENTS']['NR'];
@@ -239,7 +239,18 @@ if (isset($_POST['new_event_accept'])) {
     $_SESSION['EVENTS']['PERS_SK'] =0;
 //####['new_event_accept']#### INSERT katru personu no tmp_personam
 	foreach ($event_users as $OneUser) {
-		// var_dump($OneUser);
+		// Tikai ja ZINOJUMS
+        if ($_SESSION['EVENTS']['VEIDS']=='R'){
+            $fields ="teksts_out";
+            $ftabula="tmp_teksts_notikums";
+            $fwhere="";
+
+            $event_teksts = sqltoarray($fields,$ftabula,$fwhere,$db);
+            $evtekst=$event_teksts[0];
+
+            $OneUser['uzdevums']=$evtekst['teksts_out'];
+        }
+
         $_SESSION['EVENTS']['PERS_SK']=$_SESSION['EVENTS']['PERS_SK']+1;
 		$sql = "INSERT INTO personas_notikums SET ";
 		$sql=$sql."
@@ -364,7 +375,36 @@ if (isset($_POST['doc_to_event'])) {
     to_tmp_file('notikumi',$event_id,'fileUzdev',$db);
 }
 //###########   Saglabājam tekstu tmp failā     #########################################################
-if (isset($_POST['teksts_to_event'])) {
+if (isset($_POST['teksts_to_order'])) {
+    if (isset($_POST['zinojums'])) {
+        $variable = $_POST['zinojums'];
+             $sql = "INSERT INTO tmp_teksts_notikums SET ";
+            $sql=$sql."
+                        id_master=:id_master ,
+                        id_pers=:id_pers ,
+                        teksts_out=:teksts_out ,
+                        datums=:datums ,
+                        identif=:identif ,
+                        source=:source ,
+                        persona=:persona";
+
+            $q = $db->prepare($sql);
+
+            $data = array(
+                        ':id_master'=>$_SESSION['EVENTS']['ID'],
+                        ':id_pers'=>$_SESSION['AGENTS']['ID'],
+                        ':teksts_out'=>$_POST['zinojums'],
+                        ':datums'=>date("Y-m-d"),
+                        ':identif'=>$_SESSION['EVENTS']['KODS'],
+                        ':source'=>'notikumi',
+                        ':persona'=>$_SESSION['AGENTS']['VARDS']);
+
+            $q->execute($data);
+//       $fwhere='';
+//        sqlupdate(' teksts_out ', $variable, 'tmp_teksts_notikums', $fwhere, $db);
+    }
+}
+if (isset($_POST['teksts_to_report'])) {
     if (isset($_POST['zinojums'])) {
         $variable = $_POST['zinojums'];
         $tmp_id = max_id('tmp_teksts_notikums', $db);

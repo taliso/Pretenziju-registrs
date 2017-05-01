@@ -35,7 +35,7 @@ if(isset($_GET['mnAdm'])){
     <div id="divAdminTitle">
         <span id="span_16_yealow">
             Administrēšanas forma
-        </span>
+          </span>
     </div>
     <div id="divAdminForma">
         <div id="divAdminMenju">
@@ -52,9 +52,7 @@ if(isset($_GET['mnAdm'])){
         </div>
         <div id="divAdminWork">
         <?php
-        if (strlen($AdminForm)>0) {
-            include $AdminForm;
-        }
+            include "admin_agenti.php";
         ?>
         </div>
     </div>

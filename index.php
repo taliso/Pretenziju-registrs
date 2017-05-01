@@ -202,7 +202,7 @@ if (isset($_GET['pret_id'])){
 		$lPsw=$usr['pasword'];
 		if($luser==$user){
             $_SESSION['USER']['STATUS'] = 1;  					// Autorizācijas pirmais solis - username sakrita
-			if($lPsw=$psw){
+			if($lPsw==$psw){
 
 		//	    include 'sesion_list.php';
 
@@ -213,7 +213,15 @@ if (isset($_GET['pret_id'])){
                 $_SESSION['USER']['STRUKT']=$usr['struktura_kods'];
                 $_SESSION['USER']['STATUS'] = 2;
 				$MainInfo="Autorizācija ir veiksmīga";
-			}
+			} else {
+                $_SESSION['USER']['ID']=0;
+                $_SESSION['USER']['VARDS']='';
+                $_SESSION['USER']['TIESIBAS']='';
+                $_SESSION['USER']['LOMA']='';
+                $_SESSION['USER']['STRUKT']='';
+                $_SESSION['USER']['STATUS'] = 0;
+                $MainInfo="Autorizācija ir neveiksmīga !!!!";
+            }
 		}
 	}
 }	
@@ -225,12 +233,7 @@ include 'task_tools.php';
 //###################  IZIET  ############################################################
 if (isset($_POST['btIziet'])) {
 	$_SESSION['USER']['STATUS']=0;
-}
-if (isset($_POST['btdebug'])) {
-	if($_SESSION['DEBUG']=='ON'){
-		$_SESSION['DEBUG']='OFF'; } else {
-		$_SESSION['DEBUG']='ON';
-	}
+    include 'sesion_list.php';
 }
 //###################  PRETENZIJAS VEIDS  ################################################
 if(isset($_GET['mTools'])){
@@ -359,7 +362,6 @@ if (isset ( $_POST ['pret_cancel'] )) {
 	$_SESSION['STATUS'] = "LIST";
 	$_SESSION['FORMA'] = 'pret_list.php';
 	$_SESSION['TITLE'] = "Pretenziju saraksts";
-	me("1",'FORMA',$_SESSION['FORMA']);
 }
 if ($_SESSION['USER']['STATUS']==2){
 		//<<<<<<<<<<<<<   Formas izvēle   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -435,10 +437,6 @@ if ($_SESSION['USER']['STATUS']==2){
 <form action="#" method="post" enctype="multipart/form-data">
 <div id="divMaster"><!--divMaster    -->
 	<div id="divGalva"><!--divGalva    -->
-<!--		<div id="divLogo"><!--divLogo    -->
-<!--<!--			<img id="logo" src="TENAX_TENAPORS_logo.jpg" alt="Tenapors logo" style="width:101px;height:56px;margin:10px">-->
-<!--<!--            <img id="logo" src="Title.png" alt="Tenapors logo" >-->
-<!--		</div>	<!--divLogo    -->
 		<div id="divTitle"><!--divTitle    -->
 <!--			<h1>Pretenziju reģistrācijas sistēma</h1>-->
                  <span id="span_16_yealow">Pretenziju pārvaldības sistēma</span>
@@ -480,10 +478,14 @@ if ($_SESSION['USER']['STATUS']==2){
 								<input type="submit" name="btIeiet" value="Ieiet">
 					<?php } ?>
 				</div><!--divIeIz    -->
-			</div><!--divLoginInfo    -->
+ 			</div><!--divLoginInfo    -->
 				<div id="divAdmin">
 <!--					<input type="submit" name="btdebug" value="Debug --><?php //echo $_SESSION['DEBUG']; ?><!--">-->
-				</div>
+                    <?php 	if ($_SESSION['USER']['LOMA']=='S'){?>
+                        <a href="adm.php">Administrēšana</a>
+                    <?php } ?>
+
+                </div>
 			<div id="divPapildInfo">
 				<div id="divKomp">
 				</div><!--divKomp    -->
@@ -525,10 +527,7 @@ if ($_SESSION['USER']['STATUS']==2){
 				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['PRET']['STATUS'] != "NEW") { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi <?php echo $_SESSION['PRET']['NOTIKUMU_SK'] ?></a></li>
 				<?php } ?>
-				<?php if ($_SESSION['USER']['LOMA'] =="S") { ?>
-					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnAdmin">Iestatījumi</a></li>
-				<?php } ?>
-				
+
 					
 			</ul>	
 		</div><!--divFormNavig    -->

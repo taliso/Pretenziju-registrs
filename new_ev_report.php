@@ -48,7 +48,7 @@ if (empty($event_teksts)) {
                             <td style=" background: white;"><span id="list_span"><?php echo $evUser['strukturas_kods'] ?></span></td>
                             <td style=" background: white;"><span id="list_span"><?php echo $evUser['persona'] ?></span></td>
                             <td style=" background: white;"><textarea name="zinojums" style="width:80%;font-family: verdana;font-size: 11px;"><?php echo $tekst; ?></textarea>
-                                <input type="submit" name="teksts_to_event" value="Saglabāt">
+                                <input type="submit" name="teksts_to_report" value="Saglabāt">
                             </td>
                         </tr>
                         <?php
@@ -67,7 +67,7 @@ if (empty($event_teksts)) {
         </div>
 
         <div id="divFailiMenu">
-            <input type="file" name="fileUzdev" id="fileDoc" style="margin:4px;"><input style="float:right; margin: 4px;" type="submit" name="doc_to_event" value="Pievienot failu" >
+            <input type="file" name="fileUzdev" id="fileDoc" style="margin:4px;"><input style="float:right; margin: 4px;" type="submit" name="doc_to_event" value="+" >
             <table>
                 <?php
                 if (isset($event_files)){

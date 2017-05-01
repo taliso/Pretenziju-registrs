@@ -887,3 +887,10 @@ tr td {
 	font-family: verdana;
 	font-size: 13px;
 }
+#text_admin {
+	background: grey;
+	color: #3fe647;
+	font-family: verdana;
+	font-size: 13px;
+
+}

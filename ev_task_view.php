@@ -7,6 +7,17 @@
  */
 $where=" id_event =".$one_event['ID'];
 $ev_pers=sqltoarray(' * ','personas_notikums',$where,$db);
+$pers=count($ev_pers);
+
+$where=" id_event =".$one_event['ID']." and status = 1 ";
+$ev_atb=sqltoarray(' * ','personas_notikums',$where,$db);
+$atb=count($ev_atb);
+
+$visas_atb=0;
+if ($pers==$atb){
+    $visas_atb=1;
+}
+
 
 $where=" source='notikumi' && id_master =".$one_event['ID'];
 $ev_faili=sqltoarray(' * ','faili',$where,$db);
@@ -18,6 +29,20 @@ $ev_faili=sqltoarray(' * ','faili',$where,$db);
         <table style="width: 100%;">
             <tr>
                 <td style="width: 25%;">
+                    <div>
+                        <?php   if ($visas_atb==0){
+                            $imag = '<img id="logo" src="icons\rosette.png" alt="NEW" >';
+                        }
+                        if ($visas_atb==1){
+                            $imag = '<img id="logo" src="icons\tick.png" alt="ACCEPT" >';
+
+                        }
+                        if ($atb>0&&$atb<$pers){
+                            $imag = '<img id="logo" src="icons\error.png" alt="WAIT" >';
+                        }
+                        echo $imag;
+                        ?>
+                    </div>
                     <span id="span_14_br">UZDEVUMS</span>
                 </td>
                 <td style="width: 50%;">

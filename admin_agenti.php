@@ -11,7 +11,7 @@ $lietotaji=sqltoarray('*','kl_agenti','',$db);
                                     </td>
                                     <td class="tcol3" style="background-color: indigo;color: ivory;">Lietotājs
                                     </td>
-                                    <td class="tcol3" style="background-color: indigo;color: ivory;">Parole
+                                    <td class="tcol3" style="background-color: indigo;color: ivory;">Tiesibas
                                     </td>
                                     <td class="tcol1" style="background-color: indigo;color: ivory;">Loma
                                     </td>
@@ -30,11 +30,11 @@ $lietotaji=sqltoarray('*','kl_agenti','',$db);
                                     <td class="tcol3">
 
                                         <?php
-                                            echo '<a href="?cilv='.$persona['agents'].'" style= "color: black;">'.$persona['agents']; ?>
+                                            echo '<a href="?cilv='.$persona['agents'].'" style= "color: #b9ceb6;">'.$persona['agents']; ?>
                                     </td>
                                     <td class="tcol3"><?php echo $persona['username'];?>
                                     </td>
-                                    <td class="tcol3"><?php echo $persona['pasword'];?>
+                                    <td class="tcol3"><?php echo $persona['tiesibas'];?>
                                     </td>
                                     <td class="tcol1"><?php echo $persona['loma'];?>
                                     </td>
@@ -64,92 +64,99 @@ $lietotaji=sqltoarray('*','kl_agenti','',$db);
 
 
         <div id="divLietKart" >
-            <table style="width:100%;">
+            <div style="background-color: indigo;color: ivory; height:20px;">
+                Programmas lietotāja kartiņa
+            </div>
+        <table style="width:100%;">
                 <tr>
                     <td style="width:50%;">
-                        Vārds:
+                        <span id="tx_12_dzigs">Vārds:</span>
                     </td>
                     <td style="width:50%;">
-                        <input ID="text_pret" type="text" name="agents" value="<?php echo $aCilv['agents']; ?>.">
+                        <input id="text_admin" type="text" name="agents" value="<?php echo $aCilv['agents']; ?>.">
                     </td>
 
                 </tr>
                 <tr>
                     <td>
-                        Lietotāja vārds:
+                         <span id="tx_12_dzigs">Lietotāja vārds:</span>
                     </td>
                     <td>
-                        <input ID="text_pret" type="text" name="username" value="<?php echo $aCilv['username']; ?>">
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Parole:
-                    </td>
-                    <td>
-                        <input ID="text_pret" type="text" name="pasword" value="<?php echo $aCilv['pasword']; ?>"><br>
-                        <input ID="text_pret" type="text" name="pasword2" value="">
+                        <input ID="text_admin" type="text" name="username" value="<?php echo $aCilv['username']; ?>">
                     </td>
 
                 </tr>
                 <tr>
                     <td>
-                        Tiesības:
+                         <span id="tx_12_dzigs">Parole:</span>
                     </td>
                     <td>
-                        <input ID="text_pret" type="text" name="tiesibas" value="<?php echo $aCilv['tiesibas']; ?>">
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Loma:
-                    </td>
-                    <td>
-                        <input ID="text_pret" type="text" name="loma" value="<?php echo $aCilv['loma']; ?>">
+                        <input ID="text_admin" type="text" name="pasword" value="<?php echo $aCilv['pasword']; ?>"><br>
+                        <input ID="text_admin" type="text" name="pasword2" value="">
+                        <input type="submit" name="admin_passw" value="Saglabāt">
                     </td>
 
                 </tr>
                 <tr>
                     <td>
-                        E-pasts:
+                         <span id="tx_12_dzigs">Tiesības:</span>
                     </td>
                     <td>
-                        <input ID="text_pret" type="text" name="epasts" value="<?php echo $aCilv['epasts']; ?>">
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Struktūra:
-                    </td>
-                    <td>
-                        <input ID="text_pret" type="text" name="struktura_kods" value="<?php echo $aCilv['struktura_kods']; ?>">
+                        <input ID="text_admin" type="text" name="tiesibas" value="<?php echo $aCilv['tiesibas']; ?>">
+                        <input type="submit" name="admin_trust" value="...">
                     </td>
 
                 </tr>
                 <tr>
                     <td>
-                        E-pastu sūtīt:
+                         <span id="tx_12_dzigs">Loma:</span>
                     </td>
                     <td>
-                        <input ID="text_pret" type="text" name="esutit" value="<?php echo $aCilv['aktivs']; ?>">
+                        <input ID="text_admin" type="text" name="loma" value="<?php echo $aCilv['loma']; ?>">
+                        <input type="submit" name="admin_loma" value="...">
                     </td>
 
                 </tr>
                 <tr>
                     <td>
-                        Aktīvs:
+                         <span id="tx_12_dzigs">E-pasts:</span>
                     </td>
                     <td>
-                        <input ID="text_pret" type="text" name="aktivs" value="<?php echo $aCilv['aktivs']; ?>">
+                        <input ID="text_admin" type="text" name="epasts" value="<?php echo $aCilv['epasts']; ?>">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                         <span id="tx_12_dzigs">Struktūra:</span>
+                    </td>
+                    <td>
+                        <input ID="text_admin" type="text" name="struktura_kods" value="<?php echo $aCilv['struktura_kods']; ?>">
+                        <input type="submit" name="admin_strukt" value="...">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                         <span id="tx_12_dzigs">E-pastu sūtīt:</span>
+                    </td>
+                    <td>
+                        <input ID="text_admin" type="text" name="esutit" value="<?php echo $aCilv['aktivs']; ?>">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                         <span id="tx_12_dzigs">Aktīvs:</span>
+                    </td>
+                    <td>
+                        <input ID="text_admin" type="text" name="aktivs" value="<?php echo $aCilv['aktivs']; ?>">
                     </td>
 
                 </tr>
 
             </table>
-            <input type="submit" name="admin_save" value="Saglabāt">
+            <input type="submit" name="admin_save" value="Saglabāt"><input type="submit" name="admin_new" value="Jauns"><input type="submit" name="admin_canc" value="Atcelt">
         </div>
     <?php } ?>
 	</div>	
