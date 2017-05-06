@@ -23,3 +23,11 @@ Novērst POST atkārtotu nolasīšanu arī notikumos.
 Autorizējoties jārāda arī loma
 
 Administrācijas panelis.
+
+Administrēšanā tiesības iznesam atsevišķā tabulā.
+
+Paroles piešķiršanas-maiņas forma.
+
+Tiesību ekrāns
+
+Preventīvajām darbībām vajag iespēju "Nav nepieciešamas preventīvās darbības."

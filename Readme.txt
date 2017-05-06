@@ -33,4 +33,3 @@ Lomas
     T - tehniskais-kontroles dienests
     Q - kvalitātes kontrole
 
-

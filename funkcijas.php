@@ -81,6 +81,23 @@ function StatCheckBox($mname, $mvariable, $koments, $nobeig, $status) {
 	$mteksts = '<input type="checkbox" name="' . $mname . '"' . $mcheckstat . $status . '> ' . $koments . $nobeig;
 	echo $mteksts;
 }
+function StatCheckBox1($mname, $mvariable, $status) {
+    if ($mvariable == 1) {
+        $mcheckstat = " checked";
+    } else {
+        $mcheckstat = "";
+    }
+    $mteksts = "";
+    $mteksts = '<input type="checkbox" name="' . $mname . '"' . $mcheckstat . $status . '> ';
+    $aCheck=array(
+      'check'=> $mcheckstat,
+      'value'=> $mvariable,
+      'status'=> $status,
+      'teksts'=> $mteksts);
+
+//    echo $aCheck;
+    return $aCheck;
+}
 function MailTo($to, $sub, $body, $mail) {
 	$mail->addAddress ( $to ); // Name is optional
 	$mail->Subject = $sub;
@@ -116,13 +133,6 @@ function sqlupdate($field, $variable, $ftabula, $fwhere, $db) {
     }
 
 	$q = $db->query ( $sql );
-	return 'true';
-}
-function sqlinsert($ftabula, $db) {
-	$sql = "UPDATE " . $ftabula . " SET " . $field . "='" . $variable . "' WHERE " . $fwhere;
-	echo $sql;
-	$q = $db->query ( $sql );
-	
 	return 'true';
 }
 function me($key, $teksts, $vertiba) {

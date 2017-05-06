@@ -69,12 +69,13 @@ if (isset($_SESSION['INFO'])){
   		$liet_list[]=$r;
    	}
    	//______________  IELĀDĒJAM KVALITĀTES PERSONU _________________________________________
-    $_SESSION['QUALITY']['ID'] =  $qual_list[0]['ID'];
-    $_SESSION['QUALITY']['VARDS'] = $qual_list[0]['agents'];
-    $_SESSION['QUALITY']['TIESIBAS'] = $qual_list[0]['tiesibas'];
-    $_SESSION['QUALITY']['LOMA'] = $qual_list[0]['loma'];
-    $_SESSION['QUALITY']['EPASTS']=$qual_list[0]['epasts'];
-
+    if (isset($qual_list)) {
+        $_SESSION['QUALITY']['ID'] = $qual_list[0]['ID'];
+        $_SESSION['QUALITY']['VARDS'] = $qual_list[0]['agents'];
+        $_SESSION['QUALITY']['TIESIBAS'] = $qual_list[0]['tiesibas'];
+        $_SESSION['QUALITY']['LOMA'] = $qual_list[0]['loma'];
+        $_SESSION['QUALITY']['EPASTS'] = $qual_list[0]['epasts'];
+    }
     //*********  IELĀDĒJAM MENJU SARAKSTU MASĪVĀ $menju_list ******************************
 //
 //  	$sql = "SELECT * FROM menju";

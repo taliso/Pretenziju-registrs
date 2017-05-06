@@ -48,7 +48,13 @@ if(isset($_GET['mnAdm'])){
             <a id='mnAdmin' href="?mnAdm=mnaLoma">Lomu veidi</a>
            <br>
             <a id='mnAdmin' href="?mnAdm=mnaOpc">Opcijas</a>
-           <br>
+            <br>
+            <br>
+            <br>
+
+             <a id='mnAdmin' href="index.php">Iziet</a>
+
+
         </div>
         <div id="divAdminWork">
         <?php

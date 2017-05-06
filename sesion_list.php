@@ -61,5 +61,10 @@ $_SESSION['EVENTS']['AGENTS'] ='';
 $_SESSION['EVENTS']['NEWFORMA'] ='';
 $_SESSION['EVENTS']['FORMA'] ='';
 
+$_SESSION['ADMIN']['ID']=0;
+$_SESSION['ADMIN']['STATUS']="LIST";
+$_SESSION['ADMIN']['PSW']='';
+$_SESSION['ADMIN']['SUBFORM']='';
+
 
 session_write_close();

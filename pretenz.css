@@ -892,5 +892,15 @@ tr td {
 	color: #3fe647;
 	font-family: verdana;
 	font-size: 13px;
+	width:70%;
 
+}
+#divAdmTitle {
+	background: indigo;
+	color: ivory;
+	height:20px;
+}
+#divAdminPsw {
+	width:40%;
+	float:right;
 }
