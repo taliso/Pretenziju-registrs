@@ -88,7 +88,7 @@ if (isset($_SESSION['INFO'])){
   	$q = $db->query($sql);
   	$r = $q->fetch(PDO::FETCH_ASSOC);
     $_SESSION['VERSIJA']=$r['versija_koncep'].'-'.$r['versija_db'].'-'.$r['versija_kods'];
-    $_SESSION['MAIL']=$r['mail'];
+    //$_SESSION['MAIL']=$r['mail'];
 
 
 
@@ -280,7 +280,7 @@ if(isset($_GET['navig'])){
 				
 				$_SESSION['STATUS'] = "NEW";
                 $_SESSION['PRET']['ID']=max_id('pretenzijas',$db)+1;
-                $_SESSION['PRET']['STATUS']="NULL";
+                $_SESSION['PRET']['STATUS']=0;
 
 				if ($_SESSION['PRET']['PREFIKS'] =="EPS"){
 					$_SESSION['TITLE'] = "EPS pretenzijas veidlapa. Jauna.";
@@ -321,34 +321,38 @@ if (isset ( $_POST ['pret_save'] )) {
     if ($_SESSION['SAVESTATUS'] =="0") {
         include 'veidlapa_KM_save.php';
         // echo 'Pēc save:'.timer_end();
-        $_SESSION['STATUS'] = "LIST";
+//        $_SESSION['STATUS'] = "LIST";
         $_SESSION['TITLE'] = "Pretenziju saraksts";
-        if ($_SESSION['PRET']['STATUS'] == 'NULL' && $_SESSION['MAIL'] == 'Y') {
+        if ($_SESSION['MAIL'] == 'Y'&& $_SESSION['STATUS'] != "ERROR") {
+            if ($_SESSION['PRET']['STATUS'] == '0') {
 
-            $to = $_SESSION['QUALITY']['EPASTS'];
-            $sub = 'Jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'];
-            $body = 'Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '.
-            Pretenziju ievadīja ' . $_SESSION['USER']['VARDS'] . '
-            Ludzu nozimet atbildigos.';
-            MailTo($to, $sub, $body, $mail);
+                $to = $_SESSION['QUALITY']['EPASTS'];
+                $sub = 'Jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'];
 
-        } else {
+                $body = '<p style="color:#731d09; font-family:verdana; font-size:14px;" > Ir registreta jauna pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '.</p>';
 
-            $to = 'service@tenax.lv';
-            $sub = 'Pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . ' ir labota.';
-            $body = 'Pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . ' ir labota.';
+                $body .='<p style="color:blue;font-size: 12px;font-family: verdana;" >Pretenziju ievadīja ' . $_SESSION['USER']['VARDS'] . ' </p>';
+                $body .='<p style="color:#565c59;font-size: 12px;font-family: verdana;" >Lūdzu nozīmēt atbildīgos.</p>';
 
-            $mail->addAddress($to); // Name is optional
-            $mail->Subject = $sub;
-            $mail->Body = $body;
+                $body .='<p style="font-size:8px; font-family:verdana;">Informācija par šo pretenziju ir pieejama  <a href="' .$_SESSION['URL'].'">šeit</a></p>';
+                $body .='<p style="font-size:10px; font-family:verdana;">Pretenziju pārvaldības sistēma.</p>';
+                MailTo($to, $sub, $body, $mail);
 
-            if (!$mail->send()) {
-                echo 'Message could not be sent.';
-                echo 'Mailer Error: ' . $mail->ErrorInfo;
             } else {
-                echo 'E-pasts ir nosūtīts. Par labošanu.';
+
+                $to = $_SESSION['QUALITY']['EPASTS'];
+                $sub = 'Pretenzija Nr. ' . $_SESSION['PRET']['KODS'].' ir labota.';
+
+                $body = '<p style="color:#731d09; font-family:verdana; font-size:14px;" > Ir labota pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '.</p>';
+
+                $body .='<p style="color:blue;font-size: 12px;font-family: verdana;" >Pretenziju laboja ' . $_SESSION['USER']['VARDS'] . ' </p>';
+
+                $body .='<p style="font-size:8px; font-family:verdana;">Informācija par šo pretenziju ir pieejama  <a href="' .$_SESSION['URL'].'">šeit</a></p>';
+                $body .='<p style="font-size:10px; font-family:verdana;">Pretenziju pārvaldības sistēma.</p>';
+                MailTo($to, $sub, $body, $mail);
             }
         }
+        $_SESSION['STATUS'] = "LIST";
     } else {
         $_SESSION['STATUS'] = "LIST";
         $_SESSION['TITLE'] = "Pretenziju saraksts";
@@ -525,7 +529,7 @@ if ($_SESSION['USER']['STATUS']==2){
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnNew">Jauns</a></li>
 				<?php } ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnTasks">Uzdevumi</a></li>
-				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['PRET']['STATUS'] != "NEW") { ?>
+				<?php if ($_SESSION['STATUS'] != "LIST" && $_SESSION['PRET']['STATUS'] != 0) { ?>
 					<li id='mnNavig'><a id='mnaNavig' href="?navig=mnEvent">Notikumi <?php echo $_SESSION['PRET']['NOTIKUMU_SK'] ?></a></li>
 				<?php } ?>
 

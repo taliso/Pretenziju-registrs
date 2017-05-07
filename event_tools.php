@@ -21,6 +21,7 @@ if (isset($_POST['new_event_task_create'])) {
 	// Izveidojam uzdevumus visiem dalībniekiem
 	//Izsūtam piestiprinātos failus visiem dalībniekiem
 }
+
 //###################  GRIBU JAUNU NOTIKUMU - ZINOJUMS  ################################################
 if (isset($_POST['new_event_report_create'])) {
     // ***********  Izvelkam notikuma veidu  ******************************
@@ -48,6 +49,7 @@ if (isset($_POST['new_event_report_create'])) {
     // Izveidojam uzdevumus visiem dalībniekiem
     //Izsūtam piestiprinātos failus visiem dalībniekiem
 }
+
 //###################  GRIBU JAUNU NOTIKUMU - LEMUMS  ################################################
 if (isset($_POST['new_event_order_create'])) {
     // ***********  Izvelkam notikuma veidu  ******************************
@@ -70,6 +72,7 @@ if (isset($_POST['new_event_order_create'])) {
     // Izveidojam uzdevumus visiem dalībniekiem
     //Izsūtam piestiprinātos failus visiem dalībniekiem
 }
+
 //###################  GRIBU JAUNU NOTIKUMU - KOPSAVILKUMS  ################################################
 if (isset($_POST['new_event_summary_create'])) {
     // ***********  Izvelkam notikuma veidu  ******************************
@@ -91,6 +94,7 @@ if (isset($_POST['new_event_summary_create'])) {
     // Izveidojam uzdevumus visiem dalībniekiem
     //Izsūtam piestiprinātos failus visiem dalībniekiem
 }
+
 //###################  GRIBU JAUNU NOTIKUMU - DARBIBAS  ################################################
 if (isset($_POST['new_event_action_create'])) {
     // ***********  Izvelkam notikuma veidu  ******************************
@@ -113,6 +117,7 @@ if (isset($_POST['new_event_action_create'])) {
     // Izveidojam uzdevumus visiem dalībniekiem
     //Izsūtam piestiprinātos failus visiem dalībniekiem
 }
+
 //###################  ATCEĻU  NEWEVENT  ################################################
 if (isset($_POST['new_event_cancel'])) {
 	// ***********  Atceļam notikumpievienošanu ******************************
@@ -130,6 +135,7 @@ if (isset($_POST['new_event_cancel'])) {
     $q = $db->query($sql);
 
 }
+
 //####['new_event_accept']###############  APSTIPRINU  NEWEVENT - TASKS    ############################################
     //####['new_event_accept']#### INSERT notikums
 if (isset($_POST['new_event_accept'])) {
@@ -144,7 +150,7 @@ if (isset($_POST['new_event_accept'])) {
  	  	event_id=:event_id ,
    		event_date=:event_date,
 	    pers_sk=:pers_sk ,
-        fail_sk=:pers_sk ,
+        fail_sk=:fail_sk ,
         status=:status ,
         veids_nos=:veids_nos ,
         veids=:veids";
@@ -309,6 +315,33 @@ if (isset($_POST['new_event_accept'])) {
 			':termins'=>date("Y-m-d"));
 
         $q->execute($data);
+
+        $_SESSION['TASK']['KODS']=$OneUser['event_id'];
+        if ($_SESSION['EVENTS']['VEIDS']=='T') {
+            $to = $OneUser['e_pasts'];
+            $sub = 'Jauns uzdevums no Pretenziju pārvaldības sistēmas. Uzdevuma Nr. ' . $_SESSION['TASK']['KODS'];
+
+            $body = '<p style="color:#731d09; font-family:verdana; font-size:14px;" > Ir saņemts jauns uzdevums no pretenzija Nr. ' . $_SESSION['PRET']['KODS'] . '.</p>';
+            $body = '<p style="color:#731d09; font-family:verdana; font-size:14px;" > Uzdevuma identifikātors ir ' . $_SESSION['TASK']['KODS'] . '.</p>';
+
+            $body .= '<p style="color:#565c59;font-size: 12px;font-family: verdana;" >Lūdzu sniegt atbildi 3 darba dienu laikā.</p>';
+
+            $body .= '<p style="font-size:8px; font-family:verdana;">Informācija par šo pretenziju ir pieejama  <a href="' . $_SESSION['URL'] . '">šeit</a></p>';
+            $body .= '<p style="font-size:10px; font-family:verdana;">Pretenziju pārvaldības sistēma.</p>';
+            MailTo($to, $sub, $body, $mail);
+        }
+        if ($_SESSION['EVENTS']['VEIDS']=='R') {
+            $to = $OneUser['e_pasts'];
+            $sub = 'Ziņojums par pretenziju Nr. ' . $_SESSION['PRET']['KODS'];
+
+            $body = '<p style="color:#731d09; font-family:verdana; font-size:14px;" > Ir saņemts ziņojums par pretenziju Nr. ' . $_SESSION['PRET']['KODS'] . '.</p>';
+            $body = '<p style="color:#731d09; font-family:verdana; font-size:14px;" > Uzdevuma identifikātors ir ' . $_SESSION['TASK']['KODS'] . '.</p>';
+
+             $body .= '<p style="font-size:8px; font-family:verdana;">Informācija par šo pretenziju ir pieejama  <a href="' . $_SESSION['URL'] . '">šeit</a></p>';
+            $body .= '<p style="font-size:10px; font-family:verdana;">Pretenziju pārvaldības sistēma.</p>';
+            MailTo($to, $sub, $body, $mail);
+        }
+
     }
 // END  ###############   Saglabājam datus par personām  ###############################################
 //###############   Saglabājam datus par failiem  ###############################################
@@ -333,6 +366,7 @@ if (isset($_POST['new_event_accept'])) {
 
 
 }  //#########  ['new_event_accept']  END
+
 //###########   Pievienot personu jaunam eventam     #########################################################
 if (isset($_POST['user_to_event'])) {
 
@@ -367,6 +401,7 @@ if (isset($_POST['user_to_event'])) {
 	$q->execute($data);
 
 }
+
 //###########   Pievienot failu jaunam eventam     #########################################################
 if (isset($_POST['doc_to_event'])) {
     $pret_id=$_SESSION['PRET']['KODS'];
@@ -374,6 +409,7 @@ if (isset($_POST['doc_to_event'])) {
 	$event_id=$pret_id."-".$npk;
     to_tmp_file('notikumi',$event_id,'fileUzdev',$db);
 }
+
 //###########   Saglabājam tekstu tmp failā     #########################################################
 if (isset($_POST['teksts_to_order'])) {
     if (isset($_POST['zinojums'])) {

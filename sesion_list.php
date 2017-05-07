@@ -8,8 +8,9 @@ $_SESSION['FORMA'] = 'pret_list.php';
 $_SESSION['FORM_TITLE'] = -1;
 $_SESSION['NAVIG'] = -1;
 $_SESSION['VERSIJA'] = '';
-$_SESSION['MAIL'] = 'N';
+$_SESSION['MAIL'] = 'Y';
 $_SESSION['SAVESTATUS']=0;
+$_SESSION['URL']='http://127.0.0.1/Pretenziju-registrs/index.php';
 
 $_SESSION['AGENTS']['VARDS'] = '';
 $_SESSION['AGENTS']['PASTS'] = '';

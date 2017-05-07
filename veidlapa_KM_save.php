@@ -42,14 +42,23 @@ $tabula='tmp_files';
 $where='';
 $tmp_fil=tmp_fil_to_array($db);
 //$tmp_fil=sqltoarray($fields,$tabula,$where,$db);
-
-if ($_SESSION['PRET']['STATUS']=="NULL") {
-	$sql = "INSERT INTO pretenzijas SET ";
-
-} else {
-	$sql = "UPDATE pretenzijas SET ";
+$irvisidati=0;
+if (strlen($iesniedzejs)>0) {
+    $irvisidati=$irvisidati+1;
 }
-$sql=$sql."
+if (strlen($pasutijuma_nr)>0) {
+    $irvisidati=$irvisidati+1;
+}
+
+if($irvisidati==2) {
+
+    if ($_SESSION['PRET']['STATUS'] == 0) {
+        $sql = "INSERT INTO pretenzijas SET ";
+
+    } else {
+        $sql = "UPDATE pretenzijas SET ";
+    }
+    $sql = $sql . "
 		reg_nr=:reg_nr,
 		veids=:veids,
 		dokumenta_datums=:dokumenta_datums,
@@ -89,56 +98,61 @@ $sql=$sql."
 		budzets=:budzets,
 		sakuma_datums=:sakuma_datums";
 
-if ($_SESSION['STATUS']=="EDIT") {
-	$sql = $sql." WHERE pret_id='".$_SESSION['PRET']['KODS']."'";
-}
-	$q = $db->prepare($sql);
-		
-		$data = array(
-			':reg_nr'=>$reg_nr,
-			':veids'=>$veids,
-			':dokumenta_datums'=>$dokumenta_datums,
-			':sanemsanas_datums'=>$sanemsanas_datums,
-			':registr_datums'=>$registr_datums,
-			':pret_id'=>$pret_id,
-			':iesniedzejs'=>$iesniedzejs,
-			':agents'=>$agents,
-			':produkcija'=>$produkcija,
-			':pasutijuma_nr'=>$pasutijuma_nr,
-			':daudzums_viss'=>$daudzums_viss,
-			':daudzums_pieg_part'=>$daudzums_pieg_part,
-			':pieg_part_nr'=>$pieg_part_nr,
-			':daudzums_atsev_paneli'=>$daudzums_atsev_paneli,
-			':daudzums_kvmet'=>$daudzums_kvmet,
-			':daudzums_kubmet'=>$daudzums_kubmet,
-			':no_partijas'=>$no_partijas,
-			':par_laiks'=>$par_laiks,
-			':par_daudzumu'=>$par_daudzumu,
-			':par_bojats'=>$par_bojats,
-			':par_kvalitati'=>$par_kvalitati,
-			':beigu_dat'=>$beigu_dat,
-			':noform_pardev'=>0,
-			':noform_e_pasts'=>0,
-			':noform_oficial'=>0,
-			':iesniegts_nav'=>$iesniegts_nav,
-			':iesniegts_panel_foto'=>$iesniegts_panel_foto,
-			':iesniegts_mark_foto'=>$iesniegts_mark_foto,
-			':obl_dok_crm'=>$obl_dok_crm,
-			':obl_dok_akts'=>$obl_dok_akts,
-			':apraksts'=>$apraksts,
-			':file_foto'=>$file_foto,
-			':file_pas'=>$file_pas,
-			':file_apr'=>$file_apr,
-			':file_obl_doc'=>$file_obl_doc,
-			':notikumu_sk'=>0,
-			':budzets'=>$budzets,
-			':sakuma_datums'=>$sakuma_datums );
+    if ($_SESSION['STATUS'] == "EDIT") {
+        $sql = $sql . " WHERE pret_id='" . $_SESSION['PRET']['KODS'] . "'";
+    }
+    $q = $db->prepare($sql);
 
-		$q->execute($data);
+    $data = array(
+        ':reg_nr' => $reg_nr,
+        ':veids' => $veids,
+        ':dokumenta_datums' => $dokumenta_datums,
+        ':sanemsanas_datums' => $sanemsanas_datums,
+        ':registr_datums' => $registr_datums,
+        ':pret_id' => $pret_id,
+        ':iesniedzejs' => $iesniedzejs,
+        ':agents' => $agents,
+        ':produkcija' => $produkcija,
+        ':pasutijuma_nr' => $pasutijuma_nr,
+        ':daudzums_viss' => $daudzums_viss,
+        ':daudzums_pieg_part' => $daudzums_pieg_part,
+        ':pieg_part_nr' => $pieg_part_nr,
+        ':daudzums_atsev_paneli' => $daudzums_atsev_paneli,
+        ':daudzums_kvmet' => $daudzums_kvmet,
+        ':daudzums_kubmet' => $daudzums_kubmet,
+        ':no_partijas' => $no_partijas,
+        ':par_laiks' => $par_laiks,
+        ':par_daudzumu' => $par_daudzumu,
+        ':par_bojats' => $par_bojats,
+        ':par_kvalitati' => $par_kvalitati,
+        ':beigu_dat' => $beigu_dat,
+        ':noform_pardev' => 0,
+        ':noform_e_pasts' => 0,
+        ':noform_oficial' => 0,
+        ':iesniegts_nav' => $iesniegts_nav,
+        ':iesniegts_panel_foto' => $iesniegts_panel_foto,
+        ':iesniegts_mark_foto' => $iesniegts_mark_foto,
+        ':obl_dok_crm' => $obl_dok_crm,
+        ':obl_dok_akts' => $obl_dok_akts,
+        ':apraksts' => $apraksts,
+        ':file_foto' => $file_foto,
+        ':file_pas' => $file_pas,
+        ':file_apr' => $file_apr,
+        ':file_obl_doc' => $file_obl_doc,
+        ':notikumu_sk' => 0,
+        ':budzets' => $budzets,
+        ':sakuma_datums' => $sakuma_datums);
+
+    $q->execute($data);
 //#########################  FAILU UPLOADS   ################################################################
-		
+
 //^^^^^^^^^^^^^^^^^^    Saglabājam faili sarakstu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //		var_dump($tmp_fil);
-if (isset($tmp_fil)){
-    $fail_sk=tmp_fil_save('pretenzijas',$_SESSION['PRET']['ID'],$db);
+    if (isset($tmp_fil)) {
+        $fail_sk = tmp_fil_save('pretenzijas', $_SESSION['PRET']['ID'], $db);
+    }
+} else {
+    AddLog(" Neveiksmīgs mēģinājums saglabāt pretenziju Nr.".$_SESSION['PRET']['KODS']);
+    $_SESSION['STATUS'] = "ERROR";
+    echo "<script>alert('Nav ievadīti visi nepieciešamie dati! Pretenzija nav saglabāta.')</script>";
 }

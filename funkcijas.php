@@ -100,14 +100,16 @@ function StatCheckBox1($mname, $mvariable, $status) {
 }
 function MailTo($to, $sub, $body, $mail) {
 	$mail->addAddress ( $to ); // Name is optional
+    $mail->CharSet = 'UTF-8';
 	$mail->Subject = $sub;
 	$mail->Body = $body;
+    $mail->IsHTML(true);
 	
 	if (! $mail->send ()) {
 		echo 'Message could not be sent.';
 		echo 'Mailer Error: ' . $mail->ErrorInfo;
 	} else {
-		echo 'E-pasts ir nosūtīts ';
+		//echo 'E-pasts ir nosūtīts ';
 	}
 }
 function sqltoarray($fields, $ftabula, $fwhere, $db) {
@@ -308,6 +310,7 @@ function inser_pers_to_tmp($id_pers,$db){
     $muser = $q->fetch(PDO::FETCH_ASSOC);
     $sql = "INSERT INTO tmp_personas_notikums SET ";
     $sql=$sql."
+        id_event=:id_event,
         id_pers=:id_pers ,            
  	  	persona=:persona ,
  	  	strukturas_kods=:strukturas_kods ,
@@ -318,6 +321,7 @@ function inser_pers_to_tmp($id_pers,$db){
     $q = $db->prepare($sql);
 
     $data = array(
+        ':id_event'=>$_SESSION['EVENTS']['ID'],
         ':id_pers'=>$muser['ID'],
         ':persona'=>$muser['agents'],
         ':strukturas_kods'=>$muser['struktura_kods'],
@@ -469,4 +473,17 @@ function BarIndikator09 ($value){
         $rin=$rin.$frag;
     }
     return $rin;
+}
+function AddLog ($fteksts){
+    $log_rinda=date("d.m.Y h:i:s");
+    $log_rinda.=' ; ';
+    $log_rinda.=$_SESSION['USER']['ID'];
+    $log_rinda.=' ; ';
+    $log_rinda.=$_SESSION['USER']['VARDS'];
+    $log_rinda.=' ; ';
+    $log_rinda.=$_SESSION['USER']['STRUKT'];
+    $log_rinda.=' ; ';
+    $log_rinda.=$fteksts;
+
+    echo $log_rinda;
 }

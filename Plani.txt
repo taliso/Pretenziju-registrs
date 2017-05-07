@@ -31,3 +31,6 @@ Paroles piešķiršanas-maiņas forma.
 Tiesību ekrāns
 
 Preventīvajām darbībām vajag iespēju "Nav nepieciešamas preventīvās darbības."
+
+06,05
+Saglabājot uzdevumu pie ZIŅOKUMA neierakstās atbilde.

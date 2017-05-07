@@ -9,7 +9,7 @@ $evUser=$event_users[0];
 
 $fields=" teksts_out ";
 $ftabula="tmp_teksts_notikums";
-$fwhere=" id_master=".$_SESSION['EVENTS']['ID']." and id_pers=".$evUser['id_pers'];
+$fwhere="";
 $event_teksts = sqltoarray($fields,$ftabula,$fwhere,$db);
 
 $fields=" * ";

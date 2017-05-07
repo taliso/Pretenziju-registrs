@@ -1,7 +1,7 @@
 <?php
 $agents = $_SESSION['AGENTS']['VARDS'];
 
-if ($_SESSION['PRET']['STATUS']=="NULL") {
+if ($_SESSION['PRET']['STATUS']==0) {
     $_SESSION['SAVESTATUS']="0";
 	$reg_nr = "";
 	$veids = "";
@@ -181,7 +181,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 				<!--3  -->
 				<td class="npk">3.</td>
 				<td class="teksts">Pretenzijas iesniedzējs (Uzņēmuma/privātpersonas
-					nosaukums)</td>
+					nosaukums) *</td>
 				<td class="atstarpe"></td>
 				<td>
                     <input ID="text_pret_garss" type="text" name="iesniedzejs" value="<?php echo $iesniedzejs ;	?>">
@@ -215,7 +215,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 				<!-- 6 -->
 				<td class="npk">6.</td>
 				<td class="teksts">Pasūtījuma numurs, uz kuru attiecas pretenzija <br>
-					(pievienot pasūtījuma kopiju pielikumā)
+					(pievienot pasūtījuma kopiju pielikumā) *
 				</td>
 				<td class="atstarpe"></td>
 				<td class="ievade">
@@ -413,6 +413,7 @@ $agents=sqltoarray('agents','kl_agenti',$where,$db);
 			</tr>
 
 		</table>
+        * - obligāti aizpildāmie lauki<br>
 		<input type="submit" name="pret_save" value="Saglabāt"><input type="submit" name="pret_cancel" value="Atcelt">
 	</form>
 	<script>
